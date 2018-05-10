@@ -8,5 +8,12 @@
 [Google Interview University 一套完整的学习手册帮助自己准备 Google 的面试](https://github.com/jwasham/coding-interview-university/blob/master/translations/README-cn.md)
 
 
-
 [linw7/Skill-Tree: 🐼 准备秋招，欢迎来树上取果实](https://github.com/linw7/Skill-Tree)
+
+
+
+### 学习参考书籍
+
+- 
+
+《数据结构高分笔记》
