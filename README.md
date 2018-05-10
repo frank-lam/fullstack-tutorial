@@ -53,9 +53,25 @@
     - 廖师兄：Spring Cloud微服务实战 | [慕课网](https://coding.imooc.com/class/187.html)
 
 
-#### 三、数据库
-- 《高性能MySQL》
-- 《Redis实战》
+#### 数据库 :floppy_disk:
+
+
+> [数据库系统原理](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/数据库系统原理.md)
+
+整理自《数据库系统概论 第四版》
+
+> [SQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL.md)
+
+整理自《SQL 必知必会》
+
+> [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
+
+整理自《高性能 MySQL》
+
+> [Redis](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Redis.md)
+
+整理自《Redis 设计与实现》和《Redis 实战》
+
 
 #### 四、操作系统（Linux）
 - 阅读书籍
