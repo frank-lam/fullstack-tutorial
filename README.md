@@ -11,6 +11,7 @@
 [linw7/Skill-Tree: 🐼 准备秋招，欢迎来树上取果实](https://github.com/linw7/Skill-Tree)
 
 
+[视频学习资源共享 (更新于：2018年4月30日)](https://github.com/shiyuan17/share_video/tree/1773f9f1e181d40f3e00041805933ca55932c553)
 
 ---
 
