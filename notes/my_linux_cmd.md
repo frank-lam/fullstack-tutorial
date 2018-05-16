@@ -39,7 +39,7 @@
 #### > cd
 `cd`：cd命令用来切换工作目录至dirname。 其中dirName表示法可为绝对路径或相对路径。(cd = Change Directory) 
 
-```
+```linux
 cd命令示例：
 
 # 进入用户主目录

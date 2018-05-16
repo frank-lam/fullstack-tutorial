@@ -2,7 +2,7 @@
 
 
 
-## PART1：技能树强化
+## PART1：技能强化
 
 #### 一、数据结构与算法
 
@@ -10,7 +10,7 @@
     - 数据结构
     - [十大经典排序算法](https://www.cnblogs.com/onepixel/articles/7674659.html)
 - 阅读书籍
-    - 《数据结构高分笔记》
+    - 《天勤数据结构高分笔记》 && 《王道计算机考研机试指南》
     - 《剑指Offer》
     - 《程序员代码面试指南》（牛客网左神）
 - 学习课程
@@ -37,10 +37,10 @@
     
 
 - 概述
-    - **spring**: 核心提供依赖注入
-    - **spring mvc**: mvc框架
-    - **spring boot**: 说不太出什么感觉，跟mvc比就感觉配置少了好多
-    - **spring cloud**: 围绕微服务的一套东西 
+    - **spring**：核心提供依赖注入
+    - **spring mvc**： mvc框架
+    - **spring boot**：说不太出什么感觉，跟mvc比就感觉配置少了好多
+    - **spring cloud**：围绕微服务的一套东西 
 
 - 阅读书籍
     - 《深入分析Java Web技术内幕》（★★★阿里技术丛书）
@@ -103,19 +103,15 @@
 
 
 
-#### ★ 技能脑图
-
-![](pics/mind/developer_skills_tree.svg)
-
 
 
 ## PART2：学习记录进行中
 
-| 课程                                                         | 进展          |
-| ------------------------------------------------------------ | ------------- |
-| 玩转数据结构，从入门到进阶                                   | 学习至 第三章 |
-| SpringBoot+MyBatis搭建迷你小程序教程 \| [慕课网](https://www.imooc.com/learn/945) |               |
-|                                                              |               |
+| 课程                                           | 进展                     |
+| ---------------------------------------------- | ------------------------ |
+| 玩转数据结构，从入门到进阶                     | 2018/05/06 学习至 第三章 |
+| SpringBoot+MyBatis搭建迷你小程序教程 \| 慕课网 |                          |
+|                                                |                          |
 
 
 
@@ -144,3 +140,10 @@ Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)
 持续更新中...
 
 from 2018年5月
+
+
+
+## 附录：后端研发工程师_Skills Tree
+
+**![](D:/gitdoc/2019_campus_appy/pics/mind/developer_skills_tree.svg)**
+
