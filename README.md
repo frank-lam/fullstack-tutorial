@@ -34,8 +34,6 @@
     |  Maven   |                                                              |          |
     |          |                                                              |          |
 
-    
-
 - 概述
     - **spring**：核心提供依赖注入
     - **spring mvc**： mvc框架
@@ -145,5 +143,5 @@ from 2018年5月
 
 ## 附录：后端研发工程师_Skills Tree
 
-**![](D:/gitdoc/2019_campus_appy/pics/mind/developer_skills_tree.svg)**
+**![](pics/mind/developer_skills_tree.svg)**
 
