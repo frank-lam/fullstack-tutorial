@@ -2,25 +2,24 @@
 
 
 
-[TOC]
-
 ## PART1：技能树强化
 
 #### 一、数据结构与算法
 
-- 技能121212
-    - 十大经典排序算法
-    - ...
-    - 1212
+- 基础知识
+    - 数据结构
+    - [十大经典排序算法](https://www.cnblogs.com/onepixel/articles/7674659.html)
 - 阅读书籍
     - 《数据结构高分笔记》
     - 《剑指Offer》
     - 《程序员代码面试指南》（牛客网左神）
-
 - 学习课程
     - **刘宇波：玩转数据结构，从入门到进阶**（Learning...）
     - 刘宇波：程序员的内功修炼，学好算法与数据结构
     - 刘宇波：玩转算法面试 leetcode题库分门别类详细解析
+- 在线OJ
+    - [Leetcode中文网](https://leetcode-cn.com/)
+    -  [牛客网](https://www.nowcoder.com/)
 
 
 
@@ -49,8 +48,8 @@
 
 - 学习课程
 
-|                                                         课程 |     状态      |
-| -----------------------------------------------------------: | :-----------: |
+|                             课程                             |     状态      |
+| :----------------------------------------------------------: | :-----------: |
 | 神码小风：SpringMVC4从入门到实战视频教程 \| [腾讯课堂](https://ke.qq.com/course/263024) |   已经完成    |
 | 廖师兄：Spring Boot企业微信点餐系统 \|  [慕课网](https://coding.imooc.com/class/117.html) | 学习进行中... |
 | 廖师兄：Spring Cloud微服务实战 \| [慕课网](https://coding.imooc.com/class/187.html) |    待学习     |
@@ -60,22 +59,16 @@
 
 #### 三、数据库 
 
+- [数据库系统原理](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/数据库系统原理.md)
+  - 整理自《数据库系统概论 第四版》
+- [SQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL.md)
+  - 整理自《SQL 必知必会》
 
-> [数据库系统原理](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/数据库系统原理.md)
+- [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
+  - 整理自《高性能 MySQL》
 
-整理自《数据库系统概论 第四版》
-
-> [SQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL.md)
-
-整理自《SQL 必知必会》
-
-> [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
-
-整理自《高性能 MySQL》
-
-> [Redis](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Redis.md)
-
-整理自《Redis 设计与实现》和《Redis 实战》
+- [Redis](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Redis.md)
+  - 整理自《Redis 设计与实现》和《Redis 实战》
 
 
 
@@ -107,15 +100,28 @@
 - IntelliJ IDEA 
   - 学习课程：IntelliJ IDEA神器使用技巧 |[慕课网](https://www.imooc.com/learn/924)
   - 使用笔记：[Idea工具常用技巧总结](https://www.jianshu.com/p/131c2deb3ecf)
-  - 
+
+
+
+#### ★ 技能脑图
+
+​	待补充...
 
 
 
 
 
-## PART2：学习记录Learning_Record
+## PART2：学习记录进行中
 
-2018年5月学习记录
+| 课程                                                         | 进展          |
+| ------------------------------------------------------------ | ------------- |
+| 玩转数据结构，从入门到进阶                                   | 学习至 第三章 |
+| SpringBoot+MyBatis搭建迷你小程序教程 \| [慕课网](https://www.imooc.com/learn/945) |               |
+|                                                              |               |
+
+
+
+
 
 
 
@@ -132,3 +138,15 @@
 [我珍藏的神兵利器 - 效率工具](https://www.liutf.com/posts/3720794851.html)
 
 [Linux 守护进程的启动方法](https://mp.weixin.qq.com/s/DzajJNhcpB3hqWzzm71Q0w)
+
+
+
+
+
+Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)
+
+
+
+持续更新中...
+
+from 2018年5月
