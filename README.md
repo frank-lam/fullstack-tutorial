@@ -105,7 +105,7 @@
 
 #### ★ 技能脑图
 
-![](D:\gitdoc\2019_campus_appy\pics\xmind_svg\developer_skills_tree.svg)
+![](pics/mind/developer_skills_tree.svg)
 
 
 
@@ -116,8 +116,6 @@
 | 玩转数据结构，从入门到进阶                                   | 学习至 第三章 |
 | SpringBoot+MyBatis搭建迷你小程序教程 \| [慕课网](https://www.imooc.com/learn/945) |               |
 |                                                              |               |
-
-
 
 
 
