@@ -1,6 +1,8 @@
 # 备战2019校招进行时
 
-##### 
+
+
+[TOC]
 
 ## PART1：技能树强化
 
@@ -29,7 +31,7 @@
     | 学习技能 |                           参考资料                           | 其他说明 |
     | :------: | :----------------------------------------------------------: | :------: |
     |   JVM    |                                                              |          |
-    | Java注解 | [全面解析Java注解](https://www.imooc.com/learn/456) \| 慕课网 |          |
+    | Java注解 | 全面解析Java注解 \| [慕课网](https://www.imooc.com/learn/456) |          |
     |  Maven   |                                                              |          |
     |          |                                                              |          |
 
@@ -46,15 +48,12 @@
     - 《深入理解Java虚拟机》
 
 - 学习课程
-    - 
-    - 
-    - 
 
-|                             课程                             |      | 时间 |
-| :----------------------------------------------------------: | :--: | :--: |
-| 神码小风：SpringMVC4从入门到实战视频教程 \| [腾讯课堂](https://ke.qq.com/course/263024) |      |      |
-| 廖师兄：Spring Boot企业微信点餐系统 \|  [慕课网](https://coding.imooc.com/class/117.html) |      |      |
-| 廖师兄：Spring Cloud微服务实战 \| [慕课网](https://coding.imooc.com/class/187.html) |      |      |
+|                                                         课程 |     状态      |
+| -----------------------------------------------------------: | :-----------: |
+| 神码小风：SpringMVC4从入门到实战视频教程 \| [腾讯课堂](https://ke.qq.com/course/263024) |   已经完成    |
+| 廖师兄：Spring Boot企业微信点餐系统 \|  [慕课网](https://coding.imooc.com/class/117.html) | 学习进行中... |
+| 廖师兄：Spring Cloud微服务实战 \| [慕课网](https://coding.imooc.com/class/187.html) |    待学习     |
 
 
 
@@ -84,9 +83,14 @@
 
 - 阅读书籍
     - 《快乐的Linux命令行》
-- [我的Linux命令行](notes/my_linux_cmd.md)
+- [我的Linux命令行学习笔记](notes/my_linux_cmd.md)
+
+
 
 #### 五、网络部分
+
+- TCP/IP
+- HTTP
 
 
 
@@ -100,7 +104,12 @@
 
 #### 七、开发利器
 
-- IntelliJ IDEA
+- IntelliJ IDEA 
+  - 学习课程：IntelliJ IDEA神器使用技巧 |[慕课网](https://www.imooc.com/learn/924)
+  - 使用笔记：[Idea工具常用技巧总结](https://www.jianshu.com/p/131c2deb3ecf)
+  - 
+
+
 
 
 
