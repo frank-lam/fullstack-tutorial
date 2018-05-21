@@ -558,6 +558,12 @@ chkconfig iptables off
 
 
 
+#### Linux Screen 简单用法 图文教程
+
+[Screen 基本使用](https://www.jiloc.com/42235.html)
+
+
+
 
 #### 命令行清空快捷键
 清屏 
