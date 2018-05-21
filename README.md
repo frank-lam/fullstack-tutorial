@@ -134,30 +134,31 @@
 
 #### 学习进行中的课程
 
-| 课程                                                         | 进展                     |
-| ------------------------------------------------------------ | ------------------------ |
-| **刘宇波：玩转数据结构，从入门到进阶** \| [Github仓库](https://github.com/liuyubobobo/Play-with-Algorithms) | 2018/05/06 学习至 第三章 |
-| **刘宇波：玩转算法面试 leetcode题库分门别类详细解析**        | 准备开始学习             |
-| **廖师兄：Spring Boot企业微信点餐系统** \|  [慕课网](https://coding.imooc.com/class/117.html) | 2018/05/06 学习至 第五章 |
-|                                                              |                          |
-|                                                              |                          |
-| Nginx入门到实践（不管是运维还是开发 Nginx都是你的必备技能） \| [慕课网](https://coding.imooc.com/class/evaluation/121.html#Anchor) | 计划学习                 |
-| Redis从入门到高可用，分布式实践 \| [慕课网](https://coding.imooc.com/class/151.html) | 计划学习                 |
-| ZooKeeper分布式专题与Dubbo微服务入门 \| [慕课网](https://coding.imooc.com/class/201.html) | 计划学习                 |
-| docker                                                       |                          |
-|                                                              |                          |
-|                                                              |                          |
-|                                                              |                          |
+| 课程                                                         | 进展                             |
+| ------------------------------------------------------------ | -------------------------------- |
+| **刘宇波：玩转数据结构，从入门到进阶** \| [Github仓库](https://github.com/liuyubobobo/Play-with-Algorithms) | 2018/05/06 学习至 第三章<br>1212 |
+| **刘宇波：玩转算法面试 leetcode题库分门别类详细解析**        | 计划学习                         |
+| **刘宇波：程序员的内功修炼，学好算法与数据结构**             | 计划学习                         |
+| **廖师兄：Spring Boot企业微信点餐系统** \|  [慕课网](https://coding.imooc.com/class/117.html) | 2018/05/06 学习至 第五章         |
+|                                                              |                                  |
+|                                                              |                                  |
+| Nginx入门到实践（不管是运维还是开发 Nginx都是你的必备技能） \| [慕课网](https://coding.imooc.com/class/evaluation/121.html#Anchor) | 计划学习                         |
+| Redis从入门到高可用，分布式实践 \| [慕课网](https://coding.imooc.com/class/151.html) | 计划学习                         |
+| ZooKeeper分布式专题与Dubbo微服务入门 \| [慕课网](https://coding.imooc.com/class/201.html) | 计划学习                         |
+| docker                                                       | 计划学习                         |
+|                                                              |                                  |
+|                                                              |                                  |
+|                                                              |                                  |
 
 
 
 #### 学习书籍
 
-| 图书                    | 进展 |
-| ----------------------- | ---- |
-| 快乐的Linux命令行（书） |      |
-|                         |      |
-|                         |      |
+| 图书                    | 进展     |
+| ----------------------- | -------- |
+| 快乐的Linux命令行（书） | 计划学习 |
+| 设计模式之禅            | 计划学习 |
+|                         |          |
 
 
 
