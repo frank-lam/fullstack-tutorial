@@ -29,8 +29,9 @@
 3. `help`命令：用于显示shell内部命令的帮助信息。help命令只能显示shell内部的命令帮助信息。而对于外部命令的帮助信息只能使用man或者info命令查看。
 
 #### 远程连接工具
-- [Xshell 5](http://rj.baidu.com/soft/detail/15201.html) （免费）
+- [Xshell 5](http://rj.baidu.com/soft/detail/15201.html)
 - [SecureCRT 6.6](http://download.csdn.net/download/u012104219/10209465)
+- MobaXterm（强烈推荐！）
 
 ##  二、玩转Linux命令行之基础篇
 在这里我将介绍10组最常用的基础命令行，也是Linux入门必备的命令行，必须牢记于心，学习的过程中可以在Linux上熟练。这也是作为一个计算机专业人士必须熟练操作的最低要求。

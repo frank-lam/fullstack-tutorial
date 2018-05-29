@@ -145,21 +145,23 @@ Work like a Trojan.
 
 
 
+
+
 #### 进行中的课程
 
 | 课程                                                         | 进展                         |
 | ------------------------------------------------------------ | ---------------------------- |
-| 刘宇波：玩转数据结构 \| [代码仓库](https://github.com/liuyubobobo/Play-with-Algorithms) \| [学习笔记](course\01 玩转数据结构.md ) | 2018/05/06 学习至 第三章<br> |
-| 刘宇波：玩转算法面试 \| [学习笔记](course/02 玩转算法面试.md) | 计划学习                     |
-| 刘宇波：程序员的内功修炼                                     | 计划学习                     |
-| 廖师兄：[Spring Boot企业微信点餐系统](https://coding.imooc.com/class/117.html) \| [学习笔记](course\03 SpringBoot微信点餐.md ) | 2018/05/06 学习至 第五章     |
-|                                                              |                              |
-|                                                              |                              |
-| Nginx入门到实践 \| [慕课网](https://coding.imooc.com/class/evaluation/121.html#Anchor) | 计划学习                     |
+| ★★★刘宇波：玩转数据结构 \| [代码仓库](https://github.com/liuyubobobo/Play-with-Algorithms) \| [学习笔记](course\01 玩转数据结构.md ) | 2018/05/06 学习至 第三章<br> |
+| ★刘宇波：玩转算法面试 \| [学习笔记](course/02 玩转算法面试.md) | 计划学习                     |
+| ★刘宇波：程序员的内功修炼                                    | 计划学习                     |
+| ★★★廖师兄：[Spring Boot企业微信点餐系统](https://coding.imooc.com/class/117.html) \| [学习笔记](course\03 SpringBoot微信点餐.md ) | 2018/05/06 学习至 第五章     |
+| [微信授权登录](https://www.imooc.com/learn/713)              |                              |
+| [PHP第三方登录—OAuth2.0协议](https://www.imooc.com/learn/557) |                              |
+| ★Nginx入门到实践 \| [慕课网](https://coding.imooc.com/class/evaluation/121.html#Anchor) \| [学习笔记](course\04 Nginx从入门到实战.md) | 计划学习                     |
 | Redis从入门到高可用，分布式实践 \| [慕课网](https://coding.imooc.com/class/151.html) | 计划学习                     |
 | ZooKeeper分布式专题与Dubbo微服务入门 \| [慕课网](https://coding.imooc.com/class/201.html) | 计划学习                     |
-| docker                                                       | 计划学习                     |
-|                                                              |                              |
+| ★docker                                                      | 计划学习                     |
+| [Redis入门](https://www.imooc.com/learn/839)                 | 计划学习                     |
 |                                                              |                              |
 |                                                              |                              |
 
@@ -180,6 +182,8 @@ Work like a Trojan.
 ## PART3：参考学习资料
 
 ​	[CyC2018/Interview-Notebook: 技术面试需要掌握的基础知识整理，欢迎编辑~](https://github.com/CyC2018/Interview-Notebook)
+
+​	[francistao/LearningNotes: Enjoy Learning.](francistao/LearningNotes: Enjoy Learning.)
 
 ​	[Google Interview University 一套完整的学习手册帮助自己准备 Google 的面试](https://github.com/jwasham/coding-interview-university/blob/master/translations/README-cn.md)
 
