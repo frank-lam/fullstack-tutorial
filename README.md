@@ -1,6 +1,6 @@
-# 备战2019校招进行时
+# 备战2019校招，Java面试宝典
 
-Work like a Trojan.
+Work like a Trojan. 
 
 
 
@@ -8,13 +8,13 @@ Work like a Trojan.
 
 目录一览
 
-|              Ⅰ               |           Ⅱ           |                Ⅲ                |            Ⅳ             |            Ⅴ            |        Ⅵ         |         Ⅶ         |            Ⅷ             |
-| :--------------------------: | :-------------------: | :-----------------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
-| 数据结构与算法<br />:pencil: | Java Web<br/>:coffee: | 分布式&微服务<br/>:sweat_drops: | 数据库<br/>:floppy_disk: | 操作系统<br/>:computer: | 网络<br/>:cloud: | 工具<br/>:hammer: | 开发利器<br/>:paperclip: |
+|              Ⅰ               |         Ⅱ         |                Ⅲ                |            Ⅳ             |            Ⅴ            |        Ⅵ         |         Ⅶ         |            Ⅷ             |
+| :--------------------------: | :---------------: | :-----------------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
+| 数据结构与算法<br />:pencil: | Java<br/>:coffee: | 分布式&微服务<br/>:sweat_drops: | 数据库<br/>:floppy_disk: | 操作系统<br/>:computer: | 网络<br/>:cloud: | 工具<br/>:hammer: | 开发利器<br/>:paperclip: |
 
 
 
-#### 一、数据结构与算法
+### 一、数据结构与算法
 
 - 基础知识
     - 数据结构
@@ -34,8 +34,56 @@ Work like a Trojan.
 
 
 
+### 二、Java
 
-#### 二、Java Web编程
+##### 学习Github库
+
+- [hadyang/interview: Java / Android 笔试、面试 知识整理](https://github.com/hadyang/interview) `star：928`
+- [francistao/LearningNotes: Enjoy Learning.](https://github.com/francistao/LearningNotes)  `star：9194`
+- [Snailclimb/Java_Guide: Java面试通关手册（Java学习指南）](https://github.com/Snailclimb/Java_Guide) `star：94`
+
+
+
+##### Java面试宝典
+
+- Java基础
+  - 集合框架
+    -  （必读）阅读：[深入理解JCF Java集合框架](https://github.com/CarpenterLee/JCFInternals)
+  - 
+
+
+
+
+
+深入理解：
+
+
+
+##### JavaSE(Java基础)
+
+JVM(Java虚拟机)
+
+[面试JVM 听这堂课就够了_面试jvm 听这堂课就够了_腾讯视频](https://v.qq.com/x/cover/bcmtqgpddsbj75k/g1423t1uwp5.html)
+
+[咕泡学院-James老师_腾讯课堂](https://ke.qq.com/teacher/2904270631)
+
+[ProcessOn - 免费在线作图，实时协作](https://www.processon.com/)
+
+
+
+
+##### JavaConcurrent(Java并发)
+
+设计模式
+
+Java多线程系列
+
+Java IO与NIO
+
+
+
+
+
 - 技能点
 
     |    学习技能     |                           参考资料                           | 其他说明 |
@@ -78,7 +126,9 @@ Work like a Trojan.
 
 
 
-#### 三、分布式&微服务
+
+
+### 三、分布式&微服务
 
 - ZooKeeper分布式专题与Dubbo微服务入门
 
@@ -87,7 +137,7 @@ Work like a Trojan.
 
 
 
-#### 四、数据库 
+### 四、数据库 
 
 - [数据库系统原理](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/数据库系统原理.md)
   - 整理自《数据库系统概论 第四版》
@@ -102,7 +152,7 @@ Work like a Trojan.
 
 
 
-#### 五、操作系统（Linux）
+### 五、操作系统（Linux）
 
 - 阅读书籍
     - 《快乐的Linux命令行》（待整理学习笔记！！！）
@@ -110,14 +160,14 @@ Work like a Trojan.
 
 
 
-#### 六、网络部分
+### 六、网络部分
 
 - TCP/IP
 - HTTP
 
 
 
-#### 七、工具
+### 七、工具
 
 - Git
 - SVN
@@ -125,7 +175,7 @@ Work like a Trojan.
 
 
 
-#### 八、开发利器
+### 八、开发利器
 
 - IntelliJ IDEA 
   - 学习课程：IntelliJ IDEA神器使用技巧 |[慕课网](https://www.imooc.com/learn/924)
@@ -135,7 +185,7 @@ Work like a Trojan.
 
 ## PART2：学习记录
 
-#### 已完成的课程
+### 已完成的课程
 
 | 课程                                                         | 进展            |
 | ------------------------------------------------------------ | --------------- |
@@ -147,7 +197,7 @@ Work like a Trojan.
 
 
 
-#### 进行中的课程
+### 进行中的课程
 
 | 课程                                                         | 进展                         |
 | ------------------------------------------------------------ | ---------------------------- |
@@ -167,7 +217,7 @@ Work like a Trojan.
 
 
 
-#### 学习书籍
+### 学习书籍
 
 | 图书                    | 进展     |
 | ----------------------- | -------- |
@@ -181,23 +231,21 @@ Work like a Trojan.
 
 ## PART3：参考学习资料
 
-​	[CyC2018/Interview-Notebook: 技术面试需要掌握的基础知识整理，欢迎编辑~](https://github.com/CyC2018/Interview-Notebook)
+[CyC2018/Interview-Notebook: 技术面试需要掌握的基础知识整理，欢迎编辑~](https://github.com/CyC2018/Interview-Notebook) `star: 23489`
 
-​	[francistao/LearningNotes: Enjoy Learning.](francistao/LearningNotes: Enjoy Learning.)
+[Google Interview University 一套完整的学习手册帮助自己准备 Google 的面试](https://github.com/jwasham/coding-interview-university/blob/master/translations/README-cn.md)
 
-​	[Google Interview University 一套完整的学习手册帮助自己准备 Google 的面试](https://github.com/jwasham/coding-interview-university/blob/master/translations/README-cn.md)
+[linw7/Skill-Tree: 🐼 准备秋招，欢迎来树上取果实](https://github.com/linw7/Skill-Tree)
 
-​	[linw7/Skill-Tree: 🐼 准备秋招，欢迎来树上取果实](https://github.com/linw7/Skill-Tree)
+[视频学习资源共享 (更新于：2018年4月30日)](https://github.com/shiyuan17/share_video/tree/1773f9f1e181d40f3e00041805933ca55932c553)
 
-​	[视频学习资源共享 (更新于：2018年4月30日)](https://github.com/shiyuan17/share_video/tree/1773f9f1e181d40f3e00041805933ca55932c553)
+[我珍藏的神兵利器 - 效率工具](https://www.liutf.com/posts/3720794851.html)
 
-​	[我珍藏的神兵利器 - 效率工具](https://www.liutf.com/posts/3720794851.html)
+[Linux 守护进程的启动方法](https://mp.weixin.qq.com/s/DzajJNhcpB3hqWzzm71Q0w)
 
-​	[Linux 守护进程的启动方法](https://mp.weixin.qq.com/s/DzajJNhcpB3hqWzzm71Q0w)
+[波波老师：关于学习方法和今后提高自学能力的疑问！](http://coding.imooc.com/learn/questiondetail/46130.html)
 
-​	[波波老师：关于学习方法和今后提高自学能力的疑问！](http://coding.imooc.com/learn/questiondetail/46130.html)
-
-​	[最近面了不少java开发，据此来说下我的感受：哪怕事先只准备1小时，成功概率也能大大提升](https://mp.weixin.qq.com/s/TheCxmlDrcz5oFAahz6Rxw)
+[最近面了不少java开发，据此来说下我的感受：哪怕事先只准备1小时，成功概率也能大大提升](https://mp.weixin.qq.com/s/TheCxmlDrcz5oFAahz6Rxw)
 
 
 

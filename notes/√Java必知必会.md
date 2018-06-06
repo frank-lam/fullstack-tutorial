@@ -1,12 +1,8 @@
-
-
-
-
 # Java必知必会
 
 你必须知道的Java语言基础知识
 
-https://github.com/hadyang/interview
+
 
 参考资料
 
