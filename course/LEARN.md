@@ -90,5 +90,5 @@
 
 以下是所有待学习图书，仅作为全文预览检索
 
-详情转向 [course/LEARN_FULL.md](course/LEARN_FULL.md)
+详情转向 [course/LEARN_FULL.md](LEARN_FULL.md)
 
