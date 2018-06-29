@@ -276,7 +276,7 @@ AIO
 
  
 
-## web
+## web框架
 
 **Tomcat**
 
@@ -289,9 +289,7 @@ AIO
 
  
 
-springMVC
-
- 
+**springMVC**
 
 - 使用
 - 请求流程
@@ -312,6 +310,14 @@ springMVC
 - 一级、二级缓存
 
  
+
+**注解技术**
+
+annotation java5
+
+
+
+
 
  
 
