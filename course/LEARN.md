@@ -35,14 +35,14 @@
 |           |                    | :gem:【极客学院】极客学院23种设计模式                        |                 |
 |           |                    | :gem:【炼数成金】深入JVM内核—原理、诊断与优化                |                 |
 |           |                    | :gem:【炼数成金】实战Java高并发程序设计                      |                 |
-|           |                    | Java并发编程与高并发解决方案                                 |                 |
+|           |                    | Java并发编程与高并发解决方案                                 |      **🚴**      |
 |           |                    | 【慕课网】Google面试官亲授 升级Java面试                      |                 |
 |           |                    |                                                              |                 |
 |           | 02 Java web        |                                                              |                 |
 |           |                    | [【慕课网在线】Spring Boot热部署](https://www.imooc.com/learn/915) \| [参考文档](https://www.cnblogs.com/magicalSam/p/7196355.html) |     进行中      |
 |           |                    | 【慕课网】ZooKeeper分布式专题与Dubbo微服务入门               |                 |
 |           |                    | :gem:【慕课网】Spring Cloud微服务实战_廖师兄                 |                 |
-|           |                    | :gem:【慕课网】Spring Boot企业微信点餐系统                   |                 |
+|           |                    | :gem:【慕课网】Spring Boot企业微信点餐系统                   |      完成       |
 |           |                    | 【神马小风】Spring MVC4入门                                  |      完成       |
 |           |                    | ~~【极客学院】JavaWeb工程师(全套)~~ \| 部分可以学习          |                 |
 |           | 03 Web Server      |                                                              |                 |
@@ -53,7 +53,7 @@
 |           |                    | 【莫烦】Linux 简易教学                                       |                 |
 |           |                    | 【慕课网在线】[Crontab不知疲倦的时间表](https://www.imooc.com/learn/1009) |                 |
 |           | 05 网络            |                                                              |                 |
-|           |                    | :gem:**【慕课网】HTTP协议原理+实践 Web开发工程师必学**       | **:bicyclist:** |
+|           |                    | **:gem:【慕课网】HTTP协议原理+实践 Web开发工程师必学**       | **:bicyclist:** |
 |           | 06 数据库          |                                                              |                 |
 |           |                    | 【慕课网】MySQL性能管理及架构设计                            |                 |
 |           |                    | 【慕课网】Redis从入门到高可用，分布式实践                    |                 |
