@@ -24,7 +24,7 @@ http://tool.oschina.net/apidocs/apidoc?api=jdk-zh
 
 2.做过的项目 
 
-
+进程是操作系统分配资源的最小单位 ，线程是cpu调度的最小单位  
 
 [TOC]
 
