@@ -37,7 +37,7 @@ Work like a Trojan.
 
 ### 二、Java基础
 
-> 大纲：[Java基础 | 知识结构](notes/Java architecture/Overview.md)
+> 大纲：[Java基础 | 知识结构](notes/JavaArchitecture/Overview.md)
 
 ##### 知识框架
 
