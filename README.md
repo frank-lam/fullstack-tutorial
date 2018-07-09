@@ -22,14 +22,14 @@ Work like a Trojan.
     - [VisuAlgo - visualising data structures and algorithms through animation](https://visualgo.net/en) 
 - 阅读书籍
     - 《天勤数据结构高分笔记》 && 《王道计算机考研机试指南》
-    - 《剑指Offer》
+    - 《算法4》
     - 《程序员代码面试指南》（牛客网左神）
 - 学习课程
-    - **刘宇波：玩转数据结构，从入门到进阶**（Learning...）
+    - 刘宇波：玩转数据结构，从入门到进阶（Learning...）
     - 刘宇波：程序员的内功修炼，学好算法与数据结构
     - 刘宇波：玩转算法面试 leetcode题库分门别类详细解析
 - 在线OJ
-    - [Leetcode中文网](https://leetcode-cn.com/)
+    - [Leetcode中国版](https://leetcode-cn.com/)
     -  [牛客网](https://www.nowcoder.com/)
 
 
@@ -44,107 +44,25 @@ Work like a Trojan.
 
 
 
-##### Java面试宝典
+##### 知识框架
 
 - Java基础
-  - 集合框架
-    -  （必读）阅读：[深入理解JCF Java集合框架](https://github.com/CarpenterLee/JCFInternals)
-  - 
-
-
-
-
-
-深入理解：
-
-
-
-##### JavaSE(Java基础)
-
-JVM(Java虚拟机)
-
-[面试JVM 听这堂课就够了_面试jvm 听这堂课就够了_腾讯视频](https://v.qq.com/x/cover/bcmtqgpddsbj75k/g1423t1uwp5.html)
-
-[咕泡学院-James老师_腾讯课堂](https://ke.qq.com/teacher/2904270631)
-
-[ProcessOn - 免费在线作图，实时协作](https://www.processon.com/)
-
-
-
-
-##### JavaConcurrent(Java并发)
-
-设计模式
-
-Java多线程系列
-
-Java IO与NIO
-
-
-
-
-
-- 技能点
-
-    |    学习技能     |                           参考资料                           | 其他说明 |
-    | :-------------: | :----------------------------------------------------------: | :------: |
-    |       JVM       |                                                              |          |
-    |    Java注解     | 全面解析Java注解 \| [慕课网](https://www.imooc.com/learn/456) |          |
-    |      Maven      |                                                              |          |
-    |     Mybatis     |                                                              |          |
-    | Spring Data JPA |                                                              |          |
-    |       IOC       |                                                              |          |
-    |       AOP       |                                                              |          |
-    |       DI        |                                                              |          |
-    |    Hibernate    |                                                              |          |
-    |      Beans      |                                                              |          |
-    |       NIO       |                                                              |          |
-    |                 |                                                              |          |
-    |                 |                                                              |          |
-    |                 |                                                              |          |
-
-    
-
-- 概述
-
-    - **spring**：核心提供依赖注入
-    - **spring mvc**： mvc框架
-    - **spring boot**：说不太出什么感觉，跟mvc比就感觉配置少了好多
-    - **spring cloud**：围绕微服务的一套东西 
-
-- 阅读书籍
-    - 《深入分析Java Web技术内幕》（★★★阿里技术丛书）
-    - 《深入理解Java虚拟机》
-
-- 学习课程
-
-|                             课程                             |   状态   |
-| :----------------------------------------------------------: | :------: |
-| 神码小风：SpringMVC4从入门到实战视频教程 \| [腾讯课堂](https://ke.qq.com/course/263024) | 已经完成 |
-|                                                              |          |
-| 廖师兄：Spring Cloud微服务实战 \| [慕课网](https://coding.imooc.com/class/187.html) |  待学习  |
-
-
-
-【待学习列表】
-
-- 依赖管理工具
-  - Maven
-  - Gradle
-
-待学习： [H2 Database Engine](http://www.h2database.com/html/main.html) 
-
-
-
-
+- 集合框架
+  -  （必读）阅读：[深入理解JCF Java集合框架](https://github.com/CarpenterLee/JCFInternals)
+- 并发包
+- 多线程
+- IO流
+- 虚拟机
+  - [面试JVM 听这堂课就够了_面试jvm 听这堂课就够了_腾讯视频](https://v.qq.com/x/cover/bcmtqgpddsbj75k/g1423t1uwp5.html)
+  - [咕泡学院-James老师_腾讯课堂](https://ke.qq.com/teacher/2904270631)
+- 设计模式
+- Web框架
 
 
 
 ### 三、分布式&微服务
 
 - ZooKeeper分布式专题与Dubbo微服务入门
-
-
 
 
 

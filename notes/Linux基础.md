@@ -1,6 +1,7 @@
 #### Linux基础知识
 
-
+【Linux】初踏足Linux的大门 - CSDN博客
+https://blog.csdn.net/qq_41035588/article/details/80947383
 
 ##### Linux 系统的顶层目录结构 
 

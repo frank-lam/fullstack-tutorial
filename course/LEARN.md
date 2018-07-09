@@ -49,6 +49,7 @@
 |           |                    | :gem:【慕课网】Spring Boot企业微信点餐系统                   |      完成       |
 |           |                    | 【神马小风】Spring MVC4入门                                  |      完成       |
 |           |                    | ~~【极客学院】JavaWeb工程师(全套)~~ \| 部分可以学习          |                 |
+|           |                    | 神码小风：SpringMVC4从入门到实战视频教程 \| [腾讯课堂](https://ke.qq.com/course/263024) |      完成       |
 |           | 03 Web Server      |                                                              |                 |
 |           |                    | :gem:【慕课网】Nginx从入门到实践                             |                 |
 |           | 04 Linux           |                                                              |                 |
