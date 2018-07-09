@@ -8,24 +8,25 @@ Work like a Trojan.
 
 目录一览
 
-|              Ⅰ               |         Ⅱ         |                Ⅲ                |            Ⅳ             |            Ⅴ            |        Ⅵ         |         Ⅶ         |            Ⅷ             |
-| :--------------------------: | :---------------: | :-----------------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
-| 数据结构与算法<br />:pencil: | Java<br/>:coffee: | 分布式&微服务<br/>:sweat_drops: | 数据库<br/>:floppy_disk: | 操作系统<br/>:computer: | 网络<br/>:cloud: | 工具<br/>:hammer: | 开发利器<br/>:paperclip: |
+|              Ⅰ               |           Ⅱ           |            Ⅲ             |            Ⅳ            |        Ⅴ         |         Ⅵ         |            Ⅶ             |
+| :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
+| 数据结构与算法<br />:pencil: | Java基础<br/>:coffee: | 数据库<br/>:floppy_disk: | 操作系统<br/>:computer: | 网络<br/>:cloud: | 工具<br/>:hammer: | 开发利器<br/>:paperclip: |
 
 
 
 ### 一、数据结构与算法
 
-- 基础知识
-    - 数据结构
+> 大纲：[数据结构与算法| 知识结构](notes/数据结构与算法.md)
+
+- 知识结构
     - [十大经典排序算法](https://www.cnblogs.com/onepixel/articles/7674659.html)
     - [VisuAlgo - visualising data structures and algorithms through animation](https://visualgo.net/en) 
 - 阅读书籍
-    - 《天勤数据结构高分笔记》 && 《王道计算机考研机试指南》
     - 《算法4》
-    - 《程序员代码面试指南》（牛客网左神）
+    - 《天勤数据结构高分笔记》 && 《王道计算机考研机试指南》
+    - 《程序员代码面试指南》
 - 学习课程
-    - 刘宇波：玩转数据结构，从入门到进阶（Learning...）
+    - 刘宇波：玩转数据结构，从入门到进阶
     - 刘宇波：程序员的内功修炼，学好算法与数据结构
     - 刘宇波：玩转算法面试 leetcode题库分门别类详细解析
 - 在线OJ
@@ -34,15 +35,9 @@ Work like a Trojan.
 
 
 
-### 二、Java
+### 二、Java基础
 
-##### 学习Github库
-
-- [hadyang/interview: Java / Android 笔试、面试 知识整理](https://github.com/hadyang/interview) `star：928`
-- [francistao/LearningNotes: Enjoy Learning.](https://github.com/francistao/LearningNotes)  `star：9194`
-- [Snailclimb/Java_Guide: Java面试通关手册（Java学习指南）](https://github.com/Snailclimb/Java_Guide) `star：94`
-
-
+> 大纲：[Java基础 | 知识结构](notes/Java architecture/Overview.md .md)
 
 ##### 知识框架
 
@@ -60,14 +55,16 @@ Work like a Trojan.
 
 
 
-### 三、分布式&微服务
+##### 学习Github库
 
-- ZooKeeper分布式专题与Dubbo微服务入门
+- [hadyang/interview: Java / Android 笔试、面试 知识整理](https://github.com/hadyang/interview) `star：928`
+- [francistao/LearningNotes: Enjoy Learning.](https://github.com/francistao/LearningNotes)  `star：9194`
+- [Snailclimb/Java_Guide: Java面试通关手册（Java学习指南）](https://github.com/Snailclimb/Java_Guide) `star：94`
 
 
 
 
-### 四、数据库 
+### 三、数据库 
 
 - [数据库系统原理](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/数据库系统原理.md)
   - 整理自《数据库系统概论 第四版》
@@ -82,7 +79,7 @@ Work like a Trojan.
 
 
 
-### 五、操作系统（Linux）
+### 四、操作系统（Linux）
 
 - 阅读书籍
     - 《快乐的Linux命令行》（待整理学习笔记！！！）
@@ -90,14 +87,14 @@ Work like a Trojan.
 
 
 
-### 六、网络部分
+### 五、网络部分
 
 - TCP/IP
 - HTTP
 
 
 
-### 七、工具
+### 六、工具
 
 - Git
 - SVN
@@ -105,15 +102,11 @@ Work like a Trojan.
 
 
 
-### 八、开发利器
+### 七、开发利器
 
 - IntelliJ IDEA 
   - 学习课程：IntelliJ IDEA神器使用技巧 |[慕课网](https://www.imooc.com/learn/924)
   - 使用笔记：[Idea工具常用技巧总结](https://www.jianshu.com/p/131c2deb3ecf)
-
-
-
-### 九、docker容器
 
 
 
@@ -158,8 +151,6 @@ Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)
 持续更新中...
 
 from 2018年5月20日
-
-
 
 
 
