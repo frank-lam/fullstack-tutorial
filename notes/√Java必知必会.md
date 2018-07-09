@@ -281,8 +281,6 @@ Java集合类的整体框架如下：
 
 
 
-
-
 Collection
 
 ![](collection.png)
