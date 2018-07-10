@@ -8,8 +8,9 @@ https://news.netcraft.com/archives/2018/02/13/february-2018-web-server-survey.ht
 | 章节                                                         | 记录 |
 | ------------------------------------------------------------ | ---- |
 | **第1章 课程前言**                                           |      |
-| 1-1 课程介绍                                                 | 5/24 |
-| 1-2 学习环境准备                                             | 5/24 |
+| 1-1 课程介绍                                                 |      |
+| 1-2 学习环境准备                                             |      |
+|                                                              |      |
 | **第2章 基础篇**                                             |      |
 | 2-1 什么是Nginx                                              |      |
 | 2-2 常见的中间件服务                                         |      |
@@ -39,6 +40,7 @@ https://news.netcraft.com/archives/2018/02/13/february-2018-web-server-survey.ht
 | 2-26 Nginx的访问控制—access_module局限性                     |      |
 | 2-27 Nginx的访问控制—auth_basic_module配置                   |      |
 | 2-28 Nginx的访问控制—auth_basic_module局限性                 |      |
+|                                                              |      |
 | **第3章 场景实践篇**                                         |      |
 | 3-1 场景实践篇内容介绍                                       |      |
 | 3-2 Nginx作为静态资源web服务_静态资源类型                    |      |
@@ -70,6 +72,7 @@ https://news.netcraft.com/archives/2018/02/13/february-2018-web-server-survey.ht
 | 3-28 Nginx作为缓存服务_场景配置演示                          |      |
 | 3-29 Nginx作为缓存服务_场景配置补充说明                      |      |
 | 3-30 Nginx作为缓存服务_分片请求                              |      |
+|                                                              |      |
 | **第4章 深度学习篇**                                         |      |
 | 4-1 Nginx动静分离_动静分离场景演示                           |      |
 | 4-2 Nginx动静分离_动静分离场景演示(1)                        |      |
@@ -105,6 +108,7 @@ https://news.netcraft.com/archives/2018/02/13/february-2018-web-server-survey.ht
 | 4-32 Nginx与Lua的开发_实战场景灰度发布场景演示2              |      |
 | 4-33 Nginx与Lua的开发_实战场景灰度发布场景演示3              |      |
 | 4-34 Nginx与Lua的开发_实战场景灰度发布场景演示4              |      |
+|                                                              |      |
 | **第5章 Nginx架构篇**                                        |      |
 | 5-1 Nginx常见问题_架构篇介绍                                 |      |
 | 5-2 Nginx常见问题__多个server_name中虚拟主机读取的优先级     |      |
