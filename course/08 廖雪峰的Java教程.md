@@ -1,0 +1,270 @@
+## 《廖雪峰的Java教程》学习记录
+
+
+
+**1-Java快速入门**
+  01-Java入门
+	01-Java简介
+	02-安装JDK
+	03-第一个Java程序
+	04-安装并使用Eclipse
+	05-安装Eclipse插件
+  02-Java程序基础
+	01-Java程序基本结构
+	02-变量和数据类型
+	03-整数运算
+	05-浮点数运算
+	07-布尔运算
+	08-字符和字符串
+	09-数组类型
+  03-流程控制
+	01-输入和输出
+	03-if判断
+	04-switch多重选择
+	05-while循环
+	06-do-while循环
+	07-for循环
+	09-break和continue
+  04-数组操作
+	1-遍历数组
+	2-数组排序
+	4-多维数组
+	5-命令行参数
+
+**2-Java面向对象编程**
+  1-面向对象的概念
+	面向对象基础
+  2-数据封装
+	1-方法
+	2-构造方法
+	3-方法重载
+  3-继承和多态
+	1-继承
+	2-多态
+  4-抽象类和接口
+	1-抽象类
+	2-接口
+  5-包和classpath
+	1-静态字段和方法
+	2-包
+	3-作用域
+	4-classpath和jar
+  6-Java核心类
+	1-字符串和编码
+	2-StringBuilder
+	3-包装类型
+	4-JavaBean
+	5-枚举类
+	6-常用工具类
+
+
+**3-Java异常处理**
+  1-错误处理
+	1-Java的异常
+	2-捕获异常
+	3-抛出异常
+	4-自定义异常
+  2-断言和日志
+	1-使用断言
+	2-使用JDK Logging
+	3-使用Commons Logging
+	4-使用Log4j
+
+**4-Java反射与泛型**
+  1-反射
+	1-Class类
+	2-访问字段
+	3-调用方法
+	4-调用构造方法
+	5-获取继承关系
+  2-注解
+	1-使用注解
+	2-定义注解
+	3-处理注解
+  3-泛型
+	1-什么是泛型
+	2-使用泛型
+	3-编写泛型
+	4-擦拭法
+	5-extends通配符
+	6-super通配符
+	7-泛型和反射
+
+**5-Java集合**
+  1-Java集合简介
+	Java集合简介
+  2-List
+	1-使用List
+	2-编写equals方法
+  3-Map
+	1-使用Map
+	2-编写equals和hashCode
+	3-使用Properties
+  4-Set
+	使用Set
+  5-Queue
+	1-使用Queue
+	2-使用PriorityQueue
+	3-使用Deque
+  6-Stack
+	使用Stack
+  7-最佳实践
+	1-使用Iterator
+	2-使用Collections
+
+**6-Java IO编程**
+  1-IO基础
+	1-IO简介
+	2-File对象
+  2-Input和Output
+	1-InputStream
+	2-OutputStream
+	4-Filter模式
+	6-classpath资源
+	7-序列化
+  3-Reader和Writer
+	1-Reader
+	2-Writer
+
+**7-Java处理日期和时间**
+  1-概念
+	日期和时间
+  2-Date和Calendar
+	1-Date
+	2-Calendar
+  3-java.time的API
+	1-LocalDateTime
+	2-ZonedDateTime
+  4-最佳实践
+	最佳实践
+
+
+**8-JUnit单元测试**
+  1-JUnit简介
+	JUnit测试
+  2-使用JUnit
+	1-使用Before和After
+	2-异常测试
+	3-参数化测试
+	4-超时测试
+
+**9-Java正则表达式**
+  1-正则表达式入门
+	1-正则表达式简介
+	2-匹配规则
+  2-正则表达式进阶
+	1-复杂匹配规则
+	3-分组匹配规则
+	5-非贪婪匹配
+	6-搜索和替换
+
+
+**10-Java加密与安全**
+  1-数据安全简介
+	加密与安全
+  2-编码算法
+	1-URL编码
+	2-Base64编码
+  3-摘要算法
+	1-MD5
+	3-SHA1
+	4-BouncyCastle
+	5-Hmac
+  4-加密算法
+	1-对称加密算法
+	2-口令加密算法
+	4-密钥交换算法
+	5-非对称加密算法
+  5-签名算法
+	1-RSA签名算法
+	2-DSA签名算法
+  6-数字证书
+	数字证书
+
+**11-Java多线程编程**
+  1-线程的概念
+	1-多线程简介
+	2-创建新线程
+	3-线程的状态
+	5-中断线程
+	6-守护线程
+  2-线程同步
+	1-线程同步
+	2-synchronized方法
+	3-死锁
+	4-wait和notify
+  3-高级concurrent包
+	1-ReentrantLock
+	2-ReadWriteLock
+	3-Condition
+	4-Concurrent集合
+	5-Atomic
+	6-ExecutorService
+	7-Future
+	8-CompletableFuture
+	9-Fork_Join
+  4-线程工具类
+	ThreadLocal
+
+**12-Maven基础**
+  1-Maven入门
+	1-Maven介绍
+	2-依赖管理
+	3-构建流程
+  2-Maven进阶
+	1-使用插件
+	2-模块管理
+
+**13-Java网络编程**
+  1-Socket编程
+	1-网络编程概念
+	2-TCP编程
+	3-TCP多线程编程
+	5-UDP编程
+  2-Email编程
+	1-发送Email
+	2-接收Email
+
+13-Java网络编程
+  3-其他
+	1-HTTP编程
+	2-RMI远程调用
+
+**14-Java操作XML和JSON**
+  1-XML
+	1-XML介绍
+	2-DOM
+	3-SAX
+	4-第三方XML库
+  2-JSON
+	1-JSON介绍
+	2-处理JSON
+
+**15-Java JDBC编程**
+  1-关系数据库基础
+	1-关系数据库简介
+	2-安装MySQL
+  2-SQL入门
+	1-SQL介绍
+	2-Insert语句
+	3-Select语句
+	4-Update语句
+	5-Delete语句
+  3-JDBC接口
+	1-JDBC简介
+	2-JDBC查询
+	3-JDBC更新
+	4-JDBC事务
+	5-JDBC连接池
+
+**16-Java函数式编程**
+  1-Lambda表达式
+	1-Lambda基础
+	3-Method Reference
+  2-Stream
+	1-Stream简介
+	2-创建Stream
+	4-map
+	5-filter
+	6-reduce
+	7-其他操作
