@@ -18,7 +18,7 @@
 
 #### 2. 什么是反射
 
-
+​	通过Class获取class信息称之为反射（Reflection）。
 
 #### 3. 什么是注解
 
@@ -64,9 +64,9 @@
 - **重载：**<u>重载发生在同一个类中</u>，同名的方法如果有不同的参数列表（*参数类型不同、参数个数不同或者二者都不同*）则视为重载。 
 - **重写：**<u>重写发生在子类与父类之间</u>，重写要求子类被重写方法与父类被重写方法有相同的返回类型，比父类被重写方法更好访问，不能比父类被重写方法声明更多的异常（里氏代换原则）。根据不同的子类对象确定调用的那个方法。 
 
-![](D:/gitdoc/2019_campus_appy/notes/pics/overloading-vs-overriding.png)
+![](../pics/overloading-vs-overriding.png)
 
-![](D:/gitdoc/2019_campus_appy/notes/pics/overloading-vs-overriding_cartoon.jpg)
+![](../pics/overloading-vs-overriding_cartoon.jpg)
 
 
 
