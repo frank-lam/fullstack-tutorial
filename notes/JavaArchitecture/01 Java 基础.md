@@ -1,8 +1,24 @@
+
+
+
+
+## 前言
+
+为了更好的总结Java面试中的系统知识结构，当前仓库根据以下资料整理学习笔记。持续更新中...
+
+- [Interview-Notebook/Java 基础.md at master · CyC2018/Interview-Notebook](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%9F%BA%E7%A1%80.md#%E5%85%AD%E5%85%B3%E9%94%AE%E5%AD%97)
+- 《Java程序员面试笔试宝典》
+- 《阿里面经》
+
+from 2018/7/11
+
+
+
 [TOC]
 
+
+
 ## 目录
-
-
 
 ### 一、基本概念
 
@@ -49,8 +65,8 @@
   - **封装**：通常认为封装是把数据和操作数据的方法绑定起来，对数据的访问只能通过已定义的接口。面向对象的本质就是将现实世界描绘成一系列完全自治、封闭的对象。我们在类中编写的方法就是对实现细节的一种封装；我们编写一个类就是对数据和数据操作的封装。可以说，封装就是隐藏一切可隐藏的东西，只向外界提供最简单的编程接口。 
   - **多态**：多态性是指允许不同子类型的对象对同一消息作出不同的响应。 
 - 多态的理解(多态的实现方式) 
-  - **方法重载（overload）**实现的是<u>编译时的多态性</u>（也称为前绑定）。 
-  - **方法重写（override）**实现的是<u>运行时的多态性</u>（也称为后绑定）。运行时的多态是面向对象最精髓的东西。 
+  - **方法重载（overload）**实现的是**<u>编译时的多态性</u>**（也称为前绑定）。 
+  - **方法重写（override）**实现的是<u>**运行时的多态性**</u>（也称为后绑定）。运行时的多态是面向对象最精髓的东西。 
   - 要实现多态需要做两件事：
     - 1). **方法重写**（子类继承父类并重写父类中已有的或抽象的方法）；
     - 2). **对象造型**（用父类型引用引用子类型对象，这样同样的引用调用同样的方法就会根据子类对象的不同而表现出不同的行为）。 
@@ -121,16 +137,249 @@
 
 
 
-#### 5. 匿名内部类是什么？如何访问在其外面定义的变量？
+#### 5.内部类有哪些
 
-- 匿名内部类是什么？ 
-  - 匿名内部类是没有访问修饰符的。 
-  - 所以当所在方法的形参需要被匿名内部类使用，那么这个形参就必须为final 
-  - 匿名内部类是没有构造方法的。因为它连名字都没有何来构造方法。 
-- 如何访问在其外面定义的变量？ 
-  - 所以当所在方法的形参需要被匿名内部类使用，那么这个形参就必须为final 
+可以将一个类的定义放在另一个类的定义内部，这就是内部类。
+
+在Java中内部类主要分为成员内部类、局部内部类、匿名内部类、静态内部类 
+
+##### （一）成员内部类
+
+成员内部类也是最普通的内部类，它是外围类的一个成员，所以他是可以**无限制的访问外围类的所有成员属性和方法，尽管是private的**，但是外围类要访问内部类的成员属性和方法则需要通过内部类实例来访问。
+
+```java
+public class OuterClass {
+    private String str;
+   
+    public void outerDisplay(){
+        System.out.println("outerClass...");
+    }
+    
+    public class InnerClass{
+        public void innerDisplay(){
+            str = "chenssy..."; //使用外围内的属性
+            System.out.println(str);
+            outerDisplay();  //使用外围内的方法
+        }
+    }
+    
+    // 推荐使用getxxx()来获取成员内部类，尤其是该内部类的构造函数无参数时
+    public InnerClass getInnerClass(){
+        return new InnerClass();
+    }
+    
+    public static void main(String[] args) {
+        OuterClass outer = new OuterClass();
+        OuterClass.InnerClass inner = outer.getInnerClass();
+        inner.innerDisplay();
+    }
+}
+--------------------
+chenssy...
+outerClass...
+```
+
+在成员内部类中要注意两点：
+
+- 成员内部类中不能存在任何static的变量和方法；
+
+- 成员内部类是依附于外围类的，所以只有先创建了外围类才能够创建内部类。   
 
 
+
+##### （二）局部内部类
+
+有这样一种内部类，它是嵌套在方法和作用于内的，对于这个类的使用主要是应用与解决比较复杂的问题，想创建一个类来辅助我们的解决方案，到那时又不希望这个类是公共可用的，所以就产生了局部内部类，局部内部类和成员内部类一样被编译，只是它的作用域发生了改变，它只能在该方法和属性中被使用，出了该方法和属性就会失效。 
+
+```java
+//定义在方法里：
+public class Parcel5 {
+    public Destionation destionation(String str){
+        class PDestionation implements Destionation{
+            private String label;
+            private PDestionation(String whereTo){
+                label = whereTo;
+            }
+            public String readLabel(){
+                return label;
+            }
+        }
+        return new PDestionation(str);
+    }
+    
+    public static void main(String[] args) {
+        Parcel5 parcel5 = new Parcel5();
+        Destionation d = parcel5.destionation("chenssy");
+    }
+}
+
+//定义在作用域内:
+public class Parcel6 {
+    private void internalTracking(boolean b){
+        if(b){
+            class TrackingSlip{
+                private String id;
+                TrackingSlip(String s) {
+                    id = s;
+                }
+                String getSlip(){
+                    return id;
+                }
+            }
+            TrackingSlip ts = new TrackingSlip("chenssy");
+            String string = ts.getSlip();
+        }
+    }
+    
+    public void track(){
+        internalTracking(true);
+    }
+    
+    public static void main(String[] args) {
+        Parcel6 parcel6 = new Parcel6();
+        parcel6.track();
+    }
+}
+```
+
+
+
+##### （三）匿名内部类
+
+在做Swing编程中，我们经常使用这种方式来绑定事件 
+
+```java
+button2.addActionListener(  
+                new ActionListener(){  
+                    public void actionPerformed(ActionEvent e) {  
+                        System.out.println("你按了按钮二");  
+                    }  
+                });
+```
+
+ 我们咋一看可能觉得非常奇怪，因为这个内部类是没有名字的，在看如下这个例子： 
+
+```java
+public class OuterClass {
+    public InnerClass getInnerClass(final int num,String str2){
+        return new InnerClass(){
+            int number = num + 3;
+            public int getNumber(){
+                return number;
+            }
+        };        /* 注意：分号不能省 */
+    }
+    
+    public static void main(String[] args) {
+        OuterClass out = new OuterClass();
+        InnerClass inner = out.getInnerClass(2, "chenssy");
+        System.out.println(inner.getNumber());
+    }
+}
+
+interface InnerClass {
+    int getNumber();
+}
+
+----------------
+Output:
+```
+
+**这里我们就需要看清几个地方**
+
+- 匿名内部类是没有访问修饰符的。
+
+- new 匿名内部类，这个类首先是要存在的。如果我们将那个InnerClass接口注释掉，就会出现编译出错。
+
+- 注意getInnerClass()方法的形参，第一个形参是用final修饰的，而第二个却没有。同时我们也发现第二个形参在匿名内部类中没有使用过，所以当所在方法的形参需要被匿名内部类使用，那么这个形参就必须为final。
+- 匿名内部类是没有构造方法的。因为它连名字都没有何来构造方法。
+
+
+
+##### （四）静态内部类
+
+关键字static中提到Static可以修饰成员变量、方法、代码块，其他它还可以修饰内部类，使用static修饰的内部类我们称之为静态内部类，不过我们更喜欢称之为嵌套内部类。静态内部类与非静态内部类之间存在一个最大的区别，我们知道非静态内部类在编译完成之后会隐含地保存着一个引用，该引用是指向创建它的外围内，但是静态内部类却没有。
+
+1. 它的创建是不需要依赖于外围类的。
+
+2. 它不能使用任何外围类的非static成员变量和方法。
+
+```java
+public class OuterClass {
+    private String sex;
+    public static String name = "chenssy";
+    
+    //静态内部类 
+    static class InnerClass1{
+        //在静态内部类中可以存在静态成员
+        public static String _name1 = "chenssy_static";
+        
+        public void display(){ 
+            //静态内部类只能访问外围类的静态成员变量和方法
+		   //不能访问外围类的非静态成员变量和方法
+            System.out.println("OutClass name :" + name);
+        }
+    }
+    
+
+    //非静态内部类
+    class InnerClass2{
+        // 非静态内部类中不能存在静态成员
+        public String _name2 = "chenssy_inner";
+        //非静态内部类中可以调用外围类的任何成员,不管是静态的还是非静态的
+        public void display(){
+            System.out.println("OuterClass name：" + name);
+        }
+    }
+    
+    //外围类方法
+    public void display(){
+        //外围类访问静态内部类：内部类
+        System.out.println(InnerClass1._name1);
+        //静态内部类 可以直接创建实例不需要依赖于外围类
+        new InnerClass1().display();
+        
+        //非静态内部的创建需要依赖于外围类
+        OuterClass.InnerClass2 inner2 = new OuterClass().new InnerClass2();
+        //方位非静态内部类的成员需要使用非静态内部类的实例
+        System.out.println(inner2._name2);
+        inner2.display();
+    }
+    
+    public static void main(String[] args) {
+        OuterClass outer = new OuterClass();
+        outer.display();
+    }
+}
+----------------
+Output:
+chenssy_static
+OutClass name :chenssy
+chenssy_inner
+OuterClass name：chenssy
+```
+
+
+
+#### 6. 组合、继承和代理的区别
+
+**定义：**
+
+- 组合：在新类中new 另外一个类的对象，以添加该对象的特性。
+- 继承：从基类继承得到子类，获得基类的特性。
+- 代理：在代理类中创建某功能的类，调用类的一些方法以获得该类的部分特性。
+
+**使用场合：**
+
+- 组合：各部件之间没什么关系，只需要组合即可。like组装电脑，需要new CPU(),new RAM(),new Disk()……
+- 继承：子类需要具有父类的功能，各子类之间有所差异。like Shape类作为基类，子类有Rectangle，CirCle，Triangle……代码不写了，大家都经常用。
+- 代理：飞机控制类，我不想暴露太多飞机控制的功能，只需部分前进左右转的控制（而不需要暴露发射导弹功能）。通过在代理类中new一个飞机控制对象，然后在方法中添加飞机控制类的各个需要暴露的功能。
+
+**说明：**
+
+继承：<u>代码复用，引用不灵活</u>； 组合：<u>代码复用</u>， 接口：<u>引用灵活</u>； 推荐组合+接口使用，看IO中包装流FilterInputStream中的策略模式
+
+ 
 
 ### 三、关键字
 
@@ -177,6 +426,8 @@ public class A {
     public static int y;  // 静态变量
 }
 ```
+
+​	注意：不能再城院函数内部定义static变量。
 
 - **2. 静态方法**
 
@@ -238,6 +489,56 @@ public InitialOrderTest() {
 - 父类（构造函数）
 - 子类（实例变量、普通语句块）
 - 子类（构造函数）
+
+
+
+#### 1. break、continue、return
+
+
+
+#### 2. final、finally和finalize有什么区别
+
+
+
+#### 3. assert
+
+
+
+#### 4. volatile
+
+​	volatile是一个类型修饰符（type specifier），它是被设计用来修饰被不同线程访问和修改的变量。在使用volatile修饰成员变量后，所有线程在任何时间所看到变量的值都是相同的。此外，使用volatile会组织编译器对代码的优化，因此会降低程序的执行效率。所以，除非迫不得已，否则，能不使用volatile就尽量不要使用volatile
+
+- 每次访问变量时，总是获取主内存的最新值
+- 每次修改变量后，立刻协会到主内存中
+
+
+
+#### 5. instanceof
+
+
+
+
+
+#### 6. strictfp
+
+strictfp, 即 **strict float point** (精确浮点)。 
+
+strictfp 关键字可应用于类、接口或方法。使用 strictfp 关键字声明一个方法时，该方法中所有的float和double表达式都严格遵守FP-strict的限制,符合IEEE-754规范。当对一个类或接口使用 strictfp 关键字时，该类中的所有代码，包括嵌套类型中的初始设定值和代码，都将严格地进行计算。严格约束意味着所有表达式的结果都必须是 IEEE 754 算法对操作数预期的结果，以单精度和双精度格式表示。
+
+如果你想让你的浮点运算更加精确，而且不会因为不同的硬件平台所执行的结果不一致的话，可以用关键字strictfp.
+
+
+
+#### 7. transient
+
+我们都知道一个对象只要实现了Serilizable接口，这个对象就可以被序列化，java的这种序列化模式为开发者提供了很多便利，我们可以不必关系具体序列化的过程，只要这个类实现了Serilizable接口，这个类的所有属性和方法都会自动序列化。
+
+然而在实际开发过程中，我们常常会遇到这样的问题，这个类的有些属性需要序列化，而其他属性不需要被序列化，打个比方，如果一个用户有一些敏感信息（如密码，银行卡号等），为了安全起见，不希望在网络操作（主要涉及到序列化操作，本地序列化缓存也适用）中被传输，这些信息对应的变量就可以加上transient关键字。换句话说，这个字段的生命周期仅存于调用者的内存中而不会写到磁盘里持久化。
+
+总之，java 的transient关键字为我们提供了便利，你只需要实现Serilizable接口，将不需要序列化的属性前添加关键字transient，序列化对象的时候，这个属性就不会序列化到指定的目的地中。
+
+**参考资料**：[Java transient关键字使用小记 - Alexia(minmin) - 博客园](https://www.cnblogs.com/lanxuezaipiao/p/3369962.html)
+
 
 
 
@@ -464,7 +765,7 @@ public final void wait(long timeout, int nanos) throws InterruptedException
 
 public final void wait() throws InterruptedException
 
-protected void finalize() throws Throwable {}
+protected void finalize() throws Throwable {} // JVM内存回收之finalize()方法
 ```
 
 #### equals()
