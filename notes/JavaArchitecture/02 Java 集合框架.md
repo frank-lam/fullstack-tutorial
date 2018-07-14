@@ -6,7 +6,7 @@
 
 Java集合类的整体框架如下： 
 
-![](D:/gitdoc/2019_campus_appy/notes/pics/java_set_framework.jpg)
+![](../pics/java_set_framework.jpg)
 
 
 
