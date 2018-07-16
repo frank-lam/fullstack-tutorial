@@ -1,8 +1,28 @@
 [TOC]
 
+<!-- TOC -->
 
+- [集合框架](#集合框架)
+    - [第一部分：概述](#第一部分概述)
+        - [整体框架](#整体框架)
+        - [Collection](#collection)
+        - [Map](#map)
+        - [工具类](#工具类)
+        - [上述接口的通用实现见下表：](#上述接口的通用实现见下表)
+    - [第二部分：面试常见问题](#第二部分面试常见问题)
+        - [1. ArrayList和LinkedList是常用的两种存储结构，有哪些区别呢？【阿里面试】](#1-arraylist和linkedlist是常用的两种存储结构有哪些区别呢阿里面试)
+        - [2. HashMap和HashTable的区别，HashMap中的key可以是任何对象或数据类型吗？HashTable是线程安全的么？](#2-hashmap和hashtable的区别hashmap中的key可以是任何对象或数据类型吗hashtable是线程安全的么)
+        - [3. HashMap和ConcurrentHashMap区别， ConcurrentHashMap 线程安全吗， ConcurrentHashMap如何保证线程安全？](#3-hashmap和concurrenthashmap区别 concurrenthashmap 线程安全吗 concurrenthashmap如何保证线程安全)
+        - [4. Hashtable的原理是什么？【阿里内推面试】](#4-hashtable的原理是什么阿里内推面试)
+        - [5. Hash冲突的解决办法有哪些？](#5-hash冲突的解决办法有哪些)
+        - [6. 什么是迭代器？【面试宝典】](#6-什么是迭代器面试宝典)
+        - [7. 因为别人知道源码怎么实现的，故意构造相同的hash的字符串进行攻击，怎么处理？那jdk7怎么办？](#7-因为别人知道源码怎么实现的故意构造相同的hash的字符串进行攻击怎么处理那jdk7怎么办)
 
-### 第一部分：集合框架概述
+<!-- /TOC -->
+
+## 集合框架
+
+### 第一部分：概述
 
 ​	Java集合框架提供了数据持有对象的方式，提供了对数据集合的操作。Java集合框架位于`java.util`包下，主要有三个大类：`Collection`、`Map`接口以及对集合进行操作的`工具类`。
 
