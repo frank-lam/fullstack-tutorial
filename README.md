@@ -43,7 +43,7 @@ Work like a Trojan.
 ##### 知识框架
 
 - Java基础
-- [√ 集合框架](notes\JavaArchitecture\02 Java 集合框架.md)
+- [√ 集合框架](notes\JavaArchitecture\02%20Java%20集合框架.md)
   -  （必读）阅读：[深入理解JCF Java集合框架](https://github.com/CarpenterLee/JCFInternals)
 - 并发包
 - 多线程
