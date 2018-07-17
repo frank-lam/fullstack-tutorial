@@ -6,7 +6,8 @@
 
 ### 1. 说一下OSI七层模型 & TCP/IP四层模型 & 五层协议
 
-![](pics/osi7.png)
+
+<div align="center"> <img src="pics/osi7.png" width="700"/> </div><br>
 
 
 
@@ -41,7 +42,7 @@
 
 路由器只有下面三层协议，因为路由器位于网络核心中，不需要为进程或者应用程序提供服务，因此也就不需要运输层和应用层。
 
-<div align="center"> <img src="pics/transfer.jpg" width="500"/> </div><br>
+<div align="center"> <img src="pics/transfer.jpg" width="700"/> </div><br>
 
 
 
