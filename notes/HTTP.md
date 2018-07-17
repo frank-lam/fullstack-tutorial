@@ -4,11 +4,76 @@
 
 
 
-#### 1. 说一下OSI七层模型
+#### 1. 说一下OSI七层模型 & TCP/IP四层模型 & 五层协议
+
+![](pics/osi7.png)
 
 
 
-#### 2. TCP/IP五层模型？
+##### 1.1 五层协议
+
+- **应用层** ：为特定应用程序提供数据传输服务，例如 HTTP、DNS 等。数据单位为报文。
+- **运输层** ：提供的是进程间的通用数据传输服务。由于应用层协议很多，定义通用的运输层协议就可以支持不断增多的应用层协议。运输层包括两种协议：
+  - 传输控制协议 TCP，提供面向连接、可靠的数据传输服务，数据单位为报文段；
+  - 用户数据报协议 UDP，提供无连接、尽最大努力的数据传输服务，数据单位为用户数据报。
+  - TCP 主要提供完整性服务，UDP 主要提供及时性服务。
+- **网络层** ：为主机间提供数据传输服务，而运输层协议是为主机中的进程提供服务。网络层把运输层传递下来的报文段或者用户数据报封装成分组。
+- **数据链路层 ：网络层针对的还是主机之间的数据传输服务，而主机之间可以有很多链路，链路层协议就是为同一链路的节点提供服务。数据链路层把网络层传来的分组封装成帧。
+- **物理层** ：考虑的是怎样在传输媒体上传输数据比特流，而不是指具体的传输媒体。物理层的作用是尽可能屏蔽传输媒体和通信手段的差异，使数据链路层感觉不到这些差异。
+
+
+
+##### 1.2 ISO七层模型中表示层和会话层功能是什么？
+
+- **表示层** ：数据压缩、加密以及数据描述。这使得应用程序不必担心在各台主机中表示/存储的内部格式不同的问题。 
+
+- **会话层** ：建立会话，如session认证、断点续传。
+
+  
+
+- 说明：五层协议没有表示层和会话层，而是将这些功能留给应用程序开发者处理。
+
+
+
+##### 1.3 数据在各层之间的传递过程
+
+在向下的过程中，需要添加下层协议所需要的首部或者尾部，而在向上的过程中不断拆开首部和尾部。
+
+路由器只有下面三层协议，因为路由器位于网络核心中，不需要为进程或者应用程序提供服务，因此也就不需要运输层和应用层。
+
+<div align="center"> <img src="pics/transfer.jpg" width="500"/> </div><br>
+
+
+
+##### 1.4 TCP/IP四层模型
+
+它只有四层，相当于五层协议中数据链路层和物理层合并为网络接口层。
+
+现在的 TCP/IP 体系结构不严格遵循 OSI 分层概念，应用层可能会直接使用 IP 层或者网络接口层。
+
+
+<div align="center"> <img src="pics/tcp_ip_4.png" width="500"/> </div><br>
+
+
+
+
+TCP/IP 协议族是一种沙漏形状，中间小两边大，IP 协议在其中占用举足轻重的地位。 
+
+<div align="center"> <img src="pics/tcp_ip_protocol_family.png" width="500"/> </div><br>
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------这是一条整理的分割线----------------------------------------------
+
+
 
 
 
@@ -23,9 +88,10 @@
 ```
 三次握手：three times handshake；three-way handshake
 
-SYN（synchronize，译：同步）是该协议中的一个标志位。如果该位被置为1，则表示这个报文是一个请求建立连接的报文。
-ACK（acknowledgement，译：确认）也是该协议的一个标志位。如果该位被置为1，则表示这个报文是一个用于确认的报文。
+SYN（Synchronize，译：同步）是该协议中的一个标志位。如果该位被置为1，则表示这个报文是一个请求建立连接的报文。
+ACK（Acknowledgement，译：确认）也是该协议的一个标志位。如果该位被置为1，则表示这个报文是一个用于确认的报文。
 seq(sequence number，序列号)
+ack（Acknowledgement Number，确认编号）
 ```
 
 
@@ -55,9 +121,11 @@ seq(sequence number，序列号)
 
 ##### 四次挥手
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/f87afe72-c2df-4c12-ac03-9b8d581a8af8.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/f87afe72-c2df-4c12-ac03-9b8d581a8af8.jpg)
+<div align="center"> <img src="pics/tcp4.jpg" width="500"/> </div><br>
 
- 
+
+
+
 
 以下描述不讨论序号和确认号，因为序号和确认号的规则比较简单。并且不讨论 ACK，因为 ACK 在连接建立之后都为 1。
 
@@ -98,7 +166,9 @@ seq(sequence number，序列号)
 
 参考：[TCP的三次握手与四次挥手（详解+动图） - CSDN博客](https://blog.csdn.net/qzcsu/article/details/72861891)
 
-#### 为什么TCP连接需要三次握手，两次不可以吗，为什么 
+
+
+#### 为什么TCP连接需要三次握手，两次不可以吗，为什么【阿里面经OneNote】 
 
 - 为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误。 
 - 例子 
@@ -184,7 +254,7 @@ http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html
 
 
 
-#### 17. HTTP和HTTPS的区别
+#### 17. HTTP和HTTPS的区别【阿里面经OneNote】
 
 - http是HTTP协议运行在TCP之上。所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份。 
 - https是HTTP运行在SSL/TLS之上，SSL/TLS运行在TCP之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。此外客户端可以验证服务器端的身份，如果配置了客户端验证，服务器方也可以验证客户端的身份。 
@@ -198,10 +268,10 @@ http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html
 
 
 
-#### 18. 如果客户端不断的发送请求连接会怎样？ 
+#### 18. 如果客户端不断的发送请求连接会怎样？【阿里面经OneNote】 
 
 - 服务器端回为每个请求创建一个链接，然后向client端发送创建链接时的回复，然后进行等待客户端发送第三次握手数据包，这样会白白浪费资源 
-- DDos攻击 
+- DDos攻击 （分布式拒绝服务）
 
 简单的说就是想服务器发送链接请求，首先进行 
 
@@ -227,9 +297,9 @@ http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html
   - 认真检查网络设备和主机/服务器系统的日志。只要日志出现漏洞或是时间变更，那这台机器就可能遭到了攻击。 
   - 限制在防火墙外与网络文件共享。这样会给黑客截取系统文件的机会，主机的信息暴露给黑客，无疑是给了对方入侵的机会。 
 
-#### 问：那怎么知道连接是恶意的呢？可能是正常连接？ 
+#### 问：那怎么知道连接是恶意的呢？可能是正常连接？【阿里面经OneNote】 
 
-#### GET和POST的区别？ 
+#### GET和POST的区别？【阿里面经OneNote】 
 
 - GET 被强制服务器支持 
 - 浏览器对URL的长度有限制，所以GET请求不能代替POST请求发送大量数据 
@@ -253,7 +323,7 @@ http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html
 
  
 
-#### TCP和UDP区别？如何改进TCP 
+#### TCP和UDP区别？如何改进TCP【阿里面经OneNote】 
 
 - TCP和UDP区别 
   - UDP 是无连接的，即发送数据之前不需要建立连接。 
@@ -274,13 +344,13 @@ http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html
 
 
 
-#### 滑动窗口算法？ 
+#### 滑动窗口算法？【阿里面经OneNote】  
 
 <http://coolshell.cn/articles/11609.html> 
 
  
 
-#### TCP的拥塞处理 – Congestion Handling 
+#### TCP的拥塞处理 – Congestion Handling【阿里面经OneNote】 
 
 1）慢启动，2）拥塞避免，3）拥塞发生，4）快速恢复。 
 
@@ -288,7 +358,7 @@ http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html
 
 
 
-#### 从输入网址到获得页面的过程 
+#### 从输入网址到获得页面的过程【阿里面经OneNote】 
 
 - 查询DNS，获取域名对应的IP地址 
   - 浏览器搜索自身的DNS缓存 
@@ -306,6 +376,14 @@ http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html
 
 
 https://www.nowcoder.com/discuss/61958
+
+
+
+
+
+#### URL、URI、URN
+
+
 
 # 一、计算机网络 
 
@@ -335,3 +413,16 @@ https://www.nowcoder.com/discuss/61958
 
 
 
+
+
+IP地址+端口 = 套接字
+
+
+
+
+
+
+
+## 参考资料
+
+[OSI 七层参考模型-极客学院（4课时，47分钟）](http://www.jikexueyuan.com/course/1400.html)
