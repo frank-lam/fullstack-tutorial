@@ -1205,7 +1205,7 @@ public void register(Object o)
 
 
 
-### 17. 并发包（待完善）
+### 17. 并发包（非常重要！！！待整理）
 
 #### concurrenthashmap分段锁的细节？【蚂蚁金服面经】
 
