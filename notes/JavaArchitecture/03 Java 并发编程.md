@@ -1,48 +1,239 @@
 [TOC]
 
+# 并发编程
+
+## 1. 线程状态转换
+
+[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/ace830df-9919-48ca-91b5-60b193f593d2.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/ace830df-9919-48ca-91b5-60b193f593d2.png)
+
+### 新建（New）
+
+创建后尚未启动。
+
+### 可运行（Runnable）
+
+可能正在运行，也可能正在等待 CPU 时间片。
+
+包含了操作系统线程状态中的 Running 和 Ready。
+
+### 阻塞（Blocking）
+
+这个状态下, 是在多个线程有同步操作的场景，比如正在等待另一个线程的synchronized 块的执行释放，或者可重入的 synchronized块里别人调用wait() 方法，也就是线程在等待进入临界区。 
+
+### 无限期等待（Waiting）
+
+等待其它线程显式地唤醒，否则不会被分配 CPU 时间片。
+
+| 进入方法                                   | 退出方法                             |
+| ------------------------------------------ | ------------------------------------ |
+| 没有设置 Timeout 参数的 Object.wait() 方法 | Object.notify() / Object.notifyAll() |
+| 没有设置 Timeout 参数的 Thread.join() 方法 | 被调用的线程执行完毕                 |
+| LockSupport.park() 方法                    | -                                    |
+
+### 限期等待（Timed Waiting）
+
+无需等待其它线程显式地唤醒，在一定时间之后会被系统自动唤醒。
+
+调用 Thread.sleep() 方法使线程进入限期等待状态时，常常用“使一个线程睡眠”进行描述。
+
+调用 Object.wait() 方法使线程进入限期等待或者无限期等待时，常常用“挂起一个线程”进行描述。
+
+睡眠和挂起是用来描述行为，而阻塞和等待用来描述状态。
+
+阻塞和等待的区别在于，阻塞是被动的，它是在等待获取一个排它锁。而等待是主动的，通过调用 Thread.sleep() 和 Object.wait() 等方法进入。
+
+| 进入方法                                 | 退出方法                                        |
+| ---------------------------------------- | ----------------------------------------------- |
+| Thread.sleep() 方法                      | 时间结束                                        |
+| 设置了 Timeout 参数的 Object.wait() 方法 | 时间结束 / Object.notify() / Object.notifyAll() |
+| 设置了 Timeout 参数的 Thread.join() 方法 | 时间结束 / 被调用的线程执行完毕                 |
+| LockSupport.parkNanos() 方法             | -                                               |
+| LockSupport.parkUntil() 方法             | -                                               |
+
+### 死亡（Terminated）
+
+- 线程因为run方法正常退出而自然死亡
+- 因为一个没有捕获的异常终止了run方法而意外死亡
 
 
 
 
-1. ##### Java实现多线程的方式及三种方式的区别 
 
-   - 实现多线程的方式 
+## 2. Java实现多线程的方式及三种方式的区别【阿里面经Onenote】
 
-     - 继承Thread类，重写run函数。 
-     - 实现Runnable接口 
-     - 实现Callable接口 
+- 实现多线程的方式 
+  - 继承Thread类，重写run函数。 
+  - 实现Runnable接口 
+  - 实现Callable接口 
+- 三种方式的区别 
+  - 实现Runnable接口可以避免Java单继承特性而带来的局限；增强程序的健壮性，代码能够被多个线程共享，代码与数据是独立的；适合多个相同程序代码的线程区处理同一资源的情况。 
+  - 继承Thread类和实现Runnable方法启动线程都是使用start方法，然后JVM虚拟机将此线程放到就绪队列中，如果有处理机可用，则执行run方法。 
+  - 实现Callable接口要实现call方法，并且线程执行完毕后会有返回值。其他的两种都是重写run方法，没有返回值。 
 
-   - 三种方式的区别 
 
-     - 实现Runnable接口可以避免Java单继承特性而带来的局限；增强程序的健壮性，代码能够被多个线程共享，代码与数据是独立的；适合多个相同程序代码的线程区处理同一资源的情况。 
-     - 继承Thread类和实现Runnable方法启动线程都是使用start方法，然后JVM虚拟机将此线程放到就绪队列中，如果有处理机可用，则执行run方法。 
-     - 实现Callable接口要实现call方法，并且线程执行完毕后会有返回值。其他的两种都是重写run方法，没有返回值。 
 
-      
+有三种使用线程的方法：
 
-2. ##### 线程安全 
+- 实现 Runnable 接口；
+- 实现 Callable 接口；
+- 继承 Thread 类。
 
-   - 定义 
-     - 某个类的行为与其规范一致。 
-     - 不管多个线程是怎样的执行顺序和优先级,或是wait,sleep,join等控制方式,，如果一个类在多线程访问下运转一切正常，并且访问类不需要进行额外的同步处理或者协调，那么我们就认为它是线程安全的。  
-   - 如何保证线程安全？6 
-     - 对变量使用volitate 
-     - 对程序段进行加锁(synchronized,lock) 
-   - 注意 
-     - 非线程安全的集合在多线程环境下可以使用，但并不能作为多个线程共享的属性，可以作为某个线程独享的属性。 
-     - 例如Vector是线程安全的，ArrayList不是线程安全的。如果每一个线程中new一个ArrayList，而这个ArrayList只是在这一个线程中使用，肯定没问题。 
+实现 Runnable 和 Callable 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。可以说任务是通过线程驱动从而执行的。
 
-3. ##### 多线程如何进行信息交互 
+### 实现 Runnable 接口
+
+需要实现 run() 方法。
+
+通过 Thread 调用 start() 方法来启动线程。
+
+```
+public class MyRunnable implements Runnable {
+    public void run() {
+        // ...
+    }
+}
+```
+
+```
+public static void main(String[] args) {
+    MyRunnable instance = new MyRunnable();
+    Thread thread = new Thread(instance);
+    thread.start();
+}
+```
+
+### 实现 Callable 接口
+
+与 Runnable 相比，Callable 可以有返回值，返回值通过 FutureTask 进行封装。
+
+```
+public class MyCallable implements Callable<Integer> {
+    public Integer call() {
+        return 123;
+    }
+}
+```
+
+```
+public static void main(String[] args) throws ExecutionException, InterruptedException {
+    MyCallable mc = new MyCallable();
+    FutureTask<Integer> ft = new FutureTask<>(mc);
+    Thread thread = new Thread(ft);
+    thread.start();
+    System.out.println(ft.get());
+}
+```
+
+### 继承 Thread 类
+
+同样也是需要实现 run() 方法，因为 Thread 类也实现了 Runable 接口。
+
+```
+public class MyThread extends Thread {
+    public void run() {
+        // ...
+    }
+}
+```
+
+```
+public static void main(String[] args) {
+    MyThread mt = new MyThread();
+    mt.start();
+}
+```
+
+### 实现接口 VS 继承 Thread
+
+实现接口会更好一些，因为：
+
+- Java 不支持多重继承，因此继承了 Thread 类就无法继承其它类，但是可以实现多个接口；
+- 类可能只要求可执行就行，继承整个 Thread 类开销过大。
+
+
+
+
+
+
+
+### --------------------------------分割线--------------------
+
+
+
+### --------------------------------分割线--------------------
+
+
+
+
+
+
+
+**线程间的状态转换：** 
+
+**1.** **新建(new)**：新创建了一个线程对象。
+
+**2.** **可运行(runnable)**：线程对象创建后，其他线程(比如main线程）调用了该对象的start()方法。该状态的线程位于可运行线程池中，等待被线程调度选中，获取cpu 的使用权 。
+
+**3.** **运行(running)**：可运行状态(runnable)的线程获得了cpu 时间片（timeslice） ，执行程序代码。
+
+**4.** **阻塞(block)**：阻塞状态是指线程因为某种原因放弃了cpu 使用权，也即让出了cpu timeslice，暂时停止运行。直到线程进入可运行(runnable)状态，才有机会再次获得cpu timeslice 转到运行(running)状态。阻塞的情况分三种： 
+
+(一). 等待阻塞：运行(running)的线程执行o.wait()方法，JVM会把该线程放入等待队列(waitting queue)中。
+
+(二). 同步阻塞：运行(running)的线程在获取对象的同步锁时，若该同步锁被别的线程占用，则JVM会把该线程放入锁池(lock pool)中。
+
+(三). 其他阻塞：运行(running)的线程执行Thread.sleep(long ms)或t.join()方法，或者发出了I/O请求时，JVM会把该线程置为阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入可运行(runnable)状态。
+
+**5.** **死亡(dead)**：线程run()、main() 方法执行结束，或者因异常退出了run()方法，则该线程结束生命周期。死亡的线程不可再次复生。
+
+
+
+### 1.什么是线程？线程和进程有什么区别？为什么要使用多线程【阿里面经Onenote】
+
+（1）线程和进程
+
+- 进程是操作系统分配资源的最小单位 
+- 线程是cpu调度的最小单位  
+
+（2）使用线程的原因
+
+- 使用多线程可以减少程序的响应时间；
+- 与进程相比，线程的创建和切换开销更小；
+- 多核电脑上，可以同时执行多个线程，提高资源利用率；
+- 简化程序的结构，使程序便于理解和维护；
+
+
+
+- - 
+
+   
+
+### 2. 线程安全【阿里面经Onenote】 
+
+- 定义 
+  - 某个类的行为与其规范一致。 
+  - 不管多个线程是怎样的执行顺序和优先级,或是wait,sleep,join等控制方式,，如果一个类在多线程访问下运转一切正常，并且访问类不需要进行额外的同步处理或者协调，那么我们就认为它是线程安全的。  
+- 如何保证线程安全？6 
+  - 对变量使用volitate 
+  - 对程序段进行加锁(synchronized,lock) 
+- 注意 
+  - 非线程安全的集合在多线程环境下可以使用，但并不能作为多个线程共享的属性，可以作为某个线程独享的属性。 
+  - 例如Vector是线程安全的，ArrayList不是线程安全的。如果每一个线程中new一个ArrayList，而这个ArrayList只是在这一个线程中使用，肯定没问题。 
+  - 
+
+1. ### 多线程如何进行信息交互【阿里面经Onenote】 
 
    - Object中的方法，wait()， notify()，notifyAll(); 
 
-4. ##### 多线程共用一个数据变量需要注意什么？ 
+     
+
+2. ### 多线程共用一个数据变量需要注意什么？【阿里面经Onenote】 
 
    - 当我们在线程对象（Runnable）中定义了全局变量，run方法会修改该变量时，如果有多个线程同时使用该线程对象，那么就会造成全局变量的值被同时修改，造成错误. 
    - ThreadLocal是JDK引入的一种机制，它用于解决线程间共享变量，使用ThreadLocal声明的变量，即使在线程中属于全局变量，针对每个线程来讲，这个变量也是独立的。 
    - volatile变量每次被线程访问时，都强迫线程从主内存中重读该变量的最新值，而当该变量发生修改变化时，也会强迫线程将最新的值刷新回主内存中。这样一来，不同的线程都能及时的看到该变量的最新值。 
 
-5. 什么是线程池？如果让你设计一个动态大小的线程池，如何设计，应该有哪些方法？ 
+3. ### 什么是线程池？如果让你设计一个动态大小的线程池，如何设计，应该有哪些方法？【阿里面经Onenote】 
 
    - 什么是线程池 
      - 线程池顾名思义就是事先创建若干个可执行的线程放入一个池（容器）中，需要的时候从池中获取线程不用自行创建，使用完毕不需要销毁线程而是放回池中，从而减少创建和销毁线程对象的开销。 
@@ -65,7 +256,7 @@
 
 
 
-##### Java是否有内存泄露和内存溢出 
+### Java是否有内存泄露和内存溢出【阿里面经Onenote】 
 
 - 静态集合类，使用Set、Vector、HashMap等集合类的时候需要特别注意。当这些类被定义成静态的时候，由于他们的生命周期跟应用程序一样长，这时候就有可能发生内存泄漏。 
 
@@ -114,7 +305,7 @@ public void register(Object o)
 
 1. - 
 
-2. ##### volatile 关键字的如何保证内存可见性
+2. ### volatile 关键字的如何保证内存可见性【阿里面经Onenote】
 
    - volatile 关键字的作用 
 
@@ -156,7 +347,7 @@ public void register(Object o)
 
       
 
-3. ##### sleep和wait分别是那个类的方法，有什么区别
+3. ### sleep和wait分别是那个类的方法，有什么区别【阿里面经Onenote】
 
    - sleep和wait 
      - sleep是Thread类的方法 
@@ -169,7 +360,7 @@ public void register(Object o)
 
 
 
-1. ##### synchronized与lock的区别，使用场景。看过synchronized的源码没？
+1. ### synchronized与lock的区别，使用场景。看过synchronized的源码没？【阿里面经Onenote】
 
    - synchronized与lock的区别 
 
@@ -180,7 +371,7 @@ public void register(Object o)
 
       
 
-2. ##### synchronized底层如何实现的？用在代码块和方法上有什么区别？
+2. ### synchronized底层如何实现的？用在代码块和方法上有什么区别？
 
    - synchronized底层如何实现的 
 
@@ -209,94 +400,50 @@ public void register(Object o)
 
 
 
-##### 1.什么是线程？线程和进程有什么区别？为什么要使用多线程
+- 
 
-（1）线程和进程
 
-- 进程是操作系统分配资源的最小单位 
-- 线程是cpu调度的最小单位  
 
-（2）使用线程的原因
 
-- 使用多线程可以减少程序的响应时间；
-- 与进程相比，线程的创建和切换开销更小；
-- 多核电脑上，可以同时执行多个线程，提高资源利用率；
-- 简化程序的结构，使程序便于理解和维护；
 
 
 
-##### 2.线程的几种状态
 
-![](https://static.oschina.net/uploads/space/2013/0621/174442_0BNr_182175.jpg)
 
-**线程间的状态转换：** 
+### 3.什么是线程安全、非线程安全
 
-**1.** **新建(new)**：新创建了一个线程对象。
 
-**2.** **可运行(runnable)**：线程对象创建后，其他线程(比如main线程）调用了该对象的start()方法。该状态的线程位于可运行线程池中，等待被线程调度选中，获取cpu 的使用权 。
 
-**3.** **运行(running)**：可运行状态(runnable)的线程获得了cpu 时间片（timeslice） ，执行程序代码。
 
-**4.** **阻塞(block)**：阻塞状态是指线程因为某种原因放弃了cpu 使用权，也即让出了cpu timeslice，暂时停止运行。直到线程进入可运行(runnable)状态，才有机会再次获得cpu timeslice 转到运行(running)状态。阻塞的情况分三种： 
 
-(一). 等待阻塞：运行(running)的线程执行o.wait()方法，JVM会把该线程放入等待队列(waitting queue)中。
 
-(二). 同步阻塞：运行(running)的线程在获取对象的同步锁时，若该同步锁被别的线程占用，则JVM会把该线程放入锁池(lock pool)中。
 
-(三). 其他阻塞：运行(running)的线程执行Thread.sleep(long ms)或t.join()方法，或者发出了I/O请求时，JVM会把该线程置为阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入可运行(runnable)状态。
+### 4.线程间通信和进程间通信？
 
-**5.** **死亡(dead)**：线程run()、main() 方法执行结束，或者因异常退出了run()方法，则该线程结束生命周期。死亡的线程不可再次复生。
 
 
+### 4.同步和异步区别
 
+### 
 
 
-##### 3.什么是线程安全、非线程安全
 
 
 
+### 5.什么是死锁？死锁的四个必要条件？
 
 
 
 
-4.线程间通信和进程间通信？
 
+### 守护线程
 
+### 加入线程
 
-##### 4.同步和异步区别
+join();
 
+### 什么是并发和并行
 
 
 
 
-
-
-5.什么是死锁？死锁的四个必要条件？
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 
-
-
-
-Java线程状态？
-
-![1531118410215](C:\Users\Frank\AppData\Local\Temp\1531118410215.png)

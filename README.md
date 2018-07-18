@@ -112,6 +112,14 @@ Work like a Trojan.
 
 
 
+## 附录：参考面经
+
+- [【干货】阿里巴巴2018秋招面经汇总](https://zhuanlan.zhihu.com/p/39869348?from=timeline&isappinstalled=0)
+
+
+
+
+
 ## PART2：学习记录
 
 详情转向 [course/LEARN.md](course/LEARN.md)
