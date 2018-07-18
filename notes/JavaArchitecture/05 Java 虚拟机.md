@@ -13,3 +13,15 @@
 - 弱引用
   - 弱引用通过weakReference类来实现。弱引用具有很强的不确定性。因为垃圾回收每次都会回收弱引用的对象。
 
+
+
+
+
+
+
+
+
+
+
+- [面试JVM 听这堂课就够了_面试jvm 听这堂课就够了_腾讯视频](https://v.qq.com/x/cover/bcmtqgpddsbj75k/g1423t1uwp5.html)
+- [咕泡学院-James老师_腾讯课堂](https://ke.qq.com/teacher/2904270631)

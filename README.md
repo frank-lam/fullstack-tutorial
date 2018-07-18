@@ -1,5 +1,5 @@
 
-# 备战2019校招，Java面试宝典
+# 备战2019校招，面试宝典
 
 Work like a Trojan. 
 
@@ -38,21 +38,18 @@ Work like a Trojan.
 
 ### 二、Java基础
 
-> 大纲：[Java基础 | 知识结构](notes/JavaArchitecture/Overview.md)
+> 大纲：[知识结构](notes/JavaArchitecture/Overview.md)
 
 ##### 知识框架
 
 - Java基础
 - [√ 集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md)
-  -  （必读）阅读：[深入理解JCF Java集合框架](https://github.com/CarpenterLee/JCFInternals)
-- 并发包
-- 多线程
+- [√ 并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md)
 - IO流
 - 虚拟机
-  - [面试JVM 听这堂课就够了_面试jvm 听这堂课就够了_腾讯视频](https://v.qq.com/x/cover/bcmtqgpddsbj75k/g1423t1uwp5.html)
-  - [咕泡学院-James老师_腾讯课堂](https://ke.qq.com/teacher/2904270631)
 - 设计模式
 - Web框架
+- 系统架构
 
 
 
@@ -97,7 +94,6 @@ Work like a Trojan.
 ### 六、工具
 
 - Git
-- SVN
 - 正则表达式
 
 
@@ -123,8 +119,6 @@ Work like a Trojan.
 ## PART2：学习记录
 
 详情转向 [course/LEARN.md](course/LEARN.md)
-
-
 
 
 
