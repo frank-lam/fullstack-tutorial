@@ -7,3 +7,4 @@ http://www.runoob.com/redis/redis-commands.html
 redis-cli
 ```
 
+### 了解nosql吗？redis？ 

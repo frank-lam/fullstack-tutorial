@@ -1207,6 +1207,10 @@ public void register(Object o)
 
 ### 17. 并发包（待完善）
 
+#### concurrenthashmap分段锁的细节？【蚂蚁金服面经】
+
+#### 并发包里了解哪些 【蚂蚁金服面经】
+
 > 待补充
 
 
