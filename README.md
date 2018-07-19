@@ -61,21 +61,13 @@ Work like a Trojan.
 
 
 
-
 ### 三、数据库 
 
-- [数据库系统原理](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/数据库系统原理.md)
-  - 整理自《数据库系统概论 第四版》
-- [SQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/SQL.md)
-  - 整理自《SQL 必知必会》
+- [√ MySQL](notes/MySQL.md)
 
-- [MySQL](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/MySQL.md)
-  - 整理自《高性能 MySQL》
+- Redis
 
-- [Redis](https://github.com/CyC2018/InnterviewNotes/blob/master/notes/Redis.md)
-  - 整理自《Redis 设计与实现》和《Redis 实战》
-
-
+  
 
 ### 四、操作系统（Linux）
 
