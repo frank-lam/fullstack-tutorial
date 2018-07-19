@@ -13,7 +13,6 @@
 ### 阅读书籍
 
 - 《算法4》
-- 《天勤数据结构高分笔记》 && 《王道计算机考研机试指南》
 - 《程序员代码面试指南》
 
 ### 学习课程
@@ -118,7 +117,7 @@
 
 
 
-##### 学习Github库
+#### 学习Github库
 
 - [hadyang/interview: Java / Android 笔试、面试 知识整理](https://github.com/hadyang/interview) `star：928`
 - [francistao/LearningNotes: Enjoy Learning.](https://github.com/francistao/LearningNotes)  `star：9194`
