@@ -5,13 +5,13 @@ Work like a Trojan.
 
 
 
-## PART1：技能强化
+### PART1：技能强化
 
 目录一览
 
 |              Ⅰ               |           Ⅱ           |            Ⅲ             |            Ⅳ            |        Ⅴ         |         Ⅵ         |            Ⅶ             |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
-| 数据结构与算法<br />[:pencil:](#一数据结构与算法) | Java基础<br/>[:coffee:](#二java基础) | 数据库<br/>[:floppy_disk:](#三数据库) | 操作系统<br/>[:computer:](#四操作系统linux) | 网络<br/>[:cloud:](#五网络部分) | 工具<br/>[:hammer:](#六工具) | 开发利器<br/>[:paperclip:](#七开发利器) |
+| 数据结构与算法<br />[:pencil:](#一数据结构与算法) | Java基础<br/>[:coffee:](#二java基础) | 数据库<br/>[:floppy_disk:](#三数据库) | 操作系统<br/>[:computer:](#四操作系统linux) | 网络<br/>[:cloud:](#五网络部分) |  系统架构<br/>[:page_with_curl:](#六系统架构) |工具<br/>[:hammer:](#七工具) |
 
 
 
@@ -19,9 +19,6 @@ Work like a Trojan.
 
 > 大纲：[数据结构与算法| 知识结构](notes/数据结构与算法.md)
 
-- 知识结构
-    - [十大经典排序算法](https://www.cnblogs.com/onepixel/articles/7674659.html)
-    - [VisuAlgo - visualising data structures and algorithms through animation](https://visualgo.net/en) 
 - 阅读书籍
     - 《算法4》
     - 《天勤数据结构高分笔记》 && 《王道计算机考研机试指南》
@@ -30,6 +27,9 @@ Work like a Trojan.
     - 刘宇波：玩转数据结构，从入门到进阶
     - 刘宇波：程序员的内功修炼，学好算法与数据结构
     - 刘宇波：玩转算法面试 leetcode题库分门别类详细解析
+- 数据结构可视化
+    - [VisuAlgo - visualising data structures and algorithms through animation](https://visualgo.net/en) 
+    - [Data Structure Visualization](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
 - 在线OJ
     - [Leetcode中国版](https://leetcode-cn.com/)
     -  [牛客网](https://www.nowcoder.com/)
@@ -38,7 +38,7 @@ Work like a Trojan.
 
 ### 二、Java基础
 
-> 大纲：[知识结构](notes/JavaArchitecture/Overview.md)
+> 大纲：[Overview](notes/JavaArchitecture/Overview.md)
 
 ##### 知识框架
 
@@ -53,17 +53,7 @@ Work like a Trojan.
 
 
 
-##### 学习Github库
-
-- [hadyang/interview: Java / Android 笔试、面试 知识整理](https://github.com/hadyang/interview) `star：928`
-- [francistao/LearningNotes: Enjoy Learning.](https://github.com/francistao/LearningNotes)  `star：9194`
-- [Snailclimb/Java_Guide: Java面试通关手册（Java学习指南）](https://github.com/Snailclimb/Java_Guide) `star：94`
-
-
-
 ### 三、数据库 
-
-- <a href="notes/MySQL.md" target="_blank">√ MySQL</a>   
 
 - [√ MySQL](notes/MySQL.md)
 
@@ -85,38 +75,26 @@ Work like a Trojan.
 
 
 
-### 六、工具
+### 六、系统架构
+
+- ...
+
+
+
+### 七、工具
 
 - Git
 - 正则表达式
 
 
 
-### 七、开发利器
-
-- IntelliJ IDEA 
-  - 学习课程：IntelliJ IDEA神器使用技巧 |[慕课网](https://www.imooc.com/learn/924)
-  - 使用笔记：[Idea工具常用技巧总结](https://www.jianshu.com/p/131c2deb3ecf)
 
 
 
 
 
-## 附录：参考面经
 
-- [【干货】阿里巴巴2018秋招面经汇总](https://zhuanlan.zhihu.com/p/39869348?from=timeline&isappinstalled=0)
-
-
-
-
-
-## PART2：学习记录
-
-详情转向 [course/LEARN.md](course/LEARN.md)
-
-
-
-## PART3：参考资料
+## PART2：参考资料
 
 [CyC2018/Interview-Notebook: 技术面试需要掌握的基础知识整理，欢迎编辑~](https://github.com/CyC2018/Interview-Notebook) `star: 23489`
 
@@ -136,11 +114,21 @@ Work like a Trojan.
 
 
 
+##### 学习Github库
+
+- [hadyang/interview: Java / Android 笔试、面试 知识整理](https://github.com/hadyang/interview) `star：928`
+- [francistao/LearningNotes: Enjoy Learning.](https://github.com/francistao/LearningNotes)  `star：9194`
+- [Snailclimb/Java_Guide: Java面试通关手册（Java学习指南）](https://github.com/Snailclimb/Java_Guide) `star：94`
+
+
+
 ------
 
 
 
 Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)
+
+Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sheet/)
 
 
 
@@ -149,8 +137,4 @@ Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)
 from 2018年5月20日
 
 
-
-## 附录：后端研发工程师_Skills Tree
-
-**![](pics/mind/developer_skills_tree.svg)**
 
