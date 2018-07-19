@@ -63,6 +63,8 @@ Work like a Trojan.
 
 ### 三、数据库 
 
+- <a href="notes/MySQL.md" target="_blank">√ MySQL</a>   
+
 - [√ MySQL](notes/MySQL.md)
 
 - Redis
