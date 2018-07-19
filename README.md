@@ -22,11 +22,6 @@
 - 刘宇波：程序员的内功修炼，学好算法与数据结构
 - 刘宇波：玩转算法面试 leetcode题库分门别类详细解析
 
-### 数据结构可视化
-
-- [VisuAlgo - visualising data structures and algorithms through animation](https://visualgo.net/en) 
-- [Data Structure Visualization](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
-
 ### 在线OJ
 
 - [Leetcode中国版](https://leetcode-cn.com/)
