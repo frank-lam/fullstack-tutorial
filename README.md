@@ -10,20 +10,31 @@
 
 > 大纲：[under editing 数据结构与算法](notes/数据结构与算法.md)
 
-- 阅读书籍
-    - 《算法4》
-    - 《天勤数据结构高分笔记》 && 《王道计算机考研机试指南》
-    - 《程序员代码面试指南》
-- 学习课程
-    - 刘宇波：玩转数据结构，从入门到进阶
-    - 刘宇波：程序员的内功修炼，学好算法与数据结构
-    - 刘宇波：玩转算法面试 leetcode题库分门别类详细解析
-- 数据结构可视化
-    - [VisuAlgo - visualising data structures and algorithms through animation](https://visualgo.net/en) 
-    - [Data Structure Visualization](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
-- 在线OJ
-    - [Leetcode中国版](https://leetcode-cn.com/)
-    -  [牛客网](https://www.nowcoder.com/)
+### 阅读书籍
+
+- 《算法4》
+- 《天勤数据结构高分笔记》 && 《王道计算机考研机试指南》
+- 《程序员代码面试指南》
+
+### 学习课程
+
+- 刘宇波：玩转数据结构，从入门到进阶
+- 刘宇波：程序员的内功修炼，学好算法与数据结构
+- 刘宇波：玩转算法面试 leetcode题库分门别类详细解析
+
+### 数据结构可视化
+
+- [VisuAlgo - visualising data structures and algorithms through animation](https://visualgo.net/en) 
+- [Data Structure Visualization](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
+
+### 在线OJ
+
+- [Leetcode中国版](https://leetcode-cn.com/)
+-  [牛客网](https://www.nowcoder.com/)
+
+
+
+
 
 
 
@@ -31,7 +42,7 @@
 
 > 大纲：[Overview](notes/JavaArchitecture/Overview.md)
 
-##### 知识框架
+### 知识框架
 
 - Java基础
 - [√ 集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md)
@@ -44,19 +55,30 @@
 
 
 
+
+
+
+
 ## 三、数据库 
 
 - [√ MySQL](notes/MySQL.md)
 
 - Redis
 
-  
+
+
+
+
 
 ## 四、操作系统（Linux）
 
-- 阅读书籍
-    - 《快乐的Linux命令行》（待整理学习笔记！！！）
-- [我的Linux命令行学习笔记](notes/my_linux_cmd.md)
+[我的Linux命令行学习笔记](notes/my_linux_cmd.md)
+
+### 阅读书籍
+
+- 《快乐的Linux命令行》（待整理学习笔记！！！）
+
+
 
 
 
