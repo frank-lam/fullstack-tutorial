@@ -1,13 +1,4 @@
-
-# 备战2019校招，面试宝典
-
-Work like a Trojan. 
-
-
-
-### PART1：技能强化
-
-目录一览
+*Work like a Trojan.* 
 
 |              Ⅰ               |           Ⅱ           |            Ⅲ             |            Ⅳ            |        Ⅴ         |         Ⅵ         |            Ⅶ             |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
@@ -15,9 +6,9 @@ Work like a Trojan.
 
 
 
-### 一、数据结构与算法
+## 一、数据结构与算法
 
-> 大纲：[数据结构与算法| 知识结构](notes/数据结构与算法.md)
+> 大纲：[under editing 数据结构与算法](notes/数据结构与算法.md)
 
 - 阅读书籍
     - 《算法4》
@@ -36,7 +27,7 @@ Work like a Trojan.
 
 
 
-### 二、Java基础
+## 二、Java基础
 
 > 大纲：[Overview](notes/JavaArchitecture/Overview.md)
 
@@ -53,7 +44,7 @@ Work like a Trojan.
 
 
 
-### 三、数据库 
+## 三、数据库 
 
 - [√ MySQL](notes/MySQL.md)
 
@@ -61,7 +52,7 @@ Work like a Trojan.
 
   
 
-### 四、操作系统（Linux）
+## 四、操作系统（Linux）
 
 - 阅读书籍
     - 《快乐的Linux命令行》（待整理学习笔记！！！）
@@ -69,19 +60,19 @@ Work like a Trojan.
 
 
 
-### 五、网络部分
+## 五、网络部分
 
 - [√ 计算机网络（传输层与应用层）](notes/计算机网络.md)
 
 
 
-### 六、系统架构
+## 六、系统架构
 
 - ...
 
 
 
-### 七、工具
+## 七、工具
 
 - Git
 - 正则表达式
@@ -92,9 +83,7 @@ Work like a Trojan.
 
 
 
-
-
-## PART2：参考资料
+# 附录：参考资料
 
 [CyC2018/Interview-Notebook: 技术面试需要掌握的基础知识整理，欢迎编辑~](https://github.com/CyC2018/Interview-Notebook) `star: 23489`
 
