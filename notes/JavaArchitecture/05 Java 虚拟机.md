@@ -2,10 +2,6 @@
 
 
 
-
-
-
-
 # Java虚拟机
 
 ## 1. 运行时数据区域（Java虚拟机内存的划分，每个区域的功能）？
@@ -70,7 +66,7 @@ java -Xss=512M HackTheJava
 
 新生代存放着大量的生命很短的对象，因此新生代在三个区域中垃圾回收的频率最高。为了更高效地进行垃圾回收，把新生代继续划分成以下三个空间：
 
-- Eden（伊甸园）
+- ### Eden（伊甸园）
 - From Survivor（幸存者）
 - To Survivor
 
@@ -125,30 +121,15 @@ System.out.println(s1 == s1);  //  true
 
 
 
-## 2. 垃圾收集：判断一个对象是否存活？
+## 2. 判断一个对象是否存活？（对象已死吗）
 
 **程序计数器、虚拟机栈和本地方法栈**这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后也会消失，因此不需要对这三个区域进行垃圾回收。垃圾回收主要是针对 **Java 堆和方法区**进行。
 
 ### 1. 引用计数算法
 
-给对象添加一个引用计数器，当对象增加一个引用时计数器加 1，引用失效时计数器减 1。引用计数不为 0 的对象仍然存活。
+**描述：**给对象中添加一个引用计数器每当有一个地方引用它时，计数器就加1；当引用失效时，计数器值就减1；任何时刻计数器为0的对象就是不可能在被使用的。
 
-两个对象出现循环引用的情况下，此时引用计数器永远不为 0，导致无法对它们进行回收。
-
-```java
-public class ReferenceCountingGC {
-    public Object instance = null;
-
-    public static void main(String[] args) {
-        ReferenceCountingGC objectA = new ReferenceCountingGC();
-        ReferenceCountingGC objectB = new ReferenceCountingGC();
-        objectA.instance = objectB;
-        objectB.instance = objectA;
-    }
-}
-```
-
-正因为循环引用的存在，因此 Java 虚拟机不使用引用计数算法。
+**缺陷：**很难解决对象间相互循环引用的问题
 
 
 
@@ -156,16 +137,14 @@ public class ReferenceCountingGC {
 
 通过 GC Roots 作为起始点进行搜索，能够到达到的对象都是存活的，不可达的对象可被回收。
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/0635cbe8.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/0635cbe8.png)
-
- 
+[![img](../pics/root-tracing.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/0635cbe8.png)
 
 Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC Roots 一般包含以下内容：
 
-- 虚拟机栈中引用的对象
-- 本地方法栈中引用的对象
-- 方法区中类静态属性引用的对象
-- 方法区中的常量引用的对象
+- 虚拟机栈（栈帧中的本地变量表）中引用的对象。
+- 方法区中静态属性引用的对象。
+- 方法区中常量引用的对象。
+- 本地方法栈中 JNI （即一般说的 Native 方法）引用的对象。
 
 
 
@@ -173,124 +152,30 @@ Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC
 
 无论是通过引用计算算法判断对象的引用数量，还是通过可达性分析算法判断对象是否可达，判定对象是否可被回收都与引用有关。
 
-Java 具有四种强度不同的引用类型。
+在 JDK 1.2 之后，Java 对引用的概念进行了扩充，将引用分为**强引用（Strong Reference）、软引用（Soft Reference）、弱引用（Weak Reference）、虚引用（Phantom Reference）**4种，这4种引用强度依次逐渐减弱。 
 
-#### （一）强引用
-
-被强引用关联的对象不会被垃圾收集器回收。
-
-使用 new 一个新对象的方式来创建强引用。
-
-```
-Object obj = new Object();
-```
-
-
-
-#### （二）软引用
-
-被软引用关联的对象，只有在内存不够的情况下才会被回收。
-
-使用 SoftReference 类来创建软引用。
-
-```
-Object obj = new Object();
-SoftReference<Object> sf = new SoftReference<Object>(obj);
-obj = null;  // 使对象只被软引用关联
-```
-
-
-
-#### （三）弱引用
-
-被弱引用关联的对象一定会被垃圾收集器回收，也就是说它只能存活到下一次垃圾收集。
-
-使用 WeakReference 类来实现弱引用。
-
-```java
-Object obj = new Object();
-WeakReference<Object> wf = new WeakReference<Object>(obj);
-obj = null;
-```
-
-WeakHashMap 的 Entry 继承自 WeakReference，主要用来实现缓存。
-
-```java
-private static class Entry<K,V> extends WeakReference<Object> implements Map.Entry<K,V>
-```
-
-Tomcat 中的 ConcurrentCache 就使用了 WeakHashMap 来实现缓存功能。ConcurrentCache 采取的是分代缓存，经常使用的对象放入 eden 中，而不常用的对象放入 longterm。eden 使用 ConcurrentHashMap 实现，longterm 使用 WeakHashMap，保证了不常使用的对象容易被回收。
-
-```java
-public final class ConcurrentCache<K, V> {
-
-    private final int size;
-
-    private final Map<K, V> eden;
-
-    private final Map<K, V> longterm;
-
-    public ConcurrentCache(int size) {
-        this.size = size;
-        this.eden = new ConcurrentHashMap<>(size);
-        this.longterm = new WeakHashMap<>(size);
-    }
-
-    public V get(K k) {
-        V v = this.eden.get(k);
-        if (v == null) {
-            v = this.longterm.get(k);
-            if (v != null)
-                this.eden.put(k, v);
-        }
-        return v;
-    }
-
-    public void put(K k, V v) {
-        if (this.eden.size() >= size) {
-            this.longterm.putAll(this.eden);
-            this.eden.clear();
-        }
-        this.eden.put(k, v);
-    }
-}
-```
-
-#### （四）虚引用
-
-又称为幽灵引用或者幻影引用。一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用取得一个对象实例。
-
-为一个对象设置虚引用关联的唯一目的就是能在这个对象被收集器回收时收到一个系统通知。
-
-使用 PhantomReference 来实现虚引用。
-
-```
-Object obj = new Object();
-PhantomReference<Object> pf = new PhantomReference<Object>(obj);
-obj = null;
-```
+- **强引用** ：在程序代码中普遍存在，垃圾收集器永远不会回收被引用的对象。
+- **软引用** ：是用来描述一些还有用但并非必须的对象。在系统将要**发生内存溢出异常之前**，将会把这些对象列进回收范围之中进行第二次回收。如果这次回收还没有足够的内存，才会抛出内存溢出异常。
+- **弱引用**：也是用来描述非必须对象的，强度比软引用更弱一些，被弱引用关联的对象只能生存到下一次垃圾收集发生之前。
+- **虚引用**：也称为幽灵引用或者幻影引用，它是最弱的一种引用关系。唯一的目的就是能在这个对象被收集器回收时收到一个系统通知。
 
 
 
 ### 4. 方法区的回收
 
-因为方法区主要存放永久代对象，而永久代对象的回收率比新生代差很多，因此在方法区上进行回收性价比不高。
+Java虚拟机规范中确实说过可以**不要求虚拟机在方法区实现垃圾收集**，而且在方法区中进行垃圾收集的**“性价比”一般比较低**：在堆中，尤其在新生代中，常规的应用一次垃圾收集一般可以回收**70% ~ 95%的空间**，而永久代的垃圾收集效率远低于此。
 
-主要是对常量池的回收和对类的卸载。
+永久代的垃圾收集主要回收两部分：**废弃常量** 和 **无用的类**。
 
-类的卸载条件很多，需要满足以下三个条件，并且满足了也不一定会被卸载：
+- 回收废弃常量与回收 Java 堆中的对象非常类似。
+- 要判定一个类是否是“无用的类”的条件相对苛刻许多。类需要同时满足下面3个条件才能算“无用的类”
+  - 该类的所有实例都已经被回收。
+  - 加载该类的 ClassLoader 已经被回收。
+  - 该类对应的 java.lang.Class 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。
 
-- 该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。
-- 加载该类的 ClassLoader 已经被回收。
-- 该类对应的 java.lang.Class 对象没有在任何地方被引用，也就无法在任何地方通过反射访问该类方法。
+在大量使用反射、动态代理、GGLib 等 ByteCode 框架、动态生成 Jsp 以及 OSGI 这类频繁自定义 ClassLoader 的场景都需要虚拟机具备类卸载的功能，以保证永久代不会溢出。     
 
-可以通过 -Xnoclassgc 参数来控制是否对类进行卸载。
-
-在大量使用反射、动态代理、CGLib 等 ByteCode 框架、动态生成 JSP 以及 OSGi 这类频繁自定义 ClassLoader 的场景都需要虚拟机具备类卸载功能，以保证不会出现内存溢出。
-
-
-
-
+   
 
 ### 5. finalize()
 
@@ -300,23 +185,18 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 
 
-## 3. 垃圾收集算法
+## 3. 垃圾收集算法（垃圾处理方法3种）
 
 ### 1. 标记 - 清除
 
 [![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg)
 
- 
+首先标记出所有需要回收的对象，在标记完成后统一回收所有标记的对象。
 
-将存活的对象进行标记，然后清理掉未被标记的对象。
+ **不足：**
 
-不足：
-
-- 标记和清除过程效率都不高；
-- 会产生大量不连续的内存碎片，导致无法给大对象分配内存。
-  - 这里的内存碎片：JVM垃圾回收不那么精确，例如GC 1M可能只释放0.9M的空间
-
-应用：老年代
+- **效率问题**：标记和清除的效率都不高
+- **空间问题**：标记清除之后会产生大量不连续的内存碎片，导致以后需要分配较大对象时，无法找到足够的连续内存而不得不提前触发另外一次垃圾收集。
 
 
 
@@ -326,9 +206,9 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
  
 
-让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
+复制收集算法在对象存活率较高时就要进行较多的复制操作，效率会变低。更关键的是，如果不想浪费 50% 的空间，就需要有额外的空间进行分配担保，所以老年代一般不能直接选用这种算法。
 
-应用：老年代
+“标记-整理”算法的标记过程仍然与“标记-清除”算法一样，而后续是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
 
 
@@ -338,17 +218,17 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
  
 
-将内存划分为大小相等的两块，每次只使用其中一块，当这一块内存用完了就将还存活的对象复制到另一块上面，然后再把使用过的内存空间进行一次清理。
+现在的商业虚拟机都采用这种收集算法来回收新生代。
 
-主要不足是只使用了内存的一半。
+HotSopt 将内存分为一块比较大的 Eden 空间和两块比较小的 Survivor 空间，每次使用 Eden 和其中一块 Survivor 。当回收时，将 Eden 和 Survivor 中还存活着的对象一次性复制到另外一块 Survivor 空间上，最后清理掉 Eden 和 刚才用过的 Survivor 空间。
 
-现在的商业虚拟机都采用这种收集算法来回收新生代，但是并不是将内存划分为大小相等的两块，而是分为一块较大的 Eden 空间和两块较小的 Survivor 空间，每次使用 Eden 空间和其中一块 Survivor。在回收时，将 Eden 和 Survivor 中还存活着的对象一次性复制到另一块 Survivor 空间上，最后清理 Eden 和使用过的那一块 Survivor。HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了内存的利用率达到 90%。如果每次回收有多于 10% 的对象存活，那么一块 Survivor 空间就不够用了，此时需要依赖于老年代进行分配担保，也就是借用老年代的空间存储放不下的对象。
+HotSopt 虚拟机默认 Eden 和 Survivor 的大小比例是 8:1，也就是新生代中可用内存空间为整个新生代容量的 90%（80%+10%），只有10%的内存会被“浪费”。
 
-应用：新生代
+当 Survivor 空间不够用时，需要依赖其他内存（老年代）进行**分配担保**（Handle Promotion）。如果另外一块 Survivor 空间没有足够空间存放上一次新生代收集下来的存活对象时，这些对象向直接通过分配担保机制进入老年代。
 
 
 
-### 4. 分代收集
+### *. 分代收集
 
 现在的商业虚拟机采用分代收集算法，它根据对象存活周期将内存划分为几块，不同块采用适当的收集算法。（类似于分段锁）
 
@@ -357,11 +237,11 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 **一般将 Java 堆分为新生代和老年代。**
 
 - 新生代使用：复制算法
-- 老年代使用：标记 - 清理 或者 标记 - 整理 算法
+- 老年代使用：标记 - 清理 或者 **标记 - 整理** 算法
 
 
 
-## 4. 垃圾收集器有哪些？
+## 4. 垃圾收集器有哪些？【阿里面经OneNote】
 
 [![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/c625baa0-dde6-449e-93df-c3a67f2f430f.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/c625baa0-dde6-449e-93df-c3a67f2f430f.jpg)
 
@@ -373,7 +253,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
   - 串行指的是垃圾收集器与用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序；
   - 并发指的是垃圾收集器和用户程序同时执行。除了 CMS 和 G1 之外，其它垃圾收集器都是以串行的方式执行。
 
-#### 1. Serial 收集器
+### 1. Serial 收集器
 
 [![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg)
 
@@ -387,7 +267,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 
 
-#### 2. ParNew 收集器
+### 2. ParNew 收集器
 
 [![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg)
 
@@ -401,7 +281,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 
 
-#### 3. Parallel Scavenge 收集器
+### 3. Parallel Scavenge 收集器
 
 与 ParNew 一样是并行的多线程收集器。
 
@@ -415,7 +295,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 
 
-#### 4. Serial Old 收集器
+### 4. Serial Old 收集器
 
 [![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg)
 
@@ -427,7 +307,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
   
 
-#### 5. Parallel Old 收集器
+### 5. Parallel Old 收集器
 
 [![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/278fe431-af88-4a95-a895-9c3b80117de3.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/278fe431-af88-4a95-a895-9c3b80117de3.jpg)
 
@@ -437,7 +317,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 
 
-#### 6. CMS 收集器
+### 6. CMS 收集器
 
 [![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/62e77997-6957-4b68-8d12-bfd609bb2c68.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/62e77997-6957-4b68-8d12-bfd609bb2c68.jpg)
 
@@ -469,7 +349,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
   
 
-#### 7. G1 收集器
+### 7. G1 收集器
 
 G1（Garbage-First），它是一款面向服务端应用的垃圾收集器，在多 CPU 和大内存的场景下有很好的性能。HotSpot 开发团队赋予它的使命是未来可以替换掉 CMS 收集器。
 
@@ -505,7 +385,7 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 
 
-#### 8. 比较
+### 8. 比较
 
 | 收集器                | 单线程/并行 | 串行/并发 | 新生代/老年代   | 收集算法             | 目标         | 适用场景                                      |
 | --------------------- | ----------- | --------- | --------------- | -------------------- | ------------ | --------------------------------------------- |
@@ -516,6 +396,11 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 | **Parallel Old**      | 并行        | 串行      | 老年代          | 标记-整理            | 吞吐量优先   | 在后台运算而不需要太多交互的任务              |
 | **CMS**               | 并行        | 并发      | 老年代          | 标记-清除            | 响应速度优先 | 集中在互联网站或 B/S 系统服务端上的 Java 应用 |
 | **G1**                | 并行        | 并发      | 新生代 + 老年代 | 标记-整理 + 复制算法 | 响应速度优先 | 面向服务端应用，将来替换 CMS                  |
+
+
+
+参考：[Java GC | Pandora](https://hellojz.me/2017/10/10/jvm/gc/)
+
 
 
 
@@ -590,7 +475,9 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 ## 6. 类加载机制
 
-类是在运行期间动态加载的。
+虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，这就是虚拟机类加载机制。 （类是在运行期间动态加载的。）
+
+懒加载机制
 
 ### 类的生命周期
 
@@ -609,6 +496,10 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 - 卸载（Unloading）
 
 其中解析过程在某些情况下可以在初始化阶段之后再开始，这是为了支持 Java 的动态绑定。
+
+这7个阶段中的：加载、验证、准备、初始化、卸载的顺序是固定的。*但它们并不一定是严格同步串行执行，它们之间可能会有交叉*，但总是以“开始”的顺序总是按部就班的。至于解析则有可能在初始化之后才开始，**这是为了支持Java语言的运行时绑定（也称为动态绑定或晚期绑定）**。 
+
+
 
 ### 类初始化时机
 
@@ -640,6 +531,8 @@ SuperClass[] sca = new SuperClass[10];
 System.out.println(ConstClass.HELLOWORLD);
 ```
 
+
+
 ### 类加载过程
 
 包含了加载、验证、准备、解析和初始化这 5 个阶段。
@@ -654,22 +547,28 @@ System.out.println(ConstClass.HELLOWORLD);
 - 将这个字节流所代表的静态存储结构转化为方法区的运行时存储结构。
 - 在内存中生成一个代表这个类的 Class 对象，作为方法区这个类的各种数据的访问入口。
 
+
+
 其中二进制字节流可以从以下方式中获取：
 
-- 从 ZIP 包读取，这很常见，最终成为日后 JAR、EAR、WAR 格式的基础。
-- 从网络中获取，这种场景最典型的应用是 Applet。
-- 运行时计算生成，这种场景使用得最多得就是动态代理技术，在 java.lang.reflect.Proxy 中，就是用了 ProxyGenerator.generateProxyClass 的代理类的二进制字节流。
-- 由其他文件生成，典型场景是 JSP 应用，即由 JSP 文件生成对应的 Class 类。
-- 从数据库读取，这种场景相对少见，例如有些中间件服务器（如 SAP Netweaver）可以选择把程序安装到数据库中来完成程序代码在集群间的分发。 ...
+- **文件：**从 ZIP 包读取，这很常见，最终成为日后 JAR、EAR、WAR 格式的基础。
+- **网络：**从网络中获取，这种场景最典型的应用是 Applet。
+- **计算生成一个二进制流：**运行时计算生成，这种场景使用得最多得就是动态代理技术，在 java.lang.reflect.Proxy 中，就是用了 ProxyGenerator.generateProxyClass 的代理类的二进制字节流。
+- **由其他文件生成：**由其他文件生成，典型场景是 JSP 应用，即由 JSP 文件生成对应的 Class 类。
+- **数据库：**从数据库读取，这种场景相对少见，例如有些中间件服务器（如 SAP Netweaver）可以选择把程序安装到数据库中来完成程序代码在集群间的分发。 ...
+
+
 
 #### 2. 验证
 
-确保 Class 文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身的安全。
+目的是：确保 Class 文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身的安全。
 
 - 文件格式验证：验证字节流是否符合 Class 文件格式的规范，并且能被当前版本的虚拟机处理。
 - 元数据验证：对字节码描述的信息进行语义分析，以保证其描述的信息符合 Java 语言规范的要求。
 - 字节码验证：通过数据流和控制流分析，确保程序语义是合法、符合逻辑的。
 - 符号引用验证：发生在虚拟机将符号引用转换为直接引用的时候，对类自身以外（常量池中的各种符号引用）的信息进行匹配性校验。
+
+
 
 #### 3. 准备
 
@@ -689,9 +588,18 @@ public static int value = 123;
 public static final int value = 123;
 ```
 
+
+
 #### 4. 解析
 
 将常量池的符号引用替换为直接引用的过程。
+
+- 类或接口的解析
+- 字段解析
+- 类方法解析
+- 接口方法解析
+
+
 
 #### 5. 初始化
 
@@ -703,7 +611,7 @@ public static final int value = 123;
 
 - 是由编译器自动收集类中所有类变量的赋值动作和静态语句块（static{} 块）中的语句合并产生的，编译器收集的顺序由语句在源文件中出现的顺序决定。特别注意的是，静态语句块只能访问到定义在它之前的类变量，定义在它之后的类变量只能赋值，不能访问。例如以下代码：
 
-```
+```java
 public class Test {
     static {
         i = 0;                // 给变量赋值可以正常编译通过
@@ -716,7 +624,7 @@ public class Test {
 - 与类的构造函数（或者说实例构造器 <init>()）不同，不需要显式的调用父类的构造器。虚拟机会自动保证在子类的 <clinit>() 方法运行之前，父类的 <clinit>() 方法已经执行结束。因此虚拟机中第一个执行 <clinit>() 方法的类肯定为 java.lang.Object。
 - 由于父类的 <clinit>() 方法先执行，也就意味着父类中定义的静态语句块要优于子类的变量赋值操作。例如以下代码：
 
-```
+```java
 static class Parent {
     public static int A = 1;
     static {
@@ -741,7 +649,11 @@ public static void main(String[] args) {
 
 ### 类加载器
 
-在 Java 虚拟机外部实现，以便让应用程序自己决定如何去获取所需要的类。
+在 Java 虚拟机外部实现，以便让应用程序自己决定如何去获取所需要的类。（通过一个类的全限之名获取描述此类的二进制字节流）
+
+只有被同一个类加载器加载的类才可能会相等。相同的字节码被不同的类加载器加载的类不想等。
+
+
 
 #### 1. 类与类加载器
 
@@ -764,150 +676,37 @@ public static void main(String[] args) {
 
 #### 3. 双亲委派模型
 
-应用程序都是由三种类加载器相互配合进行加载的，如果有必要，还可以加入自己定义的类加载器。
+##### JVM如何加载一个类的过程，双亲委派模型中有哪些方法有没有可能父类加载器和子类加载器，加载同一个类？如果加载同一个类，该使用哪一个类？
 
-下图展示的类加载器之间的层次关系，称为类加载器的双亲委派模型（Parents Delegation Model）。该模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器。这里类加载器之间的父子关系一般通过组合（Composition）关系来实现，而不是通过继承（Inheritance）的关系实现。
+- 双亲委派机制图 
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/class_loader_hierarchy.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/class_loader_hierarchy.png)
+  ![图像](../pics/classloader.png)
 
- 
+- 双亲委派概念 
 
-（一）工作过程
+  - 如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的加载器都是如此，因此所有的类加载请求都会传给顶层的启动类加载器，只有当父加载器反馈自己无法完成该加载请求（该加载器的搜索范围中没有找到对应的类）时，子加载器才会尝试自己去加载。 
 
-一个类加载器首先将类加载请求传送到父类加载器，只有当父类加载器无法完成类加载请求时才尝试加载。
+- 加载器 
 
-（二）好处
+  - **启动（Bootstrap）类加载器：**是用本地代码实现的类装入器，它负责将 <Java_Runtime_Home>/lib下面的类库加载到内存中（比如rt.jar）。由于引导类加载器涉及到虚拟机本地实现细节，开发者无法直接获取到启动类加载器的引用，所以不允许直接通过引用进行操作。 
+  - **标准扩展（Extension）类加载器：**是由 Sun 的 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将< Java_Runtime_Home >/lib/ext或者由系统变量 java.ext.dir指定位置中的类库加载到内存中。开发者可以直接使用标准扩展类加载器。、 
+  - **系统（System）类加载器：**由 Sun 的 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。它负责将系统类路径（CLASSPATH）中指定的类库加载到内存中。开发者可以直接使用系统类加载器。除了以上列举的三种类加载器，还有一种比较特殊的类型 — 线程上下文类加载器。 
 
-使得 Java 类随着它的类加载器一起具有一种带有优先级的层次关系，从而使得基础类得到统一。
+- 如果加载同一个类，该使用哪一个类？ 
 
-例如 java.lang.Object 存放在 rt.jar 中，如果编写另外一个 java.lang.Object 的类并放到 ClassPath 中，程序可以编译通过。因为双亲委派模型的存在，所以在 rt.jar 中的 Object 比在 ClassPath 中的 Object 优先级更高，因为 rt.jar 中的 Object 使用的是启动类加载器，而 ClassPath 中的 Object 使用的是应用程序类加载器。正因为 rt.jar 中的 Object 优先级更高，因为程序中所有的 Object 都是这个 Object。
-
-（三）实现
-
-以下是抽象类 java.lang.ClassLoader 的代码片段，其中的 loadClass() 方法运行过程如下：先检查类是否已经加载过，如果没有则让父类加载器去加载。当父类加载器加载失败时抛出 ClassNotFoundException，此时尝试自己去加载。
-
-```
-public abstract class ClassLoader {
-    // The parent class loader for delegation
-    private final ClassLoader parent;
-
-    public Class<?> loadClass(String name) throws ClassNotFoundException {
-        return loadClass(name, false);
-    }
-
-    protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-        synchronized (getClassLoadingLock(name)) {
-            // First, check if the class has already been loaded
-            Class<?> c = findLoadedClass(name);
-            if (c == null) {
-                try {
-                    if (parent != null) {
-                        c = parent.loadClass(name, false);
-                    } else {
-                        c = findBootstrapClassOrNull(name);
-                    }
-                } catch (ClassNotFoundException e) {
-                    // ClassNotFoundException thrown if class not found
-                    // from the non-null parent class loader
-                }
-
-                if (c == null) {
-                    // If still not found, then invoke findClass in order
-                    // to find the class.
-                    c = findClass(name);
-                }
-            }
-            if (resolve) {
-                resolveClass(c);
-            }
-            return c;
-        }
-    }
-
-    protected Class<?> findClass(String name) throws ClassNotFoundException {
-        throw new ClassNotFoundException(name);
-    }
-}
-```
-
-#### 4. 自定义类加载器实现
-
-FileSystemClassLoader 是自定义类加载器，继承自 java.lang.ClassLoader，用于加载文件系统上的类。它首先根据类的全名在文件系统上查找类的字节代码文件（.class 文件），然后读取该文件内容，最后通过 defineClass() 方法来把这些字节代码转换成 java.lang.Class 类的实例。
-
-java.lang.ClassLoader 的 loadClass() 实现了双亲委派模型的逻辑，因此自定义类加载器一般不去重写它，但是需要重写 findClass() 方法。
-
-```
-public class FileSystemClassLoader extends ClassLoader {
-
-    private String rootDir;
-
-    public FileSystemClassLoader(String rootDir) {
-        this.rootDir = rootDir;
-    }
-
-    protected Class<?> findClass(String name) throws ClassNotFoundException {
-        byte[] classData = getClassData(name);
-        if (classData == null) {
-            throw new ClassNotFoundException();
-        } else {
-            return defineClass(name, classData, 0, classData.length);
-        }
-    }
-
-    private byte[] getClassData(String className) {
-        String path = classNameToPath(className);
-        try {
-            InputStream ins = new FileInputStream(path);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            int bufferSize = 4096;
-            byte[] buffer = new byte[bufferSize];
-            int bytesNumRead;
-            while ((bytesNumRead = ins.read(buffer)) != -1) {
-                baos.write(buffer, 0, bytesNumRead);
-            }
-            return baos.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private String classNameToPath(String className) {
-        return rootDir + File.separatorChar
-                + className.replace('.', File.separatorChar) + ".class";
-    }
-}
-```
-
-## 四、虚拟机参数
-
-大多数的配置都是为堆服务的
-
-（1）-XX 对于系统级别的（JVM）的配置
-
--  比如配置日志信息或者配置JVM使用什么样的垃圾回收器
-
-（2）非-XX 配置基本都是对应用层面上的配置
-
-`+ 表示启动`，`- 表示禁用`
+  - 父类的 
 
 
 
+## 7. Student s = new Student();在内存中做了哪些事情?
 
-
-## 五、Java虚拟机工具
-
- 
-
-## 用什么工具调试程序？JConsole，用过吗？  
-
- JConsole 中，您将能够监视 JVM 内存的使用情况、线程堆栈跟踪、已装入的类和 VM 信息以及 CE MBean。 
-
-## 了解过JVM调优没，基本思路是什么 
-
-
-
-## 用Jstack调试过吗？
+- 加载Student.class文件进内存 
+- 在栈内存为s开辟空间 
+- 在堆内存为学生对象开辟空间 
+- 对学生对象的成员变量进行默认初始化 
+- 对学生对象的成员变量进行显示初始化 
+- 通过构造方法对学生对象的成员变量赋值 
+- 学生对象初始化完毕，把对象地址赋值给s变量 
 
 
 
@@ -915,24 +714,19 @@ public class FileSystemClassLoader extends ClassLoader {
 
 
 
-# 第二部分：面试常问问题
 
 
 
-## 1. JVM垃圾处理方法(标记清除、复制、标记整理) 
 
-- 标记-清除算法
-  - 标记阶段：先通过根节点，标记所有从根节点开始的对象，未被标记的为垃圾对象 
-  - 清除阶段：清除所有未被标记的对象 
-- 复制算法 
-  - 将原有的内存空间分为两块，每次只使用其中一块，在垃圾回收时，将正在使用的内存中的存活对象复制到未使用的内存块中，然后清除正在使用的内存块中的所有对象。 
-- 标记-整理 
-  - 标记阶段：先通过根节点，标记所有从根节点开始的可达对象，为被标记的为垃圾对象 
-  - 整理阶段：将所有的存活对象压缩到内存的一段，之后清理边界所有的空间 
-- 三种算法的比较 
-  - 效率：复制算法 > 标记/整理算法 > 标记/清除算法（此处的效率只是简单的对比时间复杂度，实际情况不一定如此）。 
-  - 内存整齐度：复制算法=标记/整理算法>标记/清除算法。 
-  - 内存利用率：标记/整理算法=标记/清除算法>复制算法。 
+
+
+### 
+
+
+
+
+
+
 
 ## 2. JVM如何GC，新生代，老年代，持久代，都存储哪些东西，以及各个区的作用？ 
 
@@ -944,12 +738,16 @@ public class FileSystemClassLoader extends ClassLoader {
 - 永久代 
   - 即方法区。 
 
+
+
 ## 3. GC用的引用可达性分析算法中，哪些对象可作为GC Roots对象？ 
 
 - Java虚拟机栈中的对象 
 - 方法区中的静态成员 
 - 方法区中的常量引用对象 
 - 本地方法区中的JNI（Native方法）引用对象。 
+
+
 
 ## 4. 什么时候进行MinGC，FullGC 
 
@@ -960,96 +758,62 @@ public class FileSystemClassLoader extends ClassLoader {
   - Full GC是发生在老年代的垃圾收集动作，采用的是标记-清除/整理算法。 
   - 由于老年代的对象几乎都是在Survivor区熬过来的，不会那么容易死掉。因此Full GC发生的次数不会有Minor GC那么频繁，并且Time(Full GC)>Time(Minor GC) 
 
-## 5. 各个垃圾收集器是怎么工作的 
 
-- Serial收集器 
-  - 是一个单线程的收集器，不是只能使用一个CPU。在进行垃圾收集时，必须暂停其他所有的工作线程，直到收集结束。 
-  - 新生代采用复制算法，Stop-The-World 
-  - 老年代采用标记-整理算法，Stop-The-World 
-  - 简单高效，Client模式下默认的新生代收集器 
-  - ![图像](https://blog.csdn.net/sinat_22797429/article/details/76293284)
-- ParNew收集器 
-  - ParNew收集器是Serial收集器的多线程版本 
-  - 新生代采用复制算法，Stop-The-World 
-  - 老年代采用标记-整理算法，Stop-The-World 
-  - 它是运行在Server模式下首选新生代收集器 
-  - 除了Serial收集器之外，只有它能和CMS收集器配合工作 
-  - ![图像](https://blog.csdn.net/sinat_22797429/article/details/76293284)
-- ParNew Scanvenge收集器 
-  - 类似ParNew，但更加关注吞吐量。目标是：达到一个可控制吞吐量的收集器。 
-  - 停顿时间和吞吐量不可能同时调优。我们一方面希望停顿时间少，另外一方面希望吞吐量高，其实这是矛盾的。因为：在GC的时候，垃圾回收的工作总量是不变的，如果将停顿时间减少，那频率就会提高；既然频率提高了，说明就会频繁的进行GC，那吞吐量就会减少，性能就会降低。 
-- G1收集器 
-  - 是当今收集器发展的最前言成果之一，对垃圾回收进行了划分优先级的操作，这种有优先级的区域回收方式保证了它的高效率 
-  - 最大的优点是结合了空间整合，不会产生大量的碎片，也降低了进行gc的频率 
-  - 让使用者明确指定指定停顿时间 
-- CMS收集器：（Concurrent Mark Sweep：并发标记清除老年代收集器） 
-  - 一种以获得最短回收停顿时间为目标的收集器，适用于互联网站或者B/S系统的服务器上 
-  - 初始标记(Stop-The-World)：根可以直接关联到的对象 
-  - 并发标记(和用户线程一起)：主要标记过程，标记全部对象 
-  - 重新标记(Stop-The-World)：由于并发标记时，用户线程依然运行，因此在正式清理前，再做修正 
-  - 并发清除(和用户线程一起)：基于标记结果，直接清理对象 
-  - 并发收集，低停顿 
-  - ![图像](https://blog.csdn.net/sinat_22797429/article/details/76293284)
 
-- - 
 
-## 7. 用什么工具可以查出内存泄漏 
+
+
+
+
+## . 用什么工具可以查出内存泄漏 
 
 - MemoryAnalyzer：一个功能丰富的 JAVA 堆转储文件分析工具，可以帮助你发现内存漏洞和减少内存消耗 
 - EclipseMAT：是一款开源的JAVA内存分析软件，查找内存泄漏，能容易找到大块内存并验证谁在一直占用它，它是基于Eclipse RCP(Rich Client Platform)，可以下载RCP的独立版本或者Eclipse的插件 
 - JProbe：分析Java的内存泄漏。 
 
-## 8. JVM如何加载一个类的过程，双亲委派模型中有哪些方法有没有可能父类加载器和子类加载器，加载同一个类？如果加载同一个类，该使用哪一个类？ 
 
-- 双亲委派机制图 
-  - ![图像](https://blog.csdn.net/sinat_22797429/article/details/76293284)
-- 双亲委派概念 
-  - 如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的加载器都是如此，因此所有的类加载请求都会传给顶层的启动类加载器，只有当父加载器反馈自己无法完成该加载请求（该加载器的搜索范围中没有找到对应的类）时，子加载器才会尝试自己去加载。 
-- 加载器 
-  - 启动（Bootstrap）类加载器：是用本地代码实现的类装入器，它负责将 <Java_Runtime_Home>/lib下面的类库加载到内存中（比如rt.jar）。由于引导类加载器涉及到虚拟机本地实现细节，开发者无法直接获取到启动类加载器的引用，所以不允许直接通过引用进行操作。 
-  - 标准扩展（Extension）类加载器：是由 Sun 的 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将< Java_Runtime_Home >/lib/ext或者由系统变量 java.ext.dir指定位置中的类库加载到内存中。开发者可以直接使用标准扩展类加载器。、 
-  - 系统（System）类加载器：由 Sun 的 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。它负责将系统类路径（CLASSPATH）中指定的类库加载到内存中。开发者可以直接使用系统类加载器。除了以上列举的三种类加载器，还有一种比较特殊的类型 — 线程上下文类加载器。 
-- 如果加载同一个类，该使用哪一个类？ 
-  - 父类的 
-
- 
 
 ## JVM线程死锁，你该如何判断是因为什么？如果用VisualVM，dump线程信息出来，会有哪些信息 
 
 - 常常需要在隔两分钟后再次收集一次thread dump，如果得到的输出相同，仍然是大量thread都在等待给同一个地址上锁，那么肯定是死锁了。 
 
-## java是如何进行对象实例化的 
 
-## Student s = new Student();在内存中做了哪些事情? 
 
-- 加载Student.class文件进内存 
--  在栈内存为s开辟空间 
-- 在堆内存为学生对象开辟空间 
-- 对学生对象的成员变量进行默认初始化 
-- 对学生对象的成员变量进行显示初始化 
-- 通过构造方法对学生对象的成员变量赋值 
-- 学生对象初始化完毕，把对象地址赋值给s变量 
+## 1. 用什么工具调试程序？JConsole，用过吗？
+
+ JConsole 中，您将能够监视 JVM 内存的使用情况、线程堆栈跟踪、已装入的类和 VM 信息以及 CE MBean。 
 
 
 
-
-
-## 什么是强引用，弱引用，软引用？
-
-- 强引用
-  - 是指创建一个对象并把这个对象赋给一个引用变量。 　　强引用有引用变量指向时永远不会被垃圾回收。即使内存不足的时候。 
-- 软引用
-  - 软引用通过SoftReference类来实现。软引用的对象当系统内存充足时和强引用没有太多区别，但内存不足时会回收软引用的对象。
-- 弱引用
-  - 弱引用通过weakReference类来实现。弱引用具有很强的不确定性。因为垃圾回收每次都会回收弱引用的对象。
-
-### gc 
+## 2. 了解过JVM调优没，基本思路是什么
 
 
 
-![img](https://centmeng.github.io/img/java/JVM/picture/%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B%E5%9B%BE.png) 
+## 3. 用Jstack调试过吗？【阿里实习生面试】
+
+## 
 
 
+
+## * 虚拟机参数
+
+大多数的配置都是为堆服务的
+
+（1）-XX 对于系统级别的（JVM）的配置
+
+- 比如配置日志信息或者配置JVM使用什么样的垃圾回收器
+
+（2）非-XX 配置基本都是对应用层面上的配置
+
+`+ 表示启动`，`- 表示禁用`
+
+
+
+
+
+
+
+# 参考资料
 
 - [面试JVM 听这堂课就够了_面试jvm 听这堂课就够了_腾讯视频](https://v.qq.com/x/cover/bcmtqgpddsbj75k/g1423t1uwp5.html)
 
