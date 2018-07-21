@@ -520,7 +520,7 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 
 
-<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/f99ee771-c56f-47fb-9148-c0036695b5fe.jpg" width="800"/> </div><br>
+<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/f99ee771-c56f-47fb-9148-c0036695b5fe.jpg" width=""/> </div><br>
 
  
 
