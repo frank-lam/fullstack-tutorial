@@ -8,7 +8,7 @@
 
 ## 一、数据结构与算法
 
-> 大纲：[under editing 数据结构与算法](notes/数据结构与算法.md)
+> 大纲：[[under editing] 数据结构与算法](notes/数据结构与算法.md)
 
 ### 阅读书籍
 
@@ -30,8 +30,6 @@
 
 
 
-
-
 ## 二、Java基础
 
 > 大纲：[Overview](notes/JavaArchitecture/Overview.md)
@@ -41,13 +39,11 @@
 - Java基础
 - [√ 集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md)
 - [√ 并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md)
-- IO流
+- [[under editing] IO流](notes/JavaArchitecture/04%20Java%20IO.md)
 - [√ 虚拟机](notes/JavaArchitecture/05%20Java%20虚拟机.md)
-- 设计模式
+- 设计模式（SDK中常见10种）
 - Web框架
 - 系统架构
-
-
 
 
 
@@ -63,8 +59,11 @@
 
 
 
-
 ## 四、操作系统（Linux）
+
+- Linux基础
+
+
 
 [我的Linux命令行学习笔记](notes/my_linux_cmd.md)
 
@@ -138,6 +137,3 @@ Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sh
 持续更新中...
 
 from 2018年5月20日
-
-
-
