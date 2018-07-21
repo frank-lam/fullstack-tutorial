@@ -177,12 +177,12 @@ JNI 即Java native interface，是一种技术，提供了丰富的接口，可�
 
 新生代存放着大量的生命很短的对象，因此新生代在三个区域中垃圾回收的频率最高。为了更高效地进行垃圾回收，把新生代继续划分成以下三个空间：
 
-- ### Eden（伊甸园）
+- Eden（伊甸园）
 - From Survivor（幸存者）
 - To Survivor
 
 
-<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/blob/master/pics/ppt_img.gif" width="500"/> </div><br>
+<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/ppt_img.gif" width=""/> </div><br>
 
 
 
@@ -190,7 +190,7 @@ Java 堆不需要连续内存，并且可以动态增加其内存，增加失败
 
 可以通过 -Xms 和 -Xmx 两个虚拟机参数来指定一个程序的 Java 堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
 
-```
+```java
 java -Xms=1M -Xmx=2M HackTheJava
 ```
 
@@ -360,7 +360,9 @@ HotSopt 虚拟机默认 Eden 和 Survivor 的大小比例是 8:1，也就是新�
 
 ## 4. 垃圾收集器有哪些？【阿里面经OneNote】
 
-![](../pics/gc-collector.png)
+<div align="center"> <img src="../pics/gc-collector.png" width=""/> </div><br>
+
+
 
  以上是 HotSpot 虚拟机中的 7 个垃圾收集器，连线表示垃圾收集器可以配合使用。
 
@@ -1051,7 +1053,11 @@ https://www.jianshu.com/p/25e94a1399a0
 
 通过分析，我们得知，对于C++，程序员需要自己管理边和顶点，而对于Java程序员只需要管理边就可以了(不需要管理顶点的释放)。通过这种方式，Java提高了编程的效率。
 
-![](../pics/memory-leak.gif)
+
+
+<div align="center"> <img src="../pics/memory-leak.gif" width="600"/> </div><br>
+
+
 
 同样给出一个 Java 内存泄漏的典型例子，
 
