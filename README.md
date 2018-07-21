@@ -42,7 +42,7 @@
 - [√ 集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md)
 - [√ 并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md)
 - IO流
-- 虚拟机
+- [√ 虚拟机](notes/JavaArchitecture/05%20Java%20虚拟机.md)
 - 设计模式
 - Web框架
 - 系统架构

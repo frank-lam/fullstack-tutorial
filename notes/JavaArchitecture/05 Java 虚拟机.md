@@ -1,8 +1,6 @@
 [TOC]
 
-
-
-# Java虚拟机
+# 深入浅出Java虚拟机
 
 ## 1. 运行时数据区域（Java虚拟机内存的划分，每个区域的功能）？
 
@@ -24,7 +22,7 @@
 - 如果线程请求的栈深度超出了虚拟机所允许的深度，就会出现StackOverFlowError。-Xss规定了栈的最大空间 
 - 虚拟机栈可以动态扩展，如果扩展到无法申请到足够的内存，会出现OutOfMemoryError（OOM）
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/f5757d09-88e7-4bbd-8cfb-cecf55604854.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/f5757d09-88e7-4bbd-8cfb-cecf55604854.png)
+![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/f5757d09-88e7-4bbd-8cfb-cecf55604854.png)
 
 可以通过 -Xss 这个虚拟机参数来指定一个程序的 Java 虚拟机栈内存大小：
 
@@ -48,9 +46,22 @@ java -Xss=512M HackTheJava
 - 与 Java 虚拟机栈类似，它们之间的区别只不过是本地方法栈为本地方法服务。
 - 会抛出StackOverFlowError和OutOfMemoryError 
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/JNIFigure1.gif)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/JNIFigure1.gif)
 
- 
+
+#### ★ 什么是native方法？
+
+JNI 即Java native interface，是一种技术，提供了丰富的接口，可以在Java层调用native代码，也可以在native层调用Java代码，native代码一般是指C/C++程序。JNI就像是一座桥，连通着Java与native。阅读Android源代码的时候可以发现其用了大量的JNI技术，如果要深入学习Android了解JNI技术是必不可少的。在追求性能，对安全性要求高或者计算密集型的模块，使用JNI技术是一种不错的选择。 
+
+参考：
+
+- [Java Native Interface(JNI)从零开始详细教程 - CSDN博客](https://blog.csdn.net/createchance/article/details/53783490)
+- [理解 JNI 技术 - Pqpo's Notes](https://pqpo.me/2017/05/17/jni/)
+
+<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/JNIFigure1.gif" width="500"/> </div><br>
+
+
+
+
 
 ### （4）堆
 
@@ -58,9 +69,20 @@ java -Xss=512M HackTheJava
 
 是垃圾收集的主要区域（"GC 堆"）。现代的垃圾收集器基本都是采用分代收集算法，主要思想是针对不同的对象采取不同的垃圾回收算法。虚拟机把 Java 堆分成以下三块：
 
-- 新生代（Young Generation）
-- 老年代（Old Generation）
-- 永久代（Permanent Generation）
+#### 新生代 （Young Generation）
+
+- 在方法中去new一个对象，那这方法调用完毕后，对象就会被回收，这就是一个典型的新生代对象。 
+
+#### 老年代 （Old Generation）
+
+- 在新生代中经历了N次垃圾回收后仍然存活的对象就会被放到老年代中。而且大对象直接进入老年代 
+- 当Survivor空间不够用时，需要依赖于老年代进行分配担保，所以大对象直接进入老年代 
+
+#### 永久代 （Permanent Generation）
+
+- 即方法区。 
+
+
 
 当一个对象被创建时，它首先进入新生代，之后有可能被转移到老年代中。
 
@@ -139,7 +161,7 @@ System.out.println(s1 == s1);  //  true
 
 [![img](../pics/root-tracing.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/0635cbe8.png)
 
-Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC Roots 一般包含以下内容：
+####  ★ GC用的引用可达性分析算法中，哪些对象可作为GC Roots对象？【阿里面经】
 
 - 虚拟机栈（栈帧中的本地变量表）中引用的对象。
 - 方法区中静态属性引用的对象。
@@ -286,20 +308,6 @@ Serial 收集器是最基本，发展历史最悠久的收集器，曾经（在 
 
 
 ### 3. Parallel Scavenge 收集器（吞吐量优先收集器）
-
-与 ParNew 一样是并行的多线程收集器。
-
-其它收集器关注点是尽可能缩短垃圾收集时用户线程的停顿时间，而它的目标是达到一个可控制的吞吐量，它被称为“吞吐量优先”收集器。这里的吞吐量指 CPU 用于运行用户代码的时间占总时间的比值。
-
-停顿时间越短就越适合需要与用户交互的程序，良好的响应速度能提升用户体验。而高吞吐量则可以高效率地利用 CPU 时间，尽快完成程序的运算任务，主要适合在后台运算而不需要太多交互的任务。
-
-提供了两个参数用于精确控制吞吐量，分别是控制最大垃圾收集停顿时间 -XX:MaxGCPauseMillis 参数以及直接设置吞吐量大小的 -XX:GCTimeRatio 参数（值为大于 0 且小于 100 的整数）。缩短停顿时间是以牺牲吞吐量和新生代空间来换取的：新生代空间变小，垃圾回收变得频繁，导致吞吐量下降。
-
-还提供了一个参数 -XX:+UseAdaptiveSizePolicy，这是一个开关参数，打开参数后，就不需要手工指定新生代的大小（-Xmn）、Eden 和 Survivor 区的比例（-XX:SurvivorRatio）、晋升老年代对象年龄（-XX:PretenureSizeThreshold）等细节参数了，虚拟机会根据当前系统的运行情况收集性能监控信息，动态调整这些参数以提供最合适的停顿时间或者最大的吞吐量，这种方式称为 GC 自适应的调节策略（GC Ergonomics）。
-
-
-
-
 
 Parallel Scavenge 收集器是一个新生代收集器，它也是使用复制算法的收集器，又是并行的多线程收集器。
 
@@ -451,10 +459,16 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 ## 5. 内存分配与回收策略
 
-### 1. Minor GC 和 Full GC
+### 1. 什么时候进行MinGC，FullGC？【阿里面经】
 
 - Minor GC：发生在新生代上，因为新生代对象存活时间很短，因此 Minor GC 会频繁执行，执行的速度一般也会比较快。
+  - 新生代中的垃圾收集动作，采用的是复制算法 
+  - 对于较大的对象，在Minor GC的时候可以直接进入老年代 
 - Full GC：发生在老年代上，老年代对象其存活时间长，因此 Full GC 很少执行，执行速度会比 Minor GC 慢很多。
+  - Full GC是发生在老年代的垃圾收集动作，采用的是标记-清除/整理算法。 
+  - 由于老年代的对象几乎都是在Survivor区熬过来的，不会那么容易死掉。因此Full GC发生的次数不会有Minor GC那么频繁，并且Time(Full GC)>Time(Minor GC) 
+
+
 
 ### 2. 内存分配策略
 
@@ -757,6 +771,158 @@ public static void main(String[] args) {
 
 
 
+## 8. Java虚拟机工具
+
+JDK本身提供了很多方便的JVM性能调优监控工具，除了jps、jstat、jinfo、jmap、jhat、jstack等小巧的工具，还有集成式的jvisualvm和jconsole。
+
+
+
+### （1）jps
+
+**jps（JVM Process Status Tool，虚拟机进程监控工具）**，这个命令可以列出正在运行的虚拟机进程，并显示虚拟机执行主类名称，以及这些进程的本地虚拟机唯一ID。这个ID被称为本地虚拟机唯一ID（local virtual Machine Identifier，简写为LVMID）。*如果你在linux的一台服务器上使用jps得到的LVMID其实就是和ps 命令得到的PID是一样的。*
+
+**语法格式如下：**
+
+```shell
+jps [options] [hostid]
+```
+
+如果不指定hostid就默认为当前主机或服务器。
+
+**options参数选项说明如下：**
+
+```shell
+-q 不输出类名、Jar名和传入main方法的参数
+-m 输出传入main方法的参数
+-l 输出main类或Jar的全限名
+-v 输出传入JVM的参数
+```
+
+**使用（查看所有java进程）**
+
+```shell
+jps -lv
+```
+
+![](../pics/tools_jps.png)
+
+ 
+
+### （2）jstat
+
+**jstat（JVM Statistics Monitoring Tool，虚拟机统计信息监视工具）**，这个命令用于监视虚拟机各种运行状态信息。它可以显示本地或者远程虚拟机进程中的**类装载、内存、垃圾收集、JIT编译等运行数据**，虽然没有GUI图形界面，只是提供了纯文本控制台环境的服务器上，但它是运行期间定位虚拟机性能问题的首选工具。
+
+ 语法格式如下：
+
+```shell
+jstat [option vmid [interval [s | ms] [count ] ] ]
+```
+
+
+
+例如：需要每250毫秒查询一次进程2849 垃圾收集状况，一共查询20次，那命令如下：
+
+```
+jstat -gcutil 16418 1000 10
+```
+
+![](../pics/tools_stat.png)
+
+
+
+jstat命令详解 - CSDN博客
+https://blog.csdn.net/zhaozheng7758/article/details/8623549
+
+
+
+### （3）jinfo
+
+jinfo （Configuration Info for Java，配置信息工具） 这个命令可以实时地查看和调整虚拟机各项参数。 
+
+查看2788的MaxPerm大小可以用 
+
+```shell
+[root@Bill-8 bin]# jinfo -flag MaxPermSize 2788
+-XX:MaxPermSize=134217728
+```
+
+
+
+### （4）jmap
+
+jmap（Memory Map for Java，内存映像工具），用于生成堆转存的快照，一般是heapdump或者dump文件。如果不适用jmap命令，可以使用-XX:+HeapDumpOnOutOfMemoryError参数，当虚拟机发生内存溢出的时候可以产生快照。或者使用kill -3 pid也可以产生。jmap的作用并不仅仅是为了获取dump文件，它可以查询finalize执行队列，java堆和永久代的详细信息，如空间使用率，当前用的哪种收集器。
+
+**jmap的命令格式：**
+
+```
+jmap [option] vmid
+```
+
+
+
+```
+jmap -J-d64 -heap 16418
+```
+
+
+
+### （5）jhat
+
+jhat（虚拟机堆转储快照分析工具），这个工具是用来分析jmap dump出来的文件。
+ 由于这个工具功能比较简陋，运行起来也比较耗时，所以这个工具不推荐使用，推荐使用MAT。
+
+例如分析dump出来的test.bin，命令如下：
+
+```
+jhat test.bin 
+```
+
+它会在本地启动一个web服务，端口是7000，这样直接访问 127.0.0.1:7000就能看到分析结果了。
+
+
+
+### （6）jstack【阿里实习生面试】
+
+jstack（Java Stack Trace，Java堆栈跟踪工具），这个命令用于查看虚拟机当前时刻的线程快照（一般是threaddump 或者 javacore文件）。线程快照就是当前虚拟机内每一条线程正在执行的方法堆栈的集合。**生成线程快照的主要目的是：**定位线程出现长时间停顿的原因，入线程间死锁、死循环、请求外部资源导致的长时间等待都是导致线程长时间停顿的常见原因。线程出现停顿的时候通过jstack来查看各个线程的调用堆栈，就可以知道没有响应的线程到底在后台做些什么事情。
+
+命令格式：
+
+```java
+jstack [option] vmid
+```
+
+使用：查看进程2849 的堆栈信息
+
+```
+[root@Bill-8 yrd_soft]# jstack 2849
+```
+
+ 
+
+
+
+### （7）jconsole【阿里面经OneNote】
+
+JConsole 中，您将能够监视 JVM 内存的使用情况、线程堆栈跟踪、已装入的类和 VM 信息以及 CE MBean。 
+
+jconsole:一个java GUI监视工具，可以以图表化的形式显示各种数据。并可通过远程连接监视远程的服务器VM。用java写的GUI程序，用来监控VM，并可监控远程的VM，非常易用，而且功能非常强。命令行里打 jconsole，选则进程就可以了。
+
+ 
+
+### （8）jvisualvm
+
+jvisualvm同jconsole都是一个基于图形化界面的、可以查看本地及远程的JAVA GUI监控工具，Jvisualvm同jconsole的使用方式一样，直接在命令行打入jvisualvm即可启动，jvisualvm界面更美观一些，数据更实时：
+
+
+
+
+
+JVM性能监控工具 - 简书
+https://www.jianshu.com/p/25e94a1399a0
+
+
+
+## 9. 了解过JVM调优没，基本思路是什么
 
 
 
@@ -764,53 +930,40 @@ public static void main(String[] args) {
 
 
 
+## 10. JVM线程死锁，你该如何判断是因为什么？如果用VisualVM，dump线程信息出来，会有哪些信息
 
-### 
-
-
-
-
-
-
-
-## 2. JVM如何GC，新生代，老年代，持久代，都存储哪些东西，以及各个区的作用？ 
-
-- 新生代 
-  - 在方法中去new一个对象，那这方法调用完毕后，对象就会被回收，这就是一个典型的新生代对象。 
-- 老年代 
-  - 在新生代中经历了N次垃圾回收后仍然存活的对象就会被放到老年代中。而且大对象直接进入老年代 
-  - 当Survivor空间不够用时，需要依赖于老年代进行分配担保，所以大对象直接进入老年代 
-- 永久代 
-  - 即方法区。 
-
-
-
-## 3. GC用的引用可达性分析算法中，哪些对象可作为GC Roots对象？ 
-
-- Java虚拟机栈中的对象 
-- 方法区中的静态成员 
-- 方法区中的常量引用对象 
-- 本地方法区中的JNI（Native方法）引用对象。 
-
-
-
-## 4. 什么时候进行MinGC，FullGC 
-
-- MinGC 
-  - 新生代中的垃圾收集动作，采用的是复制算法 
-  - 对于较大的对象，在Minor GC的时候可以直接进入老年代 
-- FullGC 
-  - Full GC是发生在老年代的垃圾收集动作，采用的是标记-清除/整理算法。 
-  - 由于老年代的对象几乎都是在Survivor区熬过来的，不会那么容易死掉。因此Full GC发生的次数不会有Minor GC那么频繁，并且Time(Full GC)>Time(Minor GC) 
+- 常常需要在隔两分钟后再次收集一次thread dump，如果得到的输出相同，仍然是大量thread都在等待给同一个地址上锁，那么肯定是死锁了。 
 
 
 
 
 
+## 11. 什么是内存泄露？用什么工具可以查出内存泄漏
+
+在Java中，内存泄漏就是存在一些被分配的对象，这些对象有下面两个特点，首先，这些对象是可达的，即在有向图中，存在通路可以与其相连；其次，这些对象是无用的，即程序以后不会再使用这些对象。如果对象满足这两个条件，这些对象就可以判定为Java中的内存泄漏，这些对象不会被GC所回收，然而它却占用内存。
+
+在C++中，内存泄漏的范围更大一些。有些对象被分配了内存空间，然后却不可达，由于C++中没有GC，这些内存将永远收不回来。在Java中，这些不可达的对象都由GC负责回收，因此程序员不需要考虑这部分的内存泄露。
+
+通过分析，我们得知，对于C++，程序员需要自己管理边和顶点，而对于Java程序员只需要管理边就可以了(不需要管理顶点的释放)。通过这种方式，Java提高了编程的效率。
+
+![](../pics/memory-leak.gif)
+
+同样给出一个 Java 内存泄漏的典型例子，
+
+```java
+Vector v = new Vector(10);
+for (int i = 1; i < 100; i++) {
+    Object o = new Object();
+    v.add(o);
+    o = null;   
+}
+```
+
+在这个例子中，我们循环申请Object对象，并将所申请的对象放入一个 Vector 中，如果我们仅仅释放引用本身，那么 Vector 仍然引用该对象，所以这个对象对 GC 来说是不可回收的。因此，如果对象加入到Vector 后，还必须从 Vector 中删除，最简单的方法就是将 Vector 对象设置为 null。 
 
 
 
-## . 用什么工具可以查出内存泄漏 
+
 
 - MemoryAnalyzer：一个功能丰富的 JAVA 堆转储文件分析工具，可以帮助你发现内存漏洞和减少内存消耗 
 - EclipseMAT：是一款开源的JAVA内存分析软件，查找内存泄漏，能容易找到大块内存并验证谁在一直占用它，它是基于Eclipse RCP(Rich Client Platform)，可以下载RCP的独立版本或者Eclipse的插件 
@@ -818,33 +971,8 @@ public static void main(String[] args) {
 
 
 
-## JVM线程死锁，你该如何判断是因为什么？如果用VisualVM，dump线程信息出来，会有哪些信息 
-
-- 常常需要在隔两分钟后再次收集一次thread dump，如果得到的输出相同，仍然是大量thread都在等待给同一个地址上锁，那么肯定是死锁了。 
-
-
-
-## 1. 用什么工具调试程序？JConsole，用过吗？
-
- JConsole 中，您将能够监视 JVM 内存的使用情况、线程堆栈跟踪、已装入的类和 VM 信息以及 CE MBean。 
-
-
-
-## 2. 了解过JVM调优没，基本思路是什么
-
-
-
-## 3. 用Jstack调试过吗？【阿里实习生面试】
-
-## 
-
-
-
-
-
-## 4. 什么是native方法？
-
-
+Java中关于内存泄漏出现的原因以及如何避免内存泄漏（超详细版汇总上） - CSDN博客
+https://blog.csdn.net/wtt945482445/article/details/52483944
 
 
 
@@ -862,16 +990,29 @@ public static void main(String[] args) {
 
 
 
+# 附录1
+
+## JVM基本结构
+
+
+
+![](D:/gitdoc/2019_campus_appy/notes/pics/jvm_network.png)
 
 
 
 
-# 参考资料
+
+# 附录2：参考资料
 
 - [面试JVM 听这堂课就够了_面试jvm 听这堂课就够了_腾讯视频](https://v.qq.com/x/cover/bcmtqgpddsbj75k/g1423t1uwp5.html)
-
 - [咕泡学院-James老师_腾讯课堂](https://ke.qq.com/teacher/2904270631)
-
 - [Java虚拟机概述和基本概念](https://centmeng.github.io/2017/03/30/Java%E6%9E%B6%E6%9E%84%E5%B8%88-JVM/)
-
+- [JVM性能监控工具 - 简书](https://www.jianshu.com/p/25e94a1399a0)
   
+
+
+
+# 更新说明
+
+v1.0 2018/7/21 初版完成
+
