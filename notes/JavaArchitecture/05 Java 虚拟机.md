@@ -1,12 +1,97 @@
 [TOC]
 
+<!-- TOC -->
+
+- [深入浅出Java虚拟机](#深入浅出java虚拟机)
+    - [1. 运行时数据区域（Java虚拟机内存的划分，每个区域的功能）？](#1-运行时数据区域java虚拟机内存的划分每个区域的功能)
+        - [（1）程序计数器（线程私有）](#1程序计数器线程私有)
+        - [（2）虚拟机栈（线程私有）](#2虚拟机栈线程私有)
+        - [（3）本地方法栈（线程私有）](#3本地方法栈线程私有)
+            - [★ 什么是native方法？](#★-什么是native方法)
+        - [（4）堆](#4堆)
+            - [新生代 （Young Generation）](#新生代-young-generation)
+            - [老年代 （Old Generation）](#老年代-old-generation)
+            - [永久代 （Permanent Generation）](#永久代-permanent-generation)
+        - [（5）方法区](#5方法区)
+        - [（6）运行时常量池](#6运行时常量池)
+        - [（7）直接内存](#7直接内存)
+    - [2. 判断一个对象是否存活？（对象已死吗）](#2-判断一个对象是否存活对象已死吗)
+        - [1. 引用计数算法](#1-引用计数算法)
+        - [2. 可达性分析算法](#2-可达性分析算法)
+            - [★ GC用的引用可达性分析算法中，哪些对象可作为GC Roots对象？【阿里面经】](#★-gc用的引用可达性分析算法中哪些对象可作为gc-roots对象阿里面经)
+        - [3. 引用类型](#3-引用类型)
+        - [4. 方法区的回收](#4-方法区的回收)
+        - [5. finalize()](#5-finalize)
+    - [3. 垃圾收集算法（垃圾处理方法3种）](#3-垃圾收集算法垃圾处理方法3种)
+        - [1. 标记 - 清除](#1-标记---清除)
+        - [2. 标记 - 整理](#2-标记---整理)
+        - [3. 复制](#3-复制)
+        - [*. 分代收集](#-分代收集)
+    - [4. 垃圾收集器有哪些？【阿里面经OneNote】](#4-垃圾收集器有哪些阿里面经onenote)
+        - [1. Serial 收集器](#1-serial-收集器)
+        - [2. ParNew 收集器](#2-parnew-收集器)
+        - [3. Parallel Scavenge 收集器（吞吐量优先收集器）](#3-parallel-scavenge-收集器吞吐量优先收集器)
+        - [4. Serial Old 收集器](#4-serial-old-收集器)
+        - [5. Parallel Old 收集器](#5-parallel-old-收集器)
+        - [6. CMS 收集器](#6-cms-收集器)
+        - [7. G1 收集器](#7-g1-收集器)
+        - [8. 比较](#8-比较)
+    - [5. 内存分配与回收策略](#5-内存分配与回收策略)
+        - [1. 什么时候进行MinGC，FullGC？【阿里面经】](#1-什么时候进行mingcfullgc阿里面经)
+        - [2. 内存分配策略](#2-内存分配策略)
+            - [（一）对象优先在 Eden 分配](#一对象优先在-eden-分配)
+            - [（二）大对象直接进入老年代](#二大对象直接进入老年代)
+            - [（三）长期存活的对象进入老年代](#三长期存活的对象进入老年代)
+            - [（四）动态对象年龄判定](#四动态对象年龄判定)
+            - [（五）空间分配担保](#五空间分配担保)
+        - [3. Full GC 的触发条件](#3-full-gc-的触发条件)
+            - [（一）调用 System.gc()](#一调用-systemgc)
+            - [（二）老年代空间不足](#二老年代空间不足)
+            - [（三）空间分配担保失败](#三空间分配担保失败)
+            - [（四）JDK 1.7 及以前的永久代空间不足](#四jdk-17-及以前的永久代空间不足)
+            - [（五）Concurrent Mode Failure](#五concurrent-mode-failure)
+    - [6. 类加载机制](#6-类加载机制)
+        - [类的生命周期](#类的生命周期)
+        - [类初始化时机](#类初始化时机)
+        - [类加载过程](#类加载过程)
+            - [1. 加载](#1-加载)
+            - [2. 验证](#2-验证)
+            - [3. 准备](#3-准备)
+            - [4. 解析](#4-解析)
+            - [5. 初始化](#5-初始化)
+        - [类加载器](#类加载器)
+            - [1. 类与类加载器](#1-类与类加载器)
+            - [2. 类加载器分类](#2-类加载器分类)
+            - [3. 双亲委派模型](#3-双亲委派模型)
+                - [JVM如何加载一个类的过程，双亲委派模型中有哪些方法有没有可能父类加载器和子类加载器，加载同一个类？如果加载同一个类，该使用哪一个类？](#jvm如何加载一个类的过程双亲委派模型中有哪些方法有没有可能父类加载器和子类加载器加载同一个类如果加载同一个类该使用哪一个类)
+    - [7. Student s = new Student();在内存中做了哪些事情?](#7-student-s--new-student在内存中做了哪些事情)
+    - [8. Java虚拟机工具](#8-java虚拟机工具)
+        - [（1）jps](#1jps)
+        - [（2）jstat](#2jstat)
+        - [（3）jinfo](#3jinfo)
+        - [（4）jmap](#4jmap)
+        - [（5）jhat](#5jhat)
+        - [（6）jstack【阿里实习生面试】](#6jstack阿里实习生面试)
+        - [（7）jconsole【阿里面经OneNote】](#7jconsole阿里面经onenote)
+        - [（8）jvisualvm](#8jvisualvm)
+    - [9. 了解过JVM调优没，基本思路是什么](#9-了解过jvm调优没基本思路是什么)
+    - [10. JVM线程死锁，你该如何判断是因为什么？如果用VisualVM，dump线程信息出来，会有哪些信息](#10-jvm线程死锁你该如何判断是因为什么如果用visualvmdump线程信息出来会有哪些信息)
+    - [11. 什么是内存泄露？用什么工具可以查出内存泄漏](#11-什么是内存泄露用什么工具可以查出内存泄漏)
+    - [* 虚拟机参数](#-虚拟机参数)
+- [附录1](#附录1)
+    - [JVM基本结构](#jvm基本结构)
+- [附录2：参考资料](#附录2参考资料)
+- [更新说明](#更新说明)
+
+<!-- /TOC -->
+
 # 深入浅出Java虚拟机
 
 ## 1. 运行时数据区域（Java虚拟机内存的划分，每个区域的功能）？
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/540631a4-6018-40a5-aed7-081e2eeeaeea.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/540631a4-6018-40a5-aed7-081e2eeeaeea.png)
+<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/540631a4-6018-40a5-aed7-081e2eeeaeea.png" width="500"/> </div><br>
 
- 
+
 
 ### （1）程序计数器（线程私有）
 
@@ -22,7 +107,11 @@
 - 如果线程请求的栈深度超出了虚拟机所允许的深度，就会出现StackOverFlowError。-Xss规定了栈的最大空间 
 - 虚拟机栈可以动态扩展，如果扩展到无法申请到足够的内存，会出现OutOfMemoryError（OOM）
 
-![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/f5757d09-88e7-4bbd-8cfb-cecf55604854.png)
+
+
+
+<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/f5757d09-88e7-4bbd-8cfb-cecf55604854.png" width="500"/> </div><br>
+
 
 可以通过 -Xss 这个虚拟机参数来指定一个程序的 Java 虚拟机栈内存大小：
 
@@ -92,9 +181,10 @@ JNI 即Java native interface，是一种技术，提供了丰富的接口，可�
 - From Survivor（幸存者）
 - To Survivor
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/ppt_img.gif)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/ppt_img.gif)
 
- 
+<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/blob/master/pics/ppt_img.gif" width="500"/> </div><br>
+
+
 
 Java 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
 
@@ -159,7 +249,9 @@ System.out.println(s1 == s1);  //  true
 
 通过 GC Roots 作为起始点进行搜索，能够到达到的对象都是存活的，不可达的对象可被回收。
 
-[![img](../pics/root-tracing.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/0635cbe8.png)
+<div align="center"> <img src="../pics/root-tracing.png" width="650"/> </div><br>
+
+
 
 ####  ★ GC用的引用可达性分析算法中，哪些对象可作为GC Roots对象？【阿里面经】
 
@@ -211,7 +303,10 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 1. 标记 - 清除
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg)
+
+
+<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg" width="800"/> </div><br>
+
 
 首先标记出所有需要回收的对象，在标记完成后统一回收所有标记的对象。
 
@@ -224,9 +319,10 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 2. 标记 - 整理
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg)
 
- 
+
+<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg" width="800"/> </div><br>
+
 
 复制收集算法在对象存活率较高时就要进行较多的复制操作，效率会变低。更关键的是，如果不想浪费 50% 的空间，就需要有额外的空间进行分配担保，所以老年代一般不能直接选用这种算法。
 
@@ -236,9 +332,8 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 3. 复制
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg)
 
- 
+<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg" width="800"/> </div><br>
 
 现在的商业虚拟机都采用这种收集算法来回收新生代。
 
@@ -408,17 +503,22 @@ G1（Garbage-First），它是一款**面向服务端应用的垃圾收集器**�
 
 Java 堆被分为新生代、老年代和永久代，其它收集器进行收集的范围都是整个新生代或者老年代，而 G1 可以直接对新生代和老年代一起回收。
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/4cf711a8-7ab2-4152-b85c-d5c226733807.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/4cf711a8-7ab2-4152-b85c-d5c226733807.png)
+
+<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/4cf711a8-7ab2-4152-b85c-d5c226733807.png" width="800"/> </div><br>
 
 G1 把堆划分成多个大小相等的独立区域（Region），新生代和老年代不再物理隔离。
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png)
+
+
+<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png" width="800"/> </div><br>
 
 通过引入 Region 的概念，从而将原来的一整块内存空间划分成多个的小空间，使得每个小空间可以单独进行垃圾回收。这种划分方法带来了很大的灵活性，使得可预测的停顿时间模型成为可能。通过记录每个 Region 垃圾回收时间以及回收所获得的空间（这两个值是通过过去回收的经验获得），并维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的 Region。
 
 每个 Region 都有一个 Remembered Set，用来记录该 Region 对象的引用对象所在的 Region。通过使用 Remembered Set，在做可达性分析的时候就可以避免全堆扫描。
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/f99ee771-c56f-47fb-9148-c0036695b5fe.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/f99ee771-c56f-47fb-9148-c0036695b5fe.jpg)
+
+
+<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/f99ee771-c56f-47fb-9148-c0036695b5fe.jpg" width="800"/> </div><br>
 
  
 
@@ -435,6 +535,8 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 - 可预测的停顿：能让使用者明确指定在一个长度为 M 毫秒的时间片段内，消耗在 GC 上的时间不得超过 N 毫秒。
 
 更详细内容请参考：[Getting Started with the G1 Garbage Collector](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html)
+
+
 
 
 
@@ -540,7 +642,8 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 ### 类的生命周期
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/32b8374a-e822-4720-af0b-c0f485095ea2.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/32b8374a-e822-4720-af0b-c0f485095ea2.jpg)
+
+<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/32b8374a-e822-4720-af0b-c0f485095ea2.jpg" width="800"/> </div><br>
 
  
 
@@ -739,18 +842,20 @@ public static void main(String[] args) {
 
 - 双亲委派机制图 
 
-  ![图像](../pics/classloader.png)
+<div align="center"> <img src="../pics/classloader.png" width="600"/> </div><br>
+
+
+
+
 
 - 双亲委派概念 
 
   - 如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的加载器都是如此，因此所有的类加载请求都会传给顶层的启动类加载器，只有当父加载器反馈自己无法完成该加载请求（该加载器的搜索范围中没有找到对应的类）时，子加载器才会尝试自己去加载。 
-
 - 加载器 
 
   - **启动（Bootstrap）类加载器：**是用本地代码实现的类装入器，它负责将 <Java_Runtime_Home>/lib下面的类库加载到内存中（比如rt.jar）。由于引导类加载器涉及到虚拟机本地实现细节，开发者无法直接获取到启动类加载器的引用，所以不允许直接通过引用进行操作。 
   - **标准扩展（Extension）类加载器：**是由 Sun 的 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将< Java_Runtime_Home >/lib/ext或者由系统变量 java.ext.dir指定位置中的类库加载到内存中。开发者可以直接使用标准扩展类加载器。、 
   - **系统（System）类加载器：**由 Sun 的 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。它负责将系统类路径（CLASSPATH）中指定的类库加载到内存中。开发者可以直接使用系统类加载器。除了以上列举的三种类加载器，还有一种比较特殊的类型 — 线程上下文类加载器。 
-
 - 如果加载同一个类，该使用哪一个类？ 
 
   - 父类的 
@@ -996,7 +1101,7 @@ https://blog.csdn.net/wtt945482445/article/details/52483944
 
 
 
-![](D:/gitdoc/2019_campus_appy/notes/pics/jvm_network.png)
+<div align="center"> <img src="../pics/jvm_network.png" width="650"/> </div><br>
 
 
 
