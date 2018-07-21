@@ -243,45 +243,49 @@ HotSopt 虚拟机默认 Eden 和 Survivor 的大小比例是 8:1，也就是新�
 
 ## 4. 垃圾收集器有哪些？【阿里面经OneNote】
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/c625baa0-dde6-449e-93df-c3a67f2f430f.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/c625baa0-dde6-449e-93df-c3a67f2f430f.jpg)
+![](../pics/gc-collector.png)
 
  以上是 HotSpot 虚拟机中的 7 个垃圾收集器，连线表示垃圾收集器可以配合使用。
 
-- **单线程与并行（多线程）**：
-  - 单线程指的是垃圾收集器只使用一个线程进行收集，而并行使用多个线程。
-- **串行与并发**：
-  - 串行指的是垃圾收集器与用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序；
-  - 并发指的是垃圾收集器和用户程序同时执行。除了 CMS 和 G1 之外，其它垃圾收集器都是以串行的方式执行。
+
+> **并发与并行收集器**
+>
+> - 单线程：单线程指的是垃圾收集器只使用一个线程进行收集，而并行使用多个线程。
+>
+> - 并行（Parallel）：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。
+> - 并发（Concurrent）：指用户线程与垃圾收集线程同时执行（但不一定是并行的，可能会交替执行），用户程序在继续运行，而垃圾收集程序运行在另一个 CPU 上。
+
+
 
 ### 1. Serial 收集器
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg)
+Serial 收集器是最基本，发展历史最悠久的收集器，曾经（在 JDk1.3.1之前）是虚拟机新生代收集的唯一选择。它是一个**单线程收集器**。在它进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束。
 
-Serial 翻译为串行，也就是说它以串行的方式执行。
+实际上到现在为止，它依然是虚拟机运行在 **Client 模式**下的默认新生代收集器。
 
-它是单线程的收集器，只会使用一个线程进行垃圾收集工作。
+**优点：**简单而高效（与其他收集器的单线程相比）。
 
-它的优点是简单高效，对于单个 CPU 环境来说，由于没有线程交互的开销，因此拥有最高的单线程收集效率。
-
-它是 Client 模式下的默认新生代收集器，因为在用户的桌面应用场景下，分配给虚拟机管理的内存一般来说不会很大。Serial 收集器收集几十兆甚至一两百兆的新生代停顿时间可以控制在一百多毫秒以内，只要不是太频繁，这点停顿是可以接受的。
+![](../pics/serial.png)
 
 
 
 ### 2. ParNew 收集器
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg)
-
- 
-
 它是 Serial 收集器的多线程版本。
 
 是 Server 模式下的虚拟机首选新生代收集器，除了性能原因外，主要是因为除了 Serial 收集器，只有它能与 CMS 收集器配合工作。
 
+在JDK1.5 时期，HotSpot 推出了 CMS 收集器（Concurrent Mark Sweep），它是 HotSpot 虚拟机中第一款真正意义上的**并发收集器**。不幸的是，CMS 作为老年代的收集器，却无法与 JDK1.4.0 中已经存在的新生代收集器 Parallel Scavenge 配合工作，**所以在 JDK1.5中使用 CMS 来收集老年代的时候，新生代只能选择 ParNew 或者 Serial 收集器中的一个**。 
+
 默认开启的线程数量与 CPU 数量相同，可以使用 -XX:ParallelGCThreads 参数来设置线程数。
 
+![](../pics/parNew.png)
+
+> *Parallel Scavenge 收集器以及后面提到的 G1 收集器都没有使用传统的 GC 收集器代码框架，而另外独立实现，其余集中收集器则共用了部分的框架代码。* 
 
 
-### 3. Parallel Scavenge 收集器
+
+### 3. Parallel Scavenge 收集器（吞吐量优先收集器）
 
 与 ParNew 一样是并行的多线程收集器。
 
@@ -295,33 +299,68 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 
 
+
+
+Parallel Scavenge 收集器是一个新生代收集器，它也是使用复制算法的收集器，又是并行的多线程收集器。
+
+ **与 ParNew 的不同之处：**
+
+关注点与其他收集器不同，CMS 等收集器的关注点是**尽可能地缩短垃圾收集时用户线程的停顿时间**，而 Parallel Scavenge 收集器的目标则是**达到一个可可控的吞吐量（Throughput）**。
+
+> 吞吐量就是 CPU 运行用户代码的时间与 CPU 总消耗时间的比值。
+>
+> 吞吐量 = 运行用户代码时间 / (运行用户代码时间 + 垃圾收集时间)
+
+**停顿时间越短**就越适合需要**与用户交互**的程序，良好的相应速度能提升用户体验，
+
+而**高吞吐量**则可以高效率地利用 CPU 时间，尽快完成程序的运算任务，主要适合**在后台运算而不需要太多交互**的任务
+
+Parallel Scavenge 收集器气提供了两个参数用于**精确控制吞吐量**
+
+- **最大垃圾收集停顿时间：** -XX:MaxGCPauseMills
+- **吞吐量大小：**-XX:GCTimeRatio
+
+**MaxGCPauseMills** 参数允许的值是一个大于0的毫秒数，收集器将尽可能地保证内存回收所花费的时间不超过设定值。但 GC 的停顿时间缩短是以牺牲吞吐量和新生代空间来换取的。停顿时间下降，但吞吐量也降下来了。
+
+**GCTimeRatio** 参数的值是一个大于0且小于100的整数，也就是垃圾收集时间占总时间的比例，相当于吞吐量的倒数。区间 1/(1+99) ~ 1/(1+1)，即 1% ~ 50%。
+
+由于与吞吐量关系密切，Parallel Scavenge 收集器也经常称为“吞吐量优先“ 收集器。
+
+**-XX:+UserAdaptiveSizePolicy**： GC 自适应调节策略（GC Ergonomics），打开参数后，就不需要手工指定新生代的大小（-Xmn）、Eden 与 Survivor 区的比例（-XX:SurvivorRatio）、晋升老年代对象的年龄（-XX:PretenureSizeThreshold）等细节参数了。
+
+![](../pics/parallel-scavenge.png)
+
+
+
+
+
 ### 4. Serial Old 收集器
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg)
+Serial Old 是 Serial 收集器的老年代版本，它同样是一个单线程收集器，使用”标记-整理“算法。
 
- 是 Serial 收集器的老年代版本，也是给 Client 模式下的虚拟机使用。如果用在 Server 模式下，它有两大用途：
+这个收集器的主要意义也是在于给 Client 模式下的虚拟机使用。如果在 Server 模式下，那么它主要还有两大用途：
 
 - 在 JDK 1.5 以及之前版本（Parallel Old 诞生以前）中与 Parallel Scavenge 收集器搭配使用。
 
 - 作为 CMS 收集器的后备预案，在并发收集发生 Concurrent Mode Failure 时使用。
 
-  
+  ![](../pics/serial-old.png)
+
+
 
 ### 5. Parallel Old 收集器
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/278fe431-af88-4a95-a895-9c3b80117de3.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/278fe431-af88-4a95-a895-9c3b80117de3.jpg)
-
- 是 Parallel Scavenge 收集器的老年代版本。
+Parallel Old 是 Parallel Scavenge 收集器的老年代版本，使用多线程和”标记-整理“算法。
 
 在注重吞吐量以及 CPU 资源敏感的场合，都可以优先考虑 Parallel Scavenge 加 Parallel Old 收集器。
+
+![](../pics/parallel-old.png)
 
 
 
 ### 6. CMS 收集器
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/62e77997-6957-4b68-8d12-bfd609bb2c68.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/62e77997-6957-4b68-8d12-bfd609bb2c68.jpg)
-
- CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。
+CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。
 
 特点：并发收集、低停顿。
 
@@ -334,24 +373,30 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 在整个过程中耗时最长的并发标记和并发清除过程中，收集器线程都可以与用户线程一起工作，不需要进行停顿。
 
-优点：
 
-- 并发收集
-- 低停顿
 
-具有以下缺点：
+> CMS 是一款优秀的收集器，主要优点：并发收集、低停顿，Sun公司也称之为**并发低停顿收集器（Concurrent Low Pause Collection）**。
 
-- 吞吐量低：低停顿时间是以牺牲吞吐量为代价的，导致 CPU 利用率不够高。
 
-- 无法处理浮动垃圾，可能出现 Concurrent Mode Failure。浮动垃圾是指并发清除阶段由于用户线程继续运行而产生的垃圾，这部分垃圾只能到下一次 GC 时才能进行回收。由于浮动垃圾的存在，因此需要预留出一部分内存，意味着 CMS 收集不能像其它收集器那样等待老年代快满的时候再回收。如果预留的内存不够存放浮动垃圾，就会出现 Concurrent Mode Failure，这时虚拟机将临时启用 Serial Old 来替代 CMS。
 
-- 标记 - 清除算法导致的空间碎片，往往出现老年代空间剩余，但无法找到足够大连续空间来分配当前对象，不得不提前触发一次 Full GC。
+**3个明显的缺点**：
 
-  
+- **CMS 收集器读 CPU 资源非常敏感。**在并发阶段，它虽然不会导致用户线程停顿，但是会因为占用了一部分线程（或者说CPU资源）而导致应用程序变慢，总吞吐量会降低。CMS 默认启动的回收线程数是 (CPU数量+3)/4，也就是当 CPU 在4个以上时，并发回收时垃圾收集器线程不少于25%的 CPU 资源，并且伴随着CPU数量的增加而下降。
+
+- **CMS 收集器无法处理浮动垃圾（Floating Garbage），可能出现 Concurrent Mode Failure。浮动垃圾是指并发清除阶段由于用户线程继续运行而产生的垃圾，这部分垃圾只能到下一次 GC 时才能进行回收。由于浮动垃圾的存在，因此需要预留出一部分内存，意味着 CMS 收集不能像其它收集器那样等待老年代快满的时候再回收。如果预留的内存不够存放浮动垃圾，就会出现 Concurrent Mode Failure，这时虚拟机将临时启用 Serial Old 来替代 CMS。
+
+- CMS是一款基于 “标记-清除”算法实现的收集器，着意味着收集结束时会有**大量空间碎片产生**。空间碎片过多时，将会给大对象分配带来很大麻烦，往往会出现老年代还有很大空间剩余，但是无法找到足够大的连续空间来分配当前对象，不得不提前出发一次 Full GC。
+
+  > - CMS 提供了一个开关参数 **-XX:+UseCMSCompactAtFullCollection**（默认开启），用于在 CMS 收集器顶不住要进行 Full GC 时开启内存碎片的合并整理过程，内存整理的过程是无法并发的。
+  > - 参数 **-XX:CMSFullGCsBeforeCompaction** 用于设置执行多少次不压缩的 Full GC后，跟着来以此带压缩的，（默认值为0）
+
+![](../pics/cms.png)
+
+
 
 ### 7. G1 收集器
 
-G1（Garbage-First），它是一款面向服务端应用的垃圾收集器，在多 CPU 和大内存的场景下有很好的性能。HotSpot 开发团队赋予它的使命是未来可以替换掉 CMS 收集器。
+G1（Garbage-First），它是一款**面向服务端应用的垃圾收集器**，在多 CPU 和大内存的场景下有很好的性能。HotSpot 开发团队赋予它的使命是未来可以替换掉 CMS 收集器。
 
 Java 堆被分为新生代、老年代和永久代，其它收集器进行收集的范围都是整个新生代或者老年代，而 G1 可以直接对新生代和老年代一起回收。
 
@@ -792,6 +837,14 @@ public static void main(String[] args) {
 ## 3. 用Jstack调试过吗？【阿里实习生面试】
 
 ## 
+
+
+
+
+
+## 4. 什么是native方法？
+
+
 
 
 
