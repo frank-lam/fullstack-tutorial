@@ -41,7 +41,8 @@
 |           |                    | :gem:【炼数成金】实战Java高并发程序设计                      |                 |
 |           |                    | 【慕课网】Java并发编程与高并发解决方案                       |      **🚴**      |
 |           |                    | 【慕课网】Google面试官亲授 升级Java面试                      |                 |
-|           |                    |                                                              |                 |
+|           |                    | 【慕课网】Java读源码之Netty深入剖析                          | 有时间回来学习  |
+|           |                    | 【慕课在线】Netty入门之WebSocket初体验 \| [慕课网](https://www.imooc.com/learn/941) |                 |
 |           | 02 Java web        |                                                              |                 |
 |           |                    | [【慕课网在线】Spring Boot热部署](https://www.imooc.com/learn/915) \| [参考文档](https://www.cnblogs.com/magicalSam/p/7196355.html) |     进行中      |
 |           |                    | 【慕课网】ZooKeeper分布式专题与Dubbo微服务入门               |                 |

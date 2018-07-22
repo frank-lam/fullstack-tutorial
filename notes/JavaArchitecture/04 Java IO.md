@@ -1,5 +1,32 @@
 [TOC]
 
+<!-- TOC -->
+
+- [Java IO](#java-io)
+    - [1、磁盘操作](#1磁盘操作)
+    - [2、字节操作（*Stream）](#2字节操作stream)
+    - [3、字符操作（*Reader | *Writer）](#3字符操作reader--writer)
+    - [4、Java序列化，如何实现序列化和反序列化，常见的序列化协议有哪些？](#4java序列化如何实现序列化和反序列化常见的序列化协议有哪些)
+        - [Java序列化定义](#java序列化定义)
+        - [如何实现序列化和反序列化，底层怎么实现【蚂蚁金服-面经】](#如何实现序列化和反序列化底层怎么实现蚂蚁金服-面经)
+        - [相关注意事项](#相关注意事项)
+        - [常见的序列化协议有哪些](#常见的序列化协议有哪些)
+    - [5、Java中的NIO，BIO，AIO分别是什么？](#5java中的niobioaio分别是什么)
+        - [BIO](#bio)
+        - [NIO](#nio)
+        - [AIO (NIO.2)](#aio-nio2)
+        - [总结](#总结)
+    - [6、BIO，NIO，AIO区别](#6bionioaio区别)
+    - [7、Stock通信的伪代码实现流程](#7stock通信的伪代码实现流程)
+    - [8、网络操作](#8网络操作)
+        - [InetAddress](#inetaddress)
+        - [URL](#url)
+        - [Sockets](#sockets)
+        - [Datagram](#datagram)
+        - [什么是Socket？](#什么是socket)
+
+<!-- /TOC -->
+
 # Java IO
 
 Java 的 I/O 大概可以分成以下几类：
@@ -60,7 +87,9 @@ public static void copyFile(String src, String dist) throws IOException
 }
 ```
 
-![](../pics/DP-Decorator-java.io.png)
+
+
+<div align="center"> <img src="../pics//DP-Decorator-java.io.png" width="600"/> </div><br>
 
 
 
@@ -131,50 +160,158 @@ byte[] bytes = str1.getBytes();
 
 
 
-
-
 ## 4、Java序列化，如何实现序列化和反序列化，常见的序列化协议有哪些？ 
 
-   
+
 
 ### Java序列化定义 
 
-- 将那些实现了Serializable接口的对象转换成一个字节序列，并能够在以后将这个字节序列完全恢复为原来的对象，序列化可以弥补不同操作系统之间的差异。 
+（1）Java序列化是指把Java对象转换为字节序列的过程，而Java反序列化是指把字节序列恢复为Java对象的过程；
 
-### Java序列化的作用 
+（2）**序列化：**对象序列化的最主要的用处就是在传递和保存对象的时候，保证对象的完整性和可传递性。序列化是把对象转换成有序字节流，以便在网络上传输或者保存在本地文件中。序列化后的字节流保存了Java对象的状态以及相关的描述信息。序列化机制的核心作用就是对象状态的保存与重建。
 
-- Java远程方法调用（RMI） | 详情转向：[Java远程方法调用 - 维基百科，自由的百科全书](https://zh.wikipedia.org/wiki/Java%E8%BF%9C%E7%A8%8B%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8)
-- 对JavaBeans进行序列化 
+（3）**反序列化：**客户端从文件中或网络上获得序列化后的对象字节流后，根据字节流中所保存的对象状态及描述信息，通过反序列化重建对象。
 
-### 如何实现序列化和反序列化 
+（4）本质上讲，序列化就是把实体对象状态按照一定的格式写入到有序字节流，反序列化就是从有序字节流重建对象，恢复对象状态。
 
-- 实现序列化方法 
-  - 实现Serializable接口 
-    - 该接口只是一个可序列化的标志，并没有包含实际的属性和方法。 
-    - 如果不在改方法中添加readObject()和writeObject()方法，则采取默认的序列化机制。如果添加了这两个方法之后还想利用Java默认的序列化机制，则在这两个方法中分别调用defaultReadObject()和defaultWriteObject()两个方法。 
-    - 为了保证安全性，可以使用transient关键字进行修饰不必序列化的属性。因为在反序列化时，private修饰的属性也能发查看到。 
-  - 实现ExternalSerializable方法 
-    - 自己对要序列化的内容进行控制，控制那些属性能被序列化，那些不能被序列化。 
-- 反序列化 
-  - 实现Serializable接口的对象在反序列化时不需要调用对象所在类的构造方法，完全基于字节。 
-  - 实现externalSerializable接口的方法在反序列化时会调用构造方法。 
-- 注意事项 
-  - 被static修饰的属性不会被序列化 
-  - 对象的类名、属性都会被序列化，方法不会被序列化 
-  - 要保证序列化对象所在类的属性也是可以被序列化的 
-  - 当通过网络、文件进行序列化时，必须按照写入的顺序读取对象。 
-  - 反序列化时必须有序列化对象时的class文件 
-  - 最好显示的声明serializableID，因为在不同的JVM之间，默认生成serializableID 可能不同，会造成反序列化失败。 
+### 如何实现序列化和反序列化，底层怎么实现【蚂蚁金服-面经】 
+
+**1、JDK类库中序列化和反序列化API**
+
+（1）java.io.ObjectOutputStream：表示对象输出流；
+
+它的writeObject(Object obj)方法可以对参数指定的obj对象进行序列化，把得到的字节序列写到一个目标输出流中；
+
+（2）java.io.ObjectInputStream：表示对象输入流；
+
+它的readObject()方法源输入流中读取字节序列，再把它们反序列化成为一个对象，并将其返回；
+
+**2、实现序列化的要求**
+
+只有实现了Serializable或Externalizable接口的类的对象才能被序列化，否则抛出异常！
+
+**3、实现Java对象序列化与反序列化的方法**
+
+假定一个User类，它的对象需要序列化，可以有如下三种方法：
+
+（1）若User类仅仅实现了Serializable接口，则可以按照以下方式进行序列化和反序列化
+
+ObjectOutputStream采用默认的序列化方式，对User对象的非transient的实例变量进行序列化。 
+ObjcetInputStream采用默认的反序列化方式，对对User对象的非transient的实例变量进行反序列化。
+
+（2）若User类仅仅实现了Serializable接口，并且还定义了readObject(ObjectInputStream in)和writeObject(ObjectOutputSteam out)，则采用以下方式进行序列化与反序列化。
+
+ObjectOutputStream调用User对象的writeObject(ObjectOutputStream out)的方法进行序列化。 
+ObjectInputStream会调用User对象的readObject(ObjectInputStream in)的方法进行反序列化。
+
+（3）若User类实现了Externalnalizable接口，且User类必须实现readExternal(ObjectInput in)和writeExternal(ObjectOutput out)方法，则按照以下方式进行序列化与反序列化。
+
+ObjectOutputStream调用User对象的writeExternal(ObjectOutput out))的方法进行序列化。 
+ObjectInputStream会调用User对象的readExternal(ObjectInput in)的方法进行反序列化。
+
+**4、JDK类库中序列化的步骤**
+
+步骤一：创建一个对象输出流，它可以包装一个其它类型的目标输出流，如文件输出流：
+
+```java
+ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("D:\\object.out"));
+```
+
+步骤二：通过对象输出流的writeObject()方法写对象：
+
+```java
+oos.writeObject(new User("xuliugen", "123456", "male"));1
+```
+
+**5、JDK类库中反序列化的步骤**
+
+步骤一：创建一个对象输入流，它可以包装一个其它类型输入流，如文件输入流：
+
+```java
+ObjectInputStream ois= new ObjectInputStream(new FileInputStream("object.out"));1
+```
+
+步骤二：通过对象输出流的readObject()方法读取对象：
+
+```java
+User user = (User) ois.readObject();1
+```
+
+说明：为了正确读取数据，完成反序列化，必须保证向对象输出流写对象的顺序与从对象输入流中读对象的顺序一致。
+
+**6、序列化和反序列化的示例**
+
+为了更好地理解Java序列化与反序列化，举一个简单的示例如下：
+
+```java
+public class SerialDemo {
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        //序列化
+        FileOutputStream fos = new FileOutputStream("object.out");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        User user1 = new User("xuliugen", "123456", "male");
+        oos.writeObject(user1);
+        oos.flush();
+        oos.close();
+        //反序列化
+        FileInputStream fis = new FileInputStream("object.out");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        User user2 = (User) ois.readObject();
+        System.out.println(user2.getUserName()+ " " + 
+            user2.getPassword() + " " + user2.getSex());
+        //反序列化的输出结果为：xuliugen 123456 male
+    }
+}
+
+public class User implements Serializable {
+    private String userName;
+    private String password;
+    private String sex;
+    //全参构造方法、get和set方法省略
+}
+```
 
 
 
-transient 关键字可以使一些属性不会被序列化。
+### 相关注意事项
+
+1、序列化时，只对对象的状态进行保存，而不管对象的方法；
+
+2、当一个父类实现序列化，子类自动实现序列化，不需要显式实现Serializable接口；
+
+3、当一个对象的实例变量引用其他对象，序列化该对象时也把引用对象进行序列化；
+
+4、并非所有的对象都可以序列化，至于为什么不可以，有很多原因了，比如：
+
+- 安全方面的原因，比如一个对象拥有private，public等field，对于一个要传输的对象，比如写到文件，或者进行RMI传输等等，在序列化进行传输的过程中，这个对象的private等域是不受保护的；
+- 资源分配方面的原因，比如socket，thread类，如果可以序列化，进行传输或者保存，也无法对他们进行重新的资源分配，而且，也是没有必要这样实现；
+
+5、声明为static和transient类型的成员数据不能被序列化。因为static代表类的状态，transient代表对象的临时数据。
+
+6、序列化运行时使用一个称为 serialVersionUID 的版本号与每个可序列化类相关联，该序列号在反序列化过程中用于验证序列化对象的发送者和接收者是否为该对象加载了与序列化兼容的类。为它赋予明确的值。显式地定义serialVersionUID有两种用途：
+
+- 在某些场合，希望类的不同版本对序列化兼容，因此需要确保类的不同版本具有相同的serialVersionUID；
+- 在某些场合，不希望类的不同版本对序列化兼容，因此需要确保类的不同版本具有不同的serialVersionUID。
+
+7、Java有很多基础类已经实现了serializable接口，比如String,Vector等。但是也有一些没有实现serializable接口的；
+
+8、如果一个对象的成员变量是一个对象，那么这个对象的数据成员也会被保存！这是能用序列化解决深拷贝的重要原因；
+
+
 
 **ArrayList 序列化和反序列化的实现** ：ArrayList 中存储数据的数组是用 transient 修饰的，因为这个数组是动态扩展的，并不是所有的空间都被使用，因此就不需要所有的内容都被序列化。通过重写序列化和反序列化方法，使得可以只序列化数组中有内容的那部分数据。
 
 ```java
 private transient Object[] elementData;
 ```
+
+
+
+序列化和反序列化的底层实现原理是什么？ - CSDN博客
+https://blog.csdn.net/xlgen157387/article/details/79840134
+
+
 
 ### 常见的序列化协议有哪些 
 
@@ -219,17 +356,7 @@ private transient Object[] elementData;
 
 
 
-## -----------------------------------------------------------------------------------------------------
-
-## 2. 序列化的底层怎么实现的【蚂蚁金服-面经】
-
-
-
-
-
-
-
-## 3. Java中的NIO，BIO，AIO分别是什么？
+## 5、Java中的NIO，BIO，AIO分别是什么？
 
 - **同步阻塞IO（BIO）**：用户进程发起一个IO操作以后，必须等待IO操作的真正完成后，才能继续运行。
 - **同步非阻塞IO（NIO）**：用户进程发起一个IO操作以后，可做其它事情，但用户进程需要经常询问IO操作是否完成，这样造成不必要的CPU资源浪费。
@@ -287,7 +414,7 @@ BIO模型中通过**Socket**和**ServerSocket**完成套接字通道的实现。
 
 ### NIO
 
-NIO 全称New IO，也叫Non-Block IO 是一种**非阻塞同步**的通信模式。
+NIO（官方：New IO），也叫Non-Block IO 是一种**非阻塞同步**的通信模式。
 
 **NIO 设计原理：**
 
@@ -340,88 +467,125 @@ AIO 并没有采用NIO的多路复用器，而是使用异步通道的概念。�
 - [Java IO Tutorial](http://tutorials.jenkov.com/java-io/index.html)
   
 
-## 3. BIO，NIO，AIO区别
+## 6、BIO，NIO，AIO区别
 
-**BIO（阻塞同步通信模式）**：客户端和服务器连接需要三次握手，使用简单，但吞吐量小
-**NIO（非阻塞同步通信模式）**：客户端与服务器通过Channel连接，采用多路复用器轮询注册的Channel。提高吞吐量和可靠性。
-**AIO（非阻塞异步通信模式）**：NIO的升级版，采用异步通道实现异步通信，其read和write方法均是异步方法。
-
-
-
-## 4. Stock通信的伪代码实现流程
-
-服务器绑定端口：server = new ServerSocket(PORT)
-服务器阻塞监听：socket = server.accept()
-服务器开启线程：new Thread(Handle handle)
-服务器读写数据：BufferedReader PrintWriter 
-客户端绑定IP和PORT：new Socket(IP_ADDRESS, PORT)
-客户端传输接收数据：BufferedReader PrintWriter
+- **BIO（阻塞同步通信模式）**：客户端和服务器连接需要三次握手，使用简单，但吞吐量小
+- **NIO（非阻塞同步通信模式）**：客户端与服务器通过Channel连接，采用多路复用器轮询注册的Channel。提高吞吐量和可靠性。
+- **AIO（非阻塞异步通信模式）**：NIO的升级版，采用异步通道实现异步通信，其read和write方法均是异步方法。
 
 
 
+## 7、Stock通信的伪代码实现流程
+
+1. 服务器绑定端口：server = new ServerSocket(PORT)
+2. 服务器阻塞监听：socket = server.accept()
+3. 服务器开启线程：new Thread(Handle handle)
+4. 服务器读写数据：BufferedReader PrintWriter 
+5. 客户端绑定IP和PORT：new Socket(IP_ADDRESS, PORT)
+6. 客户端传输接收数据：BufferedReader PrintWriter
+
+
+
+## 8、网络操作
+
+Java 中的网络支持：
+
+- InetAddress：用于表示网络上的硬件资源，即 IP 地址；
+- URL：统一资源定位符；
+- Sockets：使用 TCP 协议实现网络通信；
+- Datagram：使用 UDP 协议实现网络通信。
+
+### InetAddress
+
+没有公有构造函数，只能通过静态方法来创建实例。
+
+```java
+InetAddress.getByName(String host);
+InetAddress.getByAddress(byte[] address);
+```
+
+
+
+### URL
+
+可以直接从 URL 中读取字节流数据。
+
+```java
+public static void main(String[] args) throws IOException
+{
+    URL url = new URL("http://www.baidu.com");
+    // 字节流
+    InputStream is = url.openStream();
+    // 字符流
+    InputStreamReader isr = new InputStreamReader(is, "utf-8");
+    BufferedReader br = new BufferedReader(isr);
+    String line = br.readLine();
+    while (line != null) {
+        System.out.println(line);
+        line = br.readLine();
+    }
+    br.close();
+}
+```
+
+
+
+### Sockets
+
+- ServerSocket：服务器端类
+- Socket：客户端类
+- 服务器和客户端通过 InputStream 和 OutputStream 进行输入输出。
+
+![](https://raw.githubusercontent.com/CyC2018/Interview-Notebook/033676724523021872edb86176e92a87b87acd46/pics/ClienteServidorSockets1521731145260.jpg)
+
+ 
+
+
+
+### Datagram
+
+- DatagramPacket：数据包类
+- DatagramSocket：通信类
 
 
 
 
 
+### 什么是Socket？
 
-# 参考资料
+> TCP用主机的IP地址加上主机上的端口号作为TCP连接的端点，这种端点就叫做套接字（socket）或插口。 
+>
+> 套接字用（IP地址：端口号）表示。
 
+Socket是进程通讯的一种方式，即调用这个网络库的一些API函数实现分布在不同主机的相关进程之间的数据交换。 
 
+socket是网络编程的基础，本文用打电话来类比socket通信中建立TCP连接的过程。
 
+**socket函数**：表示你买了或者借了一部手机。
+**bind函数**：告诉别人你的手机号码，让他们给你打电话。
+**listen函数**：打开手机的铃声，而不是静音，这样有电话时可以立马反应。listen函数的第二个参数，最大连接数，表示最多有几个人可以同时拨打你的号码。不过我们的手机，最多只能有一个人打进来，要不然就提示占线。
+**connect函数**：你的朋友知道了你的号码，通过这个号码来联系你。在他等待你回应的时候，不能做其他事情，所以connect函数是阻塞的。
+**accept函数**：你听到了电话铃声，接电话，accept it！然后“喂”一声，你的朋友听到你的回应，知道电话已经打进去了。至此，一个TCP连接建立了。
+**read/write函数**：连接建立后，TCP的两端可以互相收发消息，这时候的连接是全双工的。对应打电话中的电话煲。
+**close函数**：通话完毕，一方说“我挂了”，另一方回应"你挂吧"，然后将连接终止。实际的close(sockfd)有些不同，它不止是终止连接，还把手机也归还，不在占有这部手机，就当是公用电话吧。
 
+注意到，上述连接是阻塞的，你一次只能响应一个用户的连接请求，但在实际网络编程中，一个服务器服务于多个客户，上述方案也就行不通了，怎么办？想一想10086，移动的声讯服务台，也是只有一个号码，它怎么能同时服务那么多人呢？可以这样理解，在你打电话到10086时，总服务台会让一个接线员来为你服务，而它自己却继续监听有没有新的电话接入。在网络编程中，这个过程类似于fork一个子进程，建立实际的通信连接，而主进程继续监听。10086的接线员是有限的，所以当连接的人数达到上线时，它会放首歌给你听，忙等待，直到有新的空闲接线员为止。
+实际网络编程中，处理并发的方式还有select/poll/epoll等。
 
+下面是一个实际的socket通信过程：
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![](../pics/tcpsocket.png)
 
 
 
 
 
+**Socket的特点**
+
+1. Socket基于TCP链接，数据传输有保障
+2. Socket适用于建立长时间链接
+3. Socket编程通常应用于即时通讯
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# 并发包
-
-## concurrent包下面，都用过什么？
-
-- concurrent下面的包 
-  - Executor  用来创建线程池，在实现Callable接口时，添加线程。 
-  - FeatureTask 此 FutureTask 的 get 方法所返回的结果类型。 
-  - TimeUnit 
-  - Semaphore  
-  - LinkedBlockingQueue  
-- 所用过的类 
-  - Executor   
 
