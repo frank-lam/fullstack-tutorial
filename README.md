@@ -59,17 +59,10 @@
 
 
 
-## 四、操作系统（Linux）
+## 四、操作系统
 
-- [[under editing] Linux基础](notes/Linux.md)
-
-
-
-### 阅读书籍
-
-- 《快乐的Linux命令行》（待整理学习笔记！！！）
-
-
+- [√ Linux](notes/Linux.md)
+- 操作系统
 
 
 
@@ -117,9 +110,11 @@
 
 #### 学习Github库
 
-- [hadyang/interview: Java / Android 笔试、面试 知识整理](https://github.com/hadyang/interview) `star：928`
-- [francistao/LearningNotes: Enjoy Learning.](https://github.com/francistao/LearningNotes)  `star：9194`
-- [Snailclimb/Java_Guide: Java面试通关手册（Java学习指南）](https://github.com/Snailclimb/Java_Guide) `star：94`
+[hadyang/interview: Java / Android 笔试、面试 知识整理](https://github.com/hadyang/interview) `star：928`
+
+[francistao/LearningNotes: Enjoy Learning.](https://github.com/francistao/LearningNotes)  `star：9194`
+
+[Snailclimb/Java_Guide: Java面试通关手册（Java学习指南）](https://github.com/Snailclimb/Java_Guide) `star：94`
 
 
 
