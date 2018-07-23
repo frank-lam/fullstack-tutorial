@@ -1,8 +1,10 @@
-[TOC]
+#### 
 
 # Linux
 
 
+
+[TOC]
 
 【Linux】初踏足Linux的大门 - CSDN博客
 
@@ -42,31 +44,49 @@ https://blog.csdn.net/qq_41035588/article/details/80947383
 
 - **/bin：**
   - bin是Binary的缩写, 这个目录存放着最经常使用的命令。
+
 - **/boot：**
   - 这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件。
+
 - **/dev ：**
   - dev是Device(设备)的缩写, 该目录下存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的。
+
 - **/etc：** 
   - 这个目录用来存放所有的系统管理所需要的配置文件和子目录。
+
 - **/home：**
   - 用户的主目录，在Linux中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。
+
 - **/lib：**
   - 这个目录里存放着系统最基本的动态连接共享库，其作用类似于Windows里的DLL文件。几乎所有的应用程序都需要用到这些共享库。
+
 - **/lost+found：**
   - 这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件。
+
 - **/media：**
   - linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下。
+
 - **/mnt：**
   - 系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在/mnt/上，然后进入该目录就可以查看光驱里的内容了。
+
 - **/opt：**
   - 这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。
+
 - **/proc：**
-  - 这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。
+
+  - 此目录的所有数据都在内存里，如 系统核心，外部设备，网络状态。由于所有数据都储存在内存里，所以不占用磁盘空间； 这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。
+
+  ```
+  more /proc/meminfo
+  ```
+
+  
+
   - 这个目录的内容不在硬盘上而是在内存里，我们也可以直接修改里面的某些文件，比如可以通过下面的命令来屏蔽主机的ping命令，使别人无法ping你的机器：
 
-```shell
-echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all
-```
+  ```shell
+  echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all
+  ```
 
 - **/root：**
   - 该目录为系统管理员，也称作超级权限者的用户主目录。
@@ -106,7 +126,7 @@ echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all
 
 > 注意：在Linux中一切皆文件
 
-## ★  proc下都放什么文件？【腾讯面试】
+### ★  proc下都放什么文件？【腾讯面试】
 
 
 
@@ -508,6 +528,8 @@ cp [-adfilprsu] source destination
 
 以字符或者十六进制的形式显示二进制文件。
 
+### ★ Linux查看日志文件的方式
+
 
 
 ## 8、指令与文件搜索
@@ -633,17 +655,29 @@ slot@slot-ubt:~/test$ grep -Rn "hello" ~/test
 /home/slot/test/bb:1:hello world!
 ```
 
- 
+### *. 管道
 
- 
+管线是将一个命令的标准输出作为另一个命令的标准输入，在数据需要经过多个步骤的处理之后才能得到我们想要的内容时就可以使用管线。
+
+在命令之间使用 | 分隔各个管线命令。
+
+```
+$ ls -al /etc | less
+```
+
+查看已经建立TCP请求的个数
+
+```
+netstat -an | grep ESTABLISHED| wc -l
+```
+
+
+
+
 
  参考资料
 
 - [Linux查找命令 - 简书](https://www.jianshu.com/p/72c579528337)
-
- 
-
- 
 
 
 
@@ -764,6 +798,12 @@ Linux 的 Shell 种类众多，常见的有：
 在一般情况下，人们并不区分 Bourne Shell 和 Bourne Again Shell，所以，像 **#!/bin/sh**，它同样也可以改为 **#!/bin/bash**。
 
 \#! 告诉系统其后路径所指定的程序即是解释此脚本文件的 Shell 程序。
+
+
+
+参考资料：
+
+- [Linux脚本开头#!/bin/bash和#!/bin/sh是什么意思以及区别 - CSDN博客](https://blog.csdn.net/y_hanxiao/article/details/78638479)
 
 
 
@@ -907,6 +947,8 @@ wc(选项)(参数)
 
 
 ## 9、正则表达式
+
+
 
 ### cut
 
@@ -1131,21 +1173,165 @@ sed -i 's/原字符串/替换字符串/g' filename
 
 ## 10、进程管理
 
+### 查看进程
+
+#### 1. ps
+
+查看某个时间点的进程信息
+
+示例一：查看自己的进程
+
+```
+# ps -l
+```
+
+示例二：查看系统所有进程
+
+```
+# ps aux
+```
+
+示例三：查看特定的进程
+
+```
+# ps aux | grep threadx
+```
+
+#### 2. top
+
+实时显示进程信息
+
+示例：两秒钟刷新一次
+
+```
+# top -d 2
+```
+
+#### 3. pstree
+
+查看进程树
+
+示例：查看所有进程树
+
+```
+# pstree -A
+```
+
+#### 4. netstat
+
+查看占用端口的进程
+
+示例：查看特定端口的进程
+
+```
+# netstat -anp | grep port
+```
+
+
+
+参考资料：
+
+- [https://www.bilibili.com/video/av9539203?from=search&seid=12568422774751055363](https://www.bilibili.com/video/av9539203?from=search&seid=12568422774751055363)
 
 
 
 
 
+### 进程状态
+
+[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/76a49594323247f21c9b3a69945445ee.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/76a49594323247f21c9b3a69945445ee.png)
+
+ 
+
+| 状态 | 说明                                                         |
+| ---- | ------------------------------------------------------------ |
+| R    | running or runnable (on run queue)                           |
+| D    | uninterruptible sleep (usually I/O)                          |
+| S    | interruptible sleep (waiting for an event to complete)       |
+| Z    | zombie (terminated but not reaped by its parent) 僵尸进程    |
+| T    | stopped (either by a job control signal or because it is being traced) |
 
 
 
-## -----------------------------------------------------
+#### SIGCHLD
+
+当一个子进程改变了它的状态时：停止运行，继续运行或者退出，有两件事会发生在父进程中：
+
+- 得到 SIGCHLD 信号；
+- waitpid() 或者 wait() 调用会返回。
+
+[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/flow.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/flow.png)
+
+其中子进程发送的 SIGCHLD 信号包含了子进程的信息，包含了进程 ID、进程状态、进程使用 CPU 的时间等。
+
+在子进程退出时，它的进程描述符不会立即释放，这是为了让父进程得到子进程信息。父进程通过 wait() 和 waitpid() 来获得一个已经退出的子进程的信息。
 
 
 
+#### wait()
+
+```
+pid_t wait(int *status)
+```
+
+父进程调用 wait() 会一直阻塞，直到收到一个子进程退出的 SIGCHLD 信号，之后 wait() 函数会销毁子进程并返回。
+
+如果成功，返回被收集的子进程的进程 ID；如果调用进程没有子进程，调用就会失败，此时返回 -1，同时 errno 被置为 ECHILD。
+
+参数 status 用来保存被收集的子进程退出时的一些状态，如果我们对这个子进程是如何死掉的毫不在意，只想把这个子进程消灭掉，可以设置这个参数为 NULL：
+
+```
+pid = wait(NULL);
+```
 
 
-## 5、进程和线程的区别【腾讯】
+
+#### waitpid()
+
+```
+pid_t waitpid(pid_t pid, int *status, int options)
+```
+
+作用和 wait() 完全相同，但是多了两个可由用户控制的参数 pid 和 options。
+
+pid 参数指示一个子进程的 ID，表示只关心这个子进程的退出 SIGCHLD 信号。如果 pid=-1 时，那么和 wait() 作用相同，都是关心所有子进程退出的 SIGCHLD 信号。
+
+options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 waitpid() 调用变成非阻塞的，也就是说它会立即返回，父进程可以继续执行其它任务。
+
+
+
+#### 孤儿进程
+
+一个父进程退出，而它的一个或多个子进程还在运行，那么这些子进程将成为孤儿进程。
+
+孤儿进程将被 init 进程（进程号为 1）所收养，并由 init 进程对它们完成状态收集工作。
+
+由于孤儿进程会被 init 进程收养，所以孤儿进程不会对系统造成危害。
+
+
+
+#### 僵尸进程
+
+一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait() 或 waitpid() 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait() 或 waitpid()，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵尸进程。
+
+僵尸进程通过 ps 命令显示出来的状态为 Z（zombie）。
+
+系统所能使用的进程号是有限的，如果大量的产生僵尸进程，将因为没有可用的进程号而导致系统不能产生新的进程。
+
+要消灭系统中大量的僵尸进程，只需要将其父进程杀死，此时所有的僵尸进程就会变成孤儿进程，从而被 init 所收养，这样 init 就会释放所有的僵死进程所占有的资源，从而结束僵尸进程。
+
+
+
+参考资料：
+
+- [孤儿进程与僵尸进程[总结] - Anker's Blog - 博客园](https://www.cnblogs.com/Anker/p/3271773.html)
+- [《深入理解计算机系统》异常控制流——读书笔记 - CSDN博客](https://blog.csdn.net/zhanghaodx082/article/details/12280689)
+- [Linux系统学习笔记：异常控制流 - CSDN博客](https://blog.csdn.net/yangxuefeng09/article/details/10066357)
+- [Linux 之守护进程、僵死进程与孤儿进程 | LiuYongbin](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
+- [CSAPP笔记第八章异常控制流 呕心沥血千行笔记- DDUPzy - 博客园](https://www.cnblogs.com/zy691357966/p/5480537.html)
+  
+
+## 11、进程和线程的区别【腾讯】
 
 **进程：**CPU资源分配的最小单位
 
@@ -1165,88 +1351,152 @@ sed -i 's/原字符串/替换字符串/g' filename
 
 
 
+## 12、kill用法，某个进程杀不掉的原因（进入内核态，忽略kill信号） 
 
-
-## 6、kill用法，某个进程杀不掉的原因（进入内核态，忽略kill信号） 
-
-
-
-
-
-## linux查看日志文件的方式    
+1. 该进程是僵尸进程（STAT z），此时进程已经释放所有的资源，但是没有被父进程释放。僵尸进程要等到父进程结束，或者重启系统才可以被释放。
+2. 进程处于“核心态”，并且在等待不可获得的资源，处于“核心态 ”的资源默认忽略所有信号。只能重启系统。
 
 
 
-## linux用过的命令
+参考资料：
+
+- [linux kill -9 杀不掉的进程 - CSDN博客](https://blog.csdn.net/lemontree1945/article/details/79169178)
 
 
 
-## 管道
 
-管线是将一个命令的标准输出作为另一个命令的标准输入，在数据需要经过多个步骤的处理之后才能得到我们想要的内容时就可以使用管线。
 
-在命令之间使用 | 分隔各个管线命令。
+## 14、包管理工具
 
+RPM 和 DPKG 为最常见的两类软件包管理工具。RPM 全称为 Redhat Package Manager，最早由 Red Hat 公司制定实施，随后被 GNU 开源操作系统接受并成为很多 Linux 系统 (RHEL) 的既定软件标准。与 RPM 进行竞争的是基于 Debian 操作系统 (UBUNTU) 的 DEB 软件包管理工具 DPKG，全称为 Debian Package，功能方面与 RPM 相似。
+
+YUM 基于 RPM，具有依赖管理功能，并具有软件升级的功能。
+
+
+
+### 软件类型
+
+1. 源码包    需要编译   *.tar.gz
+2. 二进制包    已编译   *.rpm
+
+
+
+### 发行版
+
+Linux 发行版是 Linux 内核及各种应用软件的集成版本。
+
+| 基于的包管理工具（包类型） | 商业发行版 | 社区发行版      | 工具         | 在线安装（自动解决依赖关系） |
+| -------------------------- | ---------- | --------------- | ------------ | ---------------------------- |
+| RPM                        | Red Hat    | Fedora / CentOS | rpm/rpmbuild | yum                          |
+| DPKG                       | Ubuntu     | Debian          | dpkg         | apt                          |
+
+注意：不管是源码包，还是二进制包，安装时都可能会有依赖关系！
+
+
+
+## 15、系统管理命令（如查看内存使用、网络情况）
+
+free -m
+
+ifconfig、ping、netstat、traceroute、dig和nslookup、host、hostname、route、arp、ethtool、GUI管理命令system-config-network
+
+
+
+Linux网络配置和网络诊断命令介绍_百度经验
+https://jingyan.baidu.com/article/c1465413b694d90bfcfc4c87.html
+
+
+
+## 16、磁盘管理
+
+**df命令**用于显示磁盘分区上的可使用的磁盘空间。默认显示单位为KB。可以利用该命令来获取硬盘被占用了多少空间，目前还剩下多少空间等信息。 
+
+查看系统磁盘设备，默认是KB为单位：
+
+```shell
+[root@LinServ-1 ~]# df
+文件系统               1K-块        已用     可用 已用% 挂载点
+/dev/sda2            146294492  28244432 110498708  21% /
+/dev/sda1              1019208     62360    904240   7% /boot
+tmpfs                  1032204         0   1032204   0% /dev/shm
+/dev/sdb1            2884284108 218826068 2518944764   8% /data1
 ```
-$ ls -al /etc | less
+
+使用`-h`选项以KB以上的单位来显示，可读性高：
+
+```shell
+[root@LinServ-1 ~]# df -h
+文件系统              容量  已用 可用 已用% 挂载点
+/dev/sda2             140G   27G  106G  21% /
+/dev/sda1             996M   61M  884M   7% /boot
+tmpfs                1009M     0 1009M   0% /dev/shm
+/dev/sdb1             2.7T  209G  2.4T   8% /data1
 ```
 
-查看已经建立TCP请求的个数
-
-```
-netstat -an | grep ESTABLISHED| wc -l
-```
 
 
+## 17、VIM 三个模式
 
+- 一般指令模式（Command mode）：VIM 的默认模式，可以用于移动游标查看内容；
+- 编辑模式（Insert mode）：按下 "i" 等按键之后进入，可以对文本进行编辑；
+- 指令列模式（Bottom-line mode）：按下 ":" 按键之后进入，用于保存退出等操作。
 
+[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/5942debd-fc00-477a-b390-7c5692cc8070.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/5942debd-fc00-477a-b390-7c5692cc8070.jpg)
 
-## 软件包管理
+ 
 
+在指令列模式下，有以下命令用于离开或者保存文件。
 
-
-
-
-## 系统管理命令（如查看内存使用、网络情况）
-
-
-
-
-
-## find命令
-
-
-
-## shell脚本
-
-Linux脚本开头#!/bin/bash和#!/bin/sh是什么意思以及区别 - CSDN博客
-https://blog.csdn.net/y_hanxiao/article/details/78638479
+| 命令 | 作用                                                         |
+| ---- | ------------------------------------------------------------ |
+| :w   | 写入磁盘                                                     |
+| :w!  | 当文件为只读时，强制写入磁盘。到底能不能写入，与用户对该文件的权限有关 |
+| :q   | 离开                                                         |
+| :q!  | 强制离开不保存                                               |
+| :wq  | 写入磁盘后离开                                               |
+| :wq! | 强制写入磁盘后离开                                           |
 
 
 
 
 
-## 磁盘挂载 df
+
+
+## 17、Screen命令
 
 
 
 
 
-## awk使用
-
-
-
-## netstat
-
-**netstat命令**用来打印Linux中网络系统的状态信息，可让你得知整个Linux系统的网络情况。
 
 
 
 
 
-## Screen命令
+
+## 18、常用快捷方式
+
+ctrl + c：强制终止当前命令
+
+ctrl + l：清屏
+
+ctrl + a：光标移动到命令行首
+
+ctrl + e：光标移动到命令行尾
+
+ctrl + u：从光标所在位置删除到行首
+
+ctrl + z：把命令放入后台（配合fg使用）
+
+ctrl + r：在历史命令中搜索
 
 
 
-​	高并发网络编程之epoll详解 - CSDN博客
+
+
+
+
+## 高并发网络编程之epoll详解 - CSDN博客
+
 https://blog.csdn.net/shenya1314/article/details/73691088
+
