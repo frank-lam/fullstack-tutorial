@@ -61,11 +61,9 @@
 
 ## 四、操作系统（Linux）
 
-- Linux基础
+- [[under editing] Linux基础](notes/Linux.md)
 
 
-
-[我的Linux命令行学习笔记](notes/my_linux_cmd.md)
 
 ### 阅读书籍
 
@@ -83,7 +81,8 @@
 
 ## 六、系统架构
 
-- ...
+- Nginx
+- Tomcat
 
 
 
