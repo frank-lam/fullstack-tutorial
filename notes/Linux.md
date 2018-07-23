@@ -1580,7 +1580,7 @@ https://blog.csdn.net/shenya1314/article/details/73691088
 
 
 
-# 参考资料：
+# 参考资料
 
 【Linux】初踏足Linux的大门 - CSDN博客
 
@@ -1590,3 +1590,13 @@ https://blog.csdn.net/qq_41035588/article/details/80947383
 
 (2 封私信 / 18 条消息)如何学习（记住）linux命令（常用选项）？ - 知乎
 https://www.zhihu.com/question/21690166/answer/66721478
+
+
+
+
+
+
+
+# 更新日志
+
+2018/7/23 v.1.0.0版本

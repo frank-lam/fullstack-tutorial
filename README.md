@@ -36,7 +36,7 @@
 
 ### 知识框架
 
-- Java基础
+- [[under editing] Java基础](notes/JavaArchitecture/01%20Java%20基础.md)
 - [√ 集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md)
 - [√ 并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md)
 - [√ IO流](notes/JavaArchitecture/04%20Java%20IO.md)
