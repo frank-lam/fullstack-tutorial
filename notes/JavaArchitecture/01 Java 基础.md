@@ -1,5 +1,3 @@
- 
-
 [TOC]
 
 
@@ -18,7 +16,7 @@ from 2018/7/11
 
 
 
- <div align="center"> <img src="../pics/ java-init-order.png" width=""/></div><br/>
+ 
 
 
 
@@ -34,7 +32,16 @@ from 2018/7/11
 - 父类优先于子类进行初始化
 - 按照成员变量的定义顺序进行初始化。 即使变量定义散布于方法定义之中，它们依然在任何方法（包括构造函数）被调用之前先初始化
 
- <div align="center"> <img src="../pics/java-init-order.png" width="800"/> </div><br>
+**加载顺序**
+
+- 父类（静态变量、静态语句块）
+- 子类（静态变量、静态语句块）
+- 父类（实例变量、普通语句块）
+- 父类（构造函数）
+- 子类（实例变量、普通语句块）
+- 子类（构造函数）
+
+
 
 **实例** 
 
@@ -352,6 +359,23 @@ public class Box<T> {
 
 
 
+## 7. 有哪些访问修饰符
+
+Java面向对象的基本思想之一是封装细节并且公开接口。Java语言采用访问控制修饰符来控制类及类的方法和变量的访问权限，从而向使用者暴露接口，但隐藏实现细节。访问控制分为四种级别：
+
+| 修饰符    | 当前类 | 同 包 | 子 类 | 其他包 |
+| --------- | ------ | ----- | ----- | ------ |
+| public    | √      | √     | √     | √      |
+| protected | √      | √     | √     | ×      |
+| default   | √      | √     | ×     | ×      |
+| private   | √      | ×     | ×     | ×      |
+
+- 类的成员不写访问修饰时默认为default。默认对于同一个包中的其他类相当于公开（public），对于不是同一个包中的其他类相当于私有（private）。
+- 受保护（protected）对子类相当于公开，对不是同一包中的没有父子关系的类相当于私有。
+- Java中，外部类的修饰符只能是public或默认，类的成员（包括内部类）的修饰符可以是以上四种。 
+
+
+
 
 
 # 二、面向对象
@@ -360,7 +384,7 @@ public class Box<T> {
 
 - **Java的四个基本特性** 
   - **抽象**：抽象是将一类对象的共同特征总结出来构造类的过程，包括<u>数据抽象</u>和<u>行为抽象</u>两方面。抽象只关注对象有哪些属性和行为，并不关注这些行为的细节是什么。  
-  - **继承**：继承是从已有类得到继承信息创建新类的过程。提供继承信息的类被称为父类（超类、基类）；得到继承信息的类被称为子类（派生类）。继承让变化中的软件系统有了一定的延续性，同时继承也是封装程序中可变因素的重要手段。 
+  - ## **继承**：继承是从已有类得到继承信息创建新类的过程。提供继承信息的类被称为父类（超类、基类）；得到继承信息的类被称为子类（派生类）。继承让变化中的软件系统有了一定的延续性，同时继承也是封装程序中可变因素的重要手段。 
   - **封装**：通常认为封装是把数据和操作数据的方法绑定起来，对数据的访问只能通过已定义的接口。面向对象的本质就是将现实世界描绘成一系列完全自治、封闭的对象。我们在类中编写的方法就是对实现细节的一种封装；我们编写一个类就是对数据和数据操作的封装。可以说，封装就是隐藏一切可隐藏的东西，只向外界提供最简单的编程接口。 
   - **多态**：多态性是指允许不同子类型的对象对同一消息作出不同的响应。 
 - **多态的理解(多态的实现方式)** 
@@ -396,14 +420,14 @@ public class Box<T> {
   - **面向过程**就像是一个细心的管家，事无具细的都要考虑到。而**面向对象**就像是个家用电器，你只需要知道他的功能，不需要知道它的工作原理。 
   - **面向过程**是一种是“事件”为中心的编程思想。就是分析出解决问题所需的步骤，然后用函数把这些步骤实现，并按顺序调用。**面向对象**是以“对象”为中心的编程思想。 
   - 简单的举个例子：汽车发动、汽车到站 
-    - 这对于**“面向过程”**来说，是两个事件，汽车启动是一个事件，汽车到站是另一个事件，面向过程编程的过程中我们关心的是事件，而不是汽车本身。针对上述两个事件，形成两个函数，之 后依次调用。 
-    - 然而这对于**“面向对象”**来说，我们关心的是汽车这类对象，两个事件只是这类对象所具有的行为。而且对于这两个行为的顺序没有强制要求。 
+    - 这对于**“面向过程”**来说，是两个事件，汽车启动是一个事件，汽车到站是另一个事件，面向过程编程的过程中我们关心的是事件，而不是汽车本身。针对上述两个事件，形成两个函数，之 后依次调用。（事件驱动，动词为主）
+    - 然而这对于**“面向对象”**来说，我们关心的是汽车这类对象，两个事件只是这类对象所具有的行为。而且对于这两个行为的顺序没有强制要求。 （对象驱动，名词为主，将问题抽象出具体的对象，而这个对象有自己的属性和方法，在解决问题的时候是将不同的对象组合在一起使用）
 - 用面向过程可以实现面向对象吗 ？
 - 那是不是不能面向对象 ？
 
 
 
-#### 4. 面向对象开发的六个基本原则(单一职责、开放封闭、里氏替换、依赖倒置、合成聚合复用、接口隔离)，迪米特法则。在项目中用过哪些原则
+## 4. 面向对象开发的六个基本原则(单一职责、开放封闭、里氏替换、依赖倒置、合成聚合复用、接口隔离)，迪米特法则。在项目中用过哪些原则
 
 - **六个基本原则**（参考《设计模式之禅》）
 
@@ -437,13 +461,13 @@ public class Box<T> {
 
 
 
-#### 5.内部类有哪些
+## 5. 内部类有哪些
 
 可以将一个类的定义放在另一个类的定义内部，这就是内部类。
 
 在Java中内部类主要分为成员内部类、局部内部类、匿名内部类、静态内部类 
 
-##### （一）成员内部类
+### （一）成员内部类
 
 成员内部类也是最普通的内部类，它是外围类的一个成员，所以他是可以**无限制的访问外围类的所有成员属性和方法，尽管是private的**，但是外围类要访问内部类的成员属性和方法则需要通过内部类实例来访问。
 
@@ -487,7 +511,7 @@ outerClass...
 
 
 
-##### （二）局部内部类
+### （二）局部内部类
 
 有这样一种内部类，它是嵌套在方法和作用于内的，对于这个类的使用主要是应用与解决比较复杂的问题，想创建一个类来辅助我们的解决方案，到那时又不希望这个类是公共可用的，所以就产生了局部内部类，局部内部类和成员内部类一样被编译，只是它的作用域发生了改变，它只能在该方法和属性中被使用，出了该方法和属性就会失效。 
 
@@ -544,7 +568,7 @@ public class Parcel6 {
 
 
 
-##### （三）匿名内部类
+### （三）匿名内部类
 
 在做Swing编程中，我们经常使用这种方式来绑定事件 
 
@@ -561,7 +585,8 @@ button2.addActionListener(
 
 ```java
 public class OuterClass {
-    public InnerClass getInnerClass(final int num,String str2){
+    // ★当所在方法的形参需要被匿名内部类使用，那么这个形参就必须为final！！！这里要注意
+    public InnerClass getInnerClass(final int num,String str2){ 
         return new InnerClass(){
             int number = num + 3;
             public int getNumber(){
@@ -596,7 +621,7 @@ Output:
 
 
 
-##### （四）静态内部类
+### （四）静态内部类
 
 关键字static中提到Static可以修饰成员变量、方法、代码块，其他它还可以修饰内部类，使用static修饰的内部类我们称之为静态内部类，不过我们更喜欢称之为嵌套内部类。静态内部类与非静态内部类之间存在一个最大的区别，我们知道非静态内部类在编译完成之后会隐含地保存着一个引用，该引用是指向创建它的外围内，但是静态内部类却没有。
 
@@ -609,39 +634,39 @@ public class OuterClass {
     private String sex;
     public static String name = "chenssy";
     
-    //静态内部类 
+    // 静态内部类 
     static class InnerClass1{
-        //在静态内部类中可以存在静态成员
+        // 在静态内部类中可以存在静态成员
         public static String _name1 = "chenssy_static";
         
         public void display(){ 
-            //静态内部类只能访问外围类的静态成员变量和方法
-		   //不能访问外围类的非静态成员变量和方法
+            // 静态内部类只能访问外围类的静态成员变量和方法
+		   // 不能访问外围类的非静态成员变量和方法
             System.out.println("OutClass name :" + name);
         }
     }
     
 
-    //非静态内部类
+    // 非静态内部类
     class InnerClass2{
         // 非静态内部类中不能存在静态成员
         public String _name2 = "chenssy_inner";
-        //非静态内部类中可以调用外围类的任何成员,不管是静态的还是非静态的
+        // 非静态内部类中可以调用外围类的任何成员,不管是静态的还是非静态的
         public void display(){
             System.out.println("OuterClass name：" + name);
         }
     }
     
-    //外围类方法
+    // 外围类方法
     public void display(){
-        //外围类访问静态内部类：内部类
+        // 外围类访问静态内部类：内部类
         System.out.println(InnerClass1._name1);
-        //静态内部类 可以直接创建实例不需要依赖于外围类
+        // 静态内部类 可以直接创建实例不需要依赖于外围类
         new InnerClass1().display();
         
-        //非静态内部的创建需要依赖于外围类
+        // 非静态内部的创建需要依赖于外围类
         OuterClass.InnerClass2 inner2 = new OuterClass().new InnerClass2();
-        //方位非静态内部类的成员需要使用非静态内部类的实例
+        // 方位非静态内部类的成员需要使用非静态内部类的实例
         System.out.println(inner2._name2);
         inner2.display();
     }
@@ -661,19 +686,61 @@ OuterClass name：chenssy
 
 
 
-#### 6. 组合、继承和代理的区别
+## 6. 组合、继承和代理的区别
 
-**定义：**
+### 定义
 
 - 组合：在新类中new 另外一个类的对象，以添加该对象的特性。
 - 继承：从基类继承得到子类，获得基类的特性。
 - 代理：在代理类中创建某功能的类，调用类的一些方法以获得该类的部分特性。
 
-**使用场合：**
+### 使用场合
 
 - 组合：各部件之间没什么关系，只需要组合即可。like组装电脑，需要new CPU(),new RAM(),new Disk()……
+
+  ```java
+  public class Computer {
+      public Computer() {
+          CPU cpu=new CPU();
+          RAM ram=new RAM();
+          Disk disk=new Disk();
+      }
+  }
+  class CPU{    }
+  class RAM{    }
+  class Disk{    }
+  ```
+
 - 继承：子类需要具有父类的功能，各子类之间有所差异。like Shape类作为基类，子类有Rectangle，CirCle，Triangle……代码不写了，大家都经常用。
+
 - 代理：飞机控制类，我不想暴露太多飞机控制的功能，只需部分前进左右转的控制（而不需要暴露发射导弹功能）。通过在代理类中new一个飞机控制对象，然后在方法中添加飞机控制类的各个需要暴露的功能。
+
+  ```java
+  public class PlaneDelegation{    
+      private PlaneControl planeControl;    //private外部不可访问
+  	
+      // 飞行员权限代理类，普通飞行员不可以开火
+      PlaneDelegation(){
+          planeControl=new PlaneControl();
+      }
+      public void speed(){
+          planeControl.speed();
+      }
+      public void left(){
+          planeControl.left();
+      }
+      public void right(){
+          planeControl.right();
+      }
+  }
+  
+  final class PlaneControl {// final表示不可继承，控制器都能继承那还得了
+      protected void speed() {}
+      protected void fire() {}
+      protected void left() {}
+      protected void right() {}
+  }
+  ```
 
 **说明：**
 
@@ -681,9 +748,52 @@ OuterClass name：chenssy
 
 
 
-### 7. 什么是构造函数
+## 7. 什么是构造函数
 
-### 8. 向上造型和向下造型
+构造函数是函数的一种特殊形式，特殊在哪里？构造函数中不需要定义返回类型（void是无需返回值的意思，请注意区分两者），且构造函数的名称与所在的类名完全一致，其余的与函数的特性相同，可以带有参数列表，可以存在函数的重载现象。 
+
+一般用来初始化一些成员变量，当要生成一个类的对象（实例）的时候就会调用类的构造函数。如果不显示声明类的构造方法，会自动生成一个默认的不带参数的空的构造函数。
+
+```java
+public class Demo{
+　  private int num=0;
+
+　  //无参构造函数
+　  Demo()
+　 {
+　　　　System.out.println("constractor_run");
+　 }
+
+　  //有参构造函数
+　  Demo(int num)
+　 {
+　　　　System.out.println("constractor_args_run");
+　 }
+
+　  //普通成员函数
+　 public void demoFunction()
+　 {
+　　　　System.out.println("function_run");
+　 }
+}
+```
+
+在这里要说明一点，如果在类中我们不声明构造函数，JVM会帮我们默认生成一个空参数的构造函数；如果在类中我们声明了带参数列表的构造函数，JVM就不会帮我们默认生成一个空参数的构造函数，我们想要使用空参数的构造函数就必须自己去显式的声明一个空参的构造函数。 
+
+
+
+**构造函数的作用**
+
+　　通过开头的介绍，构造函数的轮廓已经渐渐清晰，那么为什么会有构造函数呢？构造函数有什么作用？构造函数是面向对象编程思想所需求的，它的主要作用有以下两个：
+
+- **创建对象**。任何一个对象创建时，都需要初始化才能使用，所以任何类想要创建实例对象就必须具有构造函数。
+- **对象初始化**。构造函数可以对对象进行初始化，并且是给与之格式（参数列表）相符合的对象初始化，是具有一定针对性的初始化函数。
+
+
+
+
+
+## 8. 向上造型和向下造型
 
 父类引用能指向子类对象，子类引用不能指向父类对象；
 
@@ -719,9 +829,9 @@ if(f3 instanceof Son){
 
 # 三、关键字
 
-#### 1. final与static的区别
+## 1. final与static的区别
 
-**final**
+### final
 
 - **1. 数据**
   - 声明数据为常量，可以是编译时常量，也可以是在运行时被初始化后不能被改变的常量。
@@ -747,7 +857,7 @@ y.a = 1;
 
 
 
-**static**
+### static
 
 - **1. 静态变量**
 
@@ -828,34 +938,169 @@ public InitialOrderTest() {
 
 
 
-#### 1. break、continue、return
+## 2. break、continue、return
+
+### break
+
+跳出当前循环；但是如果是嵌套循环，则只能跳出当前的这一层循环，只有逐层break才能跳出所有循环。
+
+```java
+for (int i = 0; i < 10; i++) {
+    // 在执行i==6时强制终止循环，i==6不会被执行
+    if (i == 6)
+        break;
+    System.out.println(i);  
+}  
+
+输出结果为0 1 2 3 4 5 ；6以后的都不会输出
+```
+
+### continue
+
+终止当前循环，但是不跳出循环（在循环中continue后面的语句是不会执行了），继续往下根据循环条件执行循环。 
+
+```java
+for (int i = 0; i < 10; i++) {  
+    // i==6不会被执行，而是被中断了    
+    if (i == 6)
+        continue;
+    System.out.println(i);  
+}
+
+输出结果为0 1 2 3 4 5 7 8 9；只有6没有输出
+```
+
+### return
+
+- return 从当前的方法中退出,返回到该调用的方法的语句处,继续执行。 
+- return 返回一个值给调用该方法的语句，返回值的数据类型必须与方法的声明中的返回值的类型一致。 
+- return后面也可以不带参数，不带参数就是返回空，其实主要目的就是用于想中断函数执行，返回调用函数处。
+
+特别注意：返回值为void的方法，从某个判断中跳出，必须用return；
 
 
 
-#### 2. final、finally和finalize有什么区别
+
+
+## 3. final、finally和finalize有什么区别
+
+### final
+
+如果一个类被final修饰，意味着该类不能派生出新的子类，不能作为父类被继承。因此一个类不能被声明为abstract，又被声明为final。将变量或方法声明为final。可以保证他们在使用的时候不被改变。其初始化可以在两个地方：一是其定义的地方，也就是在final变量在定义的时候就对其赋值；二是在构造函数中。这两个地方只能选其中的一个，要么在定义的时候给值，要么在构造函数中给值。被声明为final的方法也只能使用，不能重写。
 
 
 
-#### 3. assert有什么作用？
+### finally
+
+在异常处理的时候，提供finally块来执行任何的清除操作。如果抛出一个异常，那么相匹配的catch字句就会执行，然后控制就会进入finally块，前提是有finally块。
 
 
 
-#### 4. volatile
+finally作为异常处理的一部分，它只能用在try/catch语句中，并且附带一个语句块，表示这段语句最终一定会被执行（不管有没有抛出异常），经常被用在需要释放资源的情况下。（×）（这句话其实存在一定的问题） 
 
-​	volatile是一个类型修饰符（type specifier），它是被设计用来修饰被不同线程访问和修改的变量。在使用volatile修饰成员变量后，所有线程在任何时间所看到变量的值都是相同的。此外，使用volatile会组织编译器对代码的优化，因此会降低程序的执行效率。所以，除非迫不得已，否则，能不使用volatile就尽量不要使用volatile
+- 异常情况说明：
+  - 在执行try语句块之前已经返回或抛出异常，所以try对应的finally语句并没有执行。 
+  - 我们在 try 语句块中执行了 System.exit (0) 语句，终止了 Java 虚拟机的运行。那有人说了，在一般的 Java 应用中基本上是不会调用这个 System.exit(0) 方法的 
+  - 当一个线程在执行 try 语句块或者 catch 语句块时被打断（interrupted）或者被终止（killed），与其相对应的 finally 语句块可能不会执行 
+  - 还有更极端的情况，就是在线程运行 try 语句块或者 catch 语句块时，突然死机或者断电，finally 语句块肯定不会执行了。可能有人认为死机、断电这些理由有些强词夺理，没有关系，我们只是为了说明这个问题。 
+
+
+
+### finalize
+
+finalize是方法名，Java技术允许使用finalize()方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作。这个方法是在垃圾收集器确认一个对象没有被引用时对这个对象调用的。它是在Object类中定义的，因此，所有的类都继承了它。子类覆盖finalize()方法已整理系统资源或者执行其他清理工作。finalize()方法是在垃圾收集器删除对象之前对这个对象调用的。
+
+
+
+参考资料：
+
+- [final、finally与finalize的区别 - 涛声依旧~ - 博客园](https://www.cnblogs.com/ktao/p/8586966.html)
+  
+
+## 4. assert有什么作用？
+
+在实现中，assertion就是在程序中的一条语句，它对一个boolean表达式进行检查，一个正确程序必须保证这个boolean表达式的值为true；如果该值为false，说明程序已经处于不正确的状态下，系统将给出警告并且退出。一般来说，assertion用于保证程序最基本、关键的正确性。assertion检查通常在开发和测试时开启。为了提高性能，在软件发布后，assertion检查通常是关闭的。下面简单介绍一下Java中assertion的实现。
+
+在语法上，为了支持assertion，Java增加了一个关键字assert。它包括两种表达式，分别如下：
+
+**assert <boolean表达式>**
+
+如果<boolean表达式>为true，则程序继续执行。
+
+如果为false，则程序抛出AssertionError，并终止执行。
+
+ 
+
+**assert <boolean表达式> : <错误信息表达式>**
+
+如果<boolean表达式>为true，则程序继续执行。
+
+如果为false，则程序抛出java.lang.AssertionError，并输入<错误信息表达式>。
+
+
+
+```java
+public static void main(String[] args) {
+    System.out.println("123");
+
+    int a = 0;
+    int b = 1;
+    assert a == b; //需显示开启，默认为不开启状态 
+    assert a == b : "执行失败！";
+
+    System.out.println("1234");
+}
+```
+
+
+
+## 5. volatile
+
+> 每次都读错，美式发音：volatile /'vɑlətl/ adj. [化学] 挥发性的；不稳定的；爆炸性的；反复无常的 
+
+​	volatile是一个**类型修饰符**（type specifier），它是被设计用来修饰被不同线程访问和修改的变量。在使用volatile修饰成员变量后，所有线程在任何时间所看到变量的值都是相同的。此外，使用volatile会组织编译器对代码的优化，因此会降低程序的执行效率。所以，除非迫不得已，否则，能不使用volatile就尽量不要使用volatile
 
 - 每次访问变量时，总是获取主内存的最新值
-- 每次修改变量后，立刻协会到主内存中
+- 每次修改变量后，立刻写回到主内存中
+
+ <div align="center"> <img src="../pics/../pics/java-volatile.png" width="500"/></div><br/>
 
 
 
-#### 5. instanceof
+参考资料：
+
+- [理解java Volatile 关键字 - 个人文章 - SegmentFault 思否](https://segmentfault.com/a/1190000015087945)
+  
 
 
 
+## 6. instanceof
+
+instanceof 是 Java 的一个二元操作符，类似于 ==，>，< 等操作符。
+
+instanceof 是 Java 的保留关键字。它的作用是测试它左边的对象是否是它右边的类的实例，返回 boolean 的数据类型。
+
+```java
+public class Main {
+ 
+public static void main(String[] args) {
+   Object testObject = new ArrayList();
+      displayObjectClass(testObject);
+   }
+   public static void displayObjectClass(Object o) {
+      if (o instanceof Vector)
+      System.out.println("对象是 java.util.Vector 类的实例");
+      else if (o instanceof ArrayList)
+      System.out.println("对象是 java.util.ArrayList 类的实例");
+      else
+      System.out.println("对象是 " + o.getClass() + " 类的实例");
+   }
+}
+```
 
 
-#### 6. strictfp
+
+## 7. strictfp
 
 strictfp, 即 **strict float point** (精确浮点)。 
 
@@ -865,30 +1110,37 @@ strictfp 关键字可应用于类、接口或方法。使用 strictfp 关键字�
 
 
 
-#### 7. transient
+## 8. transient
 
-我们都知道一个对象只要实现了Serilizable接口，这个对象就可以被序列化，java的这种序列化模式为开发者提供了很多便利，我们可以不必关系具体序列化的过程，只要这个类实现了Serilizable接口，这个类的所有属性和方法都会自动序列化。
+> transient 英 /'trænzɪənt/   adj. 短暂的；路过的  n. 瞬变现象；过往旅客；候鸟
+
+我们都知道一个对象只要实现了Serilizable接口，这个对象就可以被序列化，Java的这种序列化模式为开发者提供了很多便利，我们可以不必关系具体序列化的过程，只要这个类实现了Serilizable接口，这个类的所有属性和方法都会自动序列化。
 
 然而在实际开发过程中，我们常常会遇到这样的问题，这个类的有些属性需要序列化，而其他属性不需要被序列化，打个比方，如果一个用户有一些敏感信息（如密码，银行卡号等），为了安全起见，不希望在网络操作（主要涉及到序列化操作，本地序列化缓存也适用）中被传输，这些信息对应的变量就可以加上transient关键字。换句话说，这个字段的生命周期仅存于调用者的内存中而不会写到磁盘里持久化。
 
-总之，java 的transient关键字为我们提供了便利，你只需要实现Serilizable接口，将不需要序列化的属性前添加关键字transient，序列化对象的时候，这个属性就不会序列化到指定的目的地中。
+总之，Java 的transient关键字为我们提供了便利，你只需要实现Serilizable接口，**将不需要序列化的属性前添加关键字transient，序列化对象的时候，这个属性就不会序列化到指定的目的地中**。
 
-**参考资料**：[Java transient关键字使用小记 - Alexia(minmin) - 博客园](https://www.cnblogs.com/lanxuezaipiao/p/3369962.html)
+
+
+参考资料：
+
+- [Java transient关键字使用小记 - Alexia(minmin) - 博客园](https://www.cnblogs.com/lanxuezaipiao/p/3369962.html)
+
 
 
 
 
 # 四、基本数据类型与运算
 
-#### 1. Java的基本数据类型/引用类型有哪些？知道自动装箱和拆箱吗？
+## 1. Java的基本数据类型/引用类型有哪些？知道自动装箱和拆箱吗？
 
 - 4类8种基本数据类型。4整数型，2浮点型，1字符型，1布尔型
 
 | 数据类型 | 存储需求 | 取值范围                                                     | 默认值          | 对应包装类 |
 | -------- | -------- | ------------------------------------------------------------ | --------------- | ---------- |
-| byte     | 8位      | 最大存储数据量是255，存放的数据范围是-128~127之间            | (byte) 0        | Byte       |
+| byte     | 8位      | 最大存储数据量是255，最小-2^7^，最大2^7^-1即：[-128~127]     | (byte) 0        | Byte       |
 | short    | 16位     | 最大数据存储量是65536，数据范围是-32768~32767之间            | (short) 0       | Short      |
-| int      | 32位     | 最大数据存储容量是2的32次方减1，数据范围是负的2的31次方到正的2的31次方减1 | 0               | Integer    |
+| int      | 32位     | 最大数据存储容量是2^31-1，数据范围是负的2的31次方到正的2的31次方减1 | 0               | Integer    |
 | long     | 64位     | 最大数据存储容量是2的64次方减1，数据范围为负的2的63次方到正的2的63次方减1 | 0L              | Long       |
 | float    | 32位     | 数据范围在3.4e-45~1.4e38，直接赋值时必须在数字后加上f或F     | 0.0f            | Float      |
 | double   | 64位     | 数据范围在4.9e-324~1.8e308，赋值时可以加d或D也可以不加       | 0.0d            | Double     |
@@ -926,7 +1178,7 @@ public class TestDemo {
 
 
 
-#### 2.缓存池
+## 2. 缓存池
 
 `new Integer(123) `与` Integer.valueOf(123) `的区别在于，new Integer(123) 每次都会新建一个对象，而 Integer.valueOf(123) 可能会使用缓存对象，因此多次使用 Integer.valueOf(123) 会取得同一个对象的引用。
 
@@ -1004,7 +1256,7 @@ Java 还将一些其它基本类型的值放在缓冲池中，包含以下这些
 [StackOverflow : Differences between new Integer(123), Integer.valueOf(123) and just 123
 ](https://stackoverflow.com/questions/9030817/differences-between-new-integer123-integer-valueof123-and-just-123)
 
-### 3. ++i和i++有什么区别
+## 3. ++i和i++有什么区别
 
 
 
@@ -1062,7 +1314,7 @@ Java 还将一些其它基本类型的值放在缓冲池中，包含以下这些
 
 # 六、异常处理
 
-#### 1. 常见异常分为那两种(Exception，Error)，常见异常的基类以及常见的异常
+## 1. 常见异常分为那两种(Exception，Error)，常见异常的基类以及常见的异常
 
 - Throwable是java语言中所有错误和异常的超类（万物即可抛）。它有两个子类：Error、Exception。 
 
@@ -1086,7 +1338,7 @@ Java 还将一些其它基本类型的值放在缓冲池中，包含以下这些
 
 # 七、Object 通用方法
 
-#### 1.概述
+## 1.概述
 
 ```java
 public final native Class<?> getClass()
@@ -1112,9 +1364,9 @@ public final void wait() throws InterruptedException
 protected void finalize() throws Throwable {} // JVM内存回收之finalize()方法
 ```
 
-#### equals()
+## equals()
 
-##### 1. equals() 与 == 的区别
+**1. equals() 与 == 的区别**
 
 - 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
 - 对于引用类型，== 判断两个实例是否引用同一个对象，而 equals() 判断引用的对象是否等价。
@@ -1196,7 +1448,7 @@ public class EqualExample {
 }
 ```
 
-#### hashCode()
+## hashCode()
 
 hasCode() 返回散列值，而 equals() 是用来判断两个实例是否等价。<u>等价的两个实例散列值一定要相同，但是散列值相同的两个实例不一定等价。</u>
 
@@ -1229,7 +1481,7 @@ public int hashCode() {
 }
 ```
 
-#### toString()
+## toString()
 
 默认返回 ToStringExample@4554617c 这种形式，其中 @ 后面的数值为散列码的无符号十六进制表示。
 
@@ -1252,7 +1504,7 @@ System.out.println(example.toString());
 ToStringExample@4554617c
 ```
 
-#### clone()
+## clone()
 
 **1. cloneable** 
 
@@ -1315,7 +1567,7 @@ public class CloneExample implements Cloneable {
 
 
 
-#### ★ 2. 深拷贝与浅拷贝 
+## ★ 2. 深拷贝与浅拷贝 
 
 - 浅拷贝：对基本数据类型进行值传递，对引用数据类型进行引用传递般的拷贝，此为浅拷贝。 
 
@@ -1343,15 +1595,4 @@ public class CloneExample implements Cloneable {
 
 
 
-
-
-
-
-# 参考资料
-
-
-
-
-
-# 更新说明
 

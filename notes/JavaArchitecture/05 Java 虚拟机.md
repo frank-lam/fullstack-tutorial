@@ -647,7 +647,12 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 
 <div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/32b8374a-e822-4720-af0b-c0f485095ea2.jpg" width="800"/> </div><br>
 
- 
+
+
+可以改成这篇文章中的配图
+http://qsxuan.com/articles/1098.html 
+
+
 
 包括以下 7 个阶段：
 
