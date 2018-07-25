@@ -68,7 +68,7 @@
 <!-- /TOC -->
 # 前言
 
-Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类比C++中的STL，在市面上似乎还没能找到一本详细介绍的书籍。在这里氛围如下部分对集合框架进行底层数据结构和源码分析，及其面试中常见的问题。比如：阿里面试常问到的HashMap和ConcurrentHashMap原理，必须在面试前理清思路。相信本文的阅读会对集合框架有更深一步的了解。
+Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类比C++中的STL，在市面上似乎还没能找到一本详细介绍的书籍。在这里主要对如下部分进行源码分析，及在面试中常见的问题。比如：阿里面试常问到的HashMap和ConcurrentHashMap原理，必须在面试前理清思路。相信本文的阅读会对集合框架有更深一步的了解。
 
 - ArrayList
 - Vector
@@ -89,7 +89,7 @@ Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类�
 
 # 一、概述
 
-​	Java集合框架提供了数据持有对象的方式，提供了对数据集合的操作。Java集合框架位于`java.util`包下，主要有三个大类：`Collection`、`Map`接口以及对集合进行操作的`工具类`。
+Java集合框架提供了数据持有对象的方式，提供了对数据集合的操作。Java集合框架位于 java.util 包下，主要有三个大类：Collection、Map 接口以及对集合进行操作的工具类。
 
 
 
@@ -132,13 +132,13 @@ Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类�
 
 - `TreeMap`：线程不同步，基于 **红黑树** （Red-Black tree）的NavigableMap 实现，**能够把它保存的记录根据键排序,默认是按键值的升序排序，也可以指定排序的比较器，当用Iterator 遍历TreeMap时，得到的记录是排过序的。**
   - **TreeMap底层通过红黑树（Red-Black tree）实现**，也就意味着`containsKey()`, `get()`, `put()`, `remove()`都有着`log(n)`的时间复杂度。其具体算法实现参照了《算法导论》。
-- `HashMap`：线程不同步。根据`key`的`hashcode`进行存储，内部使用静态内部类`Node`的数组进行存储，默认初始大小为16，每次扩大一倍。当发生Hash冲突时，采用拉链法（链表）。。JDK 1.8中：**当单个桶中元素个数大于等于8时，链表实现改为红黑树实现；当元素个数小于6时，变回链表实现。由此来防止hashCode攻击。**
+- `HashMap`：线程不同步。根据`key`的`hashcode`进行存储，内部使用静态内部类`Node`的数组进行存储，默认初始大小为16，每次扩大一倍。当发生Hash冲突时，采用拉链法（链表）。JDK 1.8中：**当单个桶中元素个数大于等于8时，链表实现改为红黑树实现；当元素个数小于6时，变回链表实现。由此来防止hashCode攻击。**
   - Java HashMap采用的是冲突链表方式。  
   - HashMap是Hashtable的轻量级实现，可以接受为null的键值\(key\)和值\(value\)，而Hashtable不允许。
-- `LinkedHashMap`：**保存了记录的插入顺序**，在用Iterator遍历LinkedHashMap时，先得到的记录肯定是先插入的. 也可以在构造时用带参数，按照应用次数排序。在遍历的时候会比HashMap慢，不过有种情况例外，当HashMap容量很大，实际数据较少时，遍历起来可能会比LinkedHashMap慢，因为LinkedHashMap的遍历速度只和实际数据有关，和容量无关，而HashMap的遍历速度和他的容量有关。
+- `LinkedHashMap`：**保存了记录的插入顺序**，在用Iterator遍历LinkedHashMap时，先得到的记录肯定是先插入的。也可以在构造时用带参数，按照应用次数排序。在遍历的时候会比HashMap慢，不过有种情况例外，当HashMap容量很大，实际数据较少时，遍历起来可能会比LinkedHashMap慢，因为LinkedHashMap的遍历速度只和实际数据有关，和容量无关，而HashMap的遍历速度和他的容量有关。
 - `HashTable`：**线程安全**，HashMap的迭代器\(Iterator\)是`fail-fast`迭代器。**HashTable不能存储NULL的key和value。**
 - `WeakHashMap`：从名字可以看出它是某种 *Map*。它的特殊之处在于 *WeakHashMap* 里的`entry`可能会被GC自动删除，即使程序员没有调用`remove()`或者`clear()`方法。 WeakHashMap的存储结构类似于HashMap
-  - 既然有 *WeekHashMap*，是否有 *WeekHashSet* 呢？答案是没有:( 。不过Java *Collections*工具类给出了解决方案，`Collections.newSetFromMap(Map<E,Boolean> map)`方法可以将任何 *Map*包装成一个*Set*。
+  - 既然有 *WeekHashMap*，是否有 *WeekHashSet* 呢？答案是没有！不过Java *Collections*工具类给出了解决方案，`Collections.newSetFromMap(Map<E,Boolean> map)`方法可以将任何 *Map*包装成一个*Set*。
 
   
 
