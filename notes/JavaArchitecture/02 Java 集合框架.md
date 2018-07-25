@@ -1,71 +1,6 @@
 [TOC]
 
-<!-- TOC -->
 
-- [前言](#前言)
-- [一、概述](#一概述)
-    - [集合框架图](#集合框架图)
-    - [Collection](#collection)
-    - [Map](#map)
-    - [工具类](#工具类)
-    - [通用实现](#通用实现)
-- [二、深入源码分析](#二深入源码分析)
-    - [ArrayList](#arraylist)
-        - [1. 概览](#1-概览)
-        - [2. 序列化](#2-序列化)
-        - [3. 扩容](#3-扩容)
-        - [4. 删除元素](#4-删除元素)
-        - [5. Fail-Fast](#5-fail-fast)
-    - [Vector](#vector)
-        - [1. 同步](#1-同步)
-        - [2. ArrayList 与 Vector](#2-arraylist-与-vector)
-        - [3. Vector 替代方案](#3-vector-替代方案)
-    - [LinkedList](#linkedlist)
-        - [1. 概览](#1-概览-1)
-        - [2. 新增方法](#2-新增方法)
-        - [3. 查询方法](#3-查询方法)
-        - [4. 总结](#4-总结)
-        - [5. ArrayList 与 LinkedList](#5-arraylist-与-linkedlist)
-    - [HashMap](#hashmap)
-        - [1. 存储结构](#1-存储结构)
-        - [2. 拉链法的工作原理](#2-拉链法的工作原理)
-        - [3. put 操作](#3-put-操作)
-        - [4. 确定桶下标](#4-确定桶下标)
-        - [5. 扩容-基本原理](#5-扩容-基本原理)
-        - [6. 扩容-重新计算桶下标](#6-扩容-重新计算桶下标)
-        - [7. 扩容-计算数组容量](#7-扩容-计算数组容量)
-        - [8. 链表转红黑树](#8-链表转红黑树)
-        - [9. HashMap 与 HashTable](#9-hashmap-与-hashtable)
-    - [ConcurrentHashMap](#concurrenthashmap)
-        - [1. 存储结构](#1-存储结构-1)
-        - [2. size 操作](#2-size-操作)
-        - [3. JDK 1.8 的改动](#3-jdk-18-的改动)
-    - [HashSet](#hashset)
-        - [1. 成员变量](#1-成员变量)
-        - [2. 构造函数](#2-构造函数)
-        - [3. add](#3-add)
-        - [4. 总结](#4-总结-1)
-    - [LinkedHashSet and LinkedHashMap](#linkedhashset-and-linkedhashmap)
-        - [1. 概览](#1-概览-2)
-        - [2. get()](#2-get)
-        - [3. put()](#3-put)
-        - [4. remove()](#4-remove)
-        - [5. LinkedHashSet](#5-linkedhashset)
-        - [6. LinkedHashMap经典用法](#6-linkedhashmap经典用法)
-- [三、容器中的设计模式](#三容器中的设计模式)
-    - [迭代器模式](#迭代器模式)
-    - [适配器模式](#适配器模式)
-- [四、面试指南](#四面试指南)
-    - [1. ArrayList和LinkedList是常用的两种存储结构，有哪些区别呢？【阿里面试】](#1-arraylist和linkedlist是常用的两种存储结构有哪些区别呢阿里面试)
-    - [2. HashMap和HashTable的区别，HashMap中的key可以是任何对象或数据类型吗？HashTable是线程安全的么？](#2-hashmap和hashtable的区别hashmap中的key可以是任何对象或数据类型吗hashtable是线程安全的么)
-    - [3. HashMap和ConcurrentHashMap区别， ConcurrentHashMap 线程安全吗， ConcurrentHashMap如何保证线程安全？](#3-hashmap和concurrenthashmap区别 concurrenthashmap 线程安全吗 concurrenthashmap如何保证线程安全)
-    - [4. Hashtable的原理是什么？深入分析底层源码【阿里内推面试】](#4-hashtable的原理是什么深入分析底层源码阿里内推面试)
-    - [5. Hash冲突的解决办法有哪些？](#5-hash冲突的解决办法有哪些)
-    - [6. 什么是迭代器？【面试宝典】](#6-什么是迭代器面试宝典)
-    - [7. 因为别人知道源码怎么实现的，故意构造相同的hash的字符串进行攻击，怎么处理？那jdk7怎么办？](#7-因为别人知道源码怎么实现的故意构造相同的hash的字符串进行攻击怎么处理那jdk7怎么办)
-    - [ArrayList如何快速排序 ？【阿里面经】](#arraylist如何快速排序-阿里面经)
-
-<!-- /TOC -->
 
 # 前言
 
@@ -83,8 +18,8 @@ Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类�
 
 本文参考：
 
-- [CarpenterLee/JCFInternals: 深入理解Java集合框架](CarpenterLee/JCFInternals: 深入理解Java集合框架)
-- [crossoverJie/Java-Interview: 👨‍🎓 Java related : basic, concurrent, algorithm](crossoverJie/Java-Interview: 👨‍🎓 Java related : basic, concurrent, algorithm)
+- [CarpenterLee/JCFInternals: 深入理解Java集合框架](https://github.com/CarpenterLee/JCFInternals)
+- [crossoverJie/Java-Interview: 👨‍🎓 Java related : basic, concurrent, algorithm](https://github.com/crossoverJie/Java-Interview)
 - [Interview-Notebook/Java 容器.md at master · CyC2018/Interview-Notebook](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%AE%B9%E5%99%A8.md)
   
 
