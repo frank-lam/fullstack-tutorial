@@ -95,9 +95,11 @@ Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类�
 
 ## 集合框架图
 
-![](D:/gitdoc/2019_campus_appy/notes/pics/java_collection_framework.jpg)
+<div align="center"> <img src="../pics/java_collection_framework.jpg" width=""/></div><br/>
 
-![](D:/gitdoc/2019_campus_appy/notes/pics/java_set_framework.jpg)
+
+
+<div align="center"> <img src="../pics/java_set_framework.jpg" width=""/></div><br/>
 
 
 
@@ -105,7 +107,7 @@ Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类�
 
 ## Collection
 
-![](D:/gitdoc/2019_campus_appy/notes/pics/collection.png)
+<div align="center"> <img src="../pics/collection.png" width=""/></div><br/>
 
 - `ArrayList`：**线程不同步**。默认初始容量为10，当数组大小不足时容量扩大为1.5倍。为追求效率，ArrayList没有实现同步（synchronized），如果需要多个线程并发访问，用户可以手动同步，也可使用Vector替代。 
 - `LinkedList`：**线程不同步**。**双向链接实现**。*LinkedList*同时实现了*List*接口和*Deque*接口，也就是说它既可以看作一个顺序容器，又可以看作一个队列（*Queue*），同时又可以看作一个栈（*Stack*）。这样看来，*LinkedList*简直就是个全能冠军。当你需要使用栈或者队列时，可以考虑使用*LinkedList*，一方面是因为Java官方已经声明不建议使用*Stack*类，更遗憾的是，Java里根本没有一个叫做*Queue*的类（它是个接口名字）。关于栈或队列，现在的首选是*ArrayDeque*，它有着比*LinkedList*（当作栈或队列使用时）有着更好的性能。 
@@ -124,7 +126,9 @@ Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类�
 
 ## Map
 
-![](D:/gitdoc/2019_campus_appy/notes/pics/map.png)
+<div align="center"> <img src="../pics/map.png" width=""/></div><br/>
+
+
 
 - `TreeMap`：线程不同步，基于 **红黑树** （Red-Black tree）的NavigableMap 实现，**能够把它保存的记录根据键排序,默认是按键值的升序排序，也可以指定排序的比较器，当用Iterator 遍历TreeMap时，得到的记录是排过序的。**
   - **TreeMap底层通过红黑树（Red-Black tree）实现**，也就意味着`containsKey()`, `get()`, `put()`, `remove()`都有着`log(n)`的时间复杂度。其具体算法实现参照了《算法导论》。
