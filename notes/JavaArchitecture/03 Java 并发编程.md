@@ -1228,7 +1228,20 @@ public void register(Object o)
 
 
 
+## -----------------------------分割线-----------------------
 
+
+
+
+
+
+
+## 从volatile说到,i++原子操作,线程安全问题
+
+
+
+从volatile说到,i++原子操作,线程安全问题 - CSDN博客
+https://blog.csdn.net/zbw18297786698/article/details/53420780
 
 
 
