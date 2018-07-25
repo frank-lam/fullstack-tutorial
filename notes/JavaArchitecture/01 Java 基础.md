@@ -1,4 +1,4 @@
-
+ 
 
 [TOC]
 
@@ -8,13 +8,17 @@
 
 # 前言
 
-为了更好的总结Java面试中的系统知识结构，当前仓库根据以下资料整理学习笔记。持续更新中...
+为了更好的总结Java面试中的系统知识结构，当前仓库根据以下资料整理学习笔记。
 
 - [Interview-Notebook/Java 基础.md at master · CyC2018/Interview-Notebook](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%9F%BA%E7%A1%80.md#%E5%85%AD%E5%85%B3%E9%94%AE%E5%AD%97)
-- 《Java程序员面试笔试宝典》
-- 《阿里面经》
+- 《Java程序员面试笔试宝典》以下索引中`B`代表该书。
+- [《阿里面经OneNote》](https://blog.csdn.net/sinat_22797429/article/details/76293284)
 
 from 2018/7/11
+
+
+
+ <div align="center"> <img src="../pics/ java-init-order.png" width=""/>
 
 
 
@@ -22,38 +26,285 @@ from 2018/7/11
 
 ## 1. Java程序初始化的顺序是怎么样的（B50）
 
+在Java语言中，当实例化对象时，对象所在类的所有成员变量首先要进行初始化，只有当所有类成员完成初始化后，才会调用对象所在类的构造函数创建象。
 
+**初始化一般遵循3个原则：**
 
+- 静态对象（变量）优先于静态对象（变量）初始化，静态对象（变量）只初始化一次，而非静态对象（变量）可能会初始化多次
+- 父类优先于子类进行初始化
+- 按照成员变量的定义顺序进行初始化。 即使变量定义散布于方法定义之中，它们依然在任何方法（包括构造函数）被调用之前先初始化
 
+ <div align="center"> <img src="../pics/java-init-order.png" width="800"/> </div><br>
+
+**实例** 
+
+```java
+class Base {
+    // 1.父类静态代码块
+    static {
+        System.out.println("Base static block!");
+    }
+    // 3.父类非静态代码块
+    {
+        System.out.println("Base block");
+    }
+    // 4.父类构造器
+    public Base() {
+        System.out.println("Base constructor!");
+    }
+}
+
+public class Derived extends Base {
+    // 2.子类静态代码块
+    static{
+        System.out.println("Derived static block!");
+    }
+    // 5.子类非静态代码块
+    {
+        System.out.println("Derived block!");
+    }
+    // 6.子类构造器
+    public Derived() {
+        System.out.println("Derived constructor!");
+    }
+    public static void main(String[] args) {
+        new Derived();
+    }
+}
+```
+
+结果是：
+
+```
+Base static block!
+Derived static block!
+Base block
+Base constructor!
+Derived block!
+Derived constructor!
+```
 
 
 
 ## 2. Java和C++的区别？
 
-- Java 是纯粹的面向对象语言，所有的对象都继承自 java.lang.Object，C++ 为了兼容 C 即支持面向对象也支持面向过程。
-- Java 通过虚拟机从而实现跨平台特性，但是 C++ 依赖于特定的平台。
+- Java 是**纯粹的面向对象语言**，所有的对象都继承自 java.lang.Object**，C++ 为了兼容 C 即支持面向对象也支持面向过程**。
+- Java 通过虚拟机从而实现**跨平台特性**，但是 C++ 依赖于**特定的平台**。
 - Java 没有指针，它的引用可以理解为安全指针，而 C++ 具有和 C 一样的指针。
-- Java 支持自动垃圾回收，而 C++ 需要手动回收。
-- Java 不支持多重继承，只能通过实现多个接口来达到相同目的，而 C++ 支持多重继承。
+- Java 支持**自动垃圾回收**，而 C++ 需要**手动回收**。
+- **Java 不支持多重继承**，只能通过实现多个接口来达到相同目的，而 **C++ 支持多重继承**。
 - Java 不支持操作符重载，虽然可以对两个 String 对象支持加法运算，但是这是语言内置支持的操作，不属于操作符重载，而 C++ 可以。
 - Java 内置了线程的支持，而 C++ 需要依靠第三方库。
-- Java 的 goto 是保留字，但是不可用，C++ 可以使用 goto。
-- Java 不支持条件编译，C++ 通过 #ifdef #ifndef 等预处理命令从而实现条件编译。
+- Java 的 **goto 是保留字**，但是不可用，C++ 可以使用 goto。
+- Java **不支持条件编译**，C++ 通过 #ifdef #ifndef 等预处理命令从而实现条件编译。
 
 
 
 ## 2. 什么是反射
 
-​	通过Class获取class信息称之为反射（Reflection）。
+​	通过Class获取class信息称之为反射（Reflection）。反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为Java语言的反射机制。 
+
+
+
+**反射应用中获取Class实例的四种方式**
+
+```java
+//1.调用运行时类本身的.class属性
+Class clazz1 = Person.class;
+System.out.println(clazz1.getName());
+
+Class clazz2 = String.class;
+System.out.println(clazz2.getName());
+
+//2.通过运行时类的对象获取 getClass();
+Person p = new Person();
+Class clazz3 = p.getClass();
+System.out.println(clazz3.getName());
+
+//3.通过Class的静态方法获取.通过此方式，体会一下，反射的动态性。
+String className = "com.atguigu.java.Person";
+Class clazz4 = Class.forName(className);
+// clazz4.newInstance();
+System.out.println(clazz4.getName());
+
+//4.（了解）通过类的加载器 ClassLoader
+ClassLoader classLoader = this.getClass().getClassLoader();
+Class clazz5 = classLoader.loadClass(className);
+System.out.println(clazz5.getName());
+```
+
+
 
 ## 3. 什么是注解
 
-​	Java 注解是附加在代码中的一些元信息，用于一些工具在编译、运行时进行解析和使用，起到说明、配置的功能。注解不会也不能影响代码的实际逻辑，仅仅起到辅助性的作用。
+​		Annontation是Java5开始引入的新特征，中文名称叫注解。它提供了一种安全的类似注释的机制，用来**将任何的信息或元数据（metadata）与程序元素（类、方法、成员变量等）进行关联**。为程序的元素（类、方法、成员变量）加上更直观更明了的说明，这些说明信息是与程序的业务逻辑无关，并且供指定的工具或框架使用。Annontation像一种修饰符一样，应用于包、类型、构造方法、方法、成员变量、参数及本地变量的声明语句中。
+
+　　Java 注解是附加在代码中的一些元信息，用于一些工具在编译、运行时进行解析和使用，起到说明、配置的功能。注解不会也不能影响代码的实际逻辑，仅仅起到辅助性的作用。包含在 java.lang.annotation 包中。
+
+
+
+**常见标准的Annotation：**
+
+  1）Override
+
+​	java.lang.Override是一个标记类型注解，它被用作标注方法。它说明了被标注的方法重载了父类的方法，起到了断言的作用。让编译器检查该方法是否正确地实现了复写。
+
+
+
+  2）Deprecated
+     Deprecated也是一种标记类型注解。当一个类型或者类型成员使用@Deprecated修饰的话，编译器将不鼓励使用这个被标注的程序元素。告诉编译器该方法已经被标记为“作废”，在其他地方引用将会出现编译警告。
+
+
+
+ 3）SuppressWarnings
+     SuppressWarning不是一个标记类型注解。它有一个类型为String[]的成员，这个成员的值为被禁止的警告名。对于javac编译器来讲，被-Xlint选项有效的警告名也同样对@SuppressWarings有效，同时编译器忽略掉无法识别的警告名。
+
+
+
+ 示例1——抑制单类型的警告：
+
+```java
+@SuppressWarnings("unchecked")
+public void addItems(String item){
+  @SuppressWarnings("rawtypes")
+   List items = new ArrayList();
+   items.add(item);
+}
+```
+
+  示例2——抑制多类型的警告：
+
+```java
+@SuppressWarnings(value={"unchecked", "rawtypes"})
+public void addItems(String item){
+   List items = new ArrayList();
+   items.add(item);
+}
+```
+
+  示例3——抑制所有类型的警告：
+
+```java
+@SuppressWarnings("all")
+public void addItems(String item){
+   List items = new ArrayList();
+   items.add(item);
+}
+```
+
+
 
  参考资料：[注解Annotation实现原理与自定义注解例子](https://www.cnblogs.com/acm-bingzi/p/javaAnnotation.html)
 
 
+
 ## 4. 什么是泛型
+
+**通俗解释**
+
+通俗的讲，泛型就是操作类型的 占位符，即：假设占位符为T，那么此次声明的数据结构操作的数据类型为T类型。
+
+
+
+假定我们有这样一个需求：写一个排序方法，能够对整型数组、字符串数组甚至其他任何类型的数组进行排序，该如何实现？
+
+答案是可以使用 **Java 泛型**。
+
+使用 Java 泛型的概念，我们可以写一个泛型方法来对一个对象数组排序。然后，调用该泛型方法来对整型数组、浮点数数组、字符串数组等进行排序。
+
+### 泛型方法
+
+**你可以写一个泛型方法，该方法在调用时可以接收不同类型的参数。根据传递给泛型方法的参数类型，编译器适当地处理每一个方法调用。**
+
+下面是定义泛型方法的规则：
+
+- 所有泛型方法声明都有一个类型参数声明部分（由尖括号分隔），该类型参数声明部分在方法返回类型之前（在下面例子中的<E>）。
+- 每一个类型参数声明部分包含一个或多个类型参数，参数间用逗号隔开。一个泛型参数，也被称为一个类型变量，是用于指定一个泛型类型名称的标识符。
+- 类型参数能被用来声明返回值类型，并且能作为泛型方法得到的实际参数类型的占位符。
+- 泛型方法体的声明和其他方法一样。注意类型参数**只能代表引用型类型，不能是原始类型（**像int,double,char的等）。
+
+```java
+public class GenericMethodTest
+{
+   // 泛型方法 printArray                         
+   public static < E > void printArray( E[] inputArray )
+   {
+      // 输出数组元素            
+         for ( E element : inputArray ){        
+            System.out.printf( "%s ", element );
+         }
+         System.out.println();
+    }
+ 
+    public static void main( String args[] )
+    {
+        // 创建不同类型数组： Integer, Double 和 Character
+        Integer[] intArray = { 1, 2, 3, 4, 5 };
+        Double[] doubleArray = { 1.1, 2.2, 3.3, 4.4 };
+        Character[] charArray = { 'H', 'E', 'L', 'L', 'O' };
+ 
+        System.out.println( "整型数组元素为:" );
+        printArray( intArray  ); // 传递一个整型数组
+ 
+        System.out.println( "\n双精度型数组元素为:" );
+        printArray( doubleArray ); // 传递一个双精度型数组
+ 
+        System.out.println( "\n字符型数组元素为:" );
+        printArray( charArray ); // 传递一个字符型数组
+    } 
+}
+```
+
+
+
+### 泛型类
+
+泛型类的声明和非泛型类的声明类似，除了在类名后面添加了类型参数声明部分。
+
+和泛型方法一样，泛型类的类型参数声明部分也包含一个或多个类型参数，参数间用逗号隔开。一个泛型参数，也被称为一个类型变量，是用于指定一个泛型类型名称的标识符。因为他们接受一个或多个参数，这些类被称为参数化的类或参数化的类型。
+
+```java
+public class Box<T> {
+  private T t;
+  public void add(T t) {
+    this.t = t;
+  }
+ 
+  public T get() {
+    return t;
+  }
+ 
+  public static void main(String[] args) {
+    Box<Integer> integerBox = new Box<Integer>();
+    Box<String> stringBox = new Box<String>();
+ 
+    integerBox.add(new Integer(10));
+    stringBox.add(new String("菜鸟教程"));
+ 
+    System.out.printf("整型值为 :%d\n\n", integerBox.get());
+    System.out.printf("字符串为 :%s\n", stringBox.get());
+  }
+}
+```
+
+### 类型通配符
+
+1、类型通配符一般是使用?代替具体的类型参数。例如 **List<?>** 在逻辑上是**List<String>,List<Integer>** 等所有List<具体类型实参>的父类。  
+
+2、类型通配符上限通过形如List来定义，如此定义就是通配符泛型值接受Number及其下层子类类型。  
+
+3、类型通配符下限通过形如 **List<? super Number>**来定义，表示类型只能接受Number及其三层父类类型，如Objec类型的实例。  
+
+
+
+
+
+参考资料：
+
+- [Java 泛型，了解这些就够用了。 - 逃离沙漠 - 博客园](https://www.cnblogs.com/demingblog/p/5495610.html)
+- [Java 泛型 | 菜鸟教程](http://www.runoob.com/java/java-generics.html)
+- [【Java心得总结四】Java泛型下——万恶的擦除 - xlturing - 博客园](https://www.cnblogs.com/xltcjylove/p/3671943.html)
+  
 
 
 
@@ -70,44 +321,75 @@ from 2018/7/11
 
 ## 6. 字节与字符的区别 ？【蚂蚁金服内推】
 
+理解编码的关键，是要把字符的概念和字节的概念理解准确。这两个概念容易混淆，我们在此做一下区分：
+
+|                | **概念描述**                                                 | **举例**                      |
+| -------------- | ------------------------------------------------------------ | ----------------------------- |
+| 字符           | 人们使用的记号，抽象意义上的一个符号。                       | '1', '中', 'a', '$', '￥', …… |
+| 字节           | 计算机中存储数据的单元，一个8位的二进制数，是一个很具体的存储空间。 | 0x01, 0x45, 0xFA, ……          |
+| ANSI 字符串    | 在内存中，如果“字符”是以 **ANSI 编码**形式存在的，一个字符可能使用一个字节或多个字节来表示，那么我们称这种字符串为 **ANSI 字符串**或者**多字节字符串**。 | "中文123" （占7字节）         |
+| UNICODE 字符串 | 在内存中，如果“字符”是以在 UNICODE 中的序号存在的，那么我们称这种字符串为 **UNICODE 字符串**或者**宽字节字符串**。 | L"中文123" （占10字节）       |
+
+
+
+**字节与字符区别**
+
+它们完全不是一个位面的概念，所以两者之间没有“区别”这个说法。不同编码里，字符和字节的对应关系不同：
+
+|         |                                                              |
+| ------- | ------------------------------------------------------------ |
+| ASCII   | 一个英文字母（不分大小写）占一个字节的空间，一个中文汉字占两个字节的空间。一个二进制数字序列，在计算机中作为一个数字单元，一般为8位二进制数，换算为十进制。最小值0，最大值255。 |
+| UTF-8   | 一个英文字符等于一个字节，一个中文（含繁体）等于三个字节     |
+| Unicode | 一个英文等于两个字节，一个中文（含繁体）等于两个字节。符号：英文标点占一个字节，中文标点占两个字节。举例：英文句号“.”占1个字节的大小，中文句号“。”占2个字节的大小。 |
+| UTF-16  | 一个英文字母字符或一个汉字字符存储都需要2个字节（Unicode扩展区的一些汉字存储需要4个字节） |
+| UTF-32  | 世界上任何字符的存储都需要4个字节                            |
+
+
+
+参考资料：
+
+- [字符，字节和编码 - Characters, Bytes And Encoding](http://www.regexlab.com/zh/encoding.htm)
+
+
+
 
 
 # 二、面向对象
 
-#### 1. Java的四个基本特性（<u>抽象、封装、继承，多态</u>），对多态的理解(多态的实现方式)以及在项目中那些地方用到多态
+## 1. Java的四个基本特性（<u>抽象、封装、继承，多态</u>），对多态的理解(多态的实现方式)以及在项目中那些地方用到多态
 
-- Java的四个基本特性 
+- **Java的四个基本特性** 
   - **抽象**：抽象是将一类对象的共同特征总结出来构造类的过程，包括<u>数据抽象</u>和<u>行为抽象</u>两方面。抽象只关注对象有哪些属性和行为，并不关注这些行为的细节是什么。  
   - **继承**：继承是从已有类得到继承信息创建新类的过程。提供继承信息的类被称为父类（超类、基类）；得到继承信息的类被称为子类（派生类）。继承让变化中的软件系统有了一定的延续性，同时继承也是封装程序中可变因素的重要手段。 
   - **封装**：通常认为封装是把数据和操作数据的方法绑定起来，对数据的访问只能通过已定义的接口。面向对象的本质就是将现实世界描绘成一系列完全自治、封闭的对象。我们在类中编写的方法就是对实现细节的一种封装；我们编写一个类就是对数据和数据操作的封装。可以说，封装就是隐藏一切可隐藏的东西，只向外界提供最简单的编程接口。 
   - **多态**：多态性是指允许不同子类型的对象对同一消息作出不同的响应。 
-- 多态的理解(多态的实现方式) 
+- **多态的理解(多态的实现方式)** 
   - **方法重载（overload）**实现的是**<u>编译时的多态性</u>**（也称为前绑定）。 
   - **方法重写（override）**实现的是<u>**运行时的多态性**</u>（也称为后绑定）。运行时的多态是面向对象最精髓的东西。 
   - 要实现多态需要做两件事：
     - 1). **方法重写**（子类继承父类并重写父类中已有的或抽象的方法）；
     - 2). **对象造型**（用父类型引用引用子类型对象，这样同样的引用调用同样的方法就会根据子类对象的不同而表现出不同的行为）。 
-- 项目中对多态的应用 
+- **项目中对多态的应用** 
   - 举一个简单的例子，在物流信息管理系统中，有两种用户：订购客户和卖房客户，两个客户都可以登录系统，他们有相同的方法Login，但登陆之后他们会进入到不同的页面，也就是在登录的时候会有不同的操作，两种客户都继承父类的Login方法，但对于不同的对象，拥有不同的操作。 
-- 面相对象开发方式优点（B65）
-  - 较高的开发效率
-  - 保证软件的鲁棒性
-  - 保证软件的高可维护性
+- **面相对象开发方式优点（B65）**
+  - 较高的开发效率：可以把事物进行抽象，映射为开发的对象。
+  - 保证软件的鲁棒性：高重用性，可以重用已有的而且在相关领域经过长期测试的代码。
+  - 保证软件的高可维护性：代码的可读性非常好，设计模式也使得代码结构清晰，拓展性好。
 
 
 
-#### 2. 什么是重载和重写？
+## 2. 什么是重载和重写？
 
 - **重载：**<u>重载发生在同一个类中</u>，同名的方法如果有不同的参数列表（*参数类型不同、参数个数不同或者二者都不同*）则视为重载。 
 - **重写：**<u>重写发生在子类与父类之间</u>，重写要求子类被重写方法与父类被重写方法有相同的返回类型，比父类被重写方法更好访问，不能比父类被重写方法声明更多的异常（里氏代换原则）。根据不同的子类对象确定调用的那个方法。 
 
-![](../pics/overloading-vs-overriding.png)
-
-![](../pics/overloading-vs-overriding_cartoon.jpg)
+ <div align="center"> <img src="../pics/overloading-vs-overriding.png" width="800"/>
 
 
 
-#### 3. 面向对象和面向过程的区别？用面向过程可以实现面向对象吗？那是不是不能面向对象？
+
+
+## 3. 面向对象和面向过程的区别？用面向过程可以实现面向对象吗？那是不是不能面向对象？
 
 - 面向对象和面向过程的区别 
   - **面向过程**就像是一个细心的管家，事无具细的都要考虑到。而**面向对象**就像是个家用电器，你只需要知道他的功能，不需要知道它的工作原理。 
@@ -396,7 +678,43 @@ OuterClass name：chenssy
 
 继承：<u>代码复用，引用不灵活</u>； 组合：<u>代码复用</u>， 接口：<u>引用灵活</u>； 推荐组合+接口使用，看IO中包装流FilterInputStream中的策略模式
 
- 
+
+
+### 7. 什么是构造函数
+
+### 8. 向上造型和向下造型
+
+父类引用能指向子类对象，子类引用不能指向父类对象；
+
+**向上造型**
+
+​	父类引用指向子类对象，例如：Father f1 = new Son();
+
+**向下造型**
+
+​	把指向子类对象的父类引用赋给子类引用，需要强制转换，例如：
+
+```java
+Father f1 = new Son();
+Son s1 = (Son)f1;
+```
+
+但有运行出错的情况：
+
+```java
+Father f2 = new Father();
+Son s2 = (Son)f2;//编译无错但运行会出现错误
+```
+
+在不确定父类引用是否指向子类对象时，可以用instanceof来判断：
+
+```java
+if(f3 instanceof Son){
+     Son s3 = (Son)f3;
+}
+```
+
+
 
 # 三、关键字
 
@@ -517,7 +835,7 @@ public InitialOrderTest() {
 
 
 
-#### 3. assert
+#### 3. assert有什么作用？
 
 
 
@@ -684,6 +1002,8 @@ Java 还将一些其它基本类型的值放在缓冲池中，包含以下这些
 
 [StackOverflow : Differences between new Integer(123), Integer.valueOf(123) and just 123
 ](https://stackoverflow.com/questions/9030817/differences-between-new-integer123-integer-valueof123-and-just-123)
+
+### 3. ++i和i++有什么区别
 
 
 
