@@ -85,8 +85,6 @@ from 2018/7/11
 
  
 
-
-
 # 一、基本概念
 
 ## 1. Java程序初始化的顺序是怎么样的（B50）
@@ -456,6 +454,10 @@ Java面向对象的基本思想之一是封装细节并且公开接口。Java语
 <div align="center"> <img src="../pics/deep_copy.jpg" width=""/></div><br/>
 
 
+
+参考资料：
+
+- [细说 Java 的深拷贝和浅拷贝 - 承香墨影 - SegmentFault 思否](https://segmentfault.com/a/1190000010648514)
 
 
 
@@ -1869,18 +1871,6 @@ public class CloneExample implements Cloneable {
 ```
 
 应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protected 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
