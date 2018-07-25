@@ -22,8 +22,8 @@
         - [3. Vector 替代方案](#3-vector-替代方案)
     - [LinkedList](#linkedlist)
         - [1. 概览](#1-概览-1)
-        - [2. 新增方法](#2-新增方法)
-        - [3. 查询方法](#3-查询方法)
+        - [2. add()](#2-add)
+        - [3. get()](#3-get)
         - [4. 总结](#4-总结)
         - [5. ArrayList 与 LinkedList](#5-arraylist-与-linkedlist)
     - [HashMap](#hashmap)
@@ -43,7 +43,7 @@
     - [HashSet](#hashset)
         - [1. 成员变量](#1-成员变量)
         - [2. 构造函数](#2-构造函数)
-        - [3. add](#3-add)
+        - [3. add()](#3-add)
         - [4. 总结](#4-总结-1)
     - [LinkedHashSet and LinkedHashMap](#linkedhashset-and-linkedhashmap)
         - [1. 概览](#1-概览-2)
@@ -400,7 +400,7 @@ transient Node<E> first;
 transient Node<E> last;
 ```
 
-### 2. 新增方法
+### 2. add()
 
 ```java
 public boolean add(E e) {
@@ -426,7 +426,7 @@ void linkLast(E e) {
 
 可见每次插入都是移动指针，和 ArrayList 的拷贝数组来说效率要高上不少。
 
-### 3. 查询方法
+### 3. get()
 
 ```java
 public E get(int index) {
@@ -463,8 +463,6 @@ Node<E> node(int index) {
 - 查找需要进行遍历查询，效率较低。
 
 
-
-   
 
 ### 5. ArrayList 与 LinkedList
 
@@ -1077,7 +1075,7 @@ public class HashSet<E>
 
 
 
-### 3. add
+### 3. add()
 
 ```java
     public boolean add(E e) {
