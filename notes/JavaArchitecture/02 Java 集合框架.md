@@ -68,7 +68,7 @@
 <!-- /TOC -->
 # 前言
 
-Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类比C++中的STL，在市面上似乎还没能找到一本详细介绍的书籍。在这里分为以下及部分对集合框架进行底层数据结构和源码分析，及其面试中常见的问题。比如：阿里面试必问HashMap和ConcurrentHashMap原理。相信本文的阅读会对集合框架有更深一步的了解。
+Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类比C++中的STL，在市面上似乎还没能找到一本详细介绍的书籍。在这里氛围如下部分对集合框架进行底层数据结构和源码分析，及其面试中常见的问题。比如：阿里面试常问到的HashMap和ConcurrentHashMap原理，必须在面试前理清思路。相信本文的阅读会对集合框架有更深一步的了解。
 
 - ArrayList
 - Vector
