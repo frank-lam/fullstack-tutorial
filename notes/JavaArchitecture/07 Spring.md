@@ -435,7 +435,11 @@ public class UserService {
 
 ## 3. AOP（面相切面编程）
 
-![](../pics/spring-aop.png)
+
+
+<div align="center"> <img src="../pics/spring-aop.png" width="650"/></div><br/>
+
+
 
 ### 3.1 什么是AOP
 
