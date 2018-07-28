@@ -70,6 +70,15 @@ from 2018/7/27
 
 
 
+个人的使用体会
+
+- **spring**：核心提供依赖注入
+- **spring mvc**： mvc框架
+- **spring boot**：说不太出什么感觉，跟mvc比就感觉配置少了好多
+- **spring cloud**：围绕微服务的一套东西 
+
+
+
 # 一、Spring核心技术
 
 ## 1. IOC（控制反转）
@@ -466,7 +475,7 @@ AOP（Aspect Oriented Programming ）称为面向切面编程，扩展功能不�
 
 JDK动态代理必须基于接口进行代理
 
-作用：使用代理可以对目标对象进行性能监控（计算运行时间）、安全检查（是否具有权限）、 记录日 志等。
+作用：使用代理可以对目标对象进行性能监控（计算运行时间）、安全检查（是否具有权限）、 记录日志等。
 
 注意：必须要有接口才能进行代理，代理后对象必须转换为接口类型
 
@@ -474,11 +483,11 @@ JDK动态代理必须基于接口进行代理
 
 #### 第二种 CGLIB(CodeGenerationLibrary)是一个开源项目
 
-​          Spring使用CGlib 进行AOP代理， hibernate 也是支持CGlib（默认使用 javassist ）需要下载cglib 的jar包（Spring 最新版本3.2 内部已经集成了cglib ，**无需下载cglib的jar** ）
+Spring使用CGlib 进行AOP代理， hibernate 也是支持CGlib（默认使用 javassist ）需要下载cglib 的jar包（Spring 最新版本3.2 内部已经集成了cglib ，**无需下载cglib的jar** ）
 
-​         **作用：可以为目标类，动态创建子类，对目标类方法进行代理（无需接口）**
+**作用：可以为目标类，动态创建子类，对目标类方法进行代理（无需接口）**
 
-​         原理：Spring AOP 底层，会判断用户是根据接口代理还是目标类代理，如果针对接口代理就使用JDK代理，如果针对目标类代理就使用Cglib代理。
+原理：Spring AOP 底层，会判断用户是根据接口代理还是目标类代理，如果针对接口代理就使用JDK代理，如果针对目标类代理就使用Cglib代理。
 
 <div align="center"> <img src="../pics/../pics/aop1.png" width="650"/></div><br/>
 
@@ -500,19 +509,41 @@ public class User {
 ```
 
 - **Joinpoint（连接点）（重要）**
-  -  类里面可以被增强的方法，这些方法称为连接点
+  - 类里面可以被增强的方法，这些方法称为连接点
+
+    
+
 - **Pointcut（切入点）（重要）**
   - 所谓切入点是指我们要对哪些Joinpoint进行拦截的定义
+
+  
+
 - **Advice（通知/增强）（重要）**
+
   - 所谓通知是指拦截到Joinpoint之后所要做的事情就是通知.通知分为前置通知，后置通知，异常通知，最终通知，环绕通知（切面要完成的功能）
+
+  
+
 - **Aspect（切面）**：
   - 是切入点和通知（引介）的结合
+
+  
+
 - **Introduction（引介）**
   - 引介是一种特殊的通知在不修改类代码的前提下， Introduction可以在运行期为类动态地添加一些方法或Field.
+
+  
+
 - **Target（目标对象）**
   - 代理的目标对象（要增强的类）
+
+  
+
 - **Weaving（织入）**
   - 是把增强应用到目标的过程，把advice 应用到 target的过程
+
+  
+
 - **Proxy（代理）**
   - 一个类被AOP织入增强后，就产生一个结果代理类
 
@@ -521,18 +552,16 @@ public class User {
 ### 3.4 Spring的AOP操作
 
 - 在Spring里面进行Aop操作，使用aspectj实现
-
-（1）aspectj不是Spring的一部分，和Spring一起使用进行Aop操作 
-（2）Spring2.0以后新增了对aspectj的支持
+  - aspectj不是Spring的一部分，和Spring一起使用进行Aop操作 
+  - Spring2.0以后新增了对aspectj的支持
 
 - 使用aspectj实现aop有两种方式
-
-（1）基于aspectj的xml配置
-（2）基于aspectj的注解方式
+  - 基于aspectj的xml配置
+  - 基于aspectj的注解方式
 
 #### （1）AOP准备操作
 
-（1）除了导入基本的jar包之外，还需要导入aop相关的jar包：
+1、除了导入基本的jar包之外，还需要导入aop相关的jar包：
 
 ```
 aopalliance-1.0.jar
@@ -541,7 +570,7 @@ spring-aspects-5.0.4.RELEASE.jar
 spring-aop-5.0.4.RELEASE.jar
 ```
 
-（2）创建Spring核心配置文件 
+2、创建Spring核心配置文件 
 除了引入了约束spring-beans之外还需要引入新约束spring-aop
 
 ```xml
@@ -746,6 +775,8 @@ public class MyBook {
     <bean id="myBook" class="cn.blinkit.aop.anno.MyBook"></bean>
 ```
 
+
+
 ### 3.7 为什么需要代理模式？
 
 假设需实现一个计算的类Math、完成加、减、乘、除功能，如下所示：  
@@ -858,15 +889,16 @@ public class Math {
 
 缺点：
 
-1、工作量特别大，如果项目中有多个类，多个方法，则要修改多次。
+1. 工作量特别大，如果项目中有多个类，多个方法，则要修改多次。
+2. 违背了设计原则：开闭原则（OCP），对扩展开放，对修改关闭，而为了增加功能把每个方法都修改了，也不便于维护。
+3. 违背了设计原则：单一职责（SRP），每个方法除了要完成自己本身的功能，还要计算耗时、延时；每一个方法引起它变化的原因就有多种。
+4. 违背了设计原则：依赖倒转（DIP），抽象不应该依赖细节，两者都应该依赖抽象。而在Test类中，Test与Math都是细节。
 
-2、违背了设计原则：开闭原则（OCP），对扩展开放，对修改关闭，而为了增加功能把每个方法都修改了，也不便于维护。
+解决：
 
-3、违背了设计原则：单一职责（SRP），每个方法除了要完成自己本身的功能，还要计算耗时、延时；每一个方法引起它变化的原因就有多种。
+- 使用静态代理可以解决部分问题（请往下看...）
 
-4、违背了设计原则：依赖倒转（DIP），抽象不应该依赖细节，两者都应该依赖抽象。而在Test类中，Test与Math都是细节。
 
-使用静态代理可以解决部分问题。
 
 
 
@@ -1035,7 +1067,7 @@ public class Test {
 
 通过静态代理，是否完全解决了上述的4个问题：
 
-已解决：
+**已解决：**
 
 - 解决了“开闭原则（OCP）”的问题，因为并没有修改Math类，而扩展出了MathProxy类。
 
@@ -1043,11 +1075,13 @@ public class Test {
 
 - 解决了“单一职责（SRP）”的问题，Math类不再需要去计算耗时与延时操作，但从某些方面讲MathProxy还是存在该问题。
 
-未解决：
+**未解决：**
 
 - 如果项目中有多个类，则需要编写多个代理类，工作量大，不好修改，不好维护，不能应对变化。
 
 如果要解决上面的问题，可以使用动态代理。
+
+
 
 
 
@@ -1263,246 +1297,9 @@ public class Test {
 }
 ```
 
-小结
+**小结**
 
 使用cglib可以实现动态代理，即使被代理的类没有实现接口，但被代理的类必须不是final类。
 
 
 
-
-
-# 二、面试指南
-
-## 1. Spring IOC、AOP的理解以及实现的原理 
-
-- Spring IOC 
-
-  - IoC叫控制反转，是Inversion of Control的缩写，DI（Dependency Injection）叫依赖注入，是对IoC更简单的诠释。控制反转是把传统上由程序代码直接操控的对象的调用权交给容器，通过容器来实现对象组件的装配和管理。所谓的"控制反转"就是对组件对象控制权的转移，从程序代码本身转移到了外部容器，由容器来创建对象并管理对象之间的依赖关系。DI是对IoC更准确的描述，即组件之间的依赖关系由容器在运行期决定，形象的来说，即由容器动态的将某种依赖关系注入到组件之中。 
-
-  举个例子：一个类A需要用到接口B中的方法，那么就需要为类A和接口B建立关联或依赖关系，最原始的方法是在类A中创建一个接口B的实现类C的实例，但这种方法需要开发人员自行维护二者的依赖关系，也就是说当依赖关系发生变动的时候需要修改代码并重新构建整个系统。如果通过一个容器来管理这些对象以及对象的依赖关系，则只需要在类A中定义好用于关联接口B的方法（构造器或setter方法），将类A和接口B的实现类C放入容器中，通过对容器的配置来实现二者的关联。 
-
-   
-
-- Spring IOC实现原理 
-
-  -  通过反射创建实例； 
-  - 获取需要注入的接口实现类并将其赋值给该接口。 
-
-- Spring AOP 
-
-  - AOP（Aspect-Oriented Programming）指一种程序设计范型，该范型以一种称为切面（aspect）的语言构造为基础，切面是一种新的模块化机制，用来描述分散在对象、类或方法中的横切关注点（crosscutting concern）。 
-  - "横切关注"是会影响到整个应用程序的关注功能，它跟正常的业务逻辑是正交的，没有必然的联系，但是几乎所有的业务逻辑都会涉及到这些关注功能。通常，事务、日志、安全性等关注就是应用中的横切关注功能。 
-
-- Spring AOP实现原理 
-
-  - 动态代理（利用反射和动态编译将代理模式变成动态的） 
-  - JDK的动态代理 
-    - JDKProxy返回动态代理类，是目标类所实现接口的另一个实现版本，它实现了对目标类的代理（如同UserDAOProxy与UserDAOImp的关系） 
-  - cglib动态代理 
-    - CGLibProxy返回的动态代理类，则是目标代理类的一个子类（代理类扩展了UserDaoImpl类） 
-
-## 2. Ioc容器的加载过程 
-
-- 创建IOC配置文件的抽象资源  
-- 创建一个BeanFactory  
-- 把读取配置信息的BeanDefinitionReader,这里是XmlBeanDefinitionReader配置给BeanFactory  
-- 从定义好的资源位置读入配置信息，具体的解析过程由XmlBeanDefinitionReader来完成，这样完成整个载入bean定义的过程。 
-
- 
-
-## 3. 动态代理与cglib实现的区别 
-
-- JDK动态代理只能对实现了接口的类生成代理，而不能针对类. 
-- CGLIB是针对类实现代理，主要是对指定的类生成一个子类，覆盖其中的方法因为是继承，所以该类或方法最好不要声明成final。 
-- JDK代理是不需要以来第三方的库，只要JDK环境就可以进行代理 
-- CGLib 必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法，是一种继承 
-
- 
-
-## 4. 代理的实现原理呗 
-
- 
-
-## 5. HIbernate一级缓存与二级缓存之间的区别 
-
-- Hibernate的Session提供了一级缓存的功能，默认总是有效的，当应用程序保存持久化实体、修改持久化实体时，Session并不会立即把这种改变提交到数据库，而是缓存在当前的Session中，除非显示调用了Session的flush()方法或通过close()方法关闭Session。通过一级缓存，可以减少程序与数据库的交互，从而提高数据库访问性能。  
-- SessionFactory级别的二级缓存是全局性的，所有的Session可以共享这个二级缓存。不过二级缓存默认是关闭的，需要显示开启并指定需要使用哪种二级缓存实现类（可以使用第三方提供的实现）。一旦开启了二级缓存并设置了需要使用二级缓存的实体类，SessionFactory就会缓存访问过的该实体类的每个对象，除非缓存的数据超出了指定的缓存空间。  
-- 一级缓存和二级缓存都是对整个实体进行缓存，不会缓存普通属性，如果希望对普通属性进行缓存，可以使用查询缓存。查询缓存是将HQL或SQL语句以及它们的查询结果作为键值对进行缓存，对于同样的查询可以直接从缓存中获取数据。查询缓存默认也是关闭的，需要显示开启。 
-
- 
-
-## 6. Spring MVC的原理 
-
-Spring MVC的工作原理如下图所示：  
-
-![这里写图片描述](https://blog.csdn.net/sinat_22797429/article/details/76293284)
-
-  
-
-- ① 客户端的所有请求都交给前端控制器DispatcherServlet来处理，它会负责调用系统的其他模块来真正处理用户的请求。  
-- ② DispatcherServlet收到请求后，将根据请求的信息（包括URL、HTTP协议方法、请求头、请求参数、Cookie等）以及HandlerMapping的配置找到处理该请求的Handler（任何一个对象都可以作为请求的Handler）。  
-- ③在这个地方Spring会通过HandlerAdapter对该处理进行封装。  
-- ④ HandlerAdapter是一个适配器，它用统一的接口对各种Handler中的方法进行调用。  
-- ⑤ Handler完成对用户请求的处理后，会返回一个ModelAndView对象给DispatcherServlet，ModelAndView顾名思义，包含了数据模型以及相应的视图的信息。  
-- ⑥ ModelAndView的视图是逻辑视图，DispatcherServlet还要借助ViewResolver完成从逻辑视图到真实视图对象的解析工作。  
-- ⑦ 当得到真正的视图对象后，DispatcherServlet会利用视图对象对模型数据进行渲染。  
-- ⑧ 客户端得到响应，可能是一个普通的HTML页面，也可以是XML或JSON字符串，还可以是一张图片或者一个PDF文件。 
-
- 
-
-## 7. 简述Hibernate常见优化策略。 
-
-- 制定合理的缓存策略（二级缓存、查询缓存）。  
-- 采用合理的Session管理机制。  
-- 尽量使用延迟加载特性。  
-- 设定合理的批处理参数。  
-- 如果可以，选用UUID作为主键生成器。  
-- 如果可以，选用基于版本号的乐观锁替代悲观锁。  
-- 在开发过程中, 开启hibernate.show_sql选项查看生成的SQL，从而了解底层的状况；开发完成后关闭此选项。  
-- 考虑数据库本身的优化，合理的索引、恰当的数据分区策略等都会对持久层的性能带来可观的提升，但这些需要专业的DBA（数据库管理员）提供支持。 
-
-
-
-什么是JavaBean
-
-
-
-
-
-
-
-**面经在框架方面的问题：**
-
-11）spring的AOP原理和底层实现（框架技术：扯了一下概念和反射机制）  
-
-12）Spring的注解讲一下；（框架技术）  
-
-16）cglib底层实现；（框架技术：懵逼）  
-
-8）Spring中的事务原理讲一下；（框架技术：只说了个声明性事务，其他的也不了解）  
-
-介绍spring的IOC和AOP，分别如何实现(classloader、动态代理)  
-
-spring中bean加载机制，bean生成的具体步骤  
-
-ioc注入的方式  
-
-spring何时创建applicationContext(web.xml中使用listener)  
-
-listener是监听哪个事件(ServletContext创建事件) springMVC流程具体叙述下 
-
-springMVC流程具体叙述下  
-
-介绍spring的IOC和AOP，容器的概念（本质就是applicationContext管理了classloader）  
-
-Spring的aop怎么实现
-
-Spring的aop有哪些实现方式
-
-介绍spring中的熟悉的注解
-
- 5.springIOC优点
-
-   了解Spring IOC 么？说下你了解的吧？   
-
- 
-
-  说下Spring Aop吧？   
-
- 
-
-  SpringMvc 工作原理？   
-
- **spring里面的工厂模式和代理模式，IO中的装饰者模式**，挑几个最熟的能讲讲思路和伪代码实现。
-
- 1、Spring具有什么特点（IOC和AOP）
-
-3、谈一谈对spring的理解
-
-4、spring实现原理
-
-8 、了解AOP吗？说说AOP原理，Spring如何实现AOP的  Spring两大核心咯IoC、AOP 这个还是要会的吧  
-
-7、Spring用的怎么样，看过源码吗？   
-
-22. springboot框架源码看过吗？hashMap的源码看过吗？  
-23. Struts拦截器和Spring AOP区别
-
-
-
-1. Spring MVC有了解嘛，Spring 事务有了解嘛
-
-   
-
- 
-
-1. Spring MVC注解的优点
-2. 
-
- 
-
-6项目中Spring AOP用在什么地方，为什么这么用，切点，织入，通知用自己的话描述一下，AOP原理，动态代理2种实现
-
- 7Spring里面注解用过没有？autowired 和resource区别（一开始我给听成result了。。。。去介绍strusts2了。。）
-
- 
-
-9Spring（AOP，IOC又来一次。。。）
-
- 
-
-8.spring boot的了解 spark hadoop的了解  
-
-
-
-
-
-20、框架用过哪些？说刚入门Spring、经典三层MVC
-
- 
-
-3、 你的项目里用了SpringMVC+hibernate，能说什么是SpringMVC？什么是hibernate吗？
-
- 
-
-4.Spring IOC初始化过程
-
- Spring 
-
- 
-
-整体都有啥   IOC  AOP思想  bean如何初始化 生命周期  动态代理 等等细节的实现，能看源码最好。如果没时间都看完的话，建议IOC和AOP部分看看源码了解一下底层实现。
-
-
-
-14.手写代码  spring AOP实现拦截器，写出代码以及XML配置  
-
-8.spring事务  如何实现  
-
-
-
-13.spring初始化哪个方法  
-
-14.bean如何加载  生命周期  
-
-
-
-
-
-（14）Hibernate的理解  
-
-
-
-
-
-
-
-阿里Java研发工程师实习面经_笔经面经_牛客网
-https://www.nowcoder.com/discuss/72899?type=2&order=3&pos=509&page=1
-
-
-
-
-
-网易面经（Java开发岗） - Andya - 博客园
-https://www.cnblogs.com/Andya/p/7456511.html
