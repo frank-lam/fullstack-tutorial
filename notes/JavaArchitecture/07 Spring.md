@@ -2,54 +2,7 @@
 
 [TOC]
 
-<!-- TOC -->
 
-- [前言](#前言)
-- [一、Spring核心技术](#一spring核心技术)
-    - [1. IOC的概念](#1-ioc的概念)
-        - [1.1 什么是IOC](#11-什么是ioc)
-        - [1.2 IoC能做什么](#12-ioc能做什么)
-        - [1.3 IoC和DI](#13-ioc和di)
-        - [1.4 IOC底层原理 (降低类之间的耦合度)](#14-ioc底层原理-降低类之间的耦合度)
-        - [1.5 Spring中怎么用](#15-spring中怎么用)
-            - [（1）配置文件方式](#1配置文件方式)
-            - [（2）注解方式](#2注解方式)
-    - [2. DI（依赖注入）](#2-di依赖注入)
-        - [2.1 什么是依赖注入](#21-什么是依赖注入)
-        - [2.2 为什么使用依赖注入](#22-为什么使用依赖注入)
-        - [2.3 为什么要实现松耦合](#23-为什么要实现松耦合)
-        - [2.4 IOC和DI区别](#24-ioc和di区别)
-        - [2.5 依赖注入方式](#25-依赖注入方式)
-            - [（1）使用set方法注入](#1使用set方法注入)
-            - [（2）使用有参构造注入](#2使用有参构造注入)
-            - [（3）注入对象类型属性](#3注入对象类型属性)
-            - [（4）p名称空间注入](#4p名称空间注入)
-            - [（5）注入复杂类型属性](#5注入复杂类型属性)
-    - [3. AOP](#3-aop)
-        - [3.1 什么是AOP](#31-什么是aop)
-        - [3.2 底层原理](#32-底层原理)
-            - [第一种 JDK 自带的动态代理技术](#第一种-jdk-自带的动态代理技术)
-            - [第二种 CGLIB(CodeGenerationLibrary)是一个开源项目](#第二种-cglibcodegenerationlibrary是一个开源项目)
-        - [3.3 AOP操作术语](#33-aop操作术语)
-        - [3.4 Spring的AOP操作](#34-spring的aop操作)
-            - [（1）AOP准备操作](#1aop准备操作)
-            - [（2）使用表达式配置切入点](#2使用表达式配置切入点)
-        - [3.5 使用xml实现AOP](#35-使用xml实现aop)
-        - [3.6 使用注解实现AOP](#36-使用注解实现aop)
-        - [3.7 为什么需要代理模式？](#37-为什么需要代理模式)
-        - [3.8 静态代理](#38-静态代理)
-        - [3.9 动态代理，使用JDK内置的Proxy实现](#39-动态代理使用jdk内置的proxy实现)
-        - [3.10 动态代理，使用cglib实现](#310-动态代理使用cglib实现)
-- [二、面试指南](#二面试指南)
-    - [1. Spring IOC、AOP的理解以及实现的原理](#1-spring-iocaop的理解以及实现的原理)
-    - [2. Ioc容器的加载过程](#2-ioc容器的加载过程)
-    - [3. 动态代理与cglib实现的区别](#3-动态代理与cglib实现的区别)
-    - [4. 代理的实现原理呗](#4-代理的实现原理呗)
-    - [5. HIbernate一级缓存与二级缓存之间的区别](#5-hibernate一级缓存与二级缓存之间的区别)
-    - [6. Spring MVC的原理](#6-spring-mvc的原理)
-    - [7. 简述Hibernate常见优化策略。](#7-简述hibernate常见优化策略)
-
-<!-- /TOC -->
 
 # 前言
 
@@ -66,14 +19,13 @@ from 2018/7/27
 - [一起来谈谈 Spring AOP！ - 掘金](https://juejin.im/post/5aa7818af265da23844040c6)
 - [黑马程序员Spring2016学习笔记](https://github.com/Only-lezi/spring-learning/tree/master/spring-learning-article)
 - [Spring学习总结（二）——静态代理、JDK与CGLIB动态代理、AOP+IoC - 张果 - 博客园](http://www.cnblogs.com/best/p/5679656.html)
-
-
+- [Spring IoC有什么好处呢？ - 知乎](https://www.zhihu.com/question/23277575/answer/169698662)
 
 
 
 # 一、Spring核心技术
 
-## 1. IOC的概念
+## 1. IOC（控制反转）
 
 ### 1.1 什么是IOC
 
@@ -92,56 +44,10 @@ IoC(Inversion of Control)，意为控制反转，不是什么技术，而是一�
 
 
 
-**下面举个例子说明说明是IOC：**
+必读文章：[(2 封私信 / 22 条消息)Spring IoC有什么好处呢？ - 知乎](https://www.zhihu.com/question/23277575/answer/169698662)
 
-假设我们要设计一个Girl和一个Boy类，其中Girl有kiss方法，即Girl想要Kiss一个Boy。那么，我们的问题是，Girl如何能够认识这个Boy？
 
-在我们中国，常见的ＭＭ与GG的认识方式有以下几种:
 
-1. 青梅竹马
-2. 亲友介绍
-3. 父母包办
-
-那么哪一种才是最好呢？ 　　
-
-**青梅竹马：Girl从小就知道自己的Boy。**
-
-```java
-public class Girl {　
-    void kiss(){ 
-　　　 Boy boy = new Boy(); 
-　　} 
-} 
-```
-
-然而从开始就创建的Boy缺点就是无法在更换。并且要负责Boy的整个生命周期。如果我们的Girl想要换一个怎么办？（笔者严重不支持Girl经常更换Boy）
-
-**亲友介绍：由中间人负责提供Boy来见面**
-
-```java
-public class Girl { 
-　 void kiss(){ 
-　　　 Boy boy = BoyFactory.createBoy();　　　
-　 } 
-}
-```
-
-亲友介绍，固然是好。如果不满意，尽管另外换一个好了。但是，亲友BoyFactory经常是以Singleton的形式出现，不然就是，存在于Globals，无处不在，无处不能。实在是太繁琐了一点，不够灵活。我为什么一定要这个亲友掺和进来呢？为什么一定要付给她介绍费呢？万一最好的朋友爱上了我的男朋友呢？
-
-**父母包办：一切交给父母，自己不用费吹灰之力，只需要等着Kiss就好了。**
-
-```java
-public class Girl { 
-　  void kiss(Boy boy){ 
-　　　 // kiss boy　
-　　　boy.kiss(); 
-　　} 
-}
-```
-
-Well，这是对Girl最好的方法，只要想办法贿赂了Girl的父母，并把Boy交给他。那么我们就可以轻松的和Girl来Kiss了。看来几千年传统的父母之命还真是有用哦。至少Boy和Girl不用自己瞎忙乎了。
-
-**这就是IOC，将对象的创建和获取提取到外部。由外部容器提供需要的组件。**
 
 ### 1.2 IoC能做什么
 
@@ -480,7 +386,7 @@ public class UserService {
 
 
 
-## 3. AOP
+## 3. AOP（面相切面编程）
 
 ![](../pics/spring-aop.png)
 
