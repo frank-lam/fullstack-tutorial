@@ -22,18 +22,13 @@ from 2018/7/27
 
 
 
-快速入门（视频）：
-
-- [Spring框架学习总结_张果_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili](https://www.bilibili.com/video/av16071354/?p=6)
-  
-
 
 
 # 一、Spring核心技术
 
 ## 1. IOC的概念
 
-### 什么是IOC
+### 1.1 什么是IOC
 
 IoC(Inversion of Control)，意为控制反转，不是什么技术，而是一种设计思想。Ioc意味着**将你设计好的对象交给容器控制，而不是传统的在你的对象内部直接控制**。
 
@@ -44,9 +39,9 @@ IoC(Inversion of Control)，意为控制反转，不是什么技术，而是一�
 
 **简单来说**
 
-> **正转：**比如有一个类，在类里面有方法（不是静态的方法），调用类里面的方法，创建类的对象，使用对象调用方法，创建类对象的过程，需要new出来对象
+> 正转：比如有一个类，在类里面有方法（不是静态的方法），调用类里面的方法，创建类的对象，使用对象调用方法，创建类对象的过程，需要new出来对象
 >
-> **反转：**把对象的创建不是通过new方式实现，而是交给Spring配置创建类对象
+> 反转：把对象的创建不是通过new方式实现，而是交给Spring配置创建类对象
 
 
 
@@ -101,7 +96,7 @@ Well，这是对Girl最好的方法，只要想办法贿赂了Girl的父母，�
 
 **这就是IOC，将对象的创建和获取提取到外部。由外部容器提供需要的组件。**
 
-### IoC能做什么
+### 1.2 IoC能做什么
 
 IoC 不是一种技术，只是一种思想，一个重要的面向对象编程的法则，它能指导我们如何设计出松耦合、更优良的程序。传统应用程序都是由我们在类内部主动创建依赖对象，从而导致类与类之间高耦合，难于测试；有了IoC容器后，把创建和查找依赖对象的控制权交给了容器，由容器进行注入组合对象，所以对象与对象之间是松散耦合，这样也方便测试，利于功能复用，更重要的是使得程序的整个体系结构变得非常灵活。
 
@@ -109,7 +104,7 @@ IoC 不是一种技术，只是一种思想，一个重要的面向对象编程�
 
 IoC很好的体现了面向对象设计法则之一—— 好莱坞法则：“别找我们，我们找你”；即由IoC容器帮对象找相应的依赖对象并注入，而不是由对象主动去找。
 
-### IoC和DI
+### 1.3 IoC和DI
 
 **DI—Dependency Injection，即“依赖注入”**：组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。依赖注入的目的并非为软件系统带来更多功能，而是为了提升组件重用的频率，并为系统搭建一个灵活、可扩展的平台。通过依赖注入机制，我们只需要通过简单的配置，而无需任何代码就可指定目标需要的资源，完成自身的业务逻辑，而不需要关心具体的资源来自何处，由谁实现。
 
@@ -126,7 +121,7 @@ IoC和DI由什么关系呢？其实它们是同一个概念的不同角度描述
 
 
 
-### IOC底层原理 (降低类之间的耦合度)
+### 1.4 IOC底层原理 (降低类之间的耦合度)
 
 - 底层原理使用技术
   - xml配置文件
@@ -185,9 +180,9 @@ public class Factory {
 
 
 
-### Spring中怎么用
+### 1.5 Spring中怎么用
 
-#### 配置文件方式
+#### （1）配置文件方式
 
 我们在Spring中是这样获取对象的：
 
@@ -233,7 +228,7 @@ public class Lol {
 
 上面的代码运行结果自然是 `剑圣在gank!!`。
 
-#### 注解方式
+#### （2）注解方式
 
 Spring更高级的用法，在3.0版本之后有了基于Annotation的注入实现，为毛每次都要配置 `Xml` 看到都蛋疼。。
 
@@ -283,17 +278,19 @@ public class DuangService {
 
 ## 2. DI（依赖注入）
 
-
-
-### 什么是依赖注入
+### 2.1 什么是依赖注入
 
 在依赖注入的模式下，创建被调用者得工作不再由调用者来完成，创建被调用者实例的工作通常由Spring容器完成，然后注入调用者。**创建对象时，向类里的属性设置值**
 
-### 为什么使用依赖注入
+
+
+### 2.2 为什么使用依赖注入
 
 为了实现代码/模块之间松耦合。
 
-### 为什么要实现松耦合
+
+
+### 2.3 为什么要实现松耦合
 
 上层调用下层，上层依赖于下层，当下层剧烈变动时上层也要跟着变动，这就会导致模块的复用性降低而且大大提高了开发的成本。
 
@@ -301,7 +298,7 @@ public class DuangService {
 
 
 
-### IOC和DI区别
+### 2.4 IOC和DI区别
 
 1. IOC控制反转，把对象创建交给Spring配置 
 2. DI依赖注入，向类里面属性注入值 
@@ -309,13 +306,15 @@ public class DuangService {
 
 
 
-### 依赖注入方式
+### 2.5 依赖注入方式
 
-（1）使用set方法注入 
-（2）使用有参构造注入 
-（3）使用接口注入
+1. 使用set方法注入 
 
-spring框架中支持前两种方式
+2. 使用有参构造注入 
+
+3. 使用接口注入
+
+说明：Spring框架中支持前两种方式
 
 
 
@@ -385,9 +384,9 @@ public class UserService {
 
 #### （4）p名称空间注入 
 
-![p名称空间注入](D:/gitdoc/2019_campus_appy/notes/pics/ioc-p1.png)
+![p名称空间注入](../pics/ioc-p1.png)
 
-![p名称空间注入](D:/gitdoc/2019_campus_appy/notes/pics/ioc-p2.png)
+![p名称空间注入](../pics/ioc-p2.png)
 
 #### （5）注入复杂类型属性
 
@@ -434,11 +433,11 @@ public class UserService {
 
 
 
-## AOP
+## 3. AOP
 
 ![](../pics/spring-aop.png)
 
-### 什么是AOP
+### 3.1 什么是AOP
 
 AOP（Aspect Oriented Programming ）称为面向切面编程，扩展功能不是修改源代码实现，在程序开发中主要用来解决一些系统层面上的问题，比如日志，事务，权限等待，Struts2的拦截器设计就是基于AOP的思想，是个比较经典的例子。
 
@@ -453,7 +452,7 @@ AOP（Aspect Oriented Programming ）称为面向切面编程，扩展功能不�
 
 ​         第二：AspectJ第三方开源技术，Spring已经整合AspectJ，提供对AspectJ注解的支持，开发AOP程序 更加容易（企业主流）
 
-### 底层原理
+### 3.2 底层原理
 
 ![](../pics/aop2.png)
 
@@ -483,7 +482,7 @@ JDK动态代理必须基于接口进行代理
 
 
 
-### AOP操作术语
+### 3.3 AOP操作术语
 
 以下面代码为例：
 
@@ -515,7 +514,7 @@ public class User {
 
 
 
-### Spring的AOP操作
+### 3.4 Spring的AOP操作
 
 - 在Spring里面进行Aop操作，使用aspectj实现
 
@@ -527,7 +526,7 @@ public class User {
 （1）基于aspectj的xml配置
 （2）基于aspectj的注解方式
 
-#### AOP准备操作
+#### （1）AOP准备操作
 
 （1）除了导入基本的jar包之外，还需要导入aop相关的jar包：
 
@@ -552,7 +551,7 @@ spring-aop-5.0.4.RELEASE.jar
 </beans>12345678
 ```
 
-#### 使用表达式配置切入点
+#### （2）使用表达式配置切入点
 
 1. 切入点：实际增强的方法
 2. 常用的表达式
@@ -568,7 +567,7 @@ spring-aop-5.0.4.RELEASE.jar
 
 
 
-### 使用xml实现AOP
+### 3.5 使用xml实现AOP
 
 **aop配置代码：** Book
 
@@ -653,7 +652,7 @@ public class AOPTest {
 
 
 
-### 使用注解实现AOP
+### 3.6 使用注解实现AOP
 
 1. 创建对象
    (1)创建Book和MyBook **（增强类）** 对象
@@ -743,7 +742,526 @@ public class MyBook {
     <bean id="myBook" class="cn.blinkit.aop.anno.MyBook"></bean>
 ```
 
+### 3.7 为什么需要代理模式？
 
+假设需实现一个计算的类Math、完成加、减、乘、除功能，如下所示：  
+
+```java
+package com.zhangguo.Spring041.aop01;
+
+public class Math {
+    //加
+    public int add(int n1,int n2){
+        int result=n1+n2;
+        System.out.println(n1+"+"+n2+"="+result);
+        return result;
+    }
+    
+    
+    //减
+    public int sub(int n1,int n2){
+        int result=n1-n2;
+        System.out.println(n1+"-"+n2+"="+result);
+        return result;
+    }
+    
+    //乘
+    public int mut(int n1,int n2){
+        int result=n1*n2;
+        System.out.println(n1+"X"+n2+"="+result);
+        return result;
+    }
+    
+    //除
+    public int div(int n1,int n2){
+        int result=n1/n2;
+        System.out.println(n1+"/"+n2+"="+result);
+        return result;
+    }
+}
+```
+
+现在需求发生了变化，要求项目中所有的类在执行方法时输出执行耗时。最直接的办法是修改源代码，如下所示：  
+
+```java
+package com.zhangguo.Spring041.aop01;
+
+import java.util.Random;
+
+public class Math {
+    //加
+    public int add(int n1,int n2){
+        //开始时间
+        long start=System.currentTimeMillis();
+        lazy();
+        int result=n1+n2;
+        System.out.println(n1+"+"+n2+"="+result);
+        Long span= System.currentTimeMillis()-start;
+        System.out.println("共用时："+span);
+        return result;
+    }
+    
+    //减
+    public int sub(int n1,int n2){
+        //开始时间
+        long start=System.currentTimeMillis();
+        lazy();
+        int result=n1-n2;
+        System.out.println(n1+"-"+n2+"="+result);
+        Long span= System.currentTimeMillis()-start;
+        System.out.println("共用时："+span);
+        return result;
+    }
+    
+    //乘
+    public int mut(int n1,int n2){
+        //开始时间
+        long start=System.currentTimeMillis();
+        lazy();
+        int result=n1*n2;
+        System.out.println(n1+"X"+n2+"="+result);
+        Long span= System.currentTimeMillis()-start;
+        System.out.println("共用时："+span);
+        return result;
+    }
+    
+    //除
+    public int div(int n1,int n2){
+        //开始时间
+        long start=System.currentTimeMillis();
+        lazy();
+        int result=n1/n2;
+        System.out.println(n1+"/"+n2+"="+result);
+        Long span= System.currentTimeMillis()-start;
+        System.out.println("共用时："+span);
+        return result;
+    }
+    
+    //模拟延时
+    public void lazy()
+    {
+        try {
+            int n=(int)new Random().nextInt(500);
+            Thread.sleep(n);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+
+
+缺点：
+
+1、工作量特别大，如果项目中有多个类，多个方法，则要修改多次。
+
+2、违背了设计原则：开闭原则（OCP），对扩展开放，对修改关闭，而为了增加功能把每个方法都修改了，也不便于维护。
+
+3、违背了设计原则：单一职责（SRP），每个方法除了要完成自己本身的功能，还要计算耗时、延时；每一个方法引起它变化的原因就有多种。
+
+4、违背了设计原则：依赖倒转（DIP），抽象不应该依赖细节，两者都应该依赖抽象。而在Test类中，Test与Math都是细节。
+
+使用静态代理可以解决部分问题。
+
+
+
+
+
+### 3.8 静态代理
+
+ 1、定义抽象主题接口
+
+```java
+package com.zhangguo.Spring041.aop02;
+
+/**
+ * 接口
+ * 抽象主题
+ */
+public interface IMath {
+    //加
+    int add(int n1, int n2);
+
+    //减
+    int sub(int n1, int n2);
+
+    //乘
+    int mut(int n1, int n2);
+
+    //除
+    int div(int n1, int n2);
+
+}
+```
+
+2、主题类，算术类，实现抽象接口
+
+```java
+package com.zhangguo.Spring041.aop02;
+
+/**
+ * 被代理的目标对象
+ *真实主题
+ */
+public class Math implements IMath {
+    //加
+    public int add(int n1,int n2){
+        int result=n1+n2;
+        System.out.println(n1+"+"+n2+"="+result);
+        return result;
+    }
+    
+    //减
+    public int sub(int n1,int n2){
+        int result=n1-n2;
+        System.out.println(n1+"-"+n2+"="+result);
+        return result;
+    }
+    
+    //乘
+    public int mut(int n1,int n2){
+        int result=n1*n2;
+        System.out.println(n1+"X"+n2+"="+result);
+        return result;
+    }
+    
+    //除
+    public int div(int n1,int n2){
+        int result=n1/n2;
+        System.out.println(n1+"/"+n2+"="+result);
+        return result;
+    }
+}
+```
+
+3、代理类 
+
+```java
+package com.zhangguo.Spring041.aop02;
+
+import java.util.Random;
+
+/**
+ * 静态代理类
+ */
+public class MathProxy implements IMath {
+
+    //被代理的对象
+    IMath math=new Math();
+    
+    //加
+    public int add(int n1, int n2) {
+        //开始时间
+        long start=System.currentTimeMillis();
+        lazy();
+        int result=math.add(n1, n2);
+        Long span= System.currentTimeMillis()-start;
+        System.out.println("共用时："+span);
+        return result;
+    }
+
+    //减法
+    public int sub(int n1, int n2) {
+        //开始时间
+        long start=System.currentTimeMillis();
+        lazy();
+        int result=math.sub(n1, n2);
+        Long span= System.currentTimeMillis()-start;
+        System.out.println("共用时："+span);
+        return result;
+    }
+
+    //乘
+    public int mut(int n1, int n2) {
+        //开始时间
+        long start=System.currentTimeMillis();
+        lazy();
+        int result=math.mut(n1, n2);
+        Long span= System.currentTimeMillis()-start;
+        System.out.println("共用时："+span);
+        return result;
+    }
+    
+    //除
+    public int div(int n1, int n2) {
+        //开始时间
+        long start=System.currentTimeMillis();
+        lazy();
+        int result=math.div(n1, n2);
+        Long span= System.currentTimeMillis()-start;
+        System.out.println("共用时："+span);
+        return result;
+    }
+
+    //模拟延时
+    public void lazy()
+    {
+        try {
+            int n=(int)new Random().nextInt(500);
+            Thread.sleep(n);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+4、测试运行 
+
+```java
+package com.zhangguo.Spring041.aop02;
+
+public class Test {
+    
+    IMath math=new MathProxy();
+    @org.junit.Test
+    public void test01()
+    {
+        int n1=100,n2=5;
+        math.add(n1, n2);
+        math.sub(n1, n2);
+        math.mut(n1, n2);
+        math.div(n1, n2);
+    }
+}
+```
+
+5、小结 
+
+通过静态代理，是否完全解决了上述的4个问题：
+
+已解决：
+
+- 解决了“开闭原则（OCP）”的问题，因为并没有修改Math类，而扩展出了MathProxy类。
+
+- 解决了“依赖倒转（DIP）”的问题，通过引入接口。
+
+- 解决了“单一职责（SRP）”的问题，Math类不再需要去计算耗时与延时操作，但从某些方面讲MathProxy还是存在该问题。
+
+未解决：
+
+- 如果项目中有多个类，则需要编写多个代理类，工作量大，不好修改，不好维护，不能应对变化。
+
+如果要解决上面的问题，可以使用动态代理。
+
+
+
+### 3.9 动态代理，使用JDK内置的Proxy实现
+
+只需要一个代理类，而不是针对每个类编写代理类。
+
+在上一个示例中修改代理类MathProxy如下：
+
+```java
+package com.zhangguo.Spring041.aop03;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.Random;
+
+/**
+ * 动态代理类
+ */
+public class DynamicProxy implements InvocationHandler {
+
+    //被代理的对象
+    Object targetObject;
+    
+    /**
+     * 获得被代理后的对象
+     * @param object 被代理的对象
+     * @return 代理后的对象
+     */
+    public Object getProxyObject(Object object){
+        this.targetObject=object;
+        return Proxy.newProxyInstance(
+                targetObject.getClass().getClassLoader(), //类加载器
+                targetObject.getClass().getInterfaces(),  //获得被代理对象的所有接口
+                this);  //InvocationHandler对象
+        //loader:一个ClassLoader对象，定义了由哪个ClassLoader对象来生成代理对象进行加载
+        //interfaces:一个Interface对象的数组，表示的是我将要给我需要代理的对象提供一组什么接口，如果我提供了一组接口给它，那么这个代理对象就宣称实现了该接口(多态)，这样我就能调用这组接口中的方法了
+        //h:一个InvocationHandler对象，表示的是当我这个动态代理对象在调用方法的时候，会关联到哪一个InvocationHandler对象上，间接通过invoke来执行
+    }
+    
+    
+    /**
+     * 当用户调用对象中的每个方法时都通过下面的方法执行，方法必须在接口
+     * proxy 被代理后的对象
+     * method 将要被执行的方法信息（反射）
+     * args 执行方法时需要的参数
+     */
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        //被织入的内容，开始时间
+        long start=System.currentTimeMillis();
+        lazy();
+        
+        //使用反射在目标对象上调用方法并传入参数
+        Object result=method.invoke(targetObject, args);
+        
+        //被织入的内容，结束时间
+        Long span= System.currentTimeMillis()-start;
+        System.out.println("共用时："+span);
+        
+        return result;
+    }
+    
+    //模拟延时
+    public void lazy()
+    {
+        try {
+            int n=(int)new Random().nextInt(500);
+            Thread.sleep(n);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+```
+
+测试运行：  
+
+```java
+package com.zhangguo.Spring041.aop03;
+
+public class Test {
+    
+    //实例化一个MathProxy代理对象
+    //通过getProxyObject方法获得被代理后的对象
+    IMath math=(IMath)new DynamicProxy().getProxyObject(new Math());
+    @org.junit.Test
+    public void test01()
+    {
+        int n1=100,n2=5;
+        math.add(n1, n2);
+        math.sub(n1, n2);
+        math.mut(n1, n2);
+        math.div(n1, n2);
+    }
+    
+    IMessage message=(IMessage) new DynamicProxy().getProxyObject(new Message());
+    @org.junit.Test
+    public void test02()
+    {
+        message.message();
+    }
+}
+```
+
+小结：
+
+ JDK内置的Proxy动态代理可以在运行时动态生成字节码，而没必要针对每个类编写代理类。中间主要使用到了一个接口InvocationHandler与Proxy.newProxyInstance静态方法，参数说明如下：
+
+使用内置的Proxy实现动态代理有一个问题：**被代理的类必须实现接口，未实现接口则没办法完成动态代理。**
+
+如果项目中有些类没有实现接口，则不应该为了实现动态代理而刻意去抽出一些没有实例意义的接口，通过cglib可以解决该问题。
+
+
+
+### 3.10 动态代理，使用cglib实现
+
+CGLIB(Code Generation Library)是一个开源项目,是一个强大的，高性能，高质量的Code生成类库，它可以在运行期扩展Java类与实现Java接口，通俗说cglib可以在运行时动态生成字节码。
+
+1、引用cglib，通过maven
+
+2、使用cglib完成动态代理，大概的原理是：cglib继承被代理的类，重写方法，织入通知，动态生成字节码并运行，因为是继承所以final类是没有办法动态代理的。具体实现如下：  
+
+```java
+package com.zhangguo.Spring041.aop04;
+
+import java.lang.reflect.Method;
+import java.util.Random;
+
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
+
+/*
+ * 动态代理类
+ * 实现了一个方法拦截器接口
+ */
+public class DynamicProxy implements MethodInterceptor {
+
+    // 被代理对象
+    Object targetObject;
+
+    //Generate a new class if necessary and uses the specified callbacks (if any) to create a new object instance. 
+    //Uses the no-arg constructor of the superclass.
+    //动态生成一个新的类，使用父类的无参构造方法创建一个指定了特定回调的代理实例
+    public Object getProxyObject(Object object) {
+        this.targetObject = object;
+        //增强器，动态代码生成器
+        Enhancer enhancer=new Enhancer();
+        //回调方法
+        enhancer.setCallback(this);
+        //设置生成类的父类类型
+        enhancer.setSuperclass(targetObject.getClass());
+        //动态生成字节码并返回代理对象
+        return enhancer.create();
+    }
+
+    // 拦截方法
+    public Object intercept(Object object, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
+        // 被织入的横切内容，开始时间 before
+        long start = System.currentTimeMillis();
+        lazy();
+
+        // 调用方法
+        Object result = methodProxy.invoke(targetObject, args);
+
+        // 被织入的横切内容，结束时间
+        Long span = System.currentTimeMillis() - start;
+        System.out.println("共用时：" + span);
+        
+        return result;
+    }
+
+    // 模拟延时
+    public void lazy() {
+        try {
+            int n = (int) new Random().nextInt(500);
+            Thread.sleep(n);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+```
+
+测试运行：  
+
+```java
+package com.zhangguo.Spring041.aop04;
+
+public class Test {
+    //实例化一个DynamicProxy代理对象
+    //通过getProxyObject方法获得被代理后的对象
+    Math math=(Math)new DynamicProxy().getProxyObject(new Math());
+    @org.junit.Test
+    public void test01()
+    {
+        int n1=100,n2=5;
+        math.add(n1, n2);
+        math.sub(n1, n2);
+        math.mut(n1, n2);
+        math.div(n1, n2);
+    }
+    //另一个被代理的对象,不再需要重新编辑代理代码
+    Message message=(Message) new DynamicProxy().getProxyObject(new Message());
+    @org.junit.Test
+    public void test02()
+    {
+        message.message();
+    }
+}
+```
+
+小结
+
+使用cglib可以实现动态代理，即使被代理的类没有实现接口，但被代理的类必须不是final类。
 
 
 
