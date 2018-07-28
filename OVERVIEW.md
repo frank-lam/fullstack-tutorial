@@ -42,7 +42,7 @@
 #### 六、高级部分
 
 - 中间件
-  - dobbo
+  - Dobbo
   - zokkeeper
 - Nginx
 - Docker

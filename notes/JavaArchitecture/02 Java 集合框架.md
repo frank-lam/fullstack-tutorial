@@ -1468,3 +1468,12 @@ public static void main(String[] args) {
 
 
 ## ArrayList如何快速排序 ？【阿里面经】
+
+
+
+
+
+## Hashmap为什么大小是2的幂次？【阿里面经】
+
+
+
