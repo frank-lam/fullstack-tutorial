@@ -454,7 +454,7 @@ AOP（Aspect Oriented Programming ）称为面向切面编程，扩展功能不�
 
 ### 3.2 底层原理
 
-<div align="center"> <img src="../pics/../pics/aop2.png" width="auto"/></div><br/>
+<div align="center"> <img src="../pics/../pics/aop2.png" width="650"/></div><br/>
 
 
 
@@ -476,7 +476,7 @@ JDK动态代理必须基于接口进行代理
 
 ​         原理：Spring AOP 底层，会判断用户是根据接口代理还是目标类代理，如果针对接口代理就使用JDK代理，如果针对目标类代理就使用Cglib代理。
 
-<div align="center"> <img src="../pics/../pics/aop1.png" width=""/></div><br/>
+<div align="center"> <img src="../pics/../pics/aop1.png" width="650"/></div><br/>
 
 
 
