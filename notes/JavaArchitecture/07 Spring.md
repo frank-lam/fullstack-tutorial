@@ -174,7 +174,7 @@ public class Factory {
 超详细原理讲解：[java-bible/4.principle.md at master · biezhi/java-bible](https://github.com/biezhi/java-bible/blob/master/ioc/4.principle.md)
 
 
-<div align="center"> <img src="D:/gitdoc/2019_campus_appy/notes/pics/spring-ioc.png" width=""/></div><br/>
+<div align="center"> <img src="../pics/spring-ioc.png" width=""/></div><br/>
 
 
 
