@@ -68,6 +68,8 @@
 - [Spring IoC有什么好处呢？ - 知乎](https://www.zhihu.com/question/23277575/answer/169698662)
 - [极客学院Spring Wiki](http://wiki.jikexueyuan.com/project/spring/transaction-management.html) 
 - [【必读】Spring W3Cschool教程](https://www.w3cschool.cn/wkspring/f6pk1ic8.html) 
+- [【必读】Java新手如何学习Spring、Struts、Hibernate三大框架？ - 知乎，深度好文](https://www.zhihu.com/question/21142149)
+  
 
 
 

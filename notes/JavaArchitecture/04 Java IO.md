@@ -536,9 +536,15 @@ public static void main(String[] args) throws IOException
 - Socket：客户端类
 - 服务器和客户端通过 InputStream 和 OutputStream 进行输入输出。
 
+
+
 ![](https://raw.githubusercontent.com/CyC2018/Interview-Notebook/033676724523021872edb86176e92a87b87acd46/pics/ClienteServidorSockets1521731145260.jpg)
 
  
+
+参考资料：
+
+- [使用TCP/IP的套接字（Socket）进行通信 - alps_01 - 博客园](https://www.cnblogs.com/alps/p/5672757.html)
 
 
 

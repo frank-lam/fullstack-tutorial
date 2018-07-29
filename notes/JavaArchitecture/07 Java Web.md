@@ -67,6 +67,7 @@
 - Spring
 - Strust2
 - Hibernate
+- Mybatis
 - Spring MVC
 - Spring Boot
 - Dubbo
@@ -76,15 +77,12 @@
 > 在面试指南中将罗列面试中常见的考点，包含Servlet、JSP、Spring、中间件等常考Java Web框架知识
 >
 
-[Spring 常见的一些面试题整理 搜云库](https://www.souyunku.com/2018/03/21/spring/)
+
 
 
 # 一、Servlet & JSP
 
 ## 1. Servlet执行流程
-
-JavaWeb（一）Servlet中的ServletConfig与ServletContext - 苦水润喉 - 博客园
-http://www.cnblogs.com/zhangyinhua/p/7629099.html
 
 
 
@@ -378,6 +376,13 @@ AOP（Aspect Oriented Programming ）称为面向切面编程，扩展功能不�
 
 
 ## 6. Struts拦截器和Spring AOP区别
+
+
+
+Struts2拦截器浅析-慕课网
+https://www.imooc.com/learn/450
+
+
 
 
 
@@ -908,6 +913,7 @@ Spring MVC的工作原理如下图所示： 
 
 - [Java-Guide/Spring学习与面试.md at master · Snailclimb/Java-Guide](https://github.com/Snailclimb/Java-Guide/blob/master/%E4%B8%BB%E6%B5%81%E6%A1%86%E6%9E%B6/Spring%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9D%A2%E8%AF%95.md)
 - [biezhi/java-bible: 我的技术摘要](https://github.com/biezhi/java-bible)
+- [Spring 常见的一些面试题整理 搜云库](https://www.souyunku.com/2018/03/21/spring/)
 
 参考面经：
 
