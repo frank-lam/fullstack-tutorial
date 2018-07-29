@@ -15,9 +15,9 @@
 
 
 
+<div align="center"> <img src="../pics/beanfactory.jpg" width=""/></div><br/>
 
-
-
+<div align="center"> <img src="../pics/bean-init.png.png" width=""/></div><br/>
 
 
 

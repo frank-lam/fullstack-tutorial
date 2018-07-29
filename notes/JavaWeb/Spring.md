@@ -5,7 +5,12 @@
 <!-- TOC -->
 
 - [前言](#前言)
-- [一、Spring核心技术](#一spring核心技术)
+- [一、基础概念](#一基础概念)
+    - [1. JavaBean](#1-javabean)
+    - [2. Bean](#2-bean)
+    - [3. 传统Javabean与Spring中的bean的区别](#3-传统javabean与spring中的bean的区别)
+    - [4. POJO](#4-pojo)
+- [二、Spring核心技术](#二spring核心技术)
     - [1. IOC（控制反转）](#1-ioc控制反转)
         - [1.1 什么是IOC](#11-什么是ioc)
         - [1.2 IoC能做什么](#12-ioc能做什么)
@@ -40,14 +45,10 @@
         - [3.8 静态代理](#38-静态代理)
         - [3.9 动态代理，使用JDK内置的Proxy实现](#39-动态代理使用jdk内置的proxy实现)
         - [3.10 动态代理，使用cglib实现](#310-动态代理使用cglib实现)
-- [二、面试指南](#二面试指南)
-    - [1. Spring IOC、AOP的理解以及实现的原理](#1-spring-iocaop的理解以及实现的原理)
-    - [2. Ioc容器的加载过程](#2-ioc容器的加载过程)
-    - [3. 动态代理与cglib实现的区别](#3-动态代理与cglib实现的区别)
-    - [4. 代理的实现原理呗](#4-代理的实现原理呗)
-    - [5. HIbernate一级缓存与二级缓存之间的区别](#5-hibernate一级缓存与二级缓存之间的区别)
-    - [6. Spring MVC的原理](#6-spring-mvc的原理)
-    - [7. 简述Hibernate常见优化策略。](#7-简述hibernate常见优化策略)
+    - [4. Spring Ioc容器](#4-spring-ioc容器)
+        - [4.1 Bean作用域](#41-bean作用域)
+        - [4.2 Bean 的生命周期](#42-bean-的生命周期)
+        - [4.3 BeanFactory 和ApplicationContext（Bean工厂和应用上下文）](#43-beanfactory-和applicationcontextbean工厂和应用上下文)
 
 <!-- /TOC -->
 
@@ -55,18 +56,18 @@
 
 为了更好的深入学习Spring核心技术，在这里整理了Spring相关的常见核心知识，和面试知识点，本文将通过浅显易懂的语言和代码实现，相信可以在最短的时间内进行巩固学习。
 
-from 2018/7/27
-
 
 
 本文参考：
 
 - [理解并实现一个IOC容器](https://github.com/biezhi/java-bible/blob/master/ioc/index.md)
-- [Java-Guide/Spring学习与面试.md at master · Snailclimb/Java-Guide](https://github.com/Snailclimb/Java-Guide/blob/master/%E4%B8%BB%E6%B5%81%E6%A1%86%E6%9E%B6/Spring%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9D%A2%E8%AF%95.md)
+- [【源码实现】Java-Guide/Spring学习与面试.md at master · Snailclimb/Java-Guide](https://github.com/Snailclimb/Java-Guide/blob/master/%E4%B8%BB%E6%B5%81%E6%A1%86%E6%9E%B6/Spring%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9D%A2%E8%AF%95.md)
 - [一起来谈谈 Spring AOP！ - 掘金](https://juejin.im/post/5aa7818af265da23844040c6)
 - [黑马程序员Spring2016学习笔记](https://github.com/Only-lezi/spring-learning/tree/master/spring-learning-article)
 - [Spring学习总结（二）——静态代理、JDK与CGLIB动态代理、AOP+IoC - 张果 - 博客园](http://www.cnblogs.com/best/p/5679656.html)
 - [Spring IoC有什么好处呢？ - 知乎](https://www.zhihu.com/question/23277575/answer/169698662)
+- [极客学院Spring Wiki](http://wiki.jikexueyuan.com/project/spring/transaction-management.html) 
+- [【必读】Spring W3Cschool教程](https://www.w3cschool.cn/wkspring/f6pk1ic8.html) 
 
 
 
@@ -79,7 +80,131 @@ from 2018/7/27
 
 
 
-# 一、Spring核心技术
+from 2018/7/27
+
+
+
+
+
+# 一、基础概念
+
+## 1. JavaBean
+
+**JavaBean是一种组件技术**，就好像你做了一个扳子，而这个扳子会在很多地方被拿去用，这个扳子也提供多种功能(你可以拿这个扳子扳、锤、撬等等)，而这个扳子就是一个组件。
+
+　**JavaBean是一个遵循特定写法的Java类**，它通常具有如下特点：
+
+- 这个Java类必须具有一个无参的构造函数
+- 属性必须私有化。
+- 私有化的属性必须通过public类型的方法暴露给其它程序，并且方法的命名也必须遵守一定的命名规范。
+- 这个类应是可序列化的。（比如可以实现Serializable 接口，用于实现bean的持久性）
+
+许多开发者把JavaBean看作遵从特定命名约定的POJO。 简而言之，当一个POJO可序列化，有一个无参的构造函数，使用getter和setter方法来访问属性时，他就是一个JavaBean。  
+
+```java
+package gacl.javabean.study;
+
+/**
+ * @author gacl
+ * Person类就是一个最简单的JavaBean
+ */
+public class Person {
+
+    //Person类封装的私有属性
+    // 姓名 String类型
+    private String name;
+    // 性别 String类型
+    private String sex;
+    // 年龄 int类型
+    private int age;
+  
+   
+    /**
+     * 无参数构造方法
+     */
+    public Person() {
+        
+    }
+    
+    //Person类对外提供的用于访问私有属性的public方法
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getSex() {
+        return sex;
+    }
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+```
+
+JavaBean在J2EE开发中，通常用于封装数据，对于遵循以上写法的JavaBean组件，其它程序可以通过反射技术实例化JavaBean对象，并且通过反射那些遵守命名规范的方法，从而获知JavaBean的属性，进而调用其属性保存数据。 
+
+
+
+## 2. Bean
+
+- **Bean的中文含义是“豆子”，Bean的含义是可重复使用的Java组件**。所谓组件就是一个由可以自行进行内部管理的一个或几个类所组成、外界不了解其内部信息和运行方式的群体。使用它的对象只能通过接口来操作。
+- Bean并不需要继承特别的基类(BaseClass)或实现特定的接口(Interface)。Bean的编写规范使Bean的容器(Container)能够分析一个Java类文件，并将其方法(Methods)翻译成属性(Properties)，即把Java类作为一个Bean类使用。Bean的编写规范包括Bean类的构造方法、定义属性和访问方法编写规则。
+- Java Bean是基于Java的组件模型，由**属性、方法和事件**3部分组成。在该模型中，JavaBean可以被修改或与其他组件结合以生成新组件或完整的程序。它是一种Java类，通过封装成为具有某种功能或者处理某个业务的对象。因此，也可以通过嵌在JSP页面内的Java代码访问Bean及其属性。
+
+
+
+## 3. 传统Javabean与Spring中的bean的区别
+
+Javabean已经没人用了
+
+springbean可以说是javabean的发展, 但已经完全不是一回事儿了
+
+ 
+
+**用处不同：**传统javabean更多地作为值传递参数，而spring中的bean用处几乎无处不在，任何组件都可以被称为bean。
+
+**写法不同：**传统javabean作为值对象，要求每个属性都提供getter和setter方法；但spring中的bean只需为接受设值注入的属性提供setter方法。
+
+**生命周期不同：**传统javabean作为值对象传递，不接受任何容器管理其生命周期；spring中的bean有spring管理其生命周期行为。
+
+所有可以被spring容器实例化并管理的java类都可以称为bean。
+
+原来服务器处理页面返回的值都是直接使用request对象，后来增加了javabean来管理对象，所有页面值只要是和javabean对应，就可以用类.GET属性方法来获取值。javabean不只可以传参数，也可以处理数据，相当与把一个服务器执行的类放到了页面上，使对象管理相对不那么乱（对比asp的时候所有内容都在页面上完成）。
+
+spring中的bean，是通过配置文件、javaconfig等的设置，有spring自动实例化，用完后自动销毁的对象。让我们只需要在用的时候使用对象就可以，不用考虑如果创建类对象（这就是spring的注入）。一般是用在服务器端代码的执行上。
+
+
+
+## 4. POJO
+
+POJO 和JavaBean是我们常见的两个关键字，一般容易混淆，POJO全称是Plain Ordinary Java Object / Pure Old Java Object，中文可以翻译成：普通Java类，**具有一部分getter/setter方法的那种类就可以称作POJO**，但是JavaBean则比 POJO复杂很多， Java Bean 是可复用的组件，对 Java Bean 并没有严格的规范，理论上讲，任何一个 Java 类都可以是一个 Bean 。但通常情况下，由于 Java Bean 是被容器所创建（如 Tomcat) 的，所以 Java Bean 应具有一个无参的构造器，另外，通常 Java Bean 还要实现 Serializable 接口用于实现 Bean 的持久性。 Java Bean 是不能被跨进程访问的  
+
+
+
+一般在web应用程序中建立一个数据库的映射对象时，我们只能称它为POJO。
+POJO(Plain Old Java Object)这个名字用来强调它是一个普通java对象，而不是一个特殊的对象。
+2005年11月时，“POJO”主要用来指代那些没用遵从特定的Java对象模型，约定或框架如EJB的Java对象.
+理想地讲，一个POJO是一个不受任何限制的Java对象（除了Java语言规范）。例如一个POJO不应该是
+
+      1. 扩展预定的类，如  public class Foo extends javax.servlet.http.HttpServlet { ...
+    
+      2. 实现预定的接口，如  public class Bar implements javax.ejb.EntityBean { ...
+    
+      3. 包含预定的标注，如  @javax.ejb.Entity public class Baz{ ...
+  然后，因为技术上的困难及其他原因，许多兼容POJO风格的软件产品或框架事实上仍然要求使用预定的标注，譬如用于更方便的持久化。
+
+
+
+
+
+# 二、Spring核心技术
 
 ## 1. IOC（控制反转）
 
@@ -1300,6 +1425,92 @@ public class Test {
 **小结**
 
 使用cglib可以实现动态代理，即使被代理的类没有实现接口，但被代理的类必须不是final类。
+
+
+
+
+
+
+
+## 4. Spring Ioc容器
+
+### 4.1 Bean作用域
+
+Spring 框架支持以下五个作用域，如果你使用 web-aware ApplicationContext 时，其中三个是可用的。
+
+| 作用域         | 描述                                                         |
+| -------------- | ------------------------------------------------------------ |
+| singleton      | 在spring IoC容器仅存在一个Bean实例，Bean以单例方式存在，默认值 |
+| prototype      | 每次从容器中调用Bean时，都返回一个新的实例，即每次调用getBean()时，相当于执行newXxxBean() |
+| request        | 每次HTTP请求都会创建一个新的Bean，该作用域仅适用于WebApplicationContext环境 |
+| session        | 同一个HTTP Session共享一个Bean，不同Session使用不同的Bean，仅适用于WebApplicationContext环境 |
+| global-session | 一般用于Portlet应用环境，改作用于仅适用于WebApplicationContext环境 |
+
+
+
+### 4.2 Bean 的生命周期
+
+在传统的Java应用中，bean的生命周期很简单。使用Java关键字new进行bean实例化，然后该bean就可以使用了。一旦该bean不再被使用，则由Java自动进行垃圾回收。
+
+相比之下，Spring容器中的bean的生命周期就显得相对复杂多了。正确理解Spring bean的生命周期非常重要，因为你或许要利用Spring提供的扩展点来自定义bean的创建过程。下图展示了bean装载到Spring应用上下文中的一个典型的生命周期过程。 
+
+<div align="center"> <img src="../pics/bean-life.png" width=""/></div><br/>
+
+上图bean在Spring容器中从创建到销毁经历了若干阶段，每一阶段都可以针对Spring如何管理bean进行个性化定制
+
+**正如你所见，在bean准备就绪之前，bean工厂执行了若干启动步骤。我们对上图进行详细描述：**
+
+1. Spring 对 Bean 进行实例化；
+   - 相当于程序中的new Xx()
+2. Spring 将值和 Bean 的引用注入进 Bean 对应的属性中；
+3. **如果Bean实现了 BeanNameAware 接口**，Spring 将 Bean 的 ID 传递给setBeanName()方法
+   - 实现BeanNameAware清主要是为了通过Bean的引用来获得Bean的ID，一般业务中是很少有在Bean的ID的
+
+4. **如果Bean实现了BeanFactoryAware接口**，Spring将调用setBeanDactory(BeanFactory bf)方法并把BeanFactory容器实例作为参数传入。
+   - 实现BeanFactoryAware 主要目的是为了获取Spring容器，如Bean通过Spring容器发布事件等
+
+5. **如果Bean实现了ApplicationContextAwaer接口**，Spring容器将调用setApplicationContext(ApplicationContext ctx)方法，将bean所在的应用上下文的引用传入进来
+   - 作用与BeanFactory类似都是为了获取Spring容器，不同的是Spring容器在调用setApplicationContext方法时会把它自己作为setApplicationContext 的参数传入，而Spring容器在调用setBeanDactory前需要程序员自己指定（注入）setBeanDactory里的参数BeanFactory
+
+6. **如果Bean实现了BeanPostProcess接口**，Spring将调用它们的postProcessBeforeInitialization（预初始化）方法
+   - 作用是在Bean实例创建成功后对进行增强处理，如对Bean进行修改，增加某个功能
+7. **如果Bean实现了InitializingBean接口**，Spring将调用它们的afterPropertiesSet方法，作用与在配置文件中对Bean使用init-method声明初始化的作用一样，都是在Bean的全部属性设置成功后执行的初始化方法。
+8. **如果Bean实现了BeanPostProcess接口**，Spring将调用它们的postProcessAfterInitialization（后初始化）方法
+   - 作用与6的一样，只不过6是在Bean初始化前执行的，而这个是在Bean初始化后执行的，时机不同
+
+9. 经过以上的工作后，Bean将一直驻留在应用上下文中给应用使用，直到应用上下文被销毁
+10. **如果Bean实现了DispostbleBean接口**，Spring将调用它的destory方法，作用与在配置文件中对Bean使用destory-method属性的作用一样，都是在Bean实例销毁前执行的方法。
+
+
+
+### 4.3 BeanFactory 和ApplicationContext（Bean工厂和应用上下文）
+
+Bean 工厂（com.springframework.beans.factory.BeanFactory）是Spring 框架最核心的接口，它提供了高级IoC 的配置机制。
+
+应用上下文（com.springframework.context.ApplicationContext）建立在BeanFactory 基础之上。
+
+几乎所有的应用场合我们都直接使用ApplicationContext 而非底层的BeanFactory。
+
+<div align="center"> <img src="../pics/beanfactory.jpg" width=""/></div><br/>
+
+ApplicationContext 的初始化和BeanFactory有一个重大的区别：
+
+- BeanFactory在初始化容器时，并未实例化Bean，直到第一次访问某个Bean 时才实例目标Bean；
+- 而ApplicationContext 则在初始化应用上下文时就实例化所有单实例的Bean 。 
+
+```xml
+ApplicationContext ctx = new ClassPathXmlApplicationContext("com/baobaotao/context/beans.xml");
+ApplicationContext ctx = new FileSystemXmlApplicationContext("com/baobaotao/context/beans.xml");
+ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"conf/beans1.xml","conf/beans2.xml"});
+```
+
+参考资料：
+
+- [BeanFactory 和ApplicationContext（Bean工厂和应用上下文） - 品互网络](http://www.pinhuba.com/spring/101250.htm)
+
+
+
+
 
 
 
