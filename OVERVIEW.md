@@ -1,10 +1,12 @@
-#### 一、数据结构与算法
+
+
+### 一、数据结构与算法
 
 - [数据结构与算法 | v0.5](notes/数据结构与算法.md)
 
 
 
-#### 二、Java基础
+### 二、Java基础
 
 - [Java基础](notes/JavaArchitecture/01%20Java%20基础.md)
 - [集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md)
@@ -19,27 +21,28 @@
 
 
 
-#### 三、数据库
+### 三、数据库
 
 - [MySQL](notes/MySQL.md)
 - Redis
 
 
 
-#### 四、操作系统
+### 四、操作系统
 
 - [Linux](notes/Linux.md)
 - [操作系统 | v1.0](notes/操作系统.md)
+  - 内存管理待完成
 
 
 
-#### 五、网络部分
+### 五、网络部分
 
 - [计算机网络](notes/计算机网络.md)
 
 
 
-#### 六、高级部分
+### 六、高级部分
 
 - 中间件
   - Dobbo
