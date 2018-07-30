@@ -1125,7 +1125,7 @@ public void register(Object o)
 
 ### 15. 线程间通信和进程间通信？
 
-#### 进程间通信
+#### 线程间通信
 
 - synchronized同步
 
