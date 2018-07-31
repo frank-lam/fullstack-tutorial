@@ -310,8 +310,6 @@ public @interface FruitName {
 
 通俗的讲，泛型就是操作类型的 占位符，即：假设占位符为T，那么此次声明的数据结构操作的数据类型为T类型。
 
-
-
 假定我们有这样一个需求：写一个排序方法，能够对整型数组、字符串数组甚至其他任何类型的数组进行排序，该如何实现？
 
 答案是可以使用 **Java 泛型**。
@@ -479,13 +477,13 @@ Java面向对象的基本思想之一是封装细节并且公开接口。Java语
 
 - 浅拷贝：对基本数据类型进行值传递，对引用数据类型进行引用传递般的拷贝，此为浅拷贝。 
 
-<div align="center"> <img src="../pics/shadow_copy2.jpg" width=""/></div><br/>
+<div align="center"> <img src="../pics/shadow_copy2.jpg" width="550"/></div><br/>
 
 
 
 - 深拷贝：对基本数据类型进行值传递，对引用数据类型，创建一个新的对象，并复制其内容，此为深拷贝。 
 
-<div align="center"> <img src="../pics/deep_copy2.jpg" width=""/></div><br/>
+<div align="center"> <img src="../pics/deep_copy2.jpg" width="550"/></div><br/>
 
 
 
