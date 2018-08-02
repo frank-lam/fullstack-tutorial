@@ -99,12 +99,6 @@ Java集合框架提供了数据持有对象的方式，提供了对数据集合�
 
 
 
-<div align="center"> <img src="../pics/java_set_framework.jpg" width=""/></div><br/>
-
-
-
-
-
 ## Collection
 
 <div align="center"> <img src="../pics/collection.png" width=""/></div><br/>
