@@ -189,7 +189,7 @@ public class ArrayList<E> extends AbstractList<E>
 private static final int DEFAULT_CAPACITY = 10;
 ```
 
-<div align="center"> <img src="D:/gitdoc/2019_campus_appy/notes/pics/ArrayList_base.png" width=""/></div><br/>
+<div align="center"> <img src="../pics/ArrayList_base.png" width=""/></div><br/>
 
 
 
