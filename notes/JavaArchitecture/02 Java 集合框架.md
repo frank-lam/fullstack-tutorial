@@ -20,22 +20,29 @@
         - [1. 同步](#1-同步)
         - [2. ArrayList 与 Vector](#2-arraylist-与-vector)
         - [3. Vector 替代方案](#3-vector-替代方案)
+            - [synchronizedList](#synchronizedlist)
+            - [CopyOnWriteArrayList](#copyonwritearraylist)
     - [LinkedList](#linkedlist)
         - [1. 概览](#1-概览-1)
         - [2. add()](#2-add)
-        - [3. get()](#3-get)
-        - [4. 总结](#4-总结)
-        - [5. ArrayList 与 LinkedList](#5-arraylist-与-linkedlist)
+        - [3. remove()](#3-remove)
+        - [4. get()](#4-get)
+        - [5. 总结](#5-总结)
+        - [6. ArrayList 与 LinkedList](#6-arraylist-与-linkedlist)
     - [HashMap](#hashmap)
         - [1. 存储结构](#1-存储结构)
-        - [2. 拉链法的工作原理](#2-拉链法的工作原理)
-        - [3. put 操作](#3-put-操作)
-        - [4. 确定桶下标](#4-确定桶下标)
-        - [5. 扩容-基本原理](#5-扩容-基本原理)
-        - [6. 扩容-重新计算桶下标](#6-扩容-重新计算桶下标)
-        - [7. 扩容-计算数组容量](#7-扩容-计算数组容量)
-        - [8. 链表转红黑树](#8-链表转红黑树)
-        - [9. HashMap 与 HashTable](#9-hashmap-与-hashtable)
+            - [JDK1.7 的存储结构](#jdk17-的存储结构)
+            - [JDK1.8 的存储结构](#jdk18-的存储结构)
+        - [2. 重要参数](#2-重要参数)
+        - [3. 确定哈希桶数组索引位置](#3-确定哈希桶数组索引位置)
+        - [4. 分析HashMap的put方法](#4-分析hashmap的put方法)
+        - [5. 扩容机制](#5-扩容机制)
+        - [6. 线程安全性](#6-线程安全性)
+        - [7. JDK1.8与JDK1.7的性能对比](#7-jdk18与jdk17的性能对比)
+        - [8. Hash较均匀的情况](#8-hash较均匀的情况)
+        - [9. Hash极不均匀的情况](#9-hash极不均匀的情况)
+        - [10. HashMap 与 HashTable](#10-hashmap-与-hashtable)
+        - [11. 小结](#11-小结)
     - [ConcurrentHashMap](#concurrenthashmap)
         - [1. 存储结构](#1-存储结构-1)
         - [2. size 操作](#2-size-操作)
@@ -44,7 +51,7 @@
         - [1. 成员变量](#1-成员变量)
         - [2. 构造函数](#2-构造函数)
         - [3. add()](#3-add)
-        - [4. 总结](#4-总结-1)
+        - [4. 总结](#4-总结)
     - [LinkedHashSet and LinkedHashMap](#linkedhashset-and-linkedhashmap)
         - [1. 概览](#1-概览-2)
         - [2. get()](#2-get)
@@ -64,8 +71,10 @@
     - [6. 什么是迭代器？【面试宝典】](#6-什么是迭代器面试宝典)
     - [7. 因为别人知道源码怎么实现的，故意构造相同的hash的字符串进行攻击，怎么处理？那jdk7怎么办？](#7-因为别人知道源码怎么实现的故意构造相同的hash的字符串进行攻击怎么处理那jdk7怎么办)
     - [ArrayList如何快速排序 ？【阿里面经】](#arraylist如何快速排序-阿里面经)
+    - [Hashmap为什么大小是2的幂次？【阿里面经】](#hashmap为什么大小是2的幂次阿里面经)
 
 <!-- /TOC -->
+
 # 前言
 
 Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类比C++中的STL，在市面上似乎还没能找到一本详细介绍的书籍。在这里主要对如下部分进行源码分析，及在面试中常见的问题。比如：阿里面试常问到的HashMap和ConcurrentHashMap原理，必须在面试前理清思路。相信本文的阅读会对集合框架有更深一步的了解。
@@ -412,15 +421,13 @@ CopyOnWrite容器有很多优点，但是同时也存在两个问题，即内存
 
 ## LinkedList
 
-<div align="center"> <img src="../pics/LinkedList_base.png" width="600"/></div><br/>
+<div align="center"> <img src="../pics/LinkedList_base.png" width="650"/></div><br/>
 
 ### 1. 概览
 
 如图所示 LinkedList 底层是基于双向链表实现的，也是实现了 List 接口，所以也拥有 List 的一些特点 (JDK1.7/8 之后取消了循环，修改为双向链表) 。 
 
-*LinkedList*同时实现了*List*接口和*Deque*接口，也就是说它既可以看作一个顺序容器，又可以看作一个队列（*Queue*），同时又可以看作一个栈（*Stack*）。这样看来，*LinkedList*简直就是个全能冠军。当你需要使用栈或者队列时，可以考虑使用*LinkedList*，一方面是因为Java官方已经声明不建议使用*Stack*类，更遗憾的是，Java里根本没有一个叫做*Queue*的类（它是个接口名字）。关于栈或队列，现在的首选是*ArrayDeque*，它有着比*LinkedList*（当作栈或队列使用时）有着更好的性能。 
-
-
+LinkedList 同时实现了 List 接口和 Deque 接口，也就是说它既可以看作一个顺序容器，又可以看作一个队列（Queue），同时又可以看作一个栈（Stack）。这样看来， LinkedList 简直就是个全能冠军。当你需要使用栈或者队列时，可以考虑使用 LinkedList ，一方面是因为 Java 官方已经声明不建议使用 Stack 类，更遗憾的是，Java里根本没有一个叫做 Queue 的类（它是个接口名字）。关于栈或队列，现在的首选是 ArrayDeque，它有着比LinkedList （当作栈或队列使用时）有着更好的性能。 
 
 基于双向链表实现，内部使用 Node 来存储链表节点信息。
 
@@ -439,11 +446,20 @@ transient Node<E> first;
 transient Node<E> last;
 ```
 
+LinkedList 的实现方式决定了所有跟下标相关的操作都是线性时间，而在首段或者末尾删除元素只需要常数时间。为追求效率*LinkedList*没有实现同步（synchronized），如果需要多个线程并发访问，可以先采用`Collections.synchronizedList()`方法对其进行包装。 
+
 
 
 ### 2. add()
 
+<div align="center"> <img src="../pics/LinkedList_add.png" width="650"/></div><br/>
+
+add() 方法有两个版本，一个是 add(E e)，该方法在 LinkedList 的末尾插入元素，因为有last指向链表末尾，在末尾插入元素的花费是常数时间。只需要简单修改几个相关引用即可；另一个是 add(int index, E element)，该方法是在指定下表处插入元素，需要先通过线性查找找到具体位置，然后修改相关引用完成插入操作。
+
+
+
 ```java
+// JDK 1.8
 public boolean add(E e) {
     linkLast(e);
     return true;
@@ -463,13 +479,41 @@ void linkLast(E e) {
     size++;
     modCount++;
 }
+
+```
+add(int index, E element)的逻辑稍显复杂，可以分成两部分，1.先根据index找到要插入的位置；2.修改引用，完成插入操作。
+
+
+```java
+public void add(int index, E element) {
+    checkPositionIndex(index);
+    if (index == size)
+        linkLast(element);
+    else
+        linkBefore(element, node(index));
+}
+
+private void checkPositionIndex(int index) {
+    if (!isPositionIndex(index))
+        throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
+}
 ```
 
-可见每次插入都是移动指针，和 ArrayList 的拷贝数组来说效率要高上不少。
+上面代码中的`node(int index)`函数有一点小小的trick，因为链表双向的，可以从开始往后找，也可以从结尾往前找，具体朝那个方向找取决于条件`index < (size >> 1)`，也即是index是靠近前端还是后端。
 
 
 
-### 3. get()
+### 3. remove()
+
+remove()方法也有两个版本，一个是删除跟指定元素相等的第一个元素remove(Object o)，另一个是删除指定下标处的元素remove(int index)。
+
+<div align="center"> <img src="../pics/LinkedList_remove.png" width="650"/></div><br/>
+
+两个删除操作都要1.先找到要删除元素的引用，2.修改相关引用，完成删除操作。在寻找被删元素引用的时候`remove(Object o)`调用的是元素的`equals`方法，而`remove(int index)`使用的是下标计数，两种方式都是线性时间复杂度。在步骤2中，两个`revome()`方法都是通过`unlink(Node<E> x)`方法完成的。这里需要考虑删除元素是第一个或者最后一个时的边界情况。  
+
+
+
+### 4. get()
 
 ```java
 public E get(int index) {
@@ -502,14 +546,14 @@ Node<E> node(int index) {
 
 
 
-### 4. 总结
+### 5. 总结
 
 - LinkedList 插入，删除都是移动指针效率很高。
 - 查找需要进行遍历查询，效率较低。
 
 
 
-### 5. ArrayList 与 LinkedList
+### 6. ArrayList 与 LinkedList
 
 - ArrayList 基于动态数组实现，LinkedList 基于双向链表实现；
 - ArrayList 支持随机访问，LinkedList 不支持；
@@ -519,412 +563,583 @@ Node<E> node(int index) {
 
 ## HashMap
 
-为了便于理解，以下源码分析以 JDK 1.7 为主。
+为了便于理解，以下源码分析以 JDK 1.8 为主。更详细的源码分析，转向：[搞懂 Java HashMap 源码](https://juejin.im/post/5ac83fa35188255c5668afd0)
+
+我们这篇文章就来试着分析下 HashMap 的源码，由于 HashMap 底层涉及到太多方面，一篇文章总是不能面面俱到，所以我们可以带着面试官常问的几个问题去看源码：
+
+1. 了解底层如何存储数据的
+2. HashMap 的几个主要方法
+3. HashMap 是如何确定元素存储位置的以及如何处理哈希冲突的
+4. HashMap 扩容机制是怎样的
+5. JDK 1.8 在扩容和解决哈希冲突上对 HashMap 源码做了哪些改动？有什么好处?
+
+
+
+HashMap的内部功能实现很多，本文主要从根据key获取哈希桶数组索引位置、put方法的详细执行、扩容过程三个具有代表性的点深入展开讲解。
 
 ### 1. 存储结构
 
-内部包含了一个 Entry 类型的数组 table。
+要想分析 HashMap 源码，就必须在 JDK1.8 和 JDK1.7之间划分一条线，因为在 JDK 1.8 后对于 HashMap 做了底层实现的改动。
+
+#### JDK1.7 的存储结构
+
+通过[搞懂 Java equals 和 hashCode 方法](https://link.juejin.im?target=https%3A%2F%2Fjuejin.im%2Fpost%2F5ac4d8abf265da23a4050ae3) 我们以及对 hash 表有所了解，我们了解到及时 hashCode() 方法已经写得很完美了，终究还是有可能导致 「hash碰撞」的，`HashMap` 作为使用 hash 值来决定元素存储位置的集合也是需要处理 hash 冲突的。在1.7之前JDK采用「拉链法」来存储数据，即数组和链表结合的方式：
+
+ <div align="center"> <img src="../pics/hashmap-link.jpg" width="650"/></div><br/>
+
+ 「拉链法」用专业点的名词来说叫做**链地址法**。简单来说，就是数组加链表的结合。在每个数组元素上存储的都是一个链表。
+
+我们之前说到不同的 key 可能经过 hash 运算可能会得到相同的地址，但是一个数组单位上只能存放一个元素，采用链地址法以后，如果遇到相同的 hash 值的 key 的时候，我们可以将它放到作为数组元素的链表上。待我们去取元素的时候通过 hash 运算的结果找到这个链表，再在链表中找到与 key 相同的节点，就能找到 key 相应的值了。
+
+JDK1.7中新添加进来的元素总是放在数组相应的角标位置，而原来处于该角标的位置的节点作为 next 节点放到新节点的后边。稍后通过源码分析我们也能看到这一点。
+
+ 
+
+####  JDK1.8 的存储结构
+
+对于 JDK1.8 之后的`HashMap`底层在解决哈希冲突的时候，就不单单是使用数组加上单链表的组合了，因为当处理如果 hash 值冲突较多的情况下，链表的长度就会越来越长，此时通过单链表来寻找对应 Key 对应的 Value 的时候就会使得时间复杂度达到 O(n),因此在 JDK1.8 之后，在链表新增节点导致链表长度超过 `TREEIFY_THRESHOLD = 8` 的时候，就会在添加元素的同时将原来的单链表转化为红黑树。
+
+对数据结构很在行的读者应该，知道红黑树是一种易于增删改查的二叉树，他对与数据的查询的时间复杂度是 `O(logn)` 级别，所以利用红黑树的特点就可以更高效的对 `HashMap` 中的元素进行操作。
+
+<div align="center"> <img src="../pics/hashmap-rb-link.jpg" width="650"/></div><br/>
+
+ 
+
+从结构实现来讲，HashMap是数组+链表+红黑树（JDK1.8增加了红黑树部分）实现的，如下如所示。 
+
+<div align="center"> <img src="../pics/hashMap-datastruct.png" width="500"/></div><br/>
+
+
+
+**这里需要讲明白两个问题：数据底层具体存储的是什么？这样的存储方式有什么优点呢？** 
+
+(1) 从源码可知，HashMap类中有一个非常重要的字段，就是 Node[] table，即哈希桶数组，明显它是一个Node的数组。我们来看Node[JDK1.8]是何物。
 
 ```java
-transient Entry[] table;
-```
-
-其中，Entry 就是存储数据的键值对，它包含了四个字段。从 next 字段我们可以看出 Entry 是一个链表，即数组中的每个位置被当成一个桶，一个桶存放一个链表，链表中存放哈希值相同的 Entry。也就是说，HashMap 使用拉链法来解决冲突。
-
-
-
-<div align="center"> <img src="../pics/HashMap-1.png" width=""/></div><br/>
-
-```java
-static class Entry<K,V> implements Map.Entry<K,V> {
+static class Node<K,V> implements Map.Entry<K,V> {
+    final int hash;    //用来定位数组索引位置
     final K key;
     V value;
-    Entry<K,V> next;
-    int hash;
+    Node<K,V> next;   //链表的下一个node
 
-    Entry(int h, K k, V v, Entry<K,V> n) {
-        value = v;
-        next = n;
-        key = k;
-        hash = h;
-    }
-
-    public final K getKey() {
-        return key;
-    }
-
-    public final V getValue() {
-        return value;
-    }
-
-    public final V setValue(V newValue) {
-        V oldValue = value;
-        value = newValue;
-        return oldValue;
-    }
-
-    public final boolean equals(Object o) {
-        if (!(o instanceof Map.Entry))
-            return false;
-        Map.Entry e = (Map.Entry)o;
-        Object k1 = getKey();
-        Object k2 = e.getKey();
-        if (k1 == k2 || (k1 != null && k1.equals(k2))) {
-            Object v1 = getValue();
-            Object v2 = e.getValue();
-            if (v1 == v2 || (v1 != null && v1.equals(v2)))
-                return true;
-        }
-        return false;
-    }
-
-    public final int hashCode() {
-        return Objects.hashCode(getKey()) ^ Objects.hashCode(getValue());
-    }
-
-    public final String toString() {
-        return getKey() + "=" + getValue();
-    }
-
-    /**
-     * This method is invoked whenever the value in an entry is
-     * overwritten by an invocation of put(k,v) for a key k that's already
-     * in the HashMap.
-     */
-    void recordAccess(HashMap<K,V> m) {
-    }
-
-    /**
-     * This method is invoked whenever the entry is
-     * removed from the table.
-     */
-    void recordRemoval(HashMap<K,V> m) {
-    }
+    Node(int hash, K key, V value, Node<K,V> next) { ... }
+    public final K getKey(){ ... }
+    public final V getValue() { ... }
+    public final String toString() { ... }
+    public final int hashCode() { ... }
+    public final V setValue(V newValue) { ... }
+    public final boolean equals(Object o) { ... }
 }
 ```
 
+Node是HashMap的一个内部类，实现了Map.Entry接口，本质是就是一个映射(键值对)。上图中的每个黑色圆点就是一个Node对象。
 
-
-### 2. 拉链法的工作原理
+(2) HashMap就是使用哈希表来存储的。哈希表为解决冲突，可以采用开放地址法和链地址法等来解决问题，Java中HashMap采用了链地址法。链地址法，简单来说，就是数组加链表的结合。在每个数组元素上都一个链表结构，当数据被Hash后，得到数组下标，把数据放在对应下标元素的链表上。例如程序执行下面代码：
 
 ```java
-HashMap<String, String> map = new HashMap<>();
-map.put("K1", "V1");
-map.put("K2", "V2");
-map.put("K3", "V3");
+map.put("美团","小美");
 ```
 
-- 新建一个 HashMap，默认大小为 16；
-- 插入 <K1,V1> 键值对，先计算 K1 的 hashCode 为 115，使用除留余数法得到所在的桶下标 115%16=3。
-- 插入 <K2,V2> 键值对，先计算 K2 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6。
-- 插入 <K3,V3> 键值对，先计算 K3 的 hashCode 为 118，使用除留余数法得到所在的桶下标 118%16=6，插在 <K2,V2> 前面。
+系统将调用"美团"这个key的hashCode()方法得到其hashCode 值（该方法适用于每个Java对象），然后再通过Hash算法的后两步运算（高位运算和取模运算，下文有介绍）来定位该键值对的存储位置，有时两个key会定位到相同的位置，表示发生了Hash碰撞。当然Hash算法计算结果越分散均匀，Hash碰撞的概率就越小，map的存取效率就会越高。
 
-应该注意到链表的插入是以头插法方式进行的，例如上面的 <K3,V3> 不是插在 <K2,V2> 后面，而是插入在链表头部。
+如果哈希桶数组很大，即使较差的Hash算法也会比较分散，如果哈希桶数组数组很小，即使好的Hash算法也会出现较多碰撞，所以就需要在空间成本和时间成本之间权衡，其实就是在根据实际情况确定哈希桶数组的大小，并在此基础上设计好的hash算法减少Hash碰撞。那么通过什么方式来控制map使得Hash碰撞的概率又小，哈希桶数组（Node[] table）占用空间又少呢？答案就是好的Hash算法和扩容机制。
 
-查找需要分成两步进行：
+在理解Hash和扩容流程之前，我们得先了解下HashMap的几个字段。从HashMap的默认构造函数源码可知，构造函数就是对下面几个字段进行初始化，源码如下：
 
-- 计算键值对所在的桶；
-- 在链表上顺序查找，时间复杂度显然和链表的长度成正比。
+```java
+int threshold;             // 所能容纳的key-value对极限 
+final float loadFactor;    // 负载因子
+int modCount;  
+int size;
+```
 
-<div align="center"> <img src="../pics/HashMap-2.png" width=""/></div><br/>
+首先，Node[] table的初始化长度length(默认值是16)，Load factor为负载因子(默认值是0.75)，threshold是HashMap所能容纳的最大数据量的Node(键值对)个数。threshold = length * Load factor。也就是说，在数组定义好长度之后，负载因子越大，所能容纳的键值对个数越多。
+
+结合负载因子的定义公式可知，threshold就是在此Load factor和length(数组长度)对应下允许的最大元素数目，超过这个数目就重新resize(扩容)，扩容后的HashMap容量是之前容量的两倍。默认的负载因子0.75是对空间和时间效率的一个平衡选择，建议大家不要修改，除非在时间和空间比较特殊的情况下，如果内存空间很多而又对时间效率要求很高，可以降低负载因子Load factor的值；相反，如果内存空间紧张而对时间效率要求不高，可以增加负载因子loadFactor的值，这个值可以大于1。
+
+size这个字段其实很好理解，就是HashMap中实际存在的键值对数量。注意和table的长度length、容纳最大键值对数量threshold的区别。而modCount字段主要用来记录HashMap内部结构发生变化的次数，主要用于迭代的快速失败。强调一点，内部结构发生变化指的是结构发生变化，例如put新键值对，但是某个key对应的value值被覆盖不属于结构变化。
+
+在HashMap中，哈希桶数组table的长度length大小必须为2的n次方(一定是合数)，这是一种非常规的设计，常规的设计是把桶的大小设计为素数。相对来说素数导致冲突的概率要小于合数，具体证明可以参考<http://blog.csdn.net/liuqiyao_01/article/details/14475159>，Hashtable初始化桶大小为11，就是桶大小设计为素数的应用（Hashtable扩容后不能保证还是素数）。HashMap采用这种非常规设计，主要是为了在取模和扩容时做优化，同时为了减少冲突，HashMap定位哈希桶索引位置时，也加入了高位参与运算的过程。
+
+这里存在一个问题，即使负载因子和Hash算法设计的再合理，也免不了会出现拉链过长的情况，一旦出现拉链过长，则会严重影响HashMap的性能。于是，在JDK1.8版本中，对数据结构做了进一步的优化，引入了红黑树。而当链表长度太长（默认超过8）时，链表就转换为红黑树，利用红黑树快速增删改查的特点提高HashMap的性能，其中会用到红黑树的插入、删除、查找等算法。本文不再对红黑树展开讨论，想了解更多红黑树数据结构的工作原理可以参考<http://blog.csdn.net/v_july_v/article/details/6105630>。
 
 
 
-### 3. put 操作
+
+
+### 2. 重要参数
+
+1. **哈希桶（buckets）**：在 HashMap 的注释里使用哈希桶来形象的表示数组中每个地址位置。注意这里并不是数组本身，数组是装哈希桶的，他可以被称为**哈希表**。
+2. **初始容量(initial capacity)** : 这个很容易理解，就是哈希表中哈希桶初始的数量。如果我们没有通过构造方法修改这个容量值默认为`DEFAULT_INITIAL_CAPACITY = 1<<4` 即16。值得注意的是为了保证 HashMap 添加和查找的高效性，`HashMap` 的容量总是 2^n 的形式。
+3. **加载因子(load factor)**：加载因子是哈希表（散列表）在其容量自动增加之前被允许获得的最大数量的度量。当哈希表中的条目数量超过负载因子和当前容量的乘积时，散列表就会被重新映射（即重建内部数据结构），重新创建的散列表容量大约是之前散列表哈系统桶数量的两倍。默认加载因子（0.75）在时间和空间成本之间提供了良好的折衷。加载因子过大会导致很容易链表过长，**加载因子很小又容易导致频繁的扩容。所以不要轻易试着去改变这个默认值**。
+4. **扩容阈值（threshold）**：其实在说加载因子的时候已经提到了扩容阈值了，**扩容阈值 = 哈希表容量 \* 加载因子**。哈希表的键值对总数 = 所有哈希桶中所有链表节点数的加和，扩容阈值比较的是是键值对的个数而不是哈希表的数组中有多少个位置被占了。
+5. **树化阀值(TREEIFY_THRESHOLD)** ：这个参数概念是在 JDK1.8后加入的，它的含义代表一个哈希桶中的节点个数大于该值（默认为8）的时候将会被转为红黑树行存储结构。
+6. **非树化阀值(UNTREEIFY_THRESHOLD)**： 与树化阈值相对应，表示当一个已经转化为数形存储结构的哈希桶中节点数量小于该值（默认为 6）的时候将再次改为单链表的格式存储。导致这种操作的原因可能有删除节点或者扩容。
+7. **最小树化容量(MIN_TREEIFY_CAPACITY)**:：经过上边的介绍我们只知道，当链表的节点数超过8的时候就会转化为树化存储，其实对于转化还有一个要求就是哈希表的数量超过最小树化容量的要求（默认要求是 64）,且为了避免进行扩容、树形化选择的冲突，这个值不能小于 4 * TREEIFY_THRESHOLD);在达到该有求之前优先选择扩容。扩容因为因为容量的变化可能会使单链表的长度改变。
+
+
+
+### 3. 确定哈希桶数组索引位置
+
+不管增加、删除、查找键值对，定位到哈希桶数组的位置都是很关键的第一步。前面说过HashMap的数据结构是数组和链表的结合，所以我们当然希望这个HashMap里面的元素位置尽量分布均匀些，尽量使得每个位置上的元素数量只有一个，那么当我们用hash算法求得这个位置的时候，马上就可以知道对应位置的元素就是我们要的，不用遍历链表，大大优化了查询的效率。HashMap定位数组索引位置，直接决定了hash方法的离散性能。先看看源码的实现(方法一+方法二):
+
+```java
+方法一：
+static final int hash(Object key) {   //jdk1.8 & jdk1.7
+     int h;
+     // h = key.hashCode() 为第一步 取hashCode值
+     // h ^ (h >>> 16)  为第二步 高位参与运算
+     return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+}
+
+方法二：
+static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个方法，但是实现原理一样的
+     return h & (length-1);  //第三步 取模运算
+}
+```
+
+这里的Hash算法本质上就是三步：**取key的hashCode值、高位运算、取模运算**。
+
+对于任意给定的对象，只要它的hashCode()返回值相同，那么程序调用方法一所计算得到的Hash码值总是相同的。我们首先想到的就是把hash值对数组长度取模运算，这样一来，元素的分布相对来说是比较均匀的。但是，模运算的消耗还是比较大的，在HashMap中是这样做的：调用方法二来计算该对象应该保存在table数组的哪个索引处。
+
+这个方法非常巧妙，它通过h & (table.length -1)来得到该对象的保存位，而HashMap底层数组的长度总是2的n次方，这是HashMap在速度上的优化。当length总是2的n次方时，h& (length-1)运算等价于对length取模，也就是h%length，但是&比%具有更高的效率。
+
+在JDK1.8的实现中，优化了高位运算的算法，通过hashCode()的高16位异或低16位实现的：(h = k.hashCode()) ^ (h >>> 16)，主要是从速度、功效、质量来考虑的，这么做可以在数组table的length比较小的时候，也能保证考虑到高低Bit都参与到Hash的计算中，同时不会有太大的开销。
+
+下面举例说明下，n为table的长度。
+
+<div align="center"> <img src="../pics/hashmap-hash.png" width=""/></div><br/>
+
+
+
+### 4. 分析HashMap的put方法
+
+HashMap的put方法执行过程可以通过下图来理解，自己有兴趣可以去对比源码更清楚地研究学习。
+
+<div align="center"> <img src="../pics/hashmap-put.png" width=""/></div><br/>
+
+①.判断键值对数组table[i]是否为空或为null，否则执行resize()进行扩容；
+
+②.根据键值key计算hash值得到插入的数组索引i，如果table[i]==null，直接新建节点添加，转向⑥，如果table[i]不为空，转向③；
+
+③.判断table[i]的首个元素是否和key一样，如果相同直接覆盖value，否则转向④，这里的相同指的是hashCode以及equals；
+
+④.判断table[i] 是否为treeNode，即table[i] 是否是红黑树，如果是红黑树，则直接在树中插入键值对，否则转向⑤；
+
+⑤.遍历table[i]，判断链表长度是否大于8，大于8的话把链表转换为红黑树，在红黑树中执行插入操作，否则进行链表的插入操作；遍历过程中若发现key已经存在直接覆盖value即可；
+
+⑥.插入成功后，判断实际存在的键值对数量size是否超多了最大容量threshold，如果超过，进行扩容。
+
+JDK1.8HashMap的put方法源码如下:
 
 ```java
 public V put(K key, V value) {
-    if (table == EMPTY_TABLE) {
-        inflateTable(threshold);
-    }
-    // 键为 null 单独处理
-    if (key == null)
-        return putForNullKey(value);
-    int hash = hash(key);
-    // 确定桶下标
-    int i = indexFor(hash, table.length);
-    // 先找出是否已经存在键为 key 的键值对，如果存在的话就更新这个键值对的值为 value
-    for (Entry<K,V> e = table[i]; e != null; e = e.next) {
-        Object k;
-        if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+    // 对key的hashCode()做hash
+    return putVal(hash(key), key, value, false, true);
+}
+
+final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+               boolean evict) {
+    Node<K,V>[] tab; Node<K,V> p; int n, i;
+    // 步骤①：tab为空则创建
+    if ((tab = table) == null || (n = tab.length) == 0)
+        n = (tab = resize()).length;
+    // 步骤②：计算index，并对null做处理 
+    if ((p = tab[i = (n - 1) & hash]) == null) 
+        tab[i] = newNode(hash, key, value, null);
+    else {
+        Node<K,V> e; K k;
+        // 步骤③：节点key存在，直接覆盖value
+        if (p.hash == hash &&
+            ((k = p.key) == key || (key != null && key.equals(k))))
+            e = p;
+        // 步骤④：判断该链为红黑树
+        else if (p instanceof TreeNode)
+            e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+        // 步骤⑤：该链为链表
+        else {
+            for (int binCount = 0; ; ++binCount) {
+                if ((e = p.next) == null) {
+                    p.next = newNode(hash, key,value,null);
+                     //链表长度大于8转换为红黑树进行处理
+                    if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st  
+                        treeifyBin(tab, hash);
+                    break;
+                }
+                 // key已经存在直接覆盖value
+                if (e.hash == hash &&
+                    ((k = e.key) == key || (key != null && key.equals(k)))) 
+                           break;
+                p = e;
+            }
+        }
+        
+        if (e != null) { // existing mapping for key
             V oldValue = e.value;
-            e.value = value;
-            e.recordAccess(this);
+            if (!onlyIfAbsent || oldValue == null)
+                e.value = value;
+            afterNodeAccess(e);
             return oldValue;
         }
     }
-
-    modCount++;
-    // 插入新键值对
-    addEntry(hash, key, value, i);
+    ++modCount;
+    // 步骤⑥：超过最大容量 就扩容
+    if (++size > threshold)
+        resize();
+    afterNodeInsertion(evict);
     return null;
 }
 ```
 
-HashMap 允许插入键为 null 的键值对。因为无法调用 null 的 hashCode()，也就无法确定该键值对的桶下标，只能通过强制指定一个桶下标来存放。HashMap 使用第 0 个桶存放键为 null 的键值对。
+### 5. 扩容机制
 
-```java
-private V putForNullKey(V value) {
-    for (Entry<K,V> e = table[0]; e != null; e = e.next) {
-        if (e.key == null) {
-            V oldValue = e.value;
-            e.value = value;
-            e.recordAccess(this);
-            return oldValue;
-        }
-    }
-    modCount++;
-    addEntry(0, null, value, 0);
-    return null;
-}
-```
+扩容(resize)就是重新计算容量，向HashMap对象里不停的添加元素，而HashMap对象内部的数组无法装载更多的元素时，对象就需要扩大数组的长度，以便能装入更多的元素。当然Java里的数组是无法自动扩容的，方法是使用一个新的数组代替已有的容量小的数组，就像我们用一个小桶装水，如果想装更多的水，就得换大水桶。
 
-使用链表的头插法，也就是新的键值对插在链表的头部，而不是链表的尾部。
+我们分析下resize的源码，鉴于JDK1.8融入了红黑树，较复杂，为了便于理解我们仍然使用JDK1.7的代码，好理解一些，本质上区别不大，具体区别后文再说。
 
-```java
-void addEntry(int hash, K key, V value, int bucketIndex) {
-    if ((size >= threshold) && (null != table[bucketIndex])) {
-        resize(2 * table.length);
-        hash = (null != key) ? hash(key) : 0;
-        bucketIndex = indexFor(hash, table.length);
-    }
-
-    createEntry(hash, key, value, bucketIndex);
-}
-
-void createEntry(int hash, K key, V value, int bucketIndex) {
-    Entry<K,V> e = table[bucketIndex];
-    // 头插法，链表头部指向新的键值对
-    table[bucketIndex] = new Entry<>(hash, key, value, e);
-    size++;
-}
-```
-
-```java
-Entry(int h, K k, V v, Entry<K,V> n) {
-    value = v;
-    next = n;
-    key = k;
-    hash = h;
-}
-```
-
-
-
-### 4. 确定桶下标
-
-很多操作都需要先确定一个键值对所在的桶下标。
-
-```java
-int hash = hash(key);
-int i = indexFor(hash, table.length);
-```
-
-（一）计算 hash 值
-
-```java
-final int hash(Object k) {
-    int h = hashSeed;
-    if (0 != h && k instanceof String) {
-        return sun.misc.Hashing.stringHash32((String) k);
-    }
-
-    h ^= k.hashCode();
-
-    // This function ensures that hashCodes that differ only by
-    // constant multiples at each bit position have a bounded
-    // number of collisions (approximately 8 at default load factor).
-    h ^= (h >>> 20) ^ (h >>> 12);
-    return h ^ (h >>> 7) ^ (h >>> 4);
-}
-```
-
-```java
-public final int hashCode() {
-    return Objects.hashCode(key) ^ Objects.hashCode(value);
-}
-```
-
-（二）取模
-
-令 x = 1<<4，即 x 为 2 的 4 次方，它具有以下性质：
-
-```java
-x   : 00010000
-x-1 : 00001111
-```
-
-令一个数 y 与 x-1 做与运算，可以去除 y 位级表示的第 4 位以上数：
-
-```java
-y       : 10110010
-x-1     : 00001111
-y&(x-1) : 00000010
-```
-
-这个性质和 y 对 x 取模效果是一样的：
-
-```java
-x   : 00010000
-y   : 10110010
-y%x : 00000010
-```
-
-我们知道，位运算的代价比求模运算小的多，因此在进行这种计算时用位运算的话能带来更高的性能。
-
-确定桶下标的最后一步是将 key 的 hash 值对桶个数取模：hash%capacity，如果能保证 capacity 为 2 的 n 次方，那么就可以将这个操作转换为位运算。
-
-```java
-static int indexFor(int h, int length) {
-    return h & (length-1);
-}
-```
-
-
-
-### 5. 扩容-基本原理
-
-设 HashMap 的 table 长度为 M，需要存储的键值对数量为 N，如果哈希函数满足均匀性的要求，那么每条链表的长度大约为 N/M，因此平均查找次数的复杂度为 O(N/M)。
-
-为了让查找的成本降低，应该尽可能使得 N/M 尽可能小，因此需要保证 M 尽可能大，也就是说 table 要尽可能大。HashMap 采用动态扩容来根据当前的 N 值来调整 M 值，使得空间效率和时间效率都能得到保证。
-
-和扩容相关的参数主要有：capacity、size、threshold 和 load_factor。
-
-| 参数        | 含义                                                         |
-| ----------- | ------------------------------------------------------------ |
-| capacity    | table 的容量大小，默认为 16，需要注意的是 capacity 必须保证为 2 的 n 次方。 |
-| size        | table 的实际使用量。                                         |
-| threshold   | size 的临界值，size 必须小于 threshold，如果大于等于，就必须进行扩容操作。 |
-| load_factor | 装载因子，table 能够使用的比例，threshold = capacity * load_factor。 |
-
-```java
-static final int DEFAULT_INITIAL_CAPACITY = 16;
-
-static final int MAXIMUM_CAPACITY = 1 << 30;
-
-static final float DEFAULT_LOAD_FACTOR = 0.75f;
-
-transient Entry[] table;
-
-transient int size;
-
-int threshold;
-
-final float loadFactor;
-
-transient int modCount;
-```
-
-从下面的添加元素代码中可以看出，当需要扩容时，令 capacity 为原来的两倍。
-
-```java
-void addEntry(int hash, K key, V value, int bucketIndex) {
-    Entry<K,V> e = table[bucketIndex];
-    table[bucketIndex] = new Entry<>(hash, key, value, e);
-    if (size++ >= threshold)
-        resize(2 * table.length);
-}
-```
-
-扩容使用 resize() 实现，需要注意的是，扩容操作同样需要把旧 table 的所有键值对重新插入新的 table 中，因此这一步是很费时的。
-
-```java
-void resize(int newCapacity) {
-    Entry[] oldTable = table;
-    int oldCapacity = oldTable.length;
-    if (oldCapacity == MAXIMUM_CAPACITY) {
-        threshold = Integer.MAX_VALUE;
+```JAVA
+void resize(int newCapacity) {   //传入新的容量
+    Entry[] oldTable = table;    //引用扩容前的Entry数组
+    int oldCapacity = oldTable.length;         
+    if (oldCapacity == MAXIMUM_CAPACITY) {  //扩容前的数组大小如果已经达到最大(2^30)了
+        threshold = Integer.MAX_VALUE; //修改阈值为int的最大值(2^31-1)，这样以后就不会扩容了
         return;
     }
-    Entry[] newTable = new Entry[newCapacity];
-    transfer(newTable);
-    table = newTable;
-    threshold = (int)(newCapacity * loadFactor);
+ 
+    Entry[] newTable = new Entry[newCapacity];  //初始化一个新的Entry数组
+    transfer(newTable);                         //！！将数据转移到新的Entry数组里
+    table = newTable;                           //HashMap的table属性引用新的Entry数组
+    threshold = (int)(newCapacity * loadFactor);//修改阈值
 }
+```
 
+这里就是使用一个容量更大的数组来代替已有的容量小的数组，transfer()方法将原有Entry数组的元素拷贝到新的Entry数组里。
+
+```java
 void transfer(Entry[] newTable) {
-    Entry[] src = table;
+    Entry[] src = table;                   //src引用了旧的Entry数组
     int newCapacity = newTable.length;
-    for (int j = 0; j < src.length; j++) {
-        Entry<K,V> e = src[j];
+    for (int j = 0; j < src.length; j++) { //遍历旧的Entry数组
+        Entry<K,V> e = src[j];             //取得旧Entry数组的每个元素
         if (e != null) {
-            src[j] = null;
+            src[j] = null;//释放旧Entry数组的对象引用（for循环后，旧的Entry数组不再引用任何对象）
             do {
                 Entry<K,V> next = e.next;
-                int i = indexFor(e.hash, newCapacity);
-                e.next = newTable[i];
-                newTable[i] = e;
-                e = next;
+                int i = indexFor(e.hash, newCapacity); //！！重新计算每个元素在数组中的位置
+                e.next = newTable[i]; //标记[1]
+                newTable[i] = e;      //将元素放在数组上
+                e = next;             //访问下一个Entry链上的元素
             } while (e != null);
         }
     }
 }
 ```
 
+newTable[i]的引用赋给了e.next，也就是使用了单链表的头插入方式，同一位置上新元素总会被放在链表的头部位置；这样先放在一个索引上的元素终会被放到Entry链的尾部(如果发生了hash冲突的话），这一点和Jdk1.8有区别，下文详解。在旧数组中同一条Entry链上的元素，通过重新计算索引位置后，有可能被放到了新数组的不同位置上。
 
+下面举个例子说明下扩容过程。假设了我们的hash算法就是简单的用key mod 一下表的大小（也就是数组的长度）。其中的哈希桶数组table的size=2， 所以key = 3、7、5，put顺序依次为 5、7、3。在mod 2以后都冲突在table[1]这里了。这里假设负载因子 loadFactor=1，即当键值对的实际大小size 大于 table的实际大小时进行扩容。接下来的三个步骤是哈希桶数组 resize成4，然后所有的Node重新rehash的过程。
 
-### 6. 扩容-重新计算桶下标
-
-在进行扩容时，需要把键值对重新放到对应的桶上。HashMap 使用了一个特殊的机制，可以降低重新计算桶下标的操作。
-
-假设原数组长度 capacity 为 8，扩容之后 new capacity 为 16：
-
-```java
-javacapacity : 00010000
-new capacity : 00100000
-```
-
-对于一个 Key，它的哈希值如果在第 6 位上为 0，那么取模得到的结果和之前一样；如果为 1，那么得到的结果为原来的结果 + 8。
+<div align="center"> <img src="../pics/jdk1.7-resize.png" width=""/></div><br/>
 
 
 
-### 7. 扩容-计算数组容量
+下面我们讲解下JDK1.8做了哪些优化。经过观测可以发现，我们使用的是2次幂的扩展(指长度扩为原来2倍)，所以，元素的位置要么是在原位置，要么是在原位置再移动2次幂的位置。看下图可以明白这句话的意思，n为table的长度，图（a）表示扩容前的key1和key2两种key确定索引位置的示例，图（b）表示扩容后key1和key2两种key确定索引位置的示例，其中hash1是key1对应的哈希与高位运算结果。
 
-HashMap 构造函数允许用户传入的容量不是 2 的 n 次方，因为它可以自动地将传入的容量转换为 2 的 n 次方。
+<div align="center"> <img src="../pics/hashMap-1.8-hash1.png" width=""/></div><br/>
 
-先考虑如何求一个数的掩码，对于 10010000，它的掩码为 11111111，可以使用以下方法得到：
+元素在重新计算hash之后，因为n变为2倍，那么n-1的mask范围在高位多1bit(红色)，因此新的index就会发生这样的变化：
 
-```java
-mask |= mask >> 1    11011000
-mask |= mask >> 2    11111100
-mask |= mask >> 4    11111111
-```
+<div align="center"> <img src="../pics/hashMap-1.8-hash2.png" width=""/></div><br/>
 
-mask+1 是大于原始数字的最小的 2 的 n 次方。
+因此，我们在扩充HashMap的时候，不需要像JDK1.7的实现那样重新计算hash，只需要看看原来的hash值新增的那个bit是1还是0就好了，是0的话索引没变，是1的话索引变成“原索引+oldCap”，可以看看下图为16扩充为32的resize示意图：
+
+<div align="center"> <img src="../pics/jdk1.8-resize.png" width=""/></div><br/>
+
+
+
+这个设计确实非常的巧妙，既省去了重新计算hash值的时间，而且同时，由于新增的1bit是0还是1可以认为是随机的，因此resize的过程，均匀的把之前的冲突的节点分散到新的bucket了。这一块就是JDK1.8新增的优化点。有一点注意区别，JDK1.7中rehash的时候，旧链表迁移新链表的时候，如果在新表的数组索引位置相同，则链表元素会倒置，但是从上图可以看出，JDK1.8不会倒置。有兴趣的同学可以研究下JDK1.8的resize源码，写的很赞，如下:
 
 ```java
-num     10010000
-mask+1 100000000
-```
+final Node<K,V>[] resize() {
+    Node<K,V>[] oldTab = table;
+    int oldCap = (oldTab == null) ? 0 : oldTab.length;
+    int oldThr = threshold;
+    int newCap, newThr = 0;
+    if (oldCap > 0) {
+        // 超过最大值就不再扩充了，就只好随你碰撞去吧
+        if (oldCap >= MAXIMUM_CAPACITY) {
+            threshold = Integer.MAX_VALUE;
+            return oldTab;
+        }
+        // 没超过最大值，就扩充为原来的2倍
+        else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&
+                 oldCap >= DEFAULT_INITIAL_CAPACITY)
+            newThr = oldThr << 1; // double threshold
+    }
+    else if (oldThr > 0) // initial capacity was placed in threshold
+        newCap = oldThr;
+    else {               // zero initial threshold signifies using defaults
+        newCap = DEFAULT_INITIAL_CAPACITY;
+        newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+    }
+    // 计算新的resize上限
+    if (newThr == 0) {
 
-以下是 HashMap 中计算数组容量的代码：
-
-```java
-static final int tableSizeFor(int cap) {
-    int n = cap - 1;
-    n |= n >>> 1;
-    n |= n >>> 2;
-    n |= n >>> 4;
-    n |= n >>> 8;
-    n |= n >>> 16;
-    return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+        float ft = (float)newCap * loadFactor;
+        newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?
+                  (int)ft : Integer.MAX_VALUE);
+    }
+    threshold = newThr;
+    @SuppressWarnings({"rawtypes"，"unchecked"})
+        Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
+    table = newTab;
+    if (oldTab != null) {
+        // 把每个bucket都移动到新的buckets中
+        for (int j = 0; j < oldCap; ++j) {
+            Node<K,V> e;
+            if ((e = oldTab[j]) != null) {
+                oldTab[j] = null;
+                if (e.next == null)
+                    newTab[e.hash & (newCap - 1)] = e;
+                else if (e instanceof TreeNode)
+                    ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
+                else { // 链表优化重hash的代码块
+                    Node<K,V> loHead = null, loTail = null;
+                    Node<K,V> hiHead = null, hiTail = null;
+                    Node<K,V> next;
+                    do {
+                        next = e.next;
+                        // 原索引
+                        if ((e.hash & oldCap) == 0) {
+                            if (loTail == null)
+                                loHead = e;
+                            else
+                                loTail.next = e;
+                            loTail = e;
+                        }
+                        // 原索引+oldCap
+                        else {
+                            if (hiTail == null)
+                                hiHead = e;
+                            else
+                                hiTail.next = e;
+                            hiTail = e;
+                        }
+                    } while ((e = next) != null);
+                    // 原索引放到bucket里
+                    if (loTail != null) {
+                        loTail.next = null;
+                        newTab[j] = loHead;
+                    }
+                    // 原索引+oldCap放到bucket里
+                    if (hiTail != null) {
+                        hiTail.next = null;
+                        newTab[j + oldCap] = hiHead;
+                    }
+                }
+            }
+        }
+    }
+    return newTab;
 }
 ```
 
+### 6. 线程安全性
+
+在多线程使用场景中，应该尽量避免使用线程不安全的HashMap，而使用线程安全的ConcurrentHashMap。那么为什么说HashMap是线程不安全的，下面举例子说明在并发的多线程使用场景中使用HashMap可能造成死循环。代码例子如下(便于理解，仍然使用JDK1.7的环境)：
+
+```
+public class HashMapInfiniteLoop {  
+
+    private static HashMap<Integer,String> map = new HashMap<Integer,String>(2，0.75f);  
+    public static void main(String[] args) {  
+        map.put(5， "C");  
+
+        new Thread("Thread1") {  
+            public void run() {  
+                map.put(7, "B");  
+                System.out.println(map);  
+            };  
+        }.start();  
+        new Thread("Thread2") {  
+            public void run() {  
+                map.put(3, "A);  
+                System.out.println(map);  
+            };  
+        }.start();        
+    }  
+}
+```
+
+其中，map初始化为一个长度为2的数组，loadFactor=0.75，threshold=2*0.75=1，也就是说当put第二个key的时候，map就需要进行resize。
+
+通过设置断点让线程1和线程2同时debug到transfer方法(3.3小节代码块)的首行。注意此时两个线程已经成功添加数据。放开thread1的断点至transfer方法的“Entry next = e.next;” 这一行；然后放开线程2的的断点，让线程2进行resize。结果如下图。
+
+<div align="center"> <img src="../pics/jdk1.7-drop-dead-1.png" width=""/></div><br/>
+
+注意，Thread1的 e 指向了key(3)，而next指向了key(7)，其在线程二rehash后，指向了线程二重组后的链表。
+
+线程一被调度回来执行，先是执行 newTalbe[i] = e， 然后是e = next，导致了e指向了key(7)，而下一次循环的next = e.next导致了next指向了key(3)。
+
+<div align="center"> <img src="../pics/jdk1.7-drop-dead-2.png" width=""/></div><br/>
 
 
-### 8. 链表转红黑树
 
-从 JDK 1.8 开始，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
+<div align="center"> <img src="../pics/jdk1.7-drop-dead-3.png" width=""/></div><br/>
+
+e.next = newTable[i] 导致 key(3).next 指向了 key(7)。注意：此时的key(7).next 已经指向了key(3)， 环形链表就这样出现了。
 
 
 
-### 9. HashMap 与 HashTable
+<div align="center"> <img src="../pics/jdk1.7-drop-dead-5.png" width=""/></div><br/>
+
+于是，当我们用线程一调用map.get(11)时，悲剧就出现了——Infinite Loop。
+
+### 7. JDK1.8与JDK1.7的性能对比
+
+HashMap中，如果key经过hash算法得出的数组索引位置全部不相同，即Hash算法非常好，那样的话，getKey方法的时间复杂度就是O(1)，如果Hash算法技术的结果碰撞非常多，假如Hash算极其差，所有的Hash算法结果得出的索引位置一样，那样所有的键值对都集中到一个桶中，或者在一个链表中，或者在一个红黑树中，时间复杂度分别为O(n)和O(lgn)。 鉴于JDK1.8做了多方面的优化，总体性能优于JDK1.7，下面我们从两个方面用例子证明这一点。
+
+### 8. Hash较均匀的情况
+
+为了便于测试，我们先写一个类Key，如下：
+
+```java
+class Key implements Comparable<Key> {
+
+    private final int value;
+
+    Key(int value) {
+        this.value = value;
+    }
+
+    @Override
+    public int compareTo(Key o) {
+        return Integer.compare(this.value, o.value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Key key = (Key) o;
+        return value == key.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return value;
+    }
+}
+```
+
+这个类复写了equals方法，并且提供了相当好的hashCode函数，任何一个值的hashCode都不会相同，因为直接使用value当做hashcode。为了避免频繁的GC，我将不变的Key实例缓存了起来，而不是一遍一遍的创建它们。代码如下：
+
+```java
+public class Keys {
+
+    public static final int MAX_KEY = 10_000_000;
+    private static final Key[] KEYS_CACHE = new Key[MAX_KEY];
+
+    static {
+        for (int i = 0; i < MAX_KEY; ++i) {
+            KEYS_CACHE[i] = new Key(i);
+        }
+    }
+
+    public static Key of(int value) {
+        return KEYS_CACHE[value];
+    }
+}
+```
+
+现在开始我们的试验，测试需要做的仅仅是，创建不同size的HashMap（1、10、100、......10000000），屏蔽了扩容的情况，代码如下：
+
+```java
+static void test(int mapSize) {
+
+    HashMap<Key, Integer> map = new HashMap<Key,Integer>(mapSize);
+    for (int i = 0; i < mapSize; ++i) {
+        map.put(Keys.of(i), i);
+    }
+
+    long beginTime = System.nanoTime(); //获取纳秒
+    for (int i = 0; i < mapSize; i++) {
+        map.get(Keys.of(i));
+    }
+    long endTime = System.nanoTime();
+    System.out.println(endTime - beginTime);
+}
+
+public static void main(String[] args) {
+    for(int i=10;i<= 1000 0000;i*= 10){
+        test(i);
+    }
+}
+```
+
+在测试中会查找不同的值，然后度量花费的时间，为了计算getKey的平均时间，我们遍历所有的get方法，计算总的时间，除以key的数量，计算一个平均值，主要用来比较，绝对值可能会受很多环境因素的影响。结果如下：
+
+<div align="center"> <img src="../pics/hashmap-compare1.png" width=""/></div><br/>
+
+通过观测测试结果可知，JDK1.8的性能要高于JDK1.7 15%以上，在某些size的区域上，甚至高于100%。由于Hash算法较均匀，JDK1.8引入的红黑树效果不明显，下面我们看看Hash不均匀的的情况。
+
+### 9. Hash极不均匀的情况
+
+假设我们又一个非常差的Key，它们所有的实例都返回相同的hashCode值。这是使用HashMap最坏的情况。代码修改如下：
+
+```java
+class Key implements Comparable<Key> {
+
+    //...
+
+    @Override
+    public int hashCode() {
+        return 1;
+    }
+}
+```
+
+仍然执行main方法，得出的结果如下表所示：
+
+<div align="center"> <img src="../pics/hashmap-compare2.png" width=""/></div><br/>
+
+从表中结果中可知，随着size的变大，JDK1.7的花费时间是增长的趋势，而JDK1.8是明显的降低趋势，并且呈现对数增长稳定。当一个链表太长的时候，HashMap会动态的将它替换成一个红黑树，这话的话会将时间复杂度从O(n)降为O(logn)。hash算法均匀和不均匀所花费的时间明显也不相同，这两种情况的相对比较，可以说明一个好的hash算法的重要性。
+
+​      测试环境：处理器为2.2 GHz Intel Core i7，内存为16 GB 1600 MHz DDR3，SSD硬盘，使用默认的JVM参数，运行在64位的OS X 10.10.1上。
+
+
+
+### 10. HashMap 与 HashTable
 
 - HashTable 使用 synchronized 来进行同步。
 - HashMap 可以插入键为 null 的 Entry。
 - HashMap 的迭代器是 fail-fast 迭代器。
 - HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
+
+
+
+### 11. 小结
+
+(1) 扩容是一个特别耗性能的操作，所以当程序员在使用HashMap的时候，估算map的大小，初始化的时候给一个大致的数值，避免map进行频繁的扩容。
+
+(2) 负载因子是可以修改的，也可以大于1，但是建议不要轻易修改，除非情况非常特殊。
+
+(3) HashMap是线程不安全的，不要在并发的环境中同时操作HashMap，建议使用ConcurrentHashMap。
+
+(4) JDK1.8引入红黑树大程度优化了HashMap的性能。
+
+(5) 还没升级JDK1.8的，现在开始升级吧。HashMap的性能提升仅仅是JDK1.8的冰山一角。
+
+
+
+参考资料：
+
+- [Java 8系列之重新认识HashMap——美团技术](https://tech.meituan.com/java_hashmap.html)
+- [搞懂 Java HashMap 源码 - 掘金](https://juejin.im/post/5ac83fa35188255c5668afd0)
+- [搞懂 Java equals 和 hashCode 方法 - 掘金](https://juejin.im/post/5ac4d8abf265da23a4050ae3)
+
+
 
 
 

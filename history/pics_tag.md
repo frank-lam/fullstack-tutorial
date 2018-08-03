@@ -17,7 +17,9 @@
 
 <div align="center"> <img src="../pics/beanfactory.jpg" width=""/></div><br/>
 
-<div align="center"> <img src="../pics/bean-init.png.png" width=""/></div><br/>
+<div align="center"> <img src="../pics/jdk1.7-drop-dead-1.png" width=""/></div><br/>
+<div align="center"> <img src="../pics/hashmap-compare1" width=""/></div><br/>
+<div align="center"> <img src="../pics/hashmap-compare2" width=""/></div><br/>
 
 
 

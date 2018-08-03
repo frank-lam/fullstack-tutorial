@@ -1292,6 +1292,20 @@ strictfp 关键字可应用于类、接口或方法。使用 strictfp 关键字�
 
 
 
+## 9. native
+
+ native 即 JNI,Java Native Interface，凡是一种语言，都希望是纯。比如解决某一个方案都喜欢就单单这个语言来写即可。Java平台有个用户和本地C代码进行互操作的API，称为Java Native Interface (Java本地接口)。 
+
+<div align="center"> <img src="../pics/java-native-interface.png" width="500"/></div><br/>
+
+
+
+参考资料：
+
+- [java中native的用法 - 不止吧 - 博客园](https://www.cnblogs.com/b3051/p/7484501.html)
+
+
+
 
 
 # 四、基本数据类型与运算
@@ -1958,5 +1972,10 @@ public class CloneExample implements Cloneable {
 应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protected 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
 
 
+
+参考资料：
+
+- [【必读】搞懂 Java equals 和 hashCode 方法 - 掘金](https://juejin.im/post/5ac4d8abf265da23a4050ae3)
+  
 
 
