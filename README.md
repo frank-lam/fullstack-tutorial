@@ -8,7 +8,7 @@
 
 ## 一、数据结构与算法
 
-> 大纲：[[under editing] 数据结构与算法](notes/数据结构与算法.md)
+> 大纲：[数据结构与算法](notes/数据结构与算法.md)
 
 ### 阅读书籍
 
@@ -36,39 +36,37 @@
 
 ### 知识框架
 
-- [[under editing] Java基础](notes/JavaArchitecture/01%20Java%20基础.md)
-- [√ 集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md)
-- [√ 并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md)
-- [√ IO流](notes/JavaArchitecture/04%20Java%20IO.md)
-- [√ 虚拟机](notes/JavaArchitecture/05%20Java%20虚拟机.md)
-- 设计模式（SDK中常见10种）
+- [Java基础](notes/JavaArchitecture/01%20Java%20基础.md)
+- [集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md)
+- [并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md)
+- [IO流](notes/JavaArchitecture/04%20Java%20IO.md)
+- [虚拟机](notes/JavaArchitecture/05%20Java%20虚拟机.md)
+- [设计模式](notes/JavaArchitecture/06%20设计模式.md)
 - Web框架
+  - [Spring](notes/JavaWeb/Spring.md)
+  - Mybatis
 - 系统架构
-
-
 
 
 
 ## 三、数据库 
 
-- [√ MySQL](notes/MySQL.md)
+- [MySQL](notes/MySQL.md)
 
 - Redis
 
 
 
-
-
 ## 四、操作系统
 
-- [√ Linux](notes/Linux.md)
-- 操作系统
+- [Linux](notes/Linux.md)
+- [操作系统](notes/操作系统.md)
 
 
 
 ## 五、网络部分
 
-- [√ 计算机网络（传输层与应用层）](notes/计算机网络.md)
+- [计算机网络（传输层与应用层）](notes/计算机网络.md)
 
 
 

@@ -71,9 +71,8 @@
     - [4. Hashtable的原理是什么？深入分析底层源码【阿里内推面试】](#4-hashtable的原理是什么深入分析底层源码阿里内推面试)
     - [5. Hash冲突的解决办法有哪些？](#5-hash冲突的解决办法有哪些)
     - [6. 什么是迭代器？【面试宝典】](#6-什么是迭代器面试宝典)
-    - [7. 因为别人知道源码怎么实现的，故意构造相同的hash的字符串进行攻击，怎么处理？那jdk7怎么办？](#7-因为别人知道源码怎么实现的故意构造相同的hash的字符串进行攻击怎么处理那jdk7怎么办)
-    - [ArrayList如何快速排序 ？【阿里面经】](#arraylist如何快速排序-阿里面经)
-    - [Hashmap为什么大小是2的幂次？【阿里面经】](#hashmap为什么大小是2的幂次阿里面经)
+    - [7. 构造相同hash的字符串进行攻击，这种情况应该怎么处理？JDK7如何处理？](#7-构造相同hash的字符串进行攻击这种情况应该怎么处理jdk7如何处理)
+    - [8. Hashmap为什么大小是2的幂次？【阿里面经】](#8-hashmap为什么大小是2的幂次阿里面经)
 
 <!-- /TOC -->
 
@@ -861,7 +860,7 @@ newTable[i]的引用赋给了e.next，也就是使用了单链表的头插入方
 
 因此，我们在扩充HashMap的时候，不需要像JDK1.7的实现那样重新计算hash，只需要看看原来的hash值新增的那个bit是1还是0就好了，是0的话索引没变，是1的话索引变成“原索引+oldCap”，可以看看下图为16扩充为32的resize示意图：
 
-<div align="center"> <img src="../pics/jdk1.8-resize.png" width=""/></div><br/>
+<div align="center"> <img src="../pics/jdk1.8-resize.png" width="700"/></div><br/>
 
 
 
@@ -1356,7 +1355,7 @@ JDK 1.8 使用了 CAS 操作来支持更高的并发度，在 CAS 操作失败�
 
 ## HashSet
 
-前面已经说过 HashSet 是对 HashMap 的简单包装，对 HashSet 的函数调用都会转换成合适的 HashMap 方法，因此 HashSet的实现非常简单，只有不到300行代码（适配器模式）。这里不再赘述。
+　　前面已经说过 HashSet 是对 HashMap 的简单包装，对 HashSet 的函数调用都会转换成合适的 HashMap 方法，因此 HashSet的实现非常简单，只有不到300行代码（适配器模式）。这里不再赘述。
 
 ```java
 //HashSet是对HashMap的简单包装
@@ -1445,15 +1444,15 @@ public class HashSet<E>
 
 
 
-事实上*LinkedHashMap*是*HashMap*的直接子类，**二者唯一的区别是LinkedHashMap在HashMap的基础上，采用双向链表（doubly-linked list）的形式将所有entry连接起来，这样是为保证元素的迭代顺序跟插入顺序相同**。上图给出了*LinkedHashMap*的结构图，主体部分跟*HashMap*完全一样，多了`header`指向双向链表的头部（是一个哑元），**该双向链表的迭代顺序就是entry的插入顺序**。
+事实上 LinkedHashMap 是 HashMap 的直接子类，**二者唯一的区别是 LinkedHashMap 在 HashMap 的基础上，采用双向链表（doubly-linked list）的形式将所有 entry 连接起来，这样是为保证元素的迭代顺序跟插入顺序相同**。上图给出了 LinkedHashMap 的结构图，主体部分跟 HashMap 完全一样，多了`header`指向双向链表的头部（是一个哑元），**该双向链表的迭代顺序就是 entry 的插入顺序**。
 
-除了可以保迭代历顺序，这种结构还有一个好处：**迭代LinkedHashMap时不需要像HashMap那样遍历整个table，而只需要直接遍历header指向的双向链表即可**，也就是说*LinkedHashMap*的迭代时间就只跟`entry`的个数相关，而跟`table`的大小无关。
+除了可以保迭代历顺序，这种结构还有一个好处：**迭代 LinkedHashMap 时不需要像 HashMap 那样遍历整个table，而只需要直接遍历 header 指向的双向链表即可**，也就是说 LinkedHashMap 的迭代时间就只跟`entry`的个数相关，而跟`table`的大小无关。
 
-有两个参数可以影响*LinkedHashMap*的性能：初始容量（inital capacity）和负载系数（load factor）。初始容量指定了初始`table`的大小，负载系数用来指定自动扩容的临界值。当`entry`的数量超过`capacity*load_factor`时，容器将自动扩容并重新哈希。对于插入元素较多的场景，将初始容量设大可以减少重新哈希的次数。
+有两个参数可以影响 LinkedHashMap 的性能：**初始容量**（inital capacity）和**负载系数**（load factor）。初始容量指定了初始`table`的大小，负载系数用来指定自动扩容的临界值。当`entry`的数量超过`capacity*load_factor`时，容器将自动扩容并重新哈希。对于插入元素较多的场景，将初始容量设大可以减少重新哈希的次数。
 
-将对象放入到*LinkedHashMap*或*LinkedHashSet*中时，有两个方法需要特别关心：`hashCode()`和`equals()`。**hashCode()方法决定了对象会被放到哪个bucket里，当多个对象的哈希值冲突时，equals()方法决定了这些对象是否是“同一个对象”**。所以，如果要将自定义的对象放入到`LinkedHashMap`或`LinkedHashSet`中，需要*@Override*`hashCode()`和`equals()`方法。
+将对象放入到 LinkedHashMap 或 LinkedHashSet 中时，有两个方法需要特别关心：`hashCode()`和`equals()`。**hashCode()方法决定了对象会被放到哪个bucket里，当多个对象的哈希值冲突时，equals()方法决定了这些对象是否是“同一个对象”**。所以，如果要将自定义的对象放入到`LinkedHashMap`或`LinkedHashSet`中，需要*@Override*`hashCode()`和`equals()`方法。
 
-通过如下方式可以得到一个跟源*Map* **迭代顺序**一样的*LinkedHashMap*：
+通过如下方式可以得到一个跟源 Map 迭代顺序 一样的 LinkedHashMap：
 
 ```java
 void foo(Map m) {
@@ -1462,13 +1461,15 @@ void foo(Map m) {
 }
 ```
 
-出于性能原因，*LinkedHashMap*是非同步的（not synchronized），如果需要在多线程环境使用，需要程序员手动同步；或者通过如下方式将*LinkedHashMap*包装成（wrapped）同步的：
+出于性能原因，LinkedHashMap 是非同步的（not synchronized），如果需要在多线程环境使用，需要程序员手动同步；或者通过如下方式将 LinkedHashMap 包装成（wrapped）同步的：
 
 `Map m = Collections.synchronizedMap(new LinkedHashMap(...));`
 
 ### 2. get()
 
 `get(Object key)`方法根据指定的`key`值返回对应的`value`。该方法跟`HashMap.get()`方法的流程几乎完全一样，读者可自行[参考前文](https://github.com/CarpenterLee/JCFInternals/blob/master/markdown/6-HashSet%20and%20HashMap.md#get)，这里不再赘述。
+
+
 
 ### 3. put()
 
@@ -1520,6 +1521,8 @@ private void addBefore(Entry<K,V> existingEntry) {
 ```
 
 上述代码只是简单修改相关`entry`的引用而已。
+
+
 
 ### 4. remove()
 
@@ -1638,7 +1641,7 @@ for (String item : list) {
 
 ## 适配器模式
 
-java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
+java.util.Arrays.asList() 可以把数组类型转换为 List 类型。
 
 ```java
 @SafeVarargs
@@ -1664,17 +1667,17 @@ List list = Arrays.asList(1,2,3);
 
 ## 1. ArrayList和LinkedList是常用的两种存储结构，有哪些区别呢？【阿里面试】
 
-- ArrayList和LinkedList可想从名字分析，它们一个是Array(动态数组)的数据结构，一个是Link(链表)的数据结构，此外，它们两个都是对List接口的实现。前者是数组队列，相当于动态数组；后者为双向链表结构，也可当作堆栈、队列、双端队列
-- 当随机访问List时（get和set操作），ArrayList比LinkedList的效率更高，因为LinkedList是线性的数据存储方式，所以需要移动指针从前往后依次查找。
-- 当对数据进行增加和删除的操作时(add和remove操作)，LinkedList比ArrayList的效率更高，因为ArrayList是数组，所以在其中进行增删操作时，会对操作点之后所有数据的下标索引造成影响，需要进行数据的移动。
-- 从利用效率来看，ArrayList自由性较低，因为它需要手动的设置固定大小的容量，但是它的使用比较方便，只需要创建，然后添加数据，通过调用下标进行使用；而LinkedList自由性较高，能够动态的随数据量的变化而变化，但是它不便于使用。
-- ArrayList主要控件开销在于需要在lList列表预留一定空间；而LinkList主要控件开销在于需要存储结点信息以及结点指针信息。
+- ArrayList 和 LinkedList 可想从名字分析，它们一个是 Array (动态数组) 的数据结构，一个是 Link (链表) 的数据结构，此外，它们两个都是对 List 接口的实现。前者是数组队列，相当于动态数组；后者为双向链表结构，也可当作堆栈、队列、双端队列；
+- **当随机访问 List 时**（get和set操作），ArrayList 比 LinkedList的效率更高，因为 LinkedList 是线性的数据存储方式，所以需要移动指针从前往后依次查找；
+- **当对数据进行增加和删除的操作时**（add和remove操作），LinkedList 比 ArrayList 的效率更高，因为ArrayList 是数组，所以在其中进行增删操作时，会对操作点之后所有数据的下标索引造成影响，需要进行数据的移动；
+- **从利用效率来看**，ArrayList 自由性较低，因为它需要手动的设置固定大小的容量，但是它的使用比较方便，只需要创建，然后添加数据，通过调用下标进行使用；而 LinkedList 自由性较高，能够动态的随数据量的变化而变化，但是它不便于使用；
+- ArrayList 主要空间开销在于需要在 List 列表预留一定空间；而 LinkList 主要控件开销在于需要存储结点信息以及结点指针信息。
 
 
 
-- *ArrayList、LinkedList和Vector如何选择？*
-  - 当对数据的主要操作为索引或只在集合的末端增加、删除元素时，使用ArrayList或Vector效率比较高；
-  - 当对数据的操作主要为制定位置的插入或删除操作时，使用LinkedList效率比较高；
+- **ArrayList、LinkedList 和 Vector如何选择？**
+  - 当对数据的主要操作为索引或只在集合的末端增加、删除元素时，使用 ArrayList 或 Vector 效率比较高；
+  - 当对数据的操作主要为制定位置的插入或删除操作时，使用 LinkedList 效率比较高；
   - 当在多线程中使用容器时（即多个线程会同时访问该容器），选用Vector较为安全；
 
 
@@ -1715,28 +1718,32 @@ List list = Arrays.asList(1,2,3);
   - ConcurrentHashMap让锁的粒度更精细一些，并发性能更好。 
 - **ConcurrentHashMap 线程安全吗， ConcurrentHashMap如何保证 线程安全？** 
   - HashTable容器在竞争激烈的并发环境下表现出效率低下的原因是所有访问HashTable的线程都必须竞争同一把锁，那假如容器里有多把锁，每一把锁用于锁容器其中一部分数据，那么当多线程访问容器里不同数据段的数据时，线程间就不会存在锁竞争，从而可以有效的提高并发访问效率，这就是ConcurrentHashMap所使用的**锁分段技术**，首先将数据分成一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问。 
-  - get操作的高效之处在于整个get过程不需要加锁，除非读到的值是空的才会加锁重读。get方法里将要使用的共享变量都定义成volatile，如用于统计当前Segement大小的count字段和用于存储值的HashEntry的value。定义成volatile的变量，能够在线程之间保持可见性，能够被多线程同时读，并且保证不会读到过期的值，但是只能被单线程写（有一种情况可以被多线程写，就是写入的值不依赖于原值），在get操作里只需要读不需要写共享变量count和value，所以可以不用加锁。 
+  - get操作的高效之处在于整个get过程不需要加锁，除非读到的值是空的才会加锁重读。**get方法里将要使用的共享变量都定义成volatile**，如用于统计当前Segement大小的count字段和用于存储值的HashEntry的value。定义成volatile的变量，能够在线程之间保持可见性，能够被多线程同时读，并且保证不会读到过期的值，但是只能被单线程写（有一种情况可以被多线程写，就是写入的值不依赖于原值），在get操作里只需要读不需要写共享变量count和value，所以可以不用加锁。 
   - Put方法首先定位到Segment，然后在Segment里进行插入操作。插入操作需要经历两个步骤，第一步判断是否需要对Segment里的HashEntry数组进行扩容，第二步定位添加元素的位置然后放在HashEntry数组里。 
 
 
 
 ## 4. Hashtable的原理是什么？深入分析底层源码【阿里内推面试】
 
-Hashtable使用链地址法进行元素存储，通过一个实际的例子来演示一下插入元素的过程：
+**Hashtable使用链地址法进行元素存储，通过一个实际的例子来演示一下插入元素的过程：**
 
 假设我们现在Hashtable的容量为5，已经存在了(5,5)，(13,13)，(16,16)，(17,17)，(21,21)这 5 个键值对，目前他们在Hashtable中的位置如下：
 
-![img](../pics/hashtable1.png)  
+<div align="center"> <img src="../pics/hashtable1.png" width=""/></div><br/>
+
+
 
 现在，我们插入一个新的键值对，put(16,22)，假设key=16的索引为1.但现在索引1的位置有两个Entry了，所以程序会对链表进行迭代。迭代的过程中，发现其中有一个Entry的key和我们要插入的键值对的key相同，所以现在会做的工作就是将newValue=22替换oldValue=16，然后返回oldValue=16. 
 
-![img](../pics/hashtable2.png) 
+
+
+<div align="center"> <img src="../pics/hashtable2.png" width=""/></div><br/>
 
 
 
 然后我们现在再插入一个，put(33,33)，key=33的索引为3，并且在链表中也不存在key=33的Entry，所以将该节点插入链表的第一个位置。 
 
-![img](../pics/hashtable3.png) 
+<div align="center"> <img src="../pics/hashtable3.png" width=""/></div><br/>
 
 
 
@@ -1744,7 +1751,7 @@ Hashtable使用链地址法进行元素存储，通过一个实际的例子来�
 
 1. HashTable 基于 Dictionary 类，而 HashMap 是基于 AbstractMap。Dictionary 是任何可将键映射到相应值的类的抽象父类，而 AbstractMap 是基于 Map 接口的实现，它以最大限度地减少实现此接口所需的工作。
 2. HashMap 的 key 和 value 都允许为 null，而 Hashtable 的 key 和 value 都不允许为 null。HashMap 遇到 key 为 null 的时候，调用 putForNullKey 方法进行处理，而对 value 没有处理；Hashtable遇到 null，直接返回 NullPointerException。
-3. Hashtable 方法是同步，而HashMap则不是。我们可以看一下源码，Hashtable 中的几乎所有的 public 的方法都是 synchronized 的，而有些方法也是在内部通过 synchronized 代码块来实现。所以有人一般都建议如果是涉及到多线程同步时采用 HashTable，没有涉及就采用 HashMap，但是在 Collections 类中存在一个静态方法：synchronizedMap()，该方法创建了一个线程安全的 Map 对象，并把它作为一个封装的对象来返回。
+3. **Hashtable 方法是同步，而HashMap则不是**。我们可以看一下源码，Hashtable 中的几乎所有的 public 的方法都是 synchronized 的，而有些方法也是在内部通过 synchronized 代码块来实现。所以有人一般都建议如果是涉及到多线程同步时采用 HashTable，没有涉及就采用 HashMap，但是在 Collections 类中存在一个静态方法：**synchronizedMap()**，该方法创建了一个线程安全的 Map 对象，并把它作为一个封装的对象来返回。
 
 
 
@@ -1767,13 +1774,13 @@ Hashtable使用链地址法进行元素存储，通过一个实际的例子来�
 
 ## 6. 什么是迭代器？【面试宝典】
 
-​	Java集合框架的集合类，我们有时候称之为容器。容器的种类有很多种，比如ArrayList、LinkedList、HashSet...，每种容器都有自己的特点，ArrayList底层维护的是一个数组；LinkedList是链表结构的；HashSet依赖的是哈希表，每种容器都有自己特有的数据结构。
+​      Java集合框架的集合类，我们有时候称之为容器。容器的种类有很多种，比如ArrayList、LinkedList、HashSet...，每种容器都有自己的特点，ArrayList底层维护的是一个数组；LinkedList是链表结构的；HashSet依赖的是哈希表，每种容器都有自己特有的数据结构。
 
-​	因为容器的内部结构不同，很多时候可能不知道该怎样去遍历一个容器中的元素。所以为了使对容器内元素的操作更为简单，Java引入了迭代器模式！ 
+​      因为容器的内部结构不同，很多时候可能不知道该怎样去遍历一个容器中的元素。所以为了使对容器内元素的操作更为简单，Java引入了迭代器模式！ 
 
-　　把访问逻辑从不同类型的集合类中抽取出来，从而避免向外部暴露集合的内部结构。
+​      把访问逻辑从不同类型的集合类中抽取出来，从而避免向外部暴露集合的内部结构。
 
-**	迭代器模式：就是提供一种方法对一个容器对象中的各个元素进行访问，而又不暴露该对象容器的内部细。**
+​      **迭代器模式**：就是提供一种方法对一个容器对象中的各个元素进行访问，而又不暴露该对象容器的内部细。
 
 ```java
 public static void main(String[] args) {
@@ -1802,30 +1809,80 @@ public static void main(String[] args) {
 
 
 
-## 7. 因为别人知道源码怎么实现的，故意构造相同的hash的字符串进行攻击，怎么处理？那jdk7怎么办？
+## 7. 构造相同hash的字符串进行攻击，这种情况应该怎么处理？JDK7如何处理？
 
-- **怎么处理构造相同hash的字符串进行攻击?** 
+**攻击原理：**
 
-  - 当客户端提交一个请求并附带参数的时候，web应用服务器会把我们的参数转化成一个HashMap存储，这个HashMap的逻辑结构如下：key1-->value1; 
-  - 但是物理存储结构是不同的，key值会被转化成Hashcode，这个hashcode有会被转成数组的下标：0-->value1； 
-  - 不同的string就会产生相同hashcode而导致碰撞，碰撞后的物理存储结构可能如下：0-->value1-->value2; 
-  - 限制post和get参数的个数，越少越好；限制post数据的大小；使用WAF过滤。
+当客户端发送一个请求到服务器，如果该请求中带有参数，服务器端会将参数名-参数值作为key-value保存在HashMap中。如果有人恶意构造请求，在请求中加入大量相同hash值的String参数名（key），那么在服务器端用于存储这些key-value对的HashMap会被强行退化成链表，如图：
 
-- **Jdk7 如何处理hashcode字符串攻击** 
+<div align="center"> <img src="../pics/hash-to-badlink.png" width=""/></div><br/>
 
-  - HashMap会动态的使用一个专门的treemap实现来替换掉它。 
+如果数据量足够大，那么在查找，插入时会占用大量CPU，达到拒绝服务攻击的目的。
 
+ 
 
+**怎么处理**
 
-
-
-## ArrayList如何快速排序 ？【阿里面经】
-
+1. 限制POST和GET请求的参数个数
+2. 限制POST请求的请求体大小
+3. Web Application FireWall（WAF）
 
 
 
+**JDK7如何处理**
 
-## Hashmap为什么大小是2的幂次？【阿里面经】
+HashMap会动态的使用一个专门TreeMap实现来替换掉它。
 
 
 
+
+
+## 8. Hashmap为什么大小是2的幂次？【阿里面经】
+
+做为面试常考的问题之一，每次都答的模模糊糊，有必要了解一下，首先来看一下hashmap的put方法的源码
+
+```java
+public V put(K key, V value) {
+    if (key == null)                
+        return putForNullKey(value);  //将空key的Entry加入到table[0]中
+    int hash = hash(key.hashCode());  //计算key.hashcode()的hash值，hash函数由hashmap自己实现
+    int i = indexFor(hash, table.length);  //获取将要存放的数组下标
+    /*
+     * for中的代码用于：当hash值相同且key相同的情况下，使用新值覆盖旧值（其实就是修改功能）
+     */
+    //注意：for循环在第一次执行时就会先判断条件
+    for (Entry<K, V> e = table[i]; e != null; e = e.next) {
+        Object k;
+        //hash值相同且key相同的情况下，使用新值覆盖旧值
+        if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+            V oldValue = e.value;
+            e.value = value;
+            //e.recordAccess(this);
+            return oldValue;//返回旧值
+        }
+    }
+    modCount++;
+    addEntry(hash, key, value, i);//增加一个新的Entry到table[i]
+    return null;//如果没有与传入的key相等的Entry，就返回null
+}
+```
+
+```java
+/**
+ * "按位与"来获取数组下标
+ */
+static int indexFor(int h, int length) {
+    return h & (length - 1);
+}
+
+```
+
+**hashmap始终将自己的桶保持在2的n次方，这是为什么？indexFor这个方法解释了这个问题**
+
+大家都知道计算机里面位运算是基本运算，位运算的效率是远远高于取余%运算的
+
+举个例子：2<sup>n</sup>转换成二进制就是1+n个0，减1之后就是0+n个1，如16 -> 10000，15 -> 01111
+
+那么根据&位运算的规则，都为1(真)时，才为1，那0≤运算后的结果≤15，假设h <= 15，那么运算后的结果就是h本身，h >15，运算后的结果就是最后四位二进制做&运算后的值，最终，就是%运算后的余数。
+
+当容量一定是2<sup>n</sup>时，h & (length - 1) == h % length

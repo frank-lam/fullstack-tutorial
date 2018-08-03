@@ -7,7 +7,7 @@
 |                    |                                                            |      |        |                          |
 | 二、Java核心知识   |                                                            |      |        |                          |
 |                    | [Java基础](notes/JavaArchitecture/01%20Java%20基础.md)     | v2.5 | 基础版 | 7/31 复习                |
-|                    | [集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md) | v2.0 |        |                          |
+|                    | [集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md) | v2.5 | 基础版 | 8/2 复习                 |
 |                    | [并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md) |      |        |                          |
 |                    | [IO流](notes/JavaArchitecture/04%20Java%20IO.md)           |      |        |                          |
 |                    | [虚拟机](notes/JavaArchitecture/05%20Java%20虚拟机.md)     |      |        |                          |
