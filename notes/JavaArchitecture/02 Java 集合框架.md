@@ -722,7 +722,7 @@ static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个
 
 ### 4. 分析HashMap的put方法
 
-HashMap的put方法执行过程可以通过下图来理解，自己有兴趣可以去对比源码更清楚地研究学习。
+　　HashMap的put方法执行过程可以通过下图来理解，自己有兴趣可以去对比源码更清楚地研究学习。
 
 <div align="center"> <img src="../pics/hashmap-put.png" width=""/></div><br/>
 
