@@ -189,7 +189,7 @@ public class ArrayList<E> extends AbstractList<E>
 private static final int DEFAULT_CAPACITY = 10;
 ```
 
-<div align="center"> <img src="../pics/ArrayList_base.png" width=""/></div><br/>
+<div align="center"> <img src="../pics/ArrayList_base.png" width="650"/></div><br/>
 
 
 
@@ -241,6 +241,14 @@ private void grow(int minCapacity) {
     // minCapacity is usually close to size, so this is a win:
     elementData = Arrays.copyOf(elementData, newCapacity);
 }
+
+private static int hugeCapacity(int minCapacity) {
+    if (minCapacity < 0) // overflow
+        throw new OutOfMemoryError();
+    return (minCapacity > MAX_ARRAY_SIZE) ?
+        Integer.MAX_VALUE :
+    MAX_ARRAY_SIZE;
+}
 ```
 
 
@@ -271,8 +279,7 @@ modCount 用来记录 ArrayList 结构发生变化的次数。结构发生变化
 在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 ConcurrentModificationException。
 
 ```java
-private void writeObject(java.io.ObjectOutputStream s)
-    throws java.io.IOException{
+private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException{
     // Write out element count, and any hidden stuff
     int expectedModCount = modCount;
     s.defaultWriteObject();
@@ -326,6 +333,8 @@ public synchronized E get(int index) {
 
 ### 3. Vector 替代方案
 
+#### synchronizedList
+
 为了获得线程安全的 ArrayList，可以使用 `Collections.synchronizedList();` 得到一个线程安全的 ArrayList。
 
 ```java
@@ -333,23 +342,34 @@ List<String> list = new ArrayList<>();
 List<String> synList = Collections.synchronizedList(list);
 ```
 
+
+
+#### CopyOnWriteArrayList
+
+<div align="center"> <img src="../pics/cow.png" width=""/></div><br/>
+
+
+
 也可以使用 concurrent 并发包下的 CopyOnWriteArrayList 类。
 
 ```java
 List<String> list = new CopyOnWriteArrayList<>();
 ```
 
-CopyOnWriteArrayList 是一种 CopyOnWrite 容器，从以下源码看出：读取元素是从原数组读取；添加元素是在复制的新数组上。读写分离，因而可以在并发条件下进行不加锁的读取，读取效率高，适用于读操作远大于写操作的场景。
+CopyOnWrite容器即写时复制的容器。通俗的理解是**当我们往一个容器添加元素的时候，不直接往当前容器添加，而是先将当前容器进行Copy，复制出一个新的容器，然后新的容器里添加元素，添加完元素之后，再将原容器的引用指向新的容器**。这样做的好处是我们可以对CopyOnWrite容器进行并发的读，而不需要加锁，因为当前容器不会添加任何元素。所以CopyOnWrite容器也是一种**读写分离**的思想，读和写不同的容器。 
 
 ```java
-public boolean add(E e) {
+public boolean add(T e) {
     final ReentrantLock lock = this.lock;
     lock.lock();
     try {
         Object[] elements = getArray();
         int len = elements.length;
-        Object[] newElements = Arrays.copyOf(elements, len + 1); 
+        // 复制出新数组
+        Object[] newElements = Arrays.copyOf(elements, len + 1);
+        // 把新元素添加到新数组里
         newElements[len] = e;
+        // 把原数组引用指向新数组
         setArray(newElements);
         return true;
     } finally {
@@ -360,22 +380,47 @@ public boolean add(E e) {
 final void setArray(Object[] a) {
     array = a;
 }
+```
 
-@SuppressWarnings("unchecked")
-private E get(Object[] a, int index) {
-    return (E) a[index];
+读的时候不需要加锁，如果读的时候有多个线程正在向ArrayList添加数据，读还是会读到旧的数据，因为写的时候不会锁住旧的ArrayList。  
+
+```java
+public E get(int index) {
+    return get(getArray(), index);
 }
 ```
+
+**CopyOnWrite的缺点**
+
+CopyOnWrite容器有很多优点，但是同时也存在两个问题，即内存占用问题和数据一致性问题。所以在开发的时候需要注意一下。
+
+**内存占用问题**。因为 CopyOnWrite 的写时复制机制，所以在进行写操作的时候，内存里会同时驻扎两个对象的内存，旧的对象和新写入的对象（注意:在复制的时候只是复制容器里的引用，只是在写的时候会创建新对象添加到新容器里，而旧容器的对象还在使用，所以有两份对象内存）。如果这些对象占用的内存比较大，比如说200M左右，那么再写入100M数据进去，内存就会占用300M，那么这个时候很有可能造成频繁的Yong GC和Full GC。之前我们系统中使用了一个服务由于每晚使用CopyOnWrite机制更新大对象，造成了每晚15秒的Full GC，应用响应时间也随之变长。
+
+针对内存占用问题，可以通过压缩容器中的元素的方法来减少大对象的内存消耗，比如，如果元素全是10进制的数字，可以考虑把它压缩成36进制或64进制。或者不使用CopyOnWrite容器，而使用其他的并发容器，如 ConcurrentHashMap 。
+
+**数据一致性问题**。CopyOnWrite容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的的数据，马上能读到，请不要使用CopyOnWrite容器。
+
+关于C++的STL中，曾经也有过Copy-On-Write的玩法，参见陈皓的《[C++ STL String类中的Copy-On-Write](http://blog.csdn.net/haoel/article/details/24058)》，后来，因为有很多线程安全上的事，就被去掉了。
+
+
+
+参考资料：
+
+- [聊聊并发-Java中的Copy-On-Write容器 | 并发编程网 – ifeve.com](http://ifeve.com/java-copy-on-write/)
 
 
 
 ## LinkedList
 
-<div align="center"> <img src="../pics/LinkedList.png" width=""/></div><br/>
+<div align="center"> <img src="../pics/LinkedList_base.png" width="600"/></div><br/>
 
 ### 1. 概览
 
-如图所示 `LinkedList` 底层是基于双向链表实现的，也是实现了 `List` 接口，所以也拥有 List 的一些特点(JDK1.7/8 之后取消了循环，修改为双向链表)。 
+如图所示 LinkedList 底层是基于双向链表实现的，也是实现了 List 接口，所以也拥有 List 的一些特点 (JDK1.7/8 之后取消了循环，修改为双向链表) 。 
+
+*LinkedList*同时实现了*List*接口和*Deque*接口，也就是说它既可以看作一个顺序容器，又可以看作一个队列（*Queue*），同时又可以看作一个栈（*Stack*）。这样看来，*LinkedList*简直就是个全能冠军。当你需要使用栈或者队列时，可以考虑使用*LinkedList*，一方面是因为Java官方已经声明不建议使用*Stack*类，更遗憾的是，Java里根本没有一个叫做*Queue*的类（它是个接口名字）。关于栈或队列，现在的首选是*ArrayDeque*，它有着比*LinkedList*（当作栈或队列使用时）有着更好的性能。 
+
+
 
 基于双向链表实现，内部使用 Node 来存储链表节点信息。
 
@@ -393,6 +438,8 @@ private static class Node<E> {
 transient Node<E> first;
 transient Node<E> last;
 ```
+
+
 
 ### 2. add()
 
@@ -419,6 +466,8 @@ void linkLast(E e) {
 ```
 
 可见每次插入都是移动指针，和 ArrayList 的拷贝数组来说效率要高上不少。
+
+
 
 ### 3. get()
 
@@ -450,6 +499,8 @@ Node<E> node(int index) {
   - 如果索引值大于链表大小的一半，那么将从尾结点开始遍历
 
 这样的效率是非常低的，特别是当 index 越接近 size 的中间值时。
+
+
 
 ### 4. 总结
 
