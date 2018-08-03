@@ -1474,7 +1474,13 @@ void foo(Map m) {
 > 1. 从`table`的角度看，新的`entry`需要插入到对应的`bucket`里，当有哈希冲突时，采用头插法将新的`entry`插入到冲突链表的头部。
 > 2. 从`header`的角度看，新的`entry`需要插入到双向链表的尾部。
 
-[![LinkedHashMap_addEntry.png](https://github.com/CarpenterLee/JCFInternals/raw/master/PNGFigures/LinkedHashMap_addEntry.png)](https://github.com/CarpenterLee/JCFInternals/blob/master/PNGFigures/LinkedHashMap_addEntry.png)
+<div align="center"> 
+
+
+
+<img src="../pics/LinkedHashMap_addEntry.png" width="700"/></div><br/>
+
+
 
 `addEntry()`代码如下：
 
@@ -1519,7 +1525,11 @@ private void addBefore(Entry<K,V> existingEntry) {
 > 1. 从`table`的角度看，需要将该`entry`从对应的`bucket`里删除，如果对应的冲突链表不空，需要修改冲突链表的相应引用。
 > 2. 从`header`的角度来看，需要将该`entry`从双向链表中删除，同时修改链表中前面以及后面元素的相应引用。
 
-[![LinkedHashMap_removeEntryForKey.png](https://github.com/CarpenterLee/JCFInternals/raw/master/PNGFigures/LinkedHashMap_removeEntryForKey.png)](https://github.com/CarpenterLee/JCFInternals/blob/master/PNGFigures/LinkedHashMap_removeEntryForKey.png)
+
+
+<div align="center"> <img src="../pics/LinkedList_remove.png" width="700"/></div><br/>
+
+
 
 `removeEntryForKey()`对应的代码如下：
 
@@ -1551,6 +1561,8 @@ final Entry<K,V> removeEntryForKey(Object key) {
 }
 ```
 
+
+
 ### 5. LinkedHashSet
 
 前面已经说过*LinkedHashSet*是对*LinkedHashMap*的简单包装，对*LinkedHashSet*的函数调用都会转换成合适的*LinkedHashMap*方法，因此*LinkedHashSet*的实现非常简单，这里不再赘述。
@@ -1571,6 +1583,8 @@ public class LinkedHashSet<E>
     ......
 }
 ```
+
+
 
 ### 6. LinkedHashMap经典用法
 
