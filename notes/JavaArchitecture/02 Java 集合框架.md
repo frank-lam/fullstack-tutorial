@@ -44,9 +44,11 @@
         - [10. HashMap 与 HashTable](#10-hashmap-与-hashtable)
         - [11. 小结](#11-小结)
     - [ConcurrentHashMap](#concurrenthashmap)
-        - [1. 存储结构](#1-存储结构-1)
+        - [1. 概述](#1-概述)
+        - [2. 存储结构](#2-存储结构)
         - [2. size 操作](#2-size-操作)
-        - [3. JDK 1.8 的改动](#3-jdk-18-的改动)
+        - [3. 同步方式](#3-同步方式)
+        - [4. JDK 1.8 的改动](#4-jdk-18-的改动)
     - [HashSet](#hashset)
         - [1. 成员变量](#1-成员变量)
         - [2. 构造函数](#2-构造函数)
@@ -661,10 +663,9 @@ int size;
 
 size这个字段其实很好理解，就是HashMap中实际存在的键值对数量。注意和table的长度length、容纳最大键值对数量threshold的区别。而modCount字段主要用来记录HashMap内部结构发生变化的次数，主要用于迭代的快速失败。强调一点，内部结构发生变化指的是结构发生变化，例如put新键值对，但是某个key对应的value值被覆盖不属于结构变化。
 
-在HashMap中，哈希桶数组table的长度length大小必须为2的n次方(一定是合数)，这是一种非常规的设计，常规的设计是把桶的大小设计为素数。相对来说素数导致冲突的概率要小于合数，具体证明可以参考<http://blog.csdn.net/liuqiyao_01/article/details/14475159>，Hashtable初始化桶大小为11，就是桶大小设计为素数的应用（Hashtable扩容后不能保证还是素数）。HashMap采用这种非常规设计，主要是为了在取模和扩容时做优化，同时为了减少冲突，HashMap定位哈希桶索引位置时，也加入了高位参与运算的过程。
+在HashMap中，哈希桶数组table的长度length大小必须为2的n次方(一定是合数)，这是一种非常规的设计，常规的设计是把桶的大小设计为素数。相对来说素数导致冲突的概率要小于合数，具体证明可以参考 [为什么一般hashtable的桶数会取一个素数？](https://blog.csdn.net/liuqiyao_01/article/details/14475159) ，**Hashtable初始化桶大小为11，就是桶大小设计为素数的应用（Hashtable扩容后不能保证还是素数）**。HashMap采用这种非常规设计，**主要是为了在取模和扩容时做优化，同时为了减少冲突，HashMap定位哈希桶索引位置时，也加入了高位参与运算的过程**。
 
-这里存在一个问题，即使负载因子和Hash算法设计的再合理，也免不了会出现拉链过长的情况，一旦出现拉链过长，则会严重影响HashMap的性能。于是，在JDK1.8版本中，对数据结构做了进一步的优化，引入了红黑树。而当链表长度太长（默认超过8）时，链表就转换为红黑树，利用红黑树快速增删改查的特点提高HashMap的性能，其中会用到红黑树的插入、删除、查找等算法。本文不再对红黑树展开讨论，想了解更多红黑树数据结构的工作原理可以参考<http://blog.csdn.net/v_july_v/article/details/6105630>。
-
+这里存在一个问题，即使负载因子和Hash算法设计的再合理，也免不了会出现拉链过长的情况，一旦出现拉链过长，则会严重影响HashMap的性能。于是，在JDK1.8版本中，对数据结构做了进一步的优化，引入了红黑树。而当链表长度太长（默认超过8）时，链表就转换为红黑树，利用红黑树快速增删改查的特点提高HashMap的性能，其中会用到红黑树的插入、删除、查找等算法。本文不再对红黑树展开讨论，想了解更多红黑树数据结构的工作原理可以参考：[教你初步了解红黑树](https://blog.csdn.net/v_july_v/article/details/6105630)。
 
 
 
@@ -672,7 +673,7 @@ size这个字段其实很好理解，就是HashMap中实际存在的键值对数
 ### 2. 重要参数
 
 1. **哈希桶（buckets）**：在 HashMap 的注释里使用哈希桶来形象的表示数组中每个地址位置。注意这里并不是数组本身，数组是装哈希桶的，他可以被称为**哈希表**。
-2. **初始容量(initial capacity)** : 这个很容易理解，就是哈希表中哈希桶初始的数量。如果我们没有通过构造方法修改这个容量值默认为`DEFAULT_INITIAL_CAPACITY = 1<<4` 即16。值得注意的是为了保证 HashMap 添加和查找的高效性，`HashMap` 的容量总是 2^n 的形式。
+2. **初始容量(initial capacity)** : 这个很容易理解，就是哈希表中哈希桶初始的数量。如果我们没有通过构造方法修改这个容量值默认为`DEFAULT_INITIAL_CAPACITY = 1<<4` 即16。值得注意的是为了保证 HashMap 添加和查找的高效性，`HashMap` 的容量总是 2<sup>n</sup> 的形式。
 3. **加载因子(load factor)**：加载因子是哈希表（散列表）在其容量自动增加之前被允许获得的最大数量的度量。当哈希表中的条目数量超过负载因子和当前容量的乘积时，散列表就会被重新映射（即重建内部数据结构），重新创建的散列表容量大约是之前散列表哈系统桶数量的两倍。默认加载因子（0.75）在时间和空间成本之间提供了良好的折衷。加载因子过大会导致很容易链表过长，**加载因子很小又容易导致频繁的扩容。所以不要轻易试着去改变这个默认值**。
 4. **扩容阈值（threshold）**：其实在说加载因子的时候已经提到了扩容阈值了，**扩容阈值 = 哈希表容量 \* 加载因子**。哈希表的键值对总数 = 所有哈希桶中所有链表节点数的加和，扩容阈值比较的是是键值对的个数而不是哈希表的数组中有多少个位置被占了。
 5. **树化阀值(TREEIFY_THRESHOLD)** ：这个参数概念是在 JDK1.8后加入的，它的含义代表一个哈希桶中的节点个数大于该值（默认为8）的时候将会被转为红黑树行存储结构。
@@ -710,7 +711,7 @@ static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个
 
 下面举例说明下，n为table的长度。
 
-<div align="center"> <img src="../pics/hashmap-hash.png" width=""/></div><br/>
+<div align="center"> <img src="../pics/hashmap-hash.png" width="700"/></div><br/>
 
 
 
@@ -839,7 +840,7 @@ void transfer(Entry[] newTable) {
 
 newTable[i]的引用赋给了e.next，也就是使用了单链表的头插入方式，同一位置上新元素总会被放在链表的头部位置；这样先放在一个索引上的元素终会被放到Entry链的尾部(如果发生了hash冲突的话），这一点和Jdk1.8有区别，下文详解。在旧数组中同一条Entry链上的元素，通过重新计算索引位置后，有可能被放到了新数组的不同位置上。
 
-下面举个例子说明下扩容过程。假设了我们的hash算法就是简单的用key mod 一下表的大小（也就是数组的长度）。其中的哈希桶数组table的size=2， 所以key = 3、7、5，put顺序依次为 5、7、3。在mod 2以后都冲突在table[1]这里了。这里假设负载因子 loadFactor=1，即当键值对的实际大小size 大于 table的实际大小时进行扩容。接下来的三个步骤是哈希桶数组 resize成4，然后所有的Node重新rehash的过程。
+下面举个例子说明下扩容过程。假设了我们的hash算法就是简单的用key mod 一下表的大小（也就是数组的长度）。其中的哈希桶数组table的size=2， 所以key = 3、7、5，put顺序依次为 5、7、3。在mod 2以后都冲突在table[1]这里了。这里假设负载因子 loadFactor=1，即当键值对的实际大小size 大于 table的实际大小时进行扩容。接下来的三个步骤是哈希桶数组 resize成4，然后所有的Node重新rehash的过程。
 
 <div align="center"> <img src="../pics/jdk1.7-resize.png" width=""/></div><br/>
 
@@ -851,7 +852,7 @@ newTable[i]的引用赋给了e.next，也就是使用了单链表的头插入方
 
 元素在重新计算hash之后，因为n变为2倍，那么n-1的mask范围在高位多1bit(红色)，因此新的index就会发生这样的变化：
 
-<div align="center"> <img src="../pics/hashMap-1.8-hash2.png" width=""/></div><br/>
+<div align="center"> <img src="../pics/hashMap-1.8-hash2.png" width="620"/></div><br/>
 
 因此，我们在扩充HashMap的时候，不需要像JDK1.7的实现那样重新计算hash，只需要看看原来的hash值新增的那个bit是1还是0就好了，是0的话索引没变，是1的话索引变成“原索引+oldCap”，可以看看下图为16扩充为32的resize示意图：
 
@@ -950,7 +951,7 @@ final Node<K,V>[] resize() {
 
 在多线程使用场景中，应该尽量避免使用线程不安全的HashMap，而使用线程安全的ConcurrentHashMap。那么为什么说HashMap是线程不安全的，下面举例子说明在并发的多线程使用场景中使用HashMap可能造成死循环。代码例子如下(便于理解，仍然使用JDK1.7的环境)：
 
-```
+```java
 public class HashMapInfiniteLoop {  
 
     private static HashMap<Integer,String> map = new HashMap<Integer,String>(2，0.75f);  
@@ -1106,32 +1107,32 @@ class Key implements Comparable<Key> {
 
 <div align="center"> <img src="../pics/hashmap-compare2.png" width=""/></div><br/>
 
-从表中结果中可知，随着size的变大，JDK1.7的花费时间是增长的趋势，而JDK1.8是明显的降低趋势，并且呈现对数增长稳定。当一个链表太长的时候，HashMap会动态的将它替换成一个红黑树，这话的话会将时间复杂度从O(n)降为O(logn)。hash算法均匀和不均匀所花费的时间明显也不相同，这两种情况的相对比较，可以说明一个好的hash算法的重要性。
+从表中结果中可知，随着size的变大，JDK1.7的花费时间是增长的趋势，而JDK1.8是明显的降低趋势，并且呈现对数增长稳定。当一个链表太长的时候，HashMap会动态的将它替换成一个红黑树，这话的话会将时间复杂度从O(n)降为O(logn)。hash算法均匀和不均匀所花费的时间明显也不相同，这两种情况的相对比较，可以说明一个好的hash算法的重要性。
 
-​      测试环境：处理器为2.2 GHz Intel Core i7，内存为16 GB 1600 MHz DDR3，SSD硬盘，使用默认的JVM参数，运行在64位的OS X 10.10.1上。
+测试环境：处理器为2.2 GHz Intel Core i7，内存为16 GB 1600 MHz DDR3，SSD硬盘，使用默认的JVM参数，运行在64位的OS X 10.10.1上。
 
 
 
 ### 10. HashMap 与 HashTable
 
-- HashTable 使用 synchronized 来进行同步。
-- HashMap 可以插入键为 null 的 Entry。
-- HashMap 的迭代器是 fail-fast 迭代器。
-- HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
+1. HashTable 使用 synchronized 来进行同步。
+2. HashMap 可以插入键为 null 的 Entry。
+3. HashMap 的迭代器是 fail-fast 迭代器。
+4. HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
 
 
 
 ### 11. 小结
 
-(1) 扩容是一个特别耗性能的操作，所以当程序员在使用HashMap的时候，估算map的大小，初始化的时候给一个大致的数值，避免map进行频繁的扩容。
+1. 扩容是一个特别耗性能的操作，所以当程序员在使用HashMap的时候，估算map的大小，初始化的时候给一个大致的数值，避免map进行频繁的扩容。
 
-(2) 负载因子是可以修改的，也可以大于1，但是建议不要轻易修改，除非情况非常特殊。
+2. 负载因子是可以修改的，也可以大于1，但是建议不要轻易修改，除非情况非常特殊。
 
-(3) HashMap是线程不安全的，不要在并发的环境中同时操作HashMap，建议使用ConcurrentHashMap。
+3. HashMap是线程不安全的，不要在并发的环境中同时操作HashMap，建议使用ConcurrentHashMap。
 
-(4) JDK1.8引入红黑树大程度优化了HashMap的性能。
+4. JDK1.8引入红黑树大程度优化了HashMap的性能。
 
-(5) 还没升级JDK1.8的，现在开始升级吧。HashMap的性能提升仅仅是JDK1.8的冰山一角。
+5. 还没升级JDK1.8的，现在开始升级吧。HashMap的性能提升仅仅是JDK1.8的冰山一角。
 
 
 
@@ -1147,7 +1148,43 @@ class Key implements Comparable<Key> {
 
 ## ConcurrentHashMap
 
-### 1. 存储结构
+### 1. 概述　　
+
+​	众所周知，哈希表是中非常高效，复杂度为O(1)的数据结构，在Java开发中，我们最常见到最频繁使用的就是HashMap和HashTable，但是在线程竞争激烈的并发场景中使用都不够合理。
+
+　　**HashMap** ：先说HashMap，HashMap是**线程不安全**的，在并发环境下，可能会形成**环状链表**（扩容时可能造成，具体原因自行百度google或查看源码分析），导致get操作时，cpu空转，所以，在并发环境中使用HashMap是非常危险的。
+
+　　**HashTable** ： HashTable和HashMap的实现原理几乎一样，差别无非是**1.HashTable不允许key和value为null；2.HashTable是线程安全的。**但是HashTable线程安全的策略实现代价却太大了，简单粗暴，get/put所有相关操作都是synchronized的，这相当于给整个哈希表加了一把**大锁**，多线程访问时候，只要有一个线程访问或操作该对象，那其他线程只能阻塞，相当于将所有的操作**串行化**，在竞争激烈的并发场景中性能就会非常差。
+
+<div align="center"> <img src="../pics/hashtable-ds.png" width=""/></div><br/>
+
+　　HashTable性能差主要是由于所有操作需要竞争同一把锁，而如果容器中有多把锁，每一把锁锁一段数据，这样在多线程访问时不同段的数据时，就不会存在锁竞争了，这样便可以有效地提高并发效率。这就是ConcurrentHashMap所采用的"**分段锁**"思想。
+
+<div align="center"> <img src="../pics/hashmap-ds.png" width=""/></div><br/>
+
+
+
+
+
+### 2. 存储结构
+
+ConcurrentHashMap采用了非常精妙的"分段锁"策略，ConcurrentHashMap的主干是个Segment数组。
+
+```java
+ final Segment<K,V>[] segments;
+```
+
+​	Segment继承了ReentrantLock，所以它就是一种可重入锁（ReentrantLock)。在ConcurrentHashMap，一个Segment就是一个子哈希表，Segment里维护了一个HashEntry数组，并发环境下，对于不同Segment的数据进行操作是不用考虑锁竞争的。（就按默认的ConcurrentLeve为16来讲，理论上就允许16个线程并发执行，有木有很酷）
+
+　　**所以，对于同一个Segment的操作才需考虑线程同步，不同的Segment则无需考虑。**
+
+Segment类似于HashMap，一个Segment维护着一个HashEntry数组
+
+```
+transient volatile HashEntry<K,V>[] table;
+```
+
+HashEntry是目前我们提到的最小的逻辑处理单元了。一个ConcurrentHashMap维护一个Segment数组，一个Segment维护一个HashEntry数组。
 
 ```java
 static final class HashEntry<K,V> {
@@ -1191,10 +1228,6 @@ final Segment<K,V>[] segments;
 ```java
 static final int DEFAULT_CONCURRENCY_LEVEL = 16;
 ```
-
-
-
-<div align="center"> <img src="../pics/ConcurrentHashMap.png" width=""/></div><br/>
 
 
 
@@ -1270,13 +1303,49 @@ public int size() {
 }
 ```
 
-### 3. JDK 1.8 的改动
+### 3. 同步方式
+
+Segment继承自ReentrantLock，所以我们可以很方便的对每一个Segment上锁。
+
+对于读操作，获取Key所在的Segment时，需要保证可见性(请参考[如何保证多线程条件下的可见性](http://www.jasongj.com/java/thread_safe/#Java如何保证可见性))。具体实现上可以使用volatile关键字，也可使用锁。但使用锁开销太大，而使用volatile时每次写操作都会让所有CPU内缓存无效，也有一定开销。ConcurrentHashMap使用如下方法保证可见性，取得最新的Segment。
+
+```java
+Segment<K,V> s = (Segment<K,V>)UNSAFE.getObjectVolatile(segments, u)
+```
+
+获取Segment中的HashEntry时也使用了类似方法
+
+```java
+HashEntry<K,V> e = (HashEntry<K,V>) UNSAFE.getObjectVolatile
+  (tab, ((long)(((tab.length - 1) & h)) << TSHIFT) + TBASE)
+```
+
+对于写操作，并不要求同时获取所有Segment的锁，因为那样相当于锁住了整个Map。它会先获取该Key-Value对所在的Segment的锁，获取成功后就可以像操作一个普通的HashMap一样操作该Segment，并保证该Segment的安全性。
+同时由于其它Segment的锁并未被获取，因此理论上可支持concurrencyLevel（等于Segment的个数）个线程安全的并发读写。
+
+获取锁时，并不直接使用lock来获取，因为该方法获取锁失败时会挂起（参考[可重入锁](http://www.jasongj.com/java/multi_thread/#重入锁)）。事实上，它使用了自旋锁，如果tryLock获取锁失败，说明锁被其它线程占用，此时通过循环再次以tryLock的方式申请锁。如果在循环过程中该Key所对应的链表头被修改，则重置retry次数。如果retry次数超过一定值，则使用lock方法申请锁。
+
+这里使用自旋锁是因为自旋锁的效率比较高，但是它消耗CPU资源比较多，因此在自旋次数超过阈值时切换为互斥锁。
+
+
+
+### 4. JDK 1.8 的改动
 
 JDK 1.7 使用分段锁机制来实现并发更新操作，核心类为 Segment，它继承自重入锁 ReentrantLock，并发程度与 Segment 数量相等。
 
 JDK 1.8 使用了 CAS 操作来支持更高的并发度，在 CAS 操作失败时使用内置锁 synchronized。
 
 并且 JDK 1.8 的实现也在链表过长时会转换为红黑树。
+
+
+
+参考资料：
+
+- [ConcurrentHashMap演进从Java7到Java8](http://www.jasongj.com/java/concurrenthashmap/)
+
+- [ConcurrentHashMap实现原理及源码分析 - dreamcatcher-cx - 博客园](https://www.cnblogs.com/chengxiao/p/6842045.html)
+
+  
 
 
 
