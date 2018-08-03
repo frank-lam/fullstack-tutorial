@@ -79,7 +79,9 @@
 
 # 前言
 
-Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类比C++中的STL，在市面上似乎还没能找到一本详细介绍的书籍。在这里主要对如下部分进行源码分析，及在面试中常见的问题。比如：阿里面试常问到的HashMap和ConcurrentHashMap原理，必须在面试前理清思路。相信本文的阅读会对集合框架有更深一步的了解。
+　　Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类比C++中的STL，在市面上似乎还没能找到一本详细介绍的书籍。在这里主要对如下部分进行源码分析，及在面试中常见的问题。
+
+　　例如，在阿里面试常问到的HashMap和ConcurrentHashMap原理等等。深入源码分析是面试中必备的技能，通过本文的阅读会对集合框架有更深一步的了解。
 
 - ArrayList
 - Vector
@@ -96,11 +98,14 @@ Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类�
 - [CarpenterLee/JCFInternals: 深入理解Java集合框架](https://github.com/CarpenterLee/JCFInternals)
 - [crossoverJie/Java-Interview: 👨‍🎓 Java related : basic, concurrent, algorithm](https://github.com/crossoverJie/Java-Interview)
 - [Interview-Notebook/Java 容器.md at master · CyC2018/Interview-Notebook](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%AE%B9%E5%99%A8.md)
-  
+
+
+
+
 
 # 一、概述
 
-Java集合框架提供了数据持有对象的方式，提供了对数据集合的操作。Java集合框架位于 java.util 包下，主要有三个大类：Collection、Map 接口以及对集合进行操作的工具类。
+　　Java集合框架提供了数据持有对象的方式，提供了对数据集合的操作。Java集合框架位于 java.util 包下，主要有三个大类：Collection(接口)、Map(接口)、集合工具类。
 
 
 
@@ -160,7 +165,7 @@ Java集合框架提供了数据持有对象的方式，提供了对数据集合�
 
 
 
-说明：线程不同步的时候可以通过，Collections.synchronizedList() 方法来包装一个线程同步方法
+**说明**：线程不同步的时候可以通过，Collections.synchronizedList() 方法来包装一个线程同步方法
 
 
 
