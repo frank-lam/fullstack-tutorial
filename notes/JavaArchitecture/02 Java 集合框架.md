@@ -1150,7 +1150,7 @@ class Key implements Comparable<Key> {
 
 ### 1. 概述　　
 
-​	众所周知，哈希表是中非常高效，复杂度为O(1)的数据结构，在Java开发中，我们最常见到最频繁使用的就是HashMap和HashTable，但是在线程竞争激烈的并发场景中使用都不够合理。
+　　众所周知，哈希表是中非常高效，复杂度为O(1)的数据结构，在Java开发中，我们最常见到最频繁使用的就是HashMap和HashTable，但是在线程竞争激烈的并发场景中使用都不够合理。
 
 　　**HashMap** ：先说HashMap，HashMap是**线程不安全**的，在并发环境下，可能会形成**环状链表**（扩容时可能造成，具体原因自行百度google或查看源码分析），导致get操作时，cpu空转，所以，在并发环境中使用HashMap是非常危险的。
 
@@ -1174,7 +1174,7 @@ ConcurrentHashMap采用了非常精妙的"分段锁"策略，ConcurrentHashMap�
  final Segment<K,V>[] segments;
 ```
 
-​	Segment继承了ReentrantLock，所以它就是一种可重入锁（ReentrantLock)。在ConcurrentHashMap，一个Segment就是一个子哈希表，Segment里维护了一个HashEntry数组，并发环境下，对于不同Segment的数据进行操作是不用考虑锁竞争的。（就按默认的ConcurrentLeve为16来讲，理论上就允许16个线程并发执行，有木有很酷）
+　　Segment继承了ReentrantLock，所以它就是一种可重入锁（ReentrantLock)。在ConcurrentHashMap，一个Segment就是一个子哈希表，Segment里维护了一个HashEntry数组，并发环境下，对于不同Segment的数据进行操作是不用考虑锁竞争的。（就按默认的ConcurrentLeve为16来讲，理论上就允许16个线程并发执行，有木有很酷）
 
 　　**所以，对于同一个Segment的操作才需考虑线程同步，不同的Segment则无需考虑。**
 
@@ -1195,7 +1195,7 @@ static final class HashEntry<K,V> {
 }
 ```
 
-ConcurrentHashMap 和 HashMap 实现上类似，最主要的差别是 ConcurrentHashMap 采用了分段锁（Segment），每个分段锁维护着几个桶（HashEntry），多个线程可以同时访问不同分段锁上的桶，从而使其并发度更高（并发度就是 Segment 的个数）。
+　　ConcurrentHashMap 和 HashMap 实现上类似，最主要的差别是 ConcurrentHashMap 采用了分段锁（Segment），每个分段锁维护着几个桶（HashEntry），多个线程可以同时访问不同分段锁上的桶，从而使其并发度更高（并发度就是 Segment 的个数）。
 
 Segment 继承自 **ReentrantLock**。
 
@@ -1351,7 +1351,7 @@ JDK 1.8 使用了 CAS 操作来支持更高的并发度，在 CAS 操作失败�
 
 ## HashSet
 
-前面已经说过*HashSet*是对*HashMap*的简单包装，对*HashSet*的函数调用都会转换成合适的*HashMap*方法，因此*HashSet*的实现非常简单，只有不到300行代码。这里不再赘述。
+前面已经说过 HashSet 是对 HashMap 的简单包装，对 HashSet 的函数调用都会转换成合适的 HashMap 方法，因此 HashSet的实现非常简单，只有不到300行代码（适配器模式）。这里不再赘述。
 
 ```java
 //HashSet是对HashMap的简单包装
@@ -1389,6 +1389,8 @@ public class HashSet<E>
 
 - `map` ：用于存放最终数据的。
 - `PRESENT` ：是所有写入 map 的 `value` 值。
+
+
 
 ### 2. 构造函数
 
@@ -1430,11 +1432,11 @@ public class HashSet<E>
 
 ### 1. 概览
 
-如果你已看过前面关于 HashSet 和 HashMap，的讲解，一定能够想到本文将要讲解的 LinkedHashSet 和 LinkedHashMap 其实也是一回事。 LinkedHashSet 和 LinkedHashMap 在Java里也有着相同的实现，前者仅仅是对后者做了一层包装，也就是说LinkedHashSet里面有一个LinkedHashMap（**适配器模式**）。因此本文将重点分析LinkedHashMap。
+　　如果你已看过前面关于 HashSet 和 HashMap，的讲解，一定能够想到本文将要讲解的 LinkedHashSet 和 LinkedHashMap 其实也是一回事。 LinkedHashSet 和 LinkedHashMap 在Java里也有着相同的实现，前者仅仅是对后者做了一层包装，也就是说LinkedHashSet里面有一个LinkedHashMap（**适配器模式**）。因此本文将重点分析LinkedHashMap。
 
-LinkedHashMap 实现了Map接口，即允许放入key为null的元素，也允许插入value为null的元素。从名字上可以看出该容器是 LinkedList 和 HashMap 的混合体，也就是说它同时满足 HashMap 和 LinkedList 的某些特性。**可将 LinkedHashMap 看作采用 LinkedList 增强的 HashMap。**
+　　LinkedHashMap 实现了Map接口，即允许放入key为null的元素，也允许插入value为null的元素。从名字上可以看出该容器是 LinkedList 和 HashMap 的混合体，也就是说它同时满足 HashMap 和 LinkedList 的某些特性。**可将 LinkedHashMap 看作采用 LinkedList 增强的 HashMap。**
 
-<div align="center"> <img src="../pics/LinkedHashMap_base.png" width=""/></div><br/>
+<div align="center"> <img src="../pics/LinkedHashMap_base.png" width="700"/></div><br/>
 
 
 
