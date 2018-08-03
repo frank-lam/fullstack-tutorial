@@ -105,7 +105,7 @@
 
 # 一、概述
 
-　　Java集合框架提供了数据持有对象的方式，提供了对数据集合的操作。Java集合框架位于 java.util 包下，主要有三个大类：Collection(接口)、Map(接口)、集合工具类。
+　　Java集合框架提供了数据持有对象的方式，提供了对数据集合的操作。Java集合框架位于 java.util 包下，主要有三个大类：**Collection(接口)**、**Map(接口)**、**集合工具类**。
 
 
 
@@ -186,7 +186,7 @@
 
 # 二、深入源码分析
 
-源码分析基于 JDK 1.8，在 IDEA 中 double shift 调出 Search EveryWhere，查找源码文件，找到之后就可以阅读源码。
+源码分析基于 JDK 1.8 / JDK 1.7，在 IDEA 中 double shift 调出 Search EveryWhere，查找源码文件，找到之后就可以阅读源码。
 
 ## ArrayList
 
