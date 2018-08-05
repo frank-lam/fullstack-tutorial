@@ -6,6 +6,7 @@
 
 <div align="center"> <img src="../pics/hash-to-badlink.png" width=""/></div><br/>
 
+<div align="center"> <img src="pics/LCS.png" width=""/></div><br/>
 
 
 
@@ -14,9 +15,3 @@
 
 
       这里开始是我的正文内容...
-
-
-
-
-
-
