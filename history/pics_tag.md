@@ -1,7 +1,3 @@
-.. contents::
-   :backlinks: none
-   :local:
-
 
 # 文档格式
 
