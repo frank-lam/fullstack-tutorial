@@ -9,7 +9,7 @@
 |                        | [Java基础](notes/JavaArchitecture/01%20Java%20基础.md)     | v2.5 | 基础版 |      | 7/31 复习                |
 |                        | [集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md) | v2.5 | 基础版 |      | 8/2 复习                 |
 |                        | [并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md) |      |        |      |                          |
-|                        | [IO流](notes/JavaArchitecture/04%20Java%20IO.md)           |      |        |      |                          |
+|                        | [IO流](notes/JavaArchitecture/04%20Java%20IO.md)           | v2.5 | 基础版 |      | 8/6 复习                 |
 |                        | [虚拟机](notes/JavaArchitecture/05%20Java%20虚拟机.md)     |      |        |      |                          |
 |                        | [设计模式](notes/JavaArchitecture/06%20设计模式.md)        | v0.5 |        |      |                          |
 |                        | [Java Web](notes/JavaArchitecture/07%20Java%20Web.md)      | v1.0 |        |      |                          |
@@ -28,7 +28,7 @@
 |                        | [操作系统](notes/操作系统.md)                              | v1.0 | 待完善 |      | 7/30初版，内存管理待完善 |
 |                        |                                                            |      |        |      |                          |
 | **五、网络部分**       |                                                            |      |        |      |                          |
-|                        | [计算机网络](notes/计算机网络.md)                          |      |        |      | 8/6<br />传输层部分      |
+|                        | [计算机网络](notes/计算机网络.md)                          | v1.5 |        |      | 8/6<br />传输层部分      |
 |                        |                                                            |      |        |      |                          |
 | **六、高级部分**       |                                                            |      |        |      |                          |
 |                        | Dobbo                                                      |      |        |      |                          |

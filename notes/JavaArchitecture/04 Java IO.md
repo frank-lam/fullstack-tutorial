@@ -499,6 +499,8 @@ AIO 并没有采用NIO的多路复用器，而是使用异步通道的概念。�
 
 
 
+
+
 ## 8、Stock通信的伪代码实现流程
 
 1. 服务器绑定端口：server = new ServerSocket(PORT)
