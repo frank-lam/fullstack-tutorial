@@ -1,31 +1,4 @@
-[TOC]
 
-<!-- TOC -->
-
-- [Java IO](#java-io)
-    - [1、磁盘操作](#1磁盘操作)
-    - [2、字节操作（*Stream）](#2字节操作stream)
-    - [3、字符操作（*Reader | *Writer）](#3字符操作reader--writer)
-    - [4、Java序列化，如何实现序列化和反序列化，常见的序列化协议有哪些？](#4java序列化如何实现序列化和反序列化常见的序列化协议有哪些)
-        - [Java序列化定义](#java序列化定义)
-        - [如何实现序列化和反序列化，底层怎么实现【蚂蚁金服-面经】](#如何实现序列化和反序列化底层怎么实现蚂蚁金服-面经)
-        - [相关注意事项](#相关注意事项)
-        - [常见的序列化协议有哪些](#常见的序列化协议有哪些)
-    - [5、Java中的NIO，BIO，AIO分别是什么？](#5java中的niobioaio分别是什么)
-        - [BIO](#bio)
-        - [NIO](#nio)
-        - [AIO (NIO.2)](#aio-nio2)
-        - [总结](#总结)
-    - [6、BIO，NIO，AIO区别](#6bionioaio区别)
-    - [7、Stock通信的伪代码实现流程](#7stock通信的伪代码实现流程)
-    - [8、网络操作](#8网络操作)
-        - [InetAddress](#inetaddress)
-        - [URL](#url)
-        - [Sockets](#sockets)
-        - [Datagram](#datagram)
-        - [什么是Socket？](#什么是socket)
-
-<!-- /TOC -->
 
 # Java IO
 
@@ -40,7 +13,7 @@ Java 的 I/O 大概可以分成以下几类：
 
 
 
-## 1、磁盘操作
+## 1、磁盘操作（File）
 
 File 类可以用于表示文件和目录的信息，但是它不表示文件的内容。
 
@@ -61,8 +34,6 @@ public static void listAllFiles(File dir)
     }
 }
 ```
-
-
 
 
 
@@ -93,7 +64,7 @@ public static void copyFile(String src, String dist) throws IOException
 
 
 
-Java I/O 使用了装饰者模式来实现。以 InputStream 为例，InputStream 是抽象组件，FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作。FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能，例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。
+Java I/O 使用了**装饰者模式**来实现。以 InputStream 为例，InputStream 是抽象组件，FileInputStream 是 InputStream 的子类，属于具体组件，提供了字节流的输入操作。FilterInputStream 属于抽象装饰者，装饰者用于装饰组件，为组件提供额外的功能，例如 BufferedInputStream 为 FileInputStream 提供缓存的功能。
 
 实例化一个具有缓存功能的字节流对象时，只需要在 FileInputStream 对象上再套一层 BufferedInputStream 对象即可。
 
@@ -131,7 +102,7 @@ public static void readFileContent(String filePath) throws IOException
 }
 ```
 
-编码就是把字符转换为字节，而解码是把字节重新组合成字符。
+**编码**就是把字符转换为字节，而**解码**是把字节重新组合成字符。
 
 如果编码和解码过程使用不同的编码方式那么就出现了乱码。
 
@@ -160,15 +131,17 @@ byte[] bytes = str1.getBytes();
 
 
 
+
+
+
+
 ## 4、Java序列化，如何实现序列化和反序列化，常见的序列化协议有哪些？ 
-
-
 
 ### Java序列化定义 
 
 （1）Java序列化是指把Java对象转换为字节序列的过程，而Java反序列化是指把字节序列恢复为Java对象的过程；
 
-（2）**序列化：**对象序列化的最主要的用处就是在传递和保存对象的时候，保证对象的完整性和可传递性。序列化是把对象转换成有序字节流，以便在网络上传输或者保存在本地文件中。序列化后的字节流保存了Java对象的状态以及相关的描述信息。序列化机制的核心作用就是对象状态的保存与重建。
+（2）**序列化：**对象序列化的最主要的用处就是在传递和保存对象的时候，保证对象的完整性和可传递性。序列化是把对象转换成有序字节流，以便在网络上传输或者保存在本地文件中。序列化后的字节流保存了Java对象的状态以及相关的描述信息。序列化机制的核心作用就是**对象状态的保存与重建**。
 
 （3）**反序列化：**客户端从文件中或网络上获得序列化后的对象字节流后，根据字节流中所保存的对象状态及描述信息，通过反序列化重建对象。
 
@@ -186,28 +159,29 @@ byte[] bytes = str1.getBytes();
 
 它的readObject()方法源输入流中读取字节序列，再把它们反序列化成为一个对象，并将其返回；
 
+
+
 **2、实现序列化的要求**
 
-只有实现了Serializable或Externalizable接口的类的对象才能被序列化，否则抛出异常！
+只有实现了 Serializable 或 Externalizable 接口的类的对象才能被序列化，否则抛出异常！
+
+
 
 **3、实现Java对象序列化与反序列化的方法**
 
-假定一个User类，它的对象需要序列化，可以有如下三种方法：
+　　假定一个User类，它的对象需要序列化，可以有如下三种方法：
 
-（1）若User类仅仅实现了Serializable接口，则可以按照以下方式进行序列化和反序列化
+- 若 User 类仅仅实现了 Serializable 接口，则可以按照以下方式进行序列化和反序列化
+  - ObjectOutputStream 采用默认的序列化方式，对 User 对象的非 transient 的实例变量进行序列化。
+  - ObjcetInputStream 采用默认的反序列化方式，对对 User 对象的非 transient 的实例变量进行反序列化。
+- 若User类仅仅实现了Serializable接口，并且还定义了 `readObject(ObjectInputStream in)` 和`writeObject(ObjectOutputSteam out)`，则采用以下方式进行序列化与反序列化。
+  - ObjectOutputStream 调用 User 对象的 writeObject(ObjectOutputStream out) 的方法进行序列化。 
+  - ObjectInputStream 会调用 User 对象的 readObject(ObjectInputStream in) 的方法进行反序列化。
+- 若User类实现了 Externalnalizable 接口，且 User 类必须实现 `readExternal(ObjectInput in)` 和 `writeExternal(ObjectOutput out)` 方法，则按照以下方式进行序列化与反序列化。
+  - ObjectOutputStream 调用 User 对象的 writeExternal(ObjectOutput out)) 的方法进行序列化。 
+  - ObjectInputStream 会调用User对象的 readExternal(ObjectInput in) 的方法进行反序列化。
 
-ObjectOutputStream采用默认的序列化方式，对User对象的非transient的实例变量进行序列化。 
-ObjcetInputStream采用默认的反序列化方式，对对User对象的非transient的实例变量进行反序列化。
 
-（2）若User类仅仅实现了Serializable接口，并且还定义了readObject(ObjectInputStream in)和writeObject(ObjectOutputSteam out)，则采用以下方式进行序列化与反序列化。
-
-ObjectOutputStream调用User对象的writeObject(ObjectOutputStream out)的方法进行序列化。 
-ObjectInputStream会调用User对象的readObject(ObjectInputStream in)的方法进行反序列化。
-
-（3）若User类实现了Externalnalizable接口，且User类必须实现readExternal(ObjectInput in)和writeExternal(ObjectOutput out)方法，则按照以下方式进行序列化与反序列化。
-
-ObjectOutputStream调用User对象的writeExternal(ObjectOutput out))的方法进行序列化。 
-ObjectInputStream会调用User对象的readExternal(ObjectInput in)的方法进行反序列化。
 
 **4、JDK类库中序列化的步骤**
 
@@ -220,24 +194,28 @@ ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("D:\\object
 步骤二：通过对象输出流的writeObject()方法写对象：
 
 ```java
-oos.writeObject(new User("xuliugen", "123456", "male"));1
+oos.writeObject(new User("xuliugen", "123456", "male"));
 ```
+
+
 
 **5、JDK类库中反序列化的步骤**
 
 步骤一：创建一个对象输入流，它可以包装一个其它类型输入流，如文件输入流：
 
 ```java
-ObjectInputStream ois= new ObjectInputStream(new FileInputStream("object.out"));1
+ObjectInputStream ois= new ObjectInputStream(new FileInputStream("object.out"));
 ```
 
 步骤二：通过对象输出流的readObject()方法读取对象：
 
 ```java
-User user = (User) ois.readObject();1
+User user = (User) ois.readObject();
 ```
 
 说明：为了正确读取数据，完成反序列化，必须保证向对象输出流写对象的顺序与从对象输入流中读对象的顺序一致。
+
+
 
 **6、序列化和反序列化的示例**
 
@@ -254,6 +232,7 @@ public class SerialDemo {
         oos.writeObject(user1);
         oos.flush();
         oos.close();
+        
         //反序列化
         FileInputStream fis = new FileInputStream("object.out");
         ObjectInputStream ois = new ObjectInputStream(fis);
@@ -278,7 +257,7 @@ public class User implements Serializable {
 
 1、序列化时，只对对象的状态进行保存，而不管对象的方法；
 
-2、当一个父类实现序列化，子类自动实现序列化，不需要显式实现Serializable接口；
+2、当一个父类实现序列化，子类自动实现序列化，不需要显式实现 Serializable 接口；
 
 3、当一个对象的实例变量引用其他对象，序列化该对象时也把引用对象进行序列化；
 
@@ -294,7 +273,7 @@ public class User implements Serializable {
 - 在某些场合，希望类的不同版本对序列化兼容，因此需要确保类的不同版本具有相同的serialVersionUID；
 - 在某些场合，不希望类的不同版本对序列化兼容，因此需要确保类的不同版本具有不同的serialVersionUID。
 
-7、Java有很多基础类已经实现了serializable接口，比如String,Vector等。但是也有一些没有实现serializable接口的；
+7、Java有很多基础类已经实现了serializable接口，比如String , Vector等。但是也有一些没有实现serializable接口的；
 
 8、如果一个对象的成员变量是一个对象，那么这个对象的数据成员也会被保存！这是能用序列化解决深拷贝的重要原因；
 
@@ -308,8 +287,11 @@ private transient Object[] elementData;
 
 
 
-序列化和反序列化的底层实现原理是什么？ - CSDN博客
-https://blog.csdn.net/xlgen157387/article/details/79840134
+参考资料：
+
+- [序列化和反序列化的底层实现原理是什么？ - CSDN博客](https://blog.csdn.net/xlgen157387/article/details/79840134)
+
+
 
 
 
@@ -319,7 +301,7 @@ https://blog.csdn.net/xlgen157387/article/details/79840134
 
 - CORBA是早期比较好的实现了跨平台，跨语言的序列化协议。COBRA的主要问题是参与方过多带来的版本过多，版本之间兼容性较差，以及使用复杂晦涩。 
 
-- XML&SOAP 
+- XML & SOAP 
 
   - XML是一种常用的序列化和反序列化协议，具有跨机器，跨语言等优点。 
   - SOAP（Simple Object Access protocol） 是一种被广泛应用的，基于XML为序列化和反序列化协议的结构化消息传递协议。SOAP具有安全、可扩展、跨语言、跨平台并支持多种传输层协议。 
@@ -344,7 +326,7 @@ https://blog.csdn.net/xlgen157387/article/details/79840134
 
 - Avro的产生解决了JSON的冗长和没有IDL的问题，Avro属于Apache Hadoop的一个子项目。 Avro提供两种序列化格式：JSON格式或者Binary格式。Binary格式在空间开销和解析性能方面可以和Protobuf媲美，JSON格式方便测试阶段的调试。适合于高性能的序列化服务。 
 
-- 几种协议的对比 
+- **几种协议的对比** 
 
   - XML序列化（Xstream）无论在性能和简洁性上比较差； 
   - Thrift与Protobuf相比在时空开销方面都有一定的劣势； 
@@ -352,14 +334,28 @@ https://blog.csdn.net/xlgen157387/article/details/79840134
 
 
 
+## 5、同步和异步
+
+同步IO：
+
+- 读写IO时代码等数据返回后才继续执行后续代码
+- 代码编写简单，CPU执行效率低
+- JDK提供的java.io是同步IO
+
+异步IO：
+
+- 读写IO时仅发出请求，然后立即执行后续代码
+- 代码编写复杂，CPU执行效率高
+- JDK提供的java.nio是异步IO
 
 
 
 
-## 5、Java中的NIO，BIO，AIO分别是什么？
 
-- **同步阻塞IO（BIO）**：用户进程发起一个IO操作以后，必须等待IO操作的真正完成后，才能继续运行。
-- **同步非阻塞IO（NIO）**：用户进程发起一个IO操作以后，可做其它事情，但用户进程需要经常询问IO操作是否完成，这样造成不必要的CPU资源浪费。
+## 6、Java中的NIO，BIO，AIO分别是什么
+
+- **同步阻塞IO（BIO）**：用户进程发起一个IO操作以后，必须等待IO操作的真正完成后，才能继续运行；
+- **同步非阻塞IO（NIO）**：用户进程发起一个IO操作以后，可做其它事情，但用户进程需要经常询问IO操作是否完成，这样造成不必要的CPU资源浪费；
 - **异步非阻塞IO（AIO）**：用户进程发起一个IO操作然后，立即返回，等IO操作真正的完成以后，应用程序会得到IO操作完成的通知。类比Future模式。
 
 
@@ -368,9 +364,11 @@ https://blog.csdn.net/xlgen157387/article/details/79840134
   - **同步 ：** 自己亲自出马持银行卡到银行取钱（使用同步IO时，Java自己处理IO读写）。
   - **异步 ：** 委托一小弟拿银行卡到银行取钱，然后给你（使用异步IO时，Java将IO读写委托给OS处理，需要将数据缓冲区地址和大小传给OS(银行卡和密码)，OS需要支持异步IO操作API）。
   - **阻塞 ：** ATM排队取款，你只能等待（使用阻塞IO时，Java调用会一直阻塞到读写完成才返回）。
-    - **非阻塞 ：** 柜台取款，取个号，然后坐在椅子上做其它事，等号广播会通知你办理，没到号你就不能去，你可以不断问大堂经理排到了没有，大堂经理如果说还没到你就不能去（使用非阻塞IO时，如果不能读写Java调用会马上返回，当IO事件分发器会通知可读写时再继续进行读写，不断循环直到读写完成）。
+  - **非阻塞 ：** 柜台取款，取个号，然后坐在椅子上做其它事，等号广播会通知你办理，没到号你就不能去，你可以不断问大堂经理排到了没有，大堂经理如果说还没到你就不能去（使用非阻塞IO时，如果不能读写Java调用会马上返回，当IO事件分发器会通知可读写时再继续进行读写，不断循环直到读写完成）。
 
-![](../pics/java-io.png)
+<div align="center"> <img src="../pics/java-io.png" width=""/></div><br/>
+
+
 
 ### BIO 
 
@@ -378,33 +376,33 @@ https://blog.csdn.net/xlgen157387/article/details/79840134
 
 **BIO 设计原理：**
 
-服务器通过一个Acceptor线程负责监听客户端请求和为每个客户端创建一个新的线程进行链路处理。典型的一请求一应答模式。若客户端数量增多，频繁地创建和销毁线程会给服务器打开很大的压力。后改良为用线程池的方式代替新增线程，被称为伪异步IO。
+服务器通过一个 Acceptor 线程负责监听客户端请求和为每个客户端创建一个新的线程进行链路处理。典型的一请求一应答模式。若客户端数量增多，频繁地创建和销毁线程会给服务器打开很大的压力。后改良为用线程池的方式代替新增线程，被称为伪异步IO。
 
 服务器提供IP地址和监听的端口，客户端通过TCP的三次握手与服务器连接，连接成功后，双放才能通过套接字(Stock)通信。
 
 **小结：**
 
-BIO模型中通过**Socket**和**ServerSocket**完成套接字通道的实现。阻塞，同步，建立连接耗时。
+BIO模型中通过 **Socket** 和 **ServerSocket** 完成套接字通道的实现。阻塞，同步，建立连接耗时。
 
 
 
-![](../pics/java-bio2.png)
+<div align="center"> <img src="../pics/java-bio2.png" width=""/></div><br/>
 
 
 
 为了改进这种一连接一线程的模型，我们可以使用线程池来管理这些线程（需要了解更多请参考前面提供的文章），实现1个或多个线程处理N个客户端的模型（但是底层还是使用的同步阻塞I/O），通常被称为“**伪异步I/O模型**“。
 
-![](../pics/java-bio-threadpool.png)
+<div align="center"> <img src="../pics/java-bio-threadpool.png" width=""/></div><br/>
 
 实现很简单，我们只需要将新建线程的地方，交给线程池管理即可。
 
-我们知道，如果使用CachedThreadPool线程池（不限制线程数量，如果不清楚请参考文首提供的文章），其实除了能自动帮我们管理线程（复用），看起来也就像是1:1的客户端：线程数模型，而使用FixedThreadPool我们就有效的控制了线程的最大数量，保证了系统有限的资源的控制，实现了N:M的伪异步I/O模型。
+我们知道，如果使用 CachedThreadPool 线程池（不限制线程数量，如果不清楚请参考文首提供的文章），其实除了能自动帮我们管理线程（复用），看起来也就像是1:1的客户端：线程数模型，而使用 FixedThreadPool 我们就有效的控制了线程的最大数量，保证了系统有限的资源的控制，实现了N:M的伪异步 I/O 模型。
 
-但是，正因为限制了线程数量，如果发生大量并发请求，超过最大数量的线程就只能等待，直到线程池中的有空闲的线程可以被复用。而对Socket的输入流就行读取时，会一直阻塞，直到发生：
+但是，正因为限制了线程数量，如果发生大量并发请求，超过最大数量的线程就只能等待，直到线程池中的有空闲的线程可以被复用。而对 Socket 的输入流就行读取时，会一直阻塞，直到发生：
 
 - 有数据可读
 - 可用数据以及读取完毕
-- 发生空指针或I/O异常
+- 发生空指针或 I/O 异常
 
 所以在读取数据较慢时（比如数据量大、网络传输慢等），大量并发的情况下，其他接入的消息，只能一直等待，这就是最大的弊端。
 
@@ -414,14 +412,14 @@ BIO模型中通过**Socket**和**ServerSocket**完成套接字通道的实现。
 
 ### NIO
 
-NIO（官方：New IO），也叫Non-Block IO 是一种**非阻塞同步**的通信模式。
+NIO（官方：New IO），也叫Non-Block IO 是一种**同步非阻塞**的通信模式。
 
 **NIO 设计原理：**
 
-NIO 相对于BIO来说一大进步。客户端和服务器之间通过Channel通信。NIO可以在Channel进行读写操作。这些Channel都会被注册在Selector多路复用器上。Selector通过一个线程不停的轮询这些Channel。找出已经准备就绪的Channel执行IO操作。
+NIO相对于BIO来说一大进步。客户端和服务器之间通过Channel通信。NIO可以在Channel进行读写操作。这些Channel都会被注册在Selector多路复用器上。Selector通过一个线程不停的轮询这些Channel。找出已经准备就绪的Channel执行IO操作。
 NIO 通过一个线程轮询，实现千万个客户端的请求，这就是非阻塞NIO的特点。
 
-1）**缓冲区Buffer**：它是NIO与BIO的一个重要区别。*BIO是将数据直接写入或读取到Stream对象中*。而NIO的数据操作都是在缓冲区中进行的。缓冲区实际上是一个数组。Buffer最常见的类型是ByteBuffer，另外还有CharBuffer，ShortBuffer，IntBuffer，LongBuffer，FloatBuffer，DoubleBuffer。
+1）**缓冲区Buffer**：它是NIO与BIO的一个重要区别。BIO是将数据直接写入或读取到Stream对象中。而NIO的数据操作都是在缓冲区中进行的。缓冲区实际上是一个数组。Buffer最常见的类型是ByteBuffer，另外还有CharBuffer，ShortBuffer，IntBuffer，LongBuffer，FloatBuffer，DoubleBuffer。
 
 2）**通道Channel**：和流不同，通道是双向的。NIO可以通过Channel进行数据的读，写和同时读写操作。通道分为两大类：一类是网络读写（SelectableChannel），一类是用于文件操作（FileChannel），我们使用的SocketChannel和ServerSocketChannel都是SelectableChannel的子类。
 
@@ -430,8 +428,6 @@ NIO 通过一个线程轮询，实现千万个客户端的请求，这就是非�
 小结：**NIO模型中通过SocketChannel和ServerSocketChannel完成套接字通道的实现。非阻塞/阻塞，同步，避免TCP建立连接使用三次握手带来的开销。**
 
 ![](../pics/java-nio.png)
-
-
 
 
 
@@ -449,11 +445,12 @@ AIO 并没有采用NIO的多路复用器，而是使用异步通道的概念。�
 ### 总结
 
 1. BIO模型中通过**Socket**和**ServerSocket**完成套接字通道实现。阻塞，同步，连接耗时。
-
 2. NIO模型中通过**SocketChannel**和**ServerSocketChannel**完成套接字通道实现。非阻塞/阻塞，同步，避免TCP建立连接使用三次握手带来的开销。
 3. AIO模型中通过**AsynchronousSocketChannel**和**AsynchronousServerSocketChannel**完成套接字通道实现。非阻塞，异步。
 
-![](../pics/java-io-compare.png)
+<div align="center"> <img src="../pics/java-io-compare.png" width=""/></div><br/>
+
+
 
 **另外，**I/O属于底层操作，需要操作系统支持，并发也需要操作系统的支持，所以性能方面不同操作系统差异会比较明显。 
 
@@ -465,17 +462,18 @@ AIO 并没有采用NIO的多路复用器，而是使用异步通道的概念。�
 - [Netty序章之BIO NIO AIO演变 - JavaEE教程 - SegmentFault 思否](https://segmentfault.com/a/1190000012976683)
 - [Java 网络IO编程总结（BIO、NIO、AIO均含完整实例代码） - CSDN博客](https://blog.csdn.net/anxpp/article/details/51512200#t3)
 - [Java IO Tutorial](http://tutorials.jenkov.com/java-io/index.html)
-  
-
-## 6、BIO，NIO，AIO区别
-
-- **BIO（阻塞同步通信模式）**：客户端和服务器连接需要三次握手，使用简单，但吞吐量小
-- **NIO（非阻塞同步通信模式）**：客户端与服务器通过Channel连接，采用多路复用器轮询注册的Channel。提高吞吐量和可靠性。
-- **AIO（非阻塞异步通信模式）**：NIO的升级版，采用异步通道实现异步通信，其read和write方法均是异步方法。
 
 
 
-## 7、Stock通信的伪代码实现流程
+## 7、BIO，NIO，AIO区别
+
+- **BIO（同步阻塞）**：客户端和服务器连接需要三次握手，使用简单，但吞吐量小
+- **NIO（同步非阻塞）**：客户端与服务器通过Channel连接，采用多路复用器轮询注册的Channel。提高吞吐量和可靠性。
+- **AIO（异步非阻塞）**：NIO的升级版，采用异步通道实现异步通信，其read和write方法均是异步方法。
+
+
+
+## 8、Stock通信的伪代码实现流程
 
 1. 服务器绑定端口：server = new ServerSocket(PORT)
 2. 服务器阻塞监听：socket = server.accept()
@@ -486,7 +484,7 @@ AIO 并没有采用NIO的多路复用器，而是使用异步通道的概念。�
 
 
 
-## 8、网络操作
+## 9、网络操作
 
 Java 中的网络支持：
 
@@ -538,9 +536,11 @@ public static void main(String[] args) throws IOException
 
 
 
-![](https://raw.githubusercontent.com/CyC2018/Interview-Notebook/033676724523021872edb86176e92a87b87acd46/pics/ClienteServidorSockets1521731145260.jpg)
+<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/033676724523021872edb86176e92a87b87acd46/pics/ClienteServidorSockets1521731145260.jpg" width=""/></div><br/>
 
- 
+
+
+
 
 参考资料：
 
@@ -580,9 +580,7 @@ socket是网络编程的基础，本文用打电话来类比socket通信中建�
 
 下面是一个实际的socket通信过程：
 
-![](../pics/tcpsocket.png)
-
-
+<div align="center"> <img src="../pics/tcpsocket.png" width=""/></div><br/>
 
 
 
@@ -591,7 +589,3 @@ socket是网络编程的基础，本文用打电话来类比socket通信中建�
 1. Socket基于TCP链接，数据传输有保障
 2. Socket适用于建立长时间链接
 3. Socket编程通常应用于即时通讯
-
-
-
-details/73691088
