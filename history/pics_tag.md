@@ -7,7 +7,7 @@
 
 <div align="center"> <img src="../pics/hash-to-badlink.png" width=""/></div><br/>
 
-<div align="center"> <img src="pics/LCS.png" width=""/></div><br/>
+<div align="center"> <img src="pics/make-rockets.png" width=""/></div><br/>
 
 
 
