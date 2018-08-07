@@ -686,7 +686,7 @@ ReentrantLock 多了一些高级功能。
 
 
 
-#### synchronized与lock的区别，使用场景。看过synchronized的源码没？【阿里面经Onenote】
+#### synchronized与lock的区别，使用场景。看过synchronized的源码没？
 
 - synchronized与lock的区别 
 
@@ -1079,8 +1079,6 @@ synchronized不仅保证可见性，而且还保证原子性，因为，只有�
 - 当我们在线程对象（Runnable）中定义了全局变量，run方法会修改该变量时，如果有多个线程同时使用该线程对象，那么就会造成全局变量的值被同时修改，造成错误. 
 - ThreadLocal是JDK引入的一种机制，它用于解决线程间共享变量，使用ThreadLocal声明的变量，即使在线程中属于全局变量，针对每个线程来讲，这个变量也是独立的。 
 - volatile变量每次被线程访问时，都强迫线程从主内存中重读该变量的最新值，而当该变量发生修改变化时，也会强迫线程将最新的值刷新回主内存中。这样一来，不同的线程都能及时的看到该变量的最新值。 
-
-
 
 ### 14. Java是否有内存泄露和内存溢出【阿里面经Onenote】
 
