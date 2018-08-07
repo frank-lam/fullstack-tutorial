@@ -1,6 +1,6 @@
 *Work like a Trojan, from zero to hero.*
 
-<div align="center"> <img src="pics/make-rockets.png" width=""/></div><br/>
+<div align="center"> <img src="pics/make-rockets2.png" width=""/></div><br/>
 
 |              Ⅰ               |           Ⅱ           |            Ⅲ             |            Ⅳ            |        Ⅴ         |         Ⅵ         |            Ⅶ             |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
