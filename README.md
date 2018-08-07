@@ -1,6 +1,4 @@
-*Work like a Trojan, from zero to hero.*
-
-<div align="center"> <img src="pics/make-rockets2.png" width=""/></div><br/>
+*Work like a Trojan, Let's build rockets!*
 
 |              Ⅰ               |           Ⅱ           |            Ⅲ             |            Ⅳ            |        Ⅴ         |         Ⅵ         |            Ⅶ             |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
