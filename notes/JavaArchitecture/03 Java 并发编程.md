@@ -1,77 +1,25 @@
-[TOC]
 
-<!-- TOC -->
 
-- [并发编程](#并发编程)
-    - [1. 线程状态转换](#1-线程状态转换)
-        - [新建（New）](#新建new)
-        - [可运行（Runnable）](#可运行runnable)
-        - [阻塞（Blocking）](#阻塞blocking)
-        - [无限期等待（Waiting）](#无限期等待waiting)
-        - [限期等待（Timed Waiting）](#限期等待timed-waiting)
-        - [死亡（Terminated）](#死亡terminated)
-    - [2. Java实现多线程的方式及三种方式的区别【阿里面经Onenote】](#2-java实现多线程的方式及三种方式的区别阿里面经onenote)
-        - [实现 Runnable 接口](#实现-runnable-接口)
-        - [实现 Callable 接口](#实现-callable-接口)
-        - [继承 Thread 类](#继承-thread-类)
-        - [实现接口 VS 继承 Thread](#实现接口-vs-继承-thread)
-    - [3. 基础线程机制：什么是守护线程、等待线程、礼让线程、线程阻塞？](#3-基础线程机制什么是守护线程等待线程礼让线程线程阻塞)
-        - [Daemon（守护线程）](#daemon守护线程)
-        - [Executor](#executor)
-        - [sleep()](#sleep)
-        - [yield()](#yield)
-        - [线程阻塞](#线程阻塞)
-    - [4. 线程间的协作（信息交互）【阿里面经Onenote】](#4-线程间的协作信息交互阿里面经onenote)
-        - [join()](#join)
-        - [wait() notify() notifyAll()](#wait-notify-notifyall)
-        - [await() signal() signalAll()](#await-signal-signalall)
-        - [sleep和wait分别是那个类的方法，有什么区别【阿里面经Onenote】](#sleep和wait分别是那个类的方法有什么区别阿里面经onenote)
-    - [5. 互斥同步](#5-互斥同步)
-        - [synchronized](#synchronized)
-        - [ReentrantLock](#reentrantlock)
-        - [synchronized 和 ReentrantLock 比较](#synchronized-和-reentrantlock-比较)
-        - [synchronized与lock的区别，使用场景。看过synchronized的源码没？【阿里面经Onenote】](#synchronized与lock的区别使用场景看过synchronized的源码没阿里面经onenote)
-        - [什么是乐观锁和悲观锁](#什么是乐观锁和悲观锁)
-        - [synchronized底层如何实现的？用在代码块和方法上有什么区别？](#synchronized底层如何实现的用在代码块和方法上有什么区别)
-    - [6. Java 内存模型（JMM）](#6-java-内存模型jmm)
-        - [主内存与工作内存](#主内存与工作内存)
-        - [内存间交互操作](#内存间交互操作)
-        - [内存模型三大特性](#内存模型三大特性)
-        - [volatile 与synchronized 的区别](#volatile-与synchronized-的区别)
-    - [7. 什么是线程池？如果让你设计一个动态大小的线程池，如何设计，应该有哪些方法？线程池创建的方式？【阿里面经Onenote】](#7-什么是线程池如果让你设计一个动态大小的线程池如何设计应该有哪些方法线程池创建的方式阿里面经onenote)
-    - [8. 什么是并发和并行](#8-什么是并发和并行)
-    - [9. 什么是线程安全【阿里面经Onenote】](#9-什么是线程安全阿里面经onenote)
-        - [非线程安全!=不安全？](#非线程安全不安全)
-        - [线程安全十万个为什么？](#线程安全十万个为什么)
-    - [10. 什么是死锁？死锁的四个必要条件？](#10-什么是死锁死锁的四个必要条件)
-        - [什么是死锁](#什么是死锁)
-        - [死锁的四个必要条件](#死锁的四个必要条件)
-        - [处理死锁的策略](#处理死锁的策略)
-        - [死锁预防](#死锁预防)
-        - [死锁避免](#死锁避免)
-    - [11. volatile 关键字的如何保证内存可见性【阿里面经Onenote】](#11-volatile-关键字的如何保证内存可见性阿里面经onenote)
-    - [12. 什么是线程？线程和进程有什么区别？为什么要使用多线程【阿里面经Onenote】](#12-什么是线程线程和进程有什么区别为什么要使用多线程阿里面经onenote)
-    - [13. 多线程共用一个数据变量需要注意什么？【阿里面经Onenote】](#13-多线程共用一个数据变量需要注意什么阿里面经onenote)
-    - [14. Java是否有内存泄露和内存溢出【阿里面经Onenote】](#14-java是否有内存泄露和内存溢出阿里面经onenote)
-    - [](#)
-    - [15. 线程间通信和进程间通信？](#15-线程间通信和进程间通信)
-        - [进程间通信](#进程间通信)
-        - [进程间通信](#进程间通信-1)
-    - [16. 什么是同步和异步，阻塞和非阻塞？](#16-什么是同步和异步阻塞和非阻塞)
-        - [同步](#同步)
-        - [异步](#异步)
-        - [阻塞](#阻塞)
-        - [非阻塞](#非阻塞)
-    - [17. 并发包（待完善）](#17-并发包待完善)
-- [附录：参考资料](#附录参考资料)
+# 前言
 
-<!-- /TOC -->
+在本文将总结多线程并发编程中的常见面试题，主要核心线程生命周期、线程通信、并发包部分。
 
-## 并发编程
 
-### 1. 线程状态转换
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/ace830df-9919-48ca-91b5-60b193f593d2.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/ace830df-9919-48ca-91b5-60b193f593d2.png)
+参考资料：
+
+- 《Java并发编程实战》
+- 【慕课网】Java并发编程与高并发解决方案
+
+
+
+# 并发编程
+
+## 1. 线程状态转换
+
+<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/ace830df-9919-48ca-91b5-60b193f593d2.png" width=""/></div><br/>
+
+
 
 #### 新建（New）
 
@@ -126,7 +74,7 @@
 
 
 
-### 2. Java实现多线程的方式及三种方式的区别【阿里面经Onenote】
+## 2. Java实现多线程的方式及三种方式的区别【阿里面经Onenote】
 
 - 实现多线程的方式 
 
@@ -220,9 +168,11 @@ public static void main(String[] args) {
 
 
 
-### 3. 基础线程机制：什么是守护线程、等待线程、礼让线程、线程阻塞？
+## 3. 基础线程机制：什么是守护线程、等待线程、礼让线程、线程阻塞？
 
-![](../pics/thread_status.jpg)
+<div align="center"> <img src="../pics/thread_status.jpg" width=""/></div><br/>
+
+
 
 #### Daemon（守护线程）
 
@@ -311,7 +261,7 @@ public void run() {
 
 
 
-### 4. 线程间的协作（信息交互）【阿里面经Onenote】
+## 4. 线程间的协作（信息交互）【阿里面经Onenote】
 
 当多个线程可以一起工作去解决某个问题时，如果某些部分必须在其它部分之前完成，那么就需要对线程进行协调。
 
@@ -486,7 +436,7 @@ after
 
 
 
-### 5. 互斥同步
+## 5. 互斥同步
 
 Java 提供了两种锁机制来控制多个线程对共享资源的互斥访问，第一个是 JVM 实现的 synchronized，而另一个是 JDK 实现的 ReentrantLock。
 
@@ -730,7 +680,7 @@ ReentrantLock 多了一些高级功能。
 
 
 
-### 6. Java 内存模型（JMM）
+## 6. Java 内存模型（JMM）
 
 Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。
 
@@ -740,23 +690,25 @@ Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，
 
 加入高速缓存带来了一个新的问题：缓存一致性。如果多个缓存共享同一块主内存区域，那么多个缓存的数据可能会不一致，需要一些协议来解决这个问题。
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/68778c1b-15ab-4826-99c0-3b4fd38cb9e9.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/68778c1b-15ab-4826-99c0-3b4fd38cb9e9.png)
+<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/68778c1b-15ab-4826-99c0-3b4fd38cb9e9.png" width=""/></div><br/>
+
+
 
 所有的变量都存储在主内存中，每个线程还有自己的工作内存，工作内存存储在高速缓存或者寄存器中，保存了该线程使用的变量的主内存副本拷贝。
 
 线程只能直接操作工作内存中的变量，不同线程之间的变量值传递需要通过主内存来完成。
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/47358f87-bc4c-496f-9a90-8d696de94cee.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/47358f87-bc4c-496f-9a90-8d696de94cee.png)
+<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/47358f87-bc4c-496f-9a90-8d696de94cee.png" width="600"/></div><br/>
 
 
-
- 
 
 #### 内存间交互操作
 
 Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互操作。
 
-![](../pics/jmm_opt-8.png)
+<div align="center"> <img src="../pics/jmm_opt-8.png" width="700"/></div><br/>
+
+
 
 
 
@@ -842,7 +794,7 @@ synchronized不仅保证可见性，而且还保证原子性，因为，只有�
 
 
 
-### 7. 什么是线程池？如果让你设计一个动态大小的线程池，如何设计，应该有哪些方法？线程池创建的方式？【阿里面经Onenote】
+## 7. 什么是线程池？如果让你设计一个动态大小的线程池，如何设计，应该有哪些方法？线程池创建的方式？【阿里面经Onenote】
 
 - 什么是线程池 
 
@@ -879,14 +831,16 @@ synchronized不仅保证可见性，而且还保证原子性，因为，只有�
 
 
 
-### 8. 什么是并发和并行
+## 8. 什么是并发和并行
 
 - 并行就是两个任务同时运行，就是甲任务进行的同时，乙任务也在进行。(需要多核CPU)
 - 并发是指两个任务都请求运行，而处理器只能按受一个任务，就把这两个任务安排轮流进行，由于时间间隔较短，使人感觉两个任务都在运行。
 - 比如我跟两个网友聊天，左手操作一个电脑跟甲聊，同时右手用另一台电脑跟乙聊天，这就叫并行。
 - 如果用一台电脑我先给甲发个消息，然后立刻再给乙发消息，然后再跟甲聊，再跟乙聊。这就叫并发。
 
-![](D:/gitdoc/2019_campus_appy/notes/pics/concurrent_and_parallel.png)
+<div align="center"> <img src="../pics/concurrent_and_parallel.png" width=""/></div><br/>
+
+
 
 参考资料：
 
@@ -894,7 +848,7 @@ synchronized不仅保证可见性，而且还保证原子性，因为，只有�
 
 
 
-### 9. 什么是线程安全【阿里面经Onenote】
+## 9. 什么是线程安全【阿里面经Onenote】
 
 当多个线程访问同一个对象时，如果不用考虑这些线程在运行时环境下的调度和交替运行，也不需要进行额外的同步，或者在调用方进行任何其他的协调操作，调用这个对象的行为都可以获取正确的结果，那这个对象是线程安全的。——来自《深入理解Java虚拟机》
 
@@ -956,7 +910,7 @@ synchronized不仅保证可见性，而且还保证原子性，因为，只有�
 
 
 
-### 10. 什么是死锁？死锁的四个必要条件？
+## 10. 什么是死锁？死锁的四个必要条件？
 
 #### 什么是死锁
 
@@ -1012,7 +966,7 @@ synchronized不仅保证可见性，而且还保证原子性，因为，只有�
 
 
 
-### 11. volatile 关键字的如何保证内存可见性【阿里面经Onenote】
+## 11. volatile 关键字的如何保证内存可见性【阿里面经Onenote】
 
 - volatile 关键字的作用 
 
@@ -1056,7 +1010,7 @@ synchronized不仅保证可见性，而且还保证原子性，因为，只有�
 
 
 
-### 12. 什么是线程？线程和进程有什么区别？为什么要使用多线程【阿里面经Onenote】
+## 12. 什么是线程？线程和进程有什么区别？为什么要使用多线程【阿里面经Onenote】
 
 （1）线程和进程
 
@@ -1074,13 +1028,13 @@ synchronized不仅保证可见性，而且还保证原子性，因为，只有�
 
 
 
-### 13. 多线程共用一个数据变量需要注意什么？【阿里面经Onenote】
+## 13. 多线程共用一个数据变量需要注意什么？【阿里面经Onenote】
 
 - 当我们在线程对象（Runnable）中定义了全局变量，run方法会修改该变量时，如果有多个线程同时使用该线程对象，那么就会造成全局变量的值被同时修改，造成错误. 
 - ThreadLocal是JDK引入的一种机制，它用于解决线程间共享变量，使用ThreadLocal声明的变量，即使在线程中属于全局变量，针对每个线程来讲，这个变量也是独立的。 
 - volatile变量每次被线程访问时，都强迫线程从主内存中重读该变量的最新值，而当该变量发生修改变化时，也会强迫线程将最新的值刷新回主内存中。这样一来，不同的线程都能及时的看到该变量的最新值。 
 
-### 14. Java是否有内存泄露和内存溢出【阿里面经Onenote】
+## 14. Java是否有内存泄露和内存溢出【阿里面经Onenote】
 
 - 静态集合类，使用Set、Vector、HashMap等集合类的时候需要特别注意。当这些类被定义成静态的时候，由于他们的生命周期跟应用程序一样长，这时候就有可能发生内存泄漏。 
 
@@ -1121,7 +1075,7 @@ public void register(Object o)
 
 ### 
 
-### 15. 线程间通信和进程间通信？
+## 15. 线程间通信和进程间通信？
 
 #### 线程间通信
 
@@ -1165,7 +1119,7 @@ public void register(Object o)
 
 
 
-### 16. 什么是同步和异步，阻塞和非阻塞？
+## 16. 什么是同步和异步，阻塞和非阻塞？
 
 
 
@@ -1203,7 +1157,7 @@ public void register(Object o)
 
 
 
-### 17. 并发包（非常重要！！！待整理）
+## 17. 并发包（非常重要！！！待整理）
 
 #### concurrenthashmap分段锁的细节？【蚂蚁金服面经】
 

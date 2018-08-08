@@ -7,7 +7,7 @@
 
 <div align="center"> <img src="../pics/hash-to-badlink.png" width=""/></div><br/>
 
-<div align="center"> <img src="pics/http2-tcp.jpg" width=""/></div><br/>
+<div align="center"> <img src="pics/concurrent_and_parallel.png" width=""/></div><br/>
 
 
 
