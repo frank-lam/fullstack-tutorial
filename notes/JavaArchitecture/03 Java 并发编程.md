@@ -842,6 +842,14 @@ synchronized不仅保证可见性，而且还保证原子性，因为，只有�
 
 
 
+**这里区分一下并发和高并发的概念**
+
+**并发**：多个线程操作相同的资源，保证线程安全，合理使用资源
+
+**高并发**：服务能同时处理很多请求，提高程序性能
+
+
+
 参考资料：
 
 - [Cplusplus-Concurrency-In-Practice/1.1 What is concurrency.md at master · forhappy/Cplusplus-Concurrency-In-Practice](https://github.com/forhappy/Cplusplus-Concurrency-In-Practice/blob/master/zh/chapter1-Introduction/1.1%20What%20is%20concurrency.md)
@@ -913,6 +921,10 @@ synchronized不仅保证可见性，而且还保证原子性，因为，只有�
 ## 10. 什么是死锁？死锁的四个必要条件？
 
 #### 什么是死锁
+
+造成死锁的原因就是多个线程或进程对同一个资源的争抢或相互依赖。一个最简单的解释就是你去面试，面试官问你告诉我什么是死锁，我就录用你，你回答面试官你录用我，我告诉你。  
+
+
 
 - 如果一个进程集合里面的每个进程都在等待只能由这个集合中的其他一个进程（包括他自身）才能引发的事件，这种情况就是死锁。
 
