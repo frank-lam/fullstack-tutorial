@@ -1169,11 +1169,19 @@ public void register(Object o)
 
 
 
+## 认识的锁
+
+认识的“*锁”偏向锁轻量级锁重量级锁重入锁自旋锁共享锁独占锁排他锁读写锁公平锁非公平锁死锁活锁
+
 ## 17. 并发包（非常重要！！！待整理）
 
-#### concurrenthashmap分段锁的细节？【蚂蚁金服面经】
+## concurrenthashmap分段锁的细节？【蚂蚁金服面经】
 
-#### 并发包里了解哪些 【蚂蚁金服面经】
+
+
+
+
+## 并发包里了解哪些 【蚂蚁金服面经】
 
 > 待补充
 
@@ -1189,6 +1197,13 @@ public void register(Object o)
   - LinkedBlockingQueue  
 - 所用过的类 
   - Executor   
+
+
+
+## AQS
+
+Java并发之AQS详解 - CodesGeek - 博客园
+https://www.cnblogs.com/daydaynobug/p/6752837.html
 
 
 
