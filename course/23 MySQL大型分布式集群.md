@@ -18,7 +18,7 @@
 
 　　教程样例项目中用到的技术及相应的环境
 
-　　MySQL5.7  CentOS6.9  Vmware  Spring3.x以上  JDK8  Maven XShell Xftp**
+　　MySQL5.7  CentOS6.9  Vmware  Spring3.x以上  JDK8  Maven XShell Xftp
 
 　　教程中所有的与编程相关均使用Java来进行演示，但与编程语言无关，可使用任何编程语言进行测试。  
 
