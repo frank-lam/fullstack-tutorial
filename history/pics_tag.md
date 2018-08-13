@@ -9,6 +9,8 @@
 
 <div align="center"> <img src="pics/concurrent_and_parallel.png" width=""/></div><br/>
 
+<div align="center"><img src="" width=""/></div><br/>
+
 
 
 

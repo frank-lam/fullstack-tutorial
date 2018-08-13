@@ -146,7 +146,7 @@ JNI 即Java native interface，是一种技术，提供了丰富的接口，可�
 - [Java Native Interface(JNI)从零开始详细教程 - CSDN博客](https://blog.csdn.net/createchance/article/details/53783490)
 - [理解 JNI 技术 - Pqpo's Notes](https://pqpo.me/2017/05/17/jni/)
 
-<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/JNIFigure1.gif" width="500"/> </div><br>
+<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/JNIFigure1.gif" width="450"/> </div><br>
 
 
 
@@ -183,8 +183,6 @@ JNI 即Java native interface，是一种技术，提供了丰富的接口，可�
 
 
 <div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/ppt_img.gif" width=""/> </div><br>
-
-
 
 Java 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
 
@@ -230,6 +228,12 @@ System.out.println(s1 == s1);  //  true
 ### （7）直接内存
 
 在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在 Java 堆和 Native 堆中来回复制数据。
+
+
+
+![running-jvm](assets/running-jvm.png)
+
+
 
 
 
