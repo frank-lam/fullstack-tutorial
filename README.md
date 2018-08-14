@@ -108,7 +108,11 @@
 
 > 当然，如果你觉得不错的话，不妨打赏一下，这样我就有更大的动力去完善它，优化它。
 
-<img src="https://raw.githubusercontent.com/frank-lam/weixin_jump/master/images/tipping.jpg"/>
+
+
+<div align="center"><img src="pics/tipping.jpg" width="700"/></div><br/>
+
+
 
 
 
