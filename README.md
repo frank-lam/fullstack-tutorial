@@ -4,6 +4,8 @@
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
 | 数据结构与算法<br />[:pencil:](#一数据结构与算法) | Java基础<br/>[:coffee:](#二java基础) | 数据库<br/>[:floppy_disk:](#三数据库) | 操作系统<br/>[:computer:](#四操作系统linux) | 网络<br/>[:cloud:](#五网络部分) |  系统架构<br/>[:page_with_curl:](#六系统架构) |工具<br/>[:hammer:](#七工具) |
 
+注：下文链接中标识 `v2` 字样的为整理完整第2版，未带链接的暂未更新。
+
 
 
 ## 一、数据结构与算法
@@ -39,10 +41,10 @@
 
 ### 知识框架
 
-- [Java基础](notes/JavaArchitecture/01%20Java%20基础.md)
-- [集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md)
+- [Java基础 v2](notes/JavaArchitecture/01%20Java%20基础.md)
+- [集合框架 v2](notes/JavaArchitecture/02%20Java%20集合框架.md)
 - [并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md)
-- [IO流](notes/JavaArchitecture/04%20Java%20IO.md)
+- [IO流 v2](notes/JavaArchitecture/04%20Java%20IO.md)
 - [虚拟机](notes/JavaArchitecture/05%20Java%20虚拟机.md)
 - [设计模式](notes/JavaArchitecture/06%20设计模式.md)
 - Web框架
@@ -50,8 +52,6 @@
   - SpringMVC
   - MyBatis
 - 系统架构
-
-　　持续更新中...
 
 
 
@@ -72,9 +72,9 @@
 
 ## 五、网络部分
 
-- [计算机网络](notes/计算机网络.md)
+- [计算机网络 v2](notes/计算机网络.md)
 
-　　传输层、应用层（HTTP）、网络层部分、网络安全等内容
+　　传输层、应用层（HTTP）、网络层、网络安全等内容
 
 
 
