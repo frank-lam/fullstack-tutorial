@@ -112,6 +112,7 @@
  - 知乎专栏：https://zhuanlan.zhihu.com/frankfeekr
  - Github：https://github.com/frank-lam
  - Email：frank_lin@whu.edu.cn
+ - QQ备战秋招，火箭交流群：862619503
 
 > 当然，如果你觉得不错的话，不妨打赏一下，这样我就有更大的动力去完善它，优化它。
 
