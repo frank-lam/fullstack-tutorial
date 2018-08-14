@@ -1038,7 +1038,8 @@ https://www.jianshu.com/p/25e94a1399a0
 
 ## 9. 了解过JVM调优没，基本思路是什么
 
-
+美团技术：从实际案例聊聊Java应用的GC优化 -
+https://tech.meituan.com/jvm_optimize.html
 
 
 

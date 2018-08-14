@@ -45,7 +45,8 @@
 - [设计模式](notes/JavaArchitecture/06%20设计模式.md)
 - Web框架
   - [Spring](notes/JavaWeb/Spring.md)
-  - Mybatis
+  - SpringMVC
+  - MyBatis
 - 系统架构
 
 
@@ -82,8 +83,6 @@
 
 - Git
 - 正则表达式
-
-
 
 
 

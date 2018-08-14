@@ -1,6 +1,6 @@
 # 前言
 
-在本文将总结多线程并发编程中的常见面试题，主要核心线程生命周期、线程通信、并发包部分。主要分成“并发编程”和“面试指南”两部分，在面试指南中将讨论并发相关面经。
+在本文将总结多线程并发编程中的常见面试题，主要核心线程生命周期、线程通信、并发包部分。主要分成 “并发编程” 和 “面试指南” 两部分，在面试指南中将讨论并发相关面经。
 
 
 
@@ -1761,15 +1761,15 @@ executorService.execute(() -> {
 
 synchronized 和 ReentrantLock。
 
+互斥同步最主要的问题就是进行线程阻塞和唤醒所带来的性能问题，因此这种同步也称为阻塞同步。
+
+互斥同步属于一种**悲观的并发策略**，总是认为只要不去做正确的同步措施，那就肯定会出现问题。无论共享数据是否真的会出现竞争，它都要进行加锁（这里讨论的是概念模型，实际上虚拟机会优化掉很大一部分不必要的加锁）、用户态核心态转换、维护锁计数器和检查是否有被阻塞的线程需要唤醒等操作。
+
 
 
 #### 2. 非阻塞同步
 
-互斥同步最主要的问题就是进行线程阻塞和唤醒所带来的性能问题，因此这种同步也称为阻塞同步。
-
-互斥同步属于一种悲观的并发策略，总是认为只要不去做正确的同步措施，那就肯定会出现问题。无论共享数据是否真的会出现竞争，它都要进行加锁（这里讨论的是概念模型，实际上虚拟机会优化掉很大一部分不必要的加锁）、用户态核心态转换、维护锁计数器和检查是否有被阻塞的线程需要唤醒等操作。
-
-随着硬件指令集的发展，我们可以使用基于冲突检测的乐观并发策略：先进行操作，如果没有其它线程争用共享数据，那操作就成功了，否则采取补偿措施（不断地重试，直到成功为止）。这种乐观的并发策略的许多实现都不需要把线程挂起，因此这种同步操作称为非阻塞同步。
+随着硬件指令集的发展，我们可以使用基于冲突检测的**乐观并发策略**：先进行操作，如果没有其它线程争用共享数据，那操作就成功了，否则采取补偿措施（不断地重试，直到成功为止）。这种乐观的并发策略的许多实现都不需要把线程挂起，因此这种同步操作称为非阻塞同步。
 
 乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。
 
@@ -1864,9 +1864,249 @@ public static void main(String[] args) {
 
 如果一段代码中所需要的数据必须与其他代码共享，那就看看这些共享数据的代码是否能保证在同一个线程中执行。如果能保证，我们就可以把共享数据的可见范围限制在同一个线程之内，这样，无须同步也能保证线程之间不出现数据争用的问题。
 
-符合这种特点的应用并不少见，大部分使用消费队列的架构模式（如“生产者-消费者”模式）都会将产品的消费过程尽量在一个线程中消费完，其中最重要的一个应用实例就是经典 Web 交互模型中的“**一个请求对应一个服务器线程**”（Thread-per-Request）的处理方式，这种处理方式的广泛应用使得很多 Web 服务端应用都可以使用线程本地存储来解决线程安全问题。
+符合这种特点的应用并不少见，大部分使用消费队列的架构模式（如“生产者-消费者”模式）都会将产品的消费过程尽量在一个线程中消费完，其中最重要的一个应用实例就是经典 Web 交互模型中的 “**一个请求对应一个服务器线程**”（Thread-per-Request）的处理方式，这种处理方式的广泛应用使得很多 Web 服务端应用都可以使用线程本地存储来解决线程安全问题。
 
 可以使用 java.lang.ThreadLocal 类来实现线程本地存储功能。
+
+**示例用法**
+
+先通过下面这个实例来理解ThreadLocal的用法。先声明一个ThreadLocal对象，存储布尔类型的数值。然后分别在主线程中、Thread1、Thread2中为ThreadLocal对象设置不同的数值：
+
+```java
+public class ThreadLocalDemo {
+    public static void main(String[] args) {
+
+      	// 声明 ThreadLocal对象
+        ThreadLocal<Boolean> mThreadLocal = new ThreadLocal<Boolean>();
+
+        // 在主线程、子线程1、子线程2中去设置访问它的值
+        mThreadLocal.set(true);
+
+        System.out.println("Main " + mThreadLocal.get());
+
+        new Thread("Thread#1"){
+            @Override
+            public void run() {
+                mThreadLocal.set(false);
+                System.out.println("Thread#1 " + mThreadLocal.get());
+            }
+        }.start();
+
+        new Thread("Thread#2"){
+            @Override
+            public void run() {
+                System.out.println("Thread#2 " + mThreadLocal.get());
+            }
+        }.start();
+    }
+}
+```
+
+打印的结果输出如下所示：
+
+```
+MainThread true
+Thread#1 false
+Thread#2 null
+```
+
+可以看见，在不同线程对同一个ThreadLocal对象设置数值，在不同的线程中取出来的值不一样。接下来就分析一下源码，看看其内部结构。
+
+**结构概览**
+
+<div align="center"><img src="assets/006dXScfgy1fj7s01fjqpj30ng0jbabn.jpg" width="500"/></div><br/>
+
+清晰的看到一个线程 Thread 中存在一个 ThreadLocalMap，ThreadLocalMap 中的 key 对应 ThreadLocal，在此处可见 Map 可以存储多个 key 即(ThreadLocal)。另外 Value 就对应着在 ThreadLocal 中存储的 Value。
+
+因此总结出：每个 Thread 中都具备一个 ThreadLocalMap，而 ThreadLocalMap 可以存储以 ThreadLocal 为key的键值对。这里解释了为什么每个线程访问同一个 ThreadLocal，得到的确是不同的数值。如果此处你觉得有点突兀，接下来看源码分析！
+
+**源码分析**
+
+###### **ThreadLocal#set**
+
+```
+ public void set(T value) {
+        // 获取当前线程对象
+        Thread t = Thread.currentThread();
+        // 根据当前线程的对象获取其内部Map
+        ThreadLocalMap map = getMap(t);
+        // 注释1
+        if (map != null)
+            map.set(this, value);
+        else
+            createMap(t, value);
+    }
+```
+
+如上所示，大部分解释已经在代码中做出，注意注释1处，得到map对象之后，用的`this`作为key，this在这里代表的是当前线程的ThreadLocal对象。 另外就是第二句根据getMap获取一个ThreadLocalMap，其中getMap中传入了参数t(当前线程对象)，这样就能够获取每个线程的`ThreadLocal`了。 
+
+继续跟进到ThreadLocalMap中查看set方法：
+
+###### **ThreadLocalMap**
+
+ThreadLocalMap是ThreadLocal的一个内部类，在分析其set方法之前，查看一下其类结构和成员变量。
+
+```
+ static class ThreadLocalMap {
+        // Entry类继承了WeakReference<ThreadLocal<?>>，即每个Entry对象都有一个ThreadLocal的弱引用
+   //（作为key），这是为了防止内存泄露。一旦线程结束，key变为一个不可达的对象，这个Entry就可以被GC了。
+        static class Entry extends WeakReference<ThreadLocal<?>> {
+            /** The value associated with this ThreadLocal. */
+            Object value;
+            Entry(ThreadLocal<?> k, Object v) {
+                super(k);
+                value = v;
+            }
+        }
+        // ThreadLocalMap 的初始容量，必须为2的倍数
+        private static final int INITIAL_CAPACITY = 16;
+
+        // resized时候需要的table
+        private Entry[] table;
+
+        // table中的entry个数
+        private int size = 0;
+
+        // 扩容数值
+        private int threshold; // Default to 0
+```
+
+一起看一下其常用的构造函数：
+
+```
+ ThreadLocalMap(ThreadLocal<?> firstKey, Object firstValue) {
+            table = new Entry[INITIAL_CAPACITY];
+            int i = firstKey.threadLocalHashCode & (INITIAL_CAPACITY - 1);
+            table[i] = new Entry(firstKey, firstValue);
+            size = 1;
+            setThreshold(INITIAL_CAPACITY);
+        }
+```
+
+构造函数的第一个参数就是本ThreadLocal实例(this)，第二个参数就是要保存的线程本地变量。构造函数首先创建一个长度为16的Entry数组，然后计算出firstKey对应的哈希值，然后存储到table中，并设置size和threshold。
+
+注意一个细节，计算hash的时候里面采用了hashCode & (size - 1)的算法，这相当于取模运算hashCode % size的一个更高效的实现（和HashMap中的思路相同）。正是因为这种算法，我们要求size必须是2的指数，因为这可以使得hash发生冲突的次数减小。
+
+###### **ThreadLocalMap#set**
+
+ThreadLocal中put函数最终调用了ThreadLocalMap中的set函数，跟进去看一看：
+
+```
+private void set(ThreadLocal<?> key, Object value) {
+    Entry[] tab = table;
+    int len = tab.length;
+    int i = key.threadLocalHashCode & (len-1);
+
+    for (Entry e = tab[i];
+         e != null;
+         // 冲突了
+         e = tab[i = nextIndex(i, len)]) {
+        ThreadLocal<?> k = e.get();
+
+        if (k == key) {
+            e.value = value;
+            return;
+        }
+
+        if (k == null) {
+            replaceStaleEntry(key, value, i);
+            return;
+        }
+    }
+
+    tab[i] = new Entry(key, value);
+    int sz = ++size;
+    if (!cleanSomeSlots(i, sz) && sz >= threshold)
+        rehash();
+}
+```
+
+在上述代码中如果Entry在存放过程中冲突了，调用nextIndex来处理，如下所示。是否还记得hashmap中对待冲突的处理？这里好像是另一种套路：只要i的数值小于len，就加1取值，官方术语称为：线性探测法。
+
+```
+ private static int nextIndex(int i, int len) {
+            return ((i + 1 < len) ? i + 1 : 0);
+ }
+```
+
+以上步骤ok了之后，再次关注一下源码中的cleanSomeSlots，该函数主要的作用就是清理无用的entry，具体细节就不扣了：
+
+```
+private boolean cleanSomeSlots(int i, int n) {
+            boolean removed = false;
+            Entry[] tab = table;
+            int len = tab.length;
+            do {
+                i = nextIndex(i, len);
+                Entry e = tab[i];
+                if (e != null && e.get() == null) {
+                    n = len;
+                    removed = true;
+                    i = expungeStaleEntry(i);
+                }
+            } while ( (n >>>= 1) != 0);
+            return removed;
+        }
+```
+
+###### **ThreadLocal#get**
+
+看完了set函数，肯定是要关注Get的，源码如下所示：
+
+```
+ public T get() {
+        // 获取Thread对象t
+        Thread t = Thread.currentThread();
+        // 获取t中的map
+        ThreadLocalMap map = getMap(t);
+        if (map != null) {
+            ThreadLocalMap.Entry e = map.getEntry(this);
+            if (e != null) {
+                @SuppressWarnings("unchecked")
+                T result = (T)e.value;
+                return result;
+            }
+        }
+        return setInitialValue();
+    }
+```
+
+如果map为null，就返回setInitialValue()这个方法，跟进这个方法看一下：
+
+```
+ private T setInitialValue() {
+        T value = initialValue();
+        Thread t = Thread.currentThread();
+        ThreadLocalMap map = getMap(t);
+        if (map != null)
+            map.set(this, value);
+        else
+            createMap(t, value);
+        return value;
+    }
+```
+
+最后返回的是value，而value来自`initialValue()`,进入这个源码中查看：
+
+```
+protected T initialValue() {
+        return null;
+    }
+```
+
+原来如此，如果不设置ThreadLocal的数值，默认就是null，来自于此。
+
+Ok，整体上关于的ThreadLocal内容就这么多了，还有一些细节没有讲述到，慢慢补充和优化。
+
+
+
+
+
+
+
+--------------------------------------------
+
+
 
 对于以下代码，thread1 中设置 threadLocal 为 1，而 thread2 设置 threadLocal 为 2。过了一段时间之后，thread1 读取 threadLocal 依然是 1，不受 thread2 的影响。
 
@@ -1963,6 +2203,15 @@ public T get() {
 ```
 
 ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因为根本不存在多线程竞争。在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，尽可能在每次使用 ThreadLocal 后手动调用 remove()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
+
+
+
+
+
+参考资料：
+
+- [深入理解 Java 之 ThreadLocal 工作原理](https://allenwu.itscoder.com/threadlocal-source)
+  
 
 
 
