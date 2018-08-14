@@ -124,6 +124,10 @@
 
 ## 本仓库
 
+在仓库中的观点和知识参考了部分的优秀的Github仓库、博客、书籍等，个人的知识和能力有限，这里做了一些学习笔记，知识整合优化，仅供大家参考。如果适合你，欢迎star~
+
+
+
 Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)
 
 Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sheet/)
