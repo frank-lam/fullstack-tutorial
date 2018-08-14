@@ -14,6 +14,7 @@
 
 - 《算法4》
 - 《程序员代码面试指南》
+- 《剑指Offer》
 
 ### 学习课程
 
@@ -86,46 +87,39 @@
 
 
 
-# 附录：参考资料
+## 一些话
 
-[CyC2018/Interview-Notebook: 技术面试需要掌握的基础知识整理，欢迎编辑~](https://github.com/CyC2018/Interview-Notebook) `star: 23489`
+都说好记性不如烂笔头，定期的学习和整理必然对学习巩固有所帮助，在这里主要通过索引的方式对 Java 研发工程师的技术栈做一个系统的整理，方便随时巩固和应对随时到来的面试。在学习这条路上难免会有很多知识盲点，不要把大脑当成硬盘，也不要做高速运转的 CPU，而要修行自己的大脑成为一个搜索引擎，学会分析解决问题。不要用肉体上的勤奋，掩盖思维上的懒惰。做一个爱思考，会学习，快乐的 developer 吧。
 
-[Google Interview University 一套完整的学习手册帮助自己准备 Google 的面试](https://github.com/jwasham/coding-interview-university/blob/master/translations/README-cn.md)
+本仓库系统整理 Java 面试过程中遇到的技能，对所有知识点进行深入串联，而后通过面经进行巩固，也推荐了学习的书籍和学习课程。
 
-[linw7/Skill-Tree: 🐼 准备秋招，欢迎来树上取果实](https://github.com/linw7/Skill-Tree)
-
-[视频学习资源共享 (更新于：2018年4月30日)](https://github.com/shiyuan17/share_video/tree/1773f9f1e181d40f3e00041805933ca55932c553)
-
-[我珍藏的神兵利器 - 效率工具](https://www.liutf.com/posts/3720794851.html)
-
-[Linux 守护进程的启动方法](https://mp.weixin.qq.com/s/DzajJNhcpB3hqWzzm71Q0w)
-
-[波波老师：关于学习方法和今后提高自学能力的疑问！](http://coding.imooc.com/learn/questiondetail/46130.html)
-
-[最近面了不少java开发，据此来说下我的感受：哪怕事先只准备1小时，成功概率也能大大提升](https://mp.weixin.qq.com/s/TheCxmlDrcz5oFAahz6Rxw)
+持续开源，永久免费。由于系统知识庞大，目前仍在持续编写中。
 
 
 
-#### 学习Github库
+## 联系我
 
-[hadyang/interview: Java / Android 笔试、面试 知识整理](https://github.com/hadyang/interview) `star：928`
+## 关于我
 
-[francistao/LearningNotes: Enjoy Learning.](https://github.com/francistao/LearningNotes)  `star：9194`
+珞珈CS硕士，秋招备战狗，致力成为一个会编程的文艺青年。
 
-[Snailclimb/Java_Guide: Java面试通关手册（Java学习指南）](https://github.com/Snailclimb/Java_Guide) `star：94`
+ - CSDN博客：http://blog.csdn.net/u012104219
+ - 知乎专栏：https://zhuanlan.zhihu.com/frankfeekr
+ - Github：https://github.com/frank-lam
+ - Email：frank_lin@whu.edu.cn
+
+> 当然，如果你觉得不错的话，不妨打赏一下，这样我就有更大的动力去完善它，优化它。
+
+<img src="https://raw.githubusercontent.com/frank-lam/weixin_jump/master/images/tipping.jpg"/>
 
 
 
-------
 
 
+## 本仓库
 
 Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)
 
 Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sheet/)
-
-
-
-持续更新中...
 
 from 2018年5月20日
