@@ -1874,7 +1874,7 @@ public static void main(String[] args) {
 
 **示例用法**
 
-先通过下面这个实例来理解ThreadLocal的用法。先声明一个ThreadLocal对象，存储布尔类型的数值。然后分别在主线程中、Thread1、Thread2中为ThreadLocal对象设置不同的数值：
+先通过下面这个实例来理解 ThreadLocal 的用法。先声明一个 ThreadLocal 对象，存储布尔类型的数值。然后分别在main线程、Thread1、Thread2中为 ThreadLocal 对象设置不同的数值：
 
 ```java
 public class ThreadLocalDemo {
@@ -1914,7 +1914,7 @@ Thread#1 false
 Thread#2 null
 ```
 
-可以看见，在不同线程对同一个ThreadLocal对象设置数值，在不同的线程中取出来的值不一样。接下来就分析一下源码，看看其内部结构。
+可以看见，在不同线程对同一个 ThreadLocal对象设置数值，在不同的线程中取出来的值不一样。接下来就分析一下源码，看看其内部结构。
 
 
 
@@ -1938,6 +1938,7 @@ public void set(T value) {
     Thread t = Thread.currentThread();
     // 根据当前线程的对象获取其内部Map
     ThreadLocalMap map = getMap(t);
+    
     // 注释1
     if (map != null)
     	map.set(this, value);
@@ -1946,22 +1947,20 @@ public void set(T value) {
 }
 ```
 
-如上所示，大部分解释已经在代码中做出，注意注释1处，得到map对象之后，用的`this`作为 key，this 在这里代表的是当前线程的 ThreadLocal 对象。 另外就是第二句根据 getMap 获取一个 ThreadLocalMap，其中getMap 中传入了参数 t (当前线程对象)，这样就能够获取每个线程的`ThreadLocal`了。 
+如上所示，大部分解释已经在代码中做出，注意`注释1`处，得到 map 对象之后，用的 `this` 作为  key，this 在这里代表的是当前线程的 ThreadLocal 对象。 另外就是第二句根据 getMap 获取一个 ThreadLocalMap，其中getMap 中传入了参数 t (当前线程对象)，这样就能够获取每个线程的 `ThreadLocal` 了。 
 
-继续跟进到ThreadLocalMap中查看set方法：
+继续跟进到 ThreadLocalMap 中查看 set 方法：
 
 
 
 **2. ThreadLocalMap**
 
-ThreadLocalMap是ThreadLocal的一个内部类，在分析其set方法之前，查看一下其类结构和成员变量。
+ThreadLocalMap 是 ThreadLocal 的一个内部类，在分析其 set 方法之前，查看一下其类结构和成员变量。
 
 ```java
  static class ThreadLocalMap {
      // Entry类继承了WeakReference<ThreadLocal<?>>
-     // 即每个Entry对象都有一个ThreadLocal的弱引用
-     
-     //（作为key），这是为了防止内存泄露。
+     // 即每个Entry对象都有一个ThreadLocal的弱引用（作为key），这是为了防止内存泄露。
      // 一旦线程结束，key变为一个不可达的对象，这个Entry就可以被GC了。
      static class Entry extends WeakReference<ThreadLocal<?>> {
          /** The value associated with this ThreadLocal. */
@@ -1997,15 +1996,15 @@ ThreadLocalMap(ThreadLocal<?> firstKey, Object firstValue) {
 }
 ```
 
-构造函数的第一个参数就是本ThreadLocal实例(this)，第二个参数就是要保存的线程本地变量。构造函数首先创建一个长度为16的Entry数组，然后计算出firstKey对应的哈希值，然后存储到table中，并设置size和threshold。
+构造函数的第一个参数就是本 ThreadLocal 实例 (this)，第二个参数就是要保存的线程本地变量。构造函数首先创建一个长度为16的 Entry 数组，然后计算出 firstKey 对应的哈希值，然后存储到 table 中，并设置 size 和 threshold。
 
-注意一个细节，计算hash的时候里面采用了hashCode & (size - 1)的算法，这相当于取模运算hashCode % size的一个更高效的实现（和HashMap中的思路相同）。正是因为这种算法，我们要求size必须是2的指数，因为这可以使得hash发生冲突的次数减小。
+注意一个细节，计算 hash 的时候里面采用了 hashCode & (size - 1) 的算法，这相当于取模运算 hashCode % size 的一个更高效的实现（和HashMap中的思路相同）。正是因为这种算法，我们要求 size必须是 2 的指数，因为这可以使得 hash 发生冲突的次数减小。
 
 
 
 **3. ThreadLocalMap#set**
 
-ThreadLocal中put函数最终调用了ThreadLocalMap中的set函数，跟进去看一看：
+ThreadLocal 中 put 函数最终调用了 ThreadLocalMap 中的 set 函数，跟进去看一看：
 
 ```java
 private void set(ThreadLocal<?> key, Object value) {
@@ -2037,15 +2036,15 @@ private void set(ThreadLocal<?> key, Object value) {
 }
 ```
 
-在上述代码中如果Entry在存放过程中冲突了，调用nextIndex来处理，如下所示。是否还记得hashmap中对待冲突的处理？这里好像是另一种套路：只要i的数值小于len，就加1取值，官方术语称为：线性探测法。
+在上述代码中如果 Entry 在存放过程中冲突了，调用 nextIndex 来处理，如下所示。是否还记得 hashmap 中对待冲突的处理？这里好像是另一种套路：只要 i 的数值小于 len，就加1取值，官方术语称为：线性探测法。
 
 ```java
  private static int nextIndex(int i, int len) {
-            return ((i + 1 < len) ? i + 1 : 0);
+     return ((i + 1 < len) ? i + 1 : 0);
  }
 ```
 
-以上步骤ok了之后，再次关注一下源码中的cleanSomeSlots，该函数主要的作用就是清理无用的entry，具体细节就不扣了：
+以上步骤ok了之后，再次关注一下源码中的 cleanSomeSlots，该函数主要的作用就是清理无用的 entry，避免出现内存泄露：
 
 ```java
 private boolean cleanSomeSlots(int i, int n) {
@@ -2069,7 +2068,7 @@ private boolean cleanSomeSlots(int i, int n) {
 
 **4. ThreadLocal#get**
 
-看完了set函数，肯定是要关注Get的，源码如下所示：
+看完了 set 函数，肯定是要关注 get 的，源码如下所示：
 
 ```java
 public T get() {
@@ -2094,18 +2093,18 @@ public T get() {
 
 ```java
  private T setInitialValue() {
-        T value = initialValue();
-        Thread t = Thread.currentThread();
-        ThreadLocalMap map = getMap(t);
-        if (map != null)
-            map.set(this, value);
-        else
-            createMap(t, value);
-        return value;
-    }
+     T value = initialValue();
+     Thread t = Thread.currentThread();
+     ThreadLocalMap map = getMap(t);
+     if (map != null)
+         map.set(this, value);
+     else
+         createMap(t, value);
+     return value;
+ }
 ```
 
-最后返回的是 value，而 value 来自`initialValue()`,进入这个源码中查看：
+最后返回的是 value，而 value 来自 `initialValue() `，进入这个源码中查看：
 
 ```java
 protected T initialValue() {
@@ -2116,8 +2115,6 @@ protected T initialValue() {
 原来如此，如果不设置 ThreadLocal 的数值，默认就是 null，来自于此。
 
 ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因为根本不存在多线程竞争。在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，尽可能在每次使用 ThreadLocal 后手动调用 remove()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
-
-
 
 
 
@@ -2136,7 +2133,7 @@ ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因�
 
 互斥同步的进入阻塞状态的开销都很大，应该尽量避免。在许多应用中，共享数据的锁定状态只会持续很短的一段时间。自旋锁的思想是让一个线程在请求一个共享数据的锁时执行忙循环（自旋）一段时间，如果在这段时间内能获得锁，就可以避免进入阻塞状态。
 
-自选锁虽然能避免进入阻塞状态从而减少开销，但是它需要进行忙循环操作占用 CPU 时间，它只适用于共享数据的锁定状态很短的场景。
+自旋锁虽然能避免进入阻塞状态从而减少开销，但是它需要进行忙循环操作占用 CPU 时间，它只适用于共享数据的锁定状态很短的场景。
 
 在 JDK 1.6 中引入了自适应的自旋锁。自适应意味着自旋的次数不再固定了，而是由前一次在同一个锁上的自旋次数及锁的拥有者的状态来决定。
 
@@ -2144,11 +2141,11 @@ ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因�
 
 锁消除是指对于被检测出不可能存在竞争的共享数据的锁进行消除。
 
-锁消除主要是通过逃逸分析来支持，如果堆上的共享数据不可能逃逸出去被其它线程访问到，那么就可以把它们当成私有数据对待，也就可以将它们的锁进行消除。
+锁消除主要是通过**逃逸分析**来支持，如果堆上的共享数据不可能逃逸出去被其它线程访问到，那么就可以把它们当成私有数据对待，也就可以将它们的锁进行消除。
 
 对于一些看起来没有加锁的代码，其实隐式的加了很多锁。例如下面的字符串拼接代码就隐式加了锁：
 
-```
+```java
 public static String concatString(String s1, String s2, String s3) {
     return s1 + s2 + s3;
 }
@@ -2156,7 +2153,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 String 是一个不可变的类，编译器会对 String 的拼接自动优化。在 JDK 1.5 之前，会转化为 StringBuffer 对象的连续 append() 操作：
 
-```
+```java
 public static String concatString(String s1, String s2, String s3) {
     StringBuffer sb = new StringBuffer();
     sb.append(s1);
@@ -2168,11 +2165,15 @@ public static String concatString(String s1, String s2, String s3) {
 
 每个 append() 方法中都有一个同步块。虚拟机观察变量 sb，很快就会发现它的动态作用域被限制在 concatString() 方法内部。也就是说，sb 的所有引用永远不会“逃逸”到 concatString() 方法之外，其他线程无法访问到它，因此可以进行消除。
 
+
+
 ### 锁粗化
 
 如果一系列的连续操作都对同一个对象反复加锁和解锁，频繁的加锁操作就会导致性能损耗。
 
 上一节的示例代码中连续的 append() 方法就属于这类情况。如果虚拟机探测到由这样的一串零碎的操作都对同一个对象加锁，将会把加锁的范围扩展（粗化）到整个操作序列的外部。对于上一节的示例代码就是扩展到第一个 append() 操作之前直至最后一个 append() 操作之后，这样只需要加锁一次就可以了。
+
+
 
 ### 轻量级锁
 
@@ -2180,19 +2181,21 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 以下是 HotSpot 虚拟机对象头的内存布局，这些数据被称为 mark word。其中 tag bits 对应了五个状态，这些状态在右侧的 state 表格中给出，应该注意的是 state 表格不是存储在对象头中的。除了 marked for gc 状态，其它四个状态已经在前面介绍过了。
 
-<div align="center"><img src="assets/bb6a49be-00f2-4f27-a0ce-4ed764bc605c-1534158631668.png" width=""/></div><br/>
+<div align="center"><img src="assets/bb6a49be-00f2-4f27-a0ce-4ed764bc605c-1534158631668.png" width="600"/></div><br/>
 
 下图左侧是一个线程的虚拟机栈，其中有一部分称为 Lock Record 的区域，这是在轻量级锁运行过程创建的，用于存放锁对象的 Mark Word。而右侧就是一个锁对象，包含了 Mark Word 和其它信息。
 
-<div align="center"><img src="assets/051e436c-0e46-4c59-8f67-52d89d656182-1534158643175.png" width=""/></div><br/>
+<div align="center"><img src="assets/051e436c-0e46-4c59-8f67-52d89d656182-1534158643175.png" width="500"/></div><br/>
 
 轻量级锁是相对于传统的重量级锁而言，它使用 CAS 操作来避免重量级锁使用互斥量的开销。对于绝大部分的锁，在整个同步周期内都是不存在竞争的，因此也就不需要都使用互斥量进行同步，可以先采用 CAS 操作进行同步，如果 CAS 失败了再改用互斥量进行同步。
 
 当尝试获取一个锁对象时，如果锁对象标记为 0 01，说明锁对象的锁未锁定（unlocked）状态。此时虚拟机在当前线程栈中创建 Lock Record，然后使用 CAS 操作将对象的 Mark Word 更新为 Lock Record 指针。如果 CAS 操作成功了，那么线程就获取了该对象上的锁，并且对象的 Mark Word 的锁标记变为 00，表示该对象处于轻量级锁状态。
 
-<div align="center"><img src="assets/baaa681f-7c52-4198-a5ae-303b9386cf47-1534158703049.png" width=""/></div><br/>
+<div align="center"><img src="assets/baaa681f-7c52-4198-a5ae-303b9386cf47-1534158703049.png" width="500"/></div><br/>
 
 如果 CAS 操作失败了，虚拟机首先会检查对象的 Mark Word 是否指向当前线程的虚拟机栈，如果是的话说明当前线程已经拥有了这个锁对象，那就可以直接进入同步块继续执行，否则说明这个锁对象已经被其他线程线程抢占了。如果有两条以上的线程争用同一个锁，那轻量级锁就不再有效，要膨胀为重量级锁。
+
+
 
 ### 偏向锁
 
@@ -2202,7 +2205,7 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 当有另外一个线程去尝试获取这个锁对象时，偏向状态就宣告结束，此时撤销偏向（Revoke Bias）后恢复到未锁定状态或者轻量级锁状态。
 
-<div align="center"><img src="assets/390c913b-5f31-444f-bbdb-2b88b688e7ce-1534158712253.jpg" width=""/></div><br/>
+<div align="center"><img src="assets/390c913b-5f31-444f-bbdb-2b88b688e7ce-1534158712253.jpg" width="600"/></div><br/>
 
 
 
@@ -2222,14 +2225,19 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 # 第二部分：面试指南
 
-
-
-Java线程面试题 Top 50 - ImportNew
-http://www.importnew.com/12773.html
+在这里将总结面试中和并发编程相关的常见知识点，如在第一部分中出现的这里将不进行详细阐述。
 
 
 
-## volatile 与 synchronized 的区别
+参考资料：
+
+- [Java线程面试题 Top 50 - ImportNew](http://www.importnew.com/12773.html)
+
+
+
+
+
+## 1. volatile 与 synchronized 的区别
 
 **（1）仅靠volatile不能保证线程的安全性。（原子性）**
 
@@ -2248,9 +2256,7 @@ synchronized 不仅保证可见性，而且还保证原子性，因为，只有�
 
 
 
-
-
-## 7. 什么是线程池？如果让你设计一个动态大小的线程池，如何设计，应该有哪些方法？线程池创建的方式？【阿里面经Onenote】
+## 2. 什么是线程池？如果让你设计一个动态大小的线程池，如何设计，应该有哪些方法？线程池创建的方式？
 
 - 什么是线程池 
 
@@ -2259,10 +2265,10 @@ synchronized 不仅保证可见性，而且还保证原子性，因为，只有�
 - 设计一个动态大小的线程池，如何设计，应该有哪些方法 
 
   - 一个线程池包括以下四个基本组成部分： 
-    - 线程管理器(ThreadPool)：用于创建并管理线程池，包括创建线程，销毁线程池，添加新任务； 
-    - 工作线程(PoolWorker)：线程池中线程，在没有任务时处于等待状态，可以循环的执行任务； 
-    - 任务接口(Task)：每个任务必须实现的接口，以供工作线程调度任务的执行，它主要规定了任务的入口，任务执行完后的收尾工作，任务的执行状态等； 
-    - 任务队列(TaskQueue)：用于存放没有处理的任务。提供一种缓冲机制； 
+    - 线程管理器 (ThreadPool)：用于创建并管理线程池，包括创建线程，销毁线程池，添加新任务； 
+    - 工作线程 (PoolWorker)：线程池中线程，在没有任务时处于等待状态，可以循环的执行任务； 
+    - 任务接口 (Task)：每个任务必须实现的接口，以供工作线程调度任务的执行，它主要规定了任务的入口，任务执行完后的收尾工作，任务的执行状态等； 
+    - 任务队列 (TaskQueue)：用于存放没有处理的任务。提供一种缓冲机制； 
   - 所包含的方法 
     - private ThreadPool()  创建线程池 
     - public static ThreadPool getThreadPool()  获得一个默认线程个数的线程池  
@@ -2276,35 +2282,36 @@ synchronized 不仅保证可见性，而且还保证原子性，因为，只有�
 
 - 线程池四种创建方式
 
-  Java通过Executors提供四种线程池，分别为：
+  Java通过 Executors 提供四种线程池，分别为：
 
-  - newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
+  - newCachedThreadPool 创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
   - newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
   - newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。
   - newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
 
 
 
-
-
-## 8. 什么是并发和并行
-
-- 并行就是两个任务同时运行，就是甲任务进行的同时，乙任务也在进行。(需要多核CPU)
-- 并发是指两个任务都请求运行，而处理器只能按受一个任务，就把这两个任务安排轮流进行，由于时间间隔较短，使人感觉两个任务都在运行。
-- 比如我跟两个网友聊天，左手操作一个电脑跟甲聊，同时右手用另一台电脑跟乙聊天，这就叫并行。
-- 如果用一台电脑我先给甲发个消息，然后立刻再给乙发消息，然后再跟甲聊，再跟乙聊。这就叫并发。
+## 3. 什么是并发和并行
 
 <div align="center"> <img src="../pics/concurrent_and_parallel.png" width=""/></div><br/>
 
+### 并发
+
+- 并发是指两个任务都请求运行，而处理器只能按受一个任务，就把这两个任务安排轮流进行，由于时间间隔较短，使人感觉两个任务都在运行。
+- 如果用一台电脑我先给甲发个消息，然后立刻再给乙发消息，然后再跟甲聊，再跟乙聊。这就叫并发。
+- 多个线程操作相同的资源，保证线程安全，合理使用资源
 
 
-**这里区分一下并发和高并发的概念**
 
-**并发**：多个线程操作相同的资源，保证线程安全，合理使用资源
+### 并行
 
-**高并发**：服务能同时处理很多请求，提高程序性能
+- 并行就是两个任务同时运行，就是甲任务进行的同时，乙任务也在进行。(需要多核CPU)
 
+- 比如我跟两个网友聊天，左手操作一个电脑跟甲聊，同时右手用另一台电脑跟乙聊天，这就叫并行。
 
+- 服务能同时处理很多请求，提高程序性能
+
+  
 
 参考资料：
 
@@ -2312,59 +2319,68 @@ synchronized 不仅保证可见性，而且还保证原子性，因为，只有�
 
 
 
-## 9. 什么是线程安全【阿里面经Onenote】
+## 4. 什么是线程安全
 
 当多个线程访问同一个对象时，如果不用考虑这些线程在运行时环境下的调度和交替运行，也不需要进行额外的同步，或者在调用方进行任何其他的协调操作，调用这个对象的行为都可以获取正确的结果，那这个对象是线程安全的。——来自《深入理解Java虚拟机》
 
 - 定义 
 
   - 某个类的行为与其规范一致。 
-  - 不管多个线程是怎样的执行顺序和优先级,或是wait,sleep,join等控制方式,，如果一个类在多线程访问下运转一切正常，并且访问类不需要进行额外的同步处理或者协调，那么我们就认为它是线程安全的。  
+  - 不管多个线程是怎样的执行顺序和优先级,或是 wait , sleep , join 等控制方式，如果一个类在多线程访问下运转一切正常，并且访问类不需要进行额外的同步处理或者协调，那么我们就认为它是线程安全的。  
 
-- 如何保证线程安全？
+- 如何保证线程安全？（更加详细的请转向第一部分 `11. 线程安全`）
 
-  - 对变量使用volitate 
-  - 对程序段进行加锁(synchronized,lock) 
+  - 对变量使用 volitate 
+  - 对程序段进行加锁 (synchronized , lock) 
 
 - 注意 
 
   - 非线程安全的集合在多线程环境下可以使用，但并不能作为多个线程共享的属性，可以作为某个线程独享的属性。 
-
-  - 例如Vector是线程安全的，ArrayList不是线程安全的。如果每一个线程中new一个ArrayList，而这个ArrayList只是在这一个线程中使用，肯定没问题。 
-
-    
-
-#### 非线程安全!=不安全？
-
-有人在使用过程中有一个不正确的观点：我的程序是多线程的，不能使用ArrayList要使用Vector，这样才安全。
-
-**非线程安全并不是多线程环境下就不能使用**。注意我上面有说到：**多线程操作同一个对象**。注意是**同一个对象**。比如最上面那个模拟，就是在主线程中new的一个ArrayList然后多个线程操作同一个ArrayList对象。
-
-如果是每个线程中new一个ArrayList，而这个ArrayList只在这一个线程中使用，那么肯定是没问题的。
+  - 例如 Vector 是线程安全的，ArrayList 不是线程安全的。如果每一个线程中 new 一个 ArrayList，而这个ArrayList 只是在这一个线程中使用，肯定没问题。 
 
 
 
-#### 线程安全十万个为什么？
+### 非线程安全!=不安全？
 
-**问：平时项目中使用锁和synchronized比较多，而很少使用volatile，难道就没有保证可见性？**
-答：锁和synchronized即可以保证原子性，也可以保证可见性。都是通过保证同一时间只有一个线程执行目标代码段来实现的。
+有人在使用过程中有一个不正确的观点：我的程序是多线程的，不能使用 ArrayList 要使用 Vector，这样才安全。
 
-**问：锁和synchronized为何能保证可见性？**
-答：根据[JDK 7的Java doc](http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/package-summary.html#MemoryVisibility)中对`concurrent`包的说明，一个线程的写结果保证对另外线程的读操作可见，只要该写操作可以由`happen-before`原则推断出在读操作之前发生。
+**非线程安全并不是多线程环境下就不能使用**。注意我上面有说到：**多线程操作同一个对象**。注意是**同一个对象**。比如最上面那个模拟，就是在主线程中 new 的一个 ArrayList 然后多个线程操作同一个 ArrayList 对象。
+
+如果是每个线程中 new 一个 ArrayList，而这个 ArrayList 只在这一个线程中使用，那么肯定是没问题的。
+
+
+
+### 线程安全十万个为什么？
+
+**问：平时项目中使用锁和 synchronized 比较多，而很少使用 volatile，难道就没有保证可见性？**
+答：锁和 synchronized 即可以保证原子性，也可以保证可见性。都是通过保证同一时间只有一个线程执行目标代码段来实现的。
+
+
+
+**问：锁和 synchronized 为何能保证可见性？**
+答：根据 [JDK 7的Java doc](http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/package-summary.html#MemoryVisibility) 中对 `concurrent` 包的说明，一个线程的写结果保证对另外线程的读操作可见，只要该写操作可以由 `happen-before` 原则推断出在读操作之前发生。
 
 > The results of a write by one thread are guaranteed to be **visible** to a read by another thread only if the write operation happens-before the read operation. The synchronized and volatile constructs, as well as the Thread.start() and Thread.join() methods, can form happens-before relationships.
 
-**问：既然锁和synchronized即可保证原子性也可保证可见性，为何还需要volatile？**
-答：synchronized和锁需要通过操作系统来仲裁谁获得锁，开销比较高，而volatile开销小很多。因此在只需要保证可见性的条件下，使用volatile的性能要比使用锁和synchronized高得多。
 
-**问：既然锁和synchronized可以保证原子性，为什么还需要AtomicInteger这种的类来保证原子操作？**
-答：锁和synchronized需要通过操作系统来仲裁谁获得锁，开销比较高，而AtomicInteger是通过CPU级的CAS操作来保证原子性，开销比较小。所以使用AtomicInteger的目的还是为了提高性能。
+
+**问：既然锁和 synchronized 即可保证原子性也可保证可见性，为何还需要 volatile？**
+答：synchronized和锁需要通过操作系统来仲裁谁获得锁，开销比较高，而 volatile 开销小很多。因此在只需要保证可见性的条件下，使用 volatile 的性能要比使用锁和 synchronized 高得多。
+
+
+
+**问：既然锁和 synchronized 可以保证原子性，为什么还需要 AtomicInteger 这种的类来保证原子操作？**
+答：锁和 synchronized 需要通过操作系统来仲裁谁获得锁，开销比较高，而 AtomicInteger 是通过CPU级的CAS操作来保证原子性，开销比较小。所以使用 AtomicInteger 的目的还是为了提高性能。
+
+
 
 **问：还有没有别的办法保证线程安全**
-答：有。尽可能避免引起非线程安全的条件——共享变量。如果能从设计上避免共享变量的使用，即可避免非线程安全的发生，也就无须通过锁或者synchronized以及volatile解决原子性、可见性和顺序性的问题。
+答：有。尽可能避免引起非线程安全的条件——共享变量。如果能从设计上避免共享变量的使用，即可避免非线程安全的发生，也就无须通过锁或者 synchronized 以及 volatile 解决原子性、可见性和顺序性的问题。
 
-**问：synchronized即可修饰非静态方式，也可修饰静态方法，还可修饰代码块，有何区别**
-答：synchronized修饰非静态同步方法时，锁住的是当前实例；synchronized修饰静态同步方法时，锁住的是该类的Class对象；synchronized修饰静态代码块时，锁住的是`synchronized`关键字后面括号内的对象。
+
+
+**问：synchronized 即可修饰非静态方式，也可修饰静态方法，还可修饰代码块，有何区别**
+答：synchronized 修饰非静态同步方法时，锁住的是当前实例；synchronized 修饰静态同步方法时，锁住的是该类的 Class 对象；synchronized 修饰静态代码块时，锁住的是 synchronized 关键字后面括号内的对象。
 
 
 
@@ -2374,67 +2390,7 @@ synchronized 不仅保证可见性，而且还保证原子性，因为，只有�
 
 
 
-## 10. 什么是死锁？死锁的四个必要条件？
-
-#### 什么是死锁
-
-造成死锁的原因就是多个线程或进程对同一个资源的争抢或相互依赖。一个最简单的解释就是你去面试，面试官问你告诉我什么是死锁，我就录用你，你回答面试官你录用我，我告诉你。  
-
-
-
-- 如果一个进程集合里面的每个进程都在等待只能由这个集合中的其他一个进程（包括他自身）才能引发的事件，这种情况就是死锁。
-
-这个定义可能有点拗口，下面用一个简单例子说明。
-
-```
-资源A、B，进程C、D描述如下：
-
-资源A和资源B，都是不可剥夺资源，
-现在进程C已经申请了资源A，进程D也申请了资源B，
-进程C接下来的操作需要用到资源B，而进程D恰好也在申请资源A，
-进程C、D都得不到接下来的资源，那么就引发了死锁。
-
-```
-
-​	*然后套用回去定义*：如果一个进程集合里面（进程C和进程D）的每个进程（进程C和进程D）都在等待只能由这个集合中的其他一个进程（对于进程C，他在等进程D；对于进程D，他在等进程C）才能引发的事件（释放相应资源）。
-
-​	这里的资源包括了软的资源（代码块）和硬的资源（例如扫描仪）。
-	资源一般可以分两种：**可剥夺资源（Preemptable）**和**不可剥夺资源 （Nonpreemptable）**。一般来说对于由可剥夺资源引起的死锁可以由系统的重新分配资源来解决，所以一般来说大家说的<u>死锁都是由于不可剥夺资源 所引起的</u>。
-
-#### 死锁的四个必要条件
-
-- **互斥条件（Mutual exclusion）**：资源不能被共享，只能由一个进程使用。
-- **请求与保持条件（Hold and wait）**：已经得到资源的进程可以再次申请新的资源。
-- **非剥夺条件（No pre-emption）**：已经分配的资源不能从相应的进程中被强制地剥夺。
-- **循环等待条件（Circular wait）**：系统中若干进程组成环路，该环路中每个进程都在等待相邻进程正占用的资源。
-
-#### 处理死锁的策略
-
-- 忽略该问题。例如鸵鸟算法，该算法可以应用在极少发生死锁的的情况下。为什么叫鸵鸟算法呢，因为传说中鸵鸟看到危险就把头埋在地底下，可能鸵鸟觉得看不到危险也就没危险了吧。跟掩耳盗铃有点像。
-- 检测死锁并且恢复。
-- 仔细地对资源进行动态分配，以避免死锁。
-- 通过破除死锁四个必要条件之一，来防止死锁产生。
-
-#### 死锁预防 
-
-- **打破互斥条件**  `一般无法破除` 。即允许进程同时访问某些资源。但是，有的资源是不允许被同时访问的，像打印机等等，这是由资源本身的属性所决定的。所以，这种办法并无实用价值。
-- **打破不可抢占条件**  `加入超时操作`。即允许进程强行从占有者那里夺取某些资源。就是说，当一个进程已占有了某些资源，它又申请新的资源，但不能立即被满足时，它必须释放所占有的全部资源，以后再重新申请。它所释放的资源可以分配给其它进程。这就相当于该进程占有的资源被隐蔽地强占了。这种预防死锁的方法实现起来困难，会降低系统性能。
-- **打破占有且申请条件** `一次性获取所有资源`。可以实行资源预先分配策略。即进程在运行前一次性地向系统申请它所需要的全部资源。如果某个进程所需的全部资源得不到满足，则不分配任何资源，此进程暂不运行。只有当系统能够满足当前进程的全部资源需求时，才一次性地将所申请的资源全部分配给该进程。由于运行的进程已占有了它所需的全部资源，所以不会发生占有资源又申请资源的现象，因此不会发生死锁。但是，这种策略也有如下缺点： 
-  - 在许多情况下，一个进程在执行之前不可能知道它所需要的全部资源。这是由于进程在执行时是动态的，不可预测的； 
-  - 资源利用率低。无论所分资源何时用到，一个进程只有在占有所需的全部资源后才能执行。即使有些资源最后才被该进程用到一次，但该进程在生存期间却一直占有它们，造成长期占着不用的状况。这显然是一种极大的资源浪费； 
-  - 降低了进程的并发性。因为资源有限，又加上存在浪费，能分配到所需全部资源的进程个数就必然少了。 
-- **打破循环等待条件** `按顺序后去自愿`，实行资源有序分配策略。采用这种策略，即把资源事先分类编号，按号分配，使进程在申请，占用资源时不会形成环路。所有进程对资源的请求必须严格按资源序号递增的顺序提出。进程占用了小号资源，才能申请大号资源，就不会产生环路，从而预防了死锁。这种策略与前面的策略相比，资源的利用率和系统吞吐量都有很大提高，但是也存在以下缺点： 
-  - 限制了进程对资源的请求，同时给系统中所有资源合理编号也是件困难事，并增加了系统开销； 
-  - 为了遵循按编号申请的次序，暂不使用的资源也需要提前申请，从而增加了进程对资源的占用时间。 
-
-#### 死锁避免 
-
-- 安全序列 
-- 银行家算法 
-
-
-
-## 11. volatile 关键字的如何保证内存可见性【阿里面经Onenote】
+## 5. volatile 关键字的如何保证内存可见性
 
 - volatile 关键字的作用 
 
@@ -2444,46 +2400,46 @@ synchronized 不仅保证可见性，而且还保证原子性，因为，只有�
 
 - 内存可见性 
 
-  - volatile保证可见性的原理是在每次访问变量时都会进行一次刷新，因此每次访问都是主内存中最新的版本。所以volatile关键字的作用之一就是保证变量修改的实时可见性。 
+  - volatile 保证可见性的原理是在每次访问变量时都会进行一次刷新，因此每次访问都是主内存中最新的版本。所以 volatile 关键字的作用之一就是保证变量修改的实时可见性。 
 
-- 当且仅当满足以下所有条件时，才应该使用volatile变量 
+- 当且仅当满足以下所有条件时，才应该使用 volatile 变量 
 
   - 对变量的写入操作不依赖变量的当前值，或者你能确保只有单个线程更新变量的值。 
   - 该变量没有包含在具有其他变量的不变式中。 
 
-- volatile使用建议 
+- volatile 使用建议 
 
-  - 在两个或者更多的线程需要访问的成员变量上使用volatile。当要访问的变量已在synchronized代码块中，或者为常量时，没必要使用volatile。 
-  - 由于使用volatile屏蔽掉了JVM中必要的代码优化，所以在效率上比较低，因此一定在必要时才使用此关键字。 
+  - 在两个或者更多的线程需要访问的成员变量上使用 volatile。当要访问的变量已在 synchronized 代码块中，或者为常量时，没必要使用volatile。 
+  - 由于使用 volatile 屏蔽掉了 JVM 中必要的代码优化，所以在效率上比较低，因此一定在必要时才使用此关键字。 
 
-- volatile和synchronized区别 
+- volatile 和 synchronized区别 
 
-  - volatile不会进行加锁操作： 
+  - volatile 不会进行加锁操作： 
 
-  volatile变量是一种稍弱的同步机制在访问volatile变量时不会执行加锁操作，因此也就不会使执行线程阻塞，因此volatile变量是一种比synchronized关键字更轻量级的同步机制。 
+  　　volatile 变量是一种稍弱的同步机制在访问 volatile 变量时不会执行加锁操作，因此也就不会使执行线程阻塞，因此 volatile 变量是一种比 synchronized 关键字更轻量级的同步机制。 
 
   - volatile 变量作用类似于同步变量读写操作： 
 
-  从内存可见性的角度看，写入volatile变量相当于退出同步代码块，而读取volatile变量相当于进入同步代码块。 
+  　　从内存可见性的角度看，写入 volatile 变量相当于退出同步代码块，而读取 volatile 变量相当于进入同步代码块。 
 
   - volatile 不如 synchronized安全： 
 
-  在代码中如果过度依赖volatile变量来控制状态的可见性，通常会比使用锁的代码更脆弱，也更难以理解。仅当volatile变量能简化代码的实现以及对同步策略的验证时，才应该使用它。一般来说，用同步机制会更安全些。 
+  　　在代码中如果过度依赖 volatile 变量来控制状态的可见性，通常会比使用锁的代码更脆弱，也更难以理解。仅当 volatile 变量能简化代码的实现以及对同步策略的验证时，才应该使用它。一般来说，用同步机制会更安全些。 
 
   - volatile 无法同时保证内存可见性和原则性： 
 
-  加锁机制（即同步机制）既可以确保可见性又可以确保原子性，而volatile变量只能确保可见性，原因是声明为volatile的简单变量如果当前值与该变量以前的值相关，那么volatile关键字不起作用，也就是说如下的表达式都不是原子操作：“count++”、“count = count+1”。 
+  　　加锁机制（即同步机制）既可以确保可见性又可以确保原子性，而 volatile 变量只能确保可见性，原因是声明为volatile的简单变量如果当前值与该变量以前的值相关，那么 volatile 关键字不起作用，也就是说如下的表达式都不是原子操作：“count++”、“count = count+1”。 
 
    
 
-
-
-## 12. 什么是线程？线程和进程有什么区别？为什么要使用多线程【阿里面经Onenote】
+## 5. 什么是线程？线程和进程有什么区别？为什么要使用多线程
 
 （1）线程和进程
 
 - 进程是操作系统**分配资源**的最小单位 
 - 线程是**CPU调度**的最小单位  
+
+
 
 （2）使用线程的原因
 
@@ -2494,17 +2450,34 @@ synchronized 不仅保证可见性，而且还保证原子性，因为，只有�
 
 
 
-
-
-## 13. 多线程共用一个数据变量需要注意什么？【阿里面经Onenote】
+## 6. 多线程共用一个数据变量需要注意什么？
 
 - 当我们在线程对象（Runnable）中定义了全局变量，run方法会修改该变量时，如果有多个线程同时使用该线程对象，那么就会造成全局变量的值被同时修改，造成错误. 
-- ThreadLocal是JDK引入的一种机制，它用于解决线程间共享变量，使用ThreadLocal声明的变量，即使在线程中属于全局变量，针对每个线程来讲，这个变量也是独立的。 
-- volatile变量每次被线程访问时，都强迫线程从主内存中重读该变量的最新值，而当该变量发生修改变化时，也会强迫线程将最新的值刷新回主内存中。这样一来，不同的线程都能及时的看到该变量的最新值。 
+- ThreadLocal 是JDK引入的一种机制，它用于解决线程间共享变量，使用 ThreadLocal 声明的变量，即使在线程中属于全局变量，针对每个线程来讲，这个变量也是独立的。 
+- volatile 变量每次被线程访问时，都强迫线程从主内存中重读该变量的最新值，而当该变量发生修改变化时，也会强迫线程将最新的值刷新回主内存中。这样一来，不同的线程都能及时的看到该变量的最新值。 
 
-## 14. Java是否有内存泄露和内存溢出【阿里面经Onenote】
 
-- 静态集合类，使用Set、Vector、HashMap等集合类的时候需要特别注意。当这些类被定义成静态的时候，由于他们的生命周期跟应用程序一样长，这时候就有可能发生内存泄漏。 
+
+## 7. 内存泄漏与内存溢出
+
+### Java内存回收机制
+
+　　不论哪种语言的内存分配方式，都需要返回所分配内存的真实地址，也就是返回一个指针到内存块的首地址。Java中对象是采用 new、反射、clone、反序列化等方法创建的， 这些对象的创建都是在堆（Heap）中分配的，所有对象的回收都是由Java虚拟机通过垃圾回收机制完成的。GC 为了能够正确释放对象，会监控每个对象的运行状况，对他们的申请、引用、被引用、赋值等状况进行监控，Java 会使用有向图的方法进行管理内存，实时监控对象是否可以达到，如果不可到达，则就将其回收，这样也可以消除引用循环的问题。
+
+　　在 Java 语言中，判断一个内存空间是否符合垃圾收集标准有两个：一个是给对象赋予了空值 null，以下再没有调用过，另一个是给对象赋予了新值，这样重新分配了内存空间。 
+
+### Java内存泄露引起原因
+
+　　首先，什么是内存泄露？经常听人谈起内存泄露，但要问什么是内存泄露，没几个说得清楚。
+
+　　**内存泄露**：是指无用对象（不再使用的对象）持续占有内存或无用对象的内存得不到及时释放，从而造成的内存空间的浪费称为内存泄露。内存泄露有时不严重且不易察觉，这样开发者就不知道存在内存泄露，但有时也会很严重，会提示 `Out of memory`。
+
+　　**内存溢出**：指程序运行过程中**无法申请到足够的内存**而导致的一种错误。**内存泄露是内存溢出的一种诱因**，不是唯一因素
+　　那么，Java 内存泄露根本原因是什么呢？长生命周期的对象持有短生命周期对象的引用就很可能发生内存泄露，尽管短生命周期对象已经不再需要，但是因为长生命周期对象持有它的引用而导致不能被回收，这就是 Java 中内存泄露的发生场景。具体主要有如下几大类
+
+#### 静态集合类
+
+　　静态集合类，使用Set、Vector、HashMap等集合类的时候需要特别注意。当这些类被定义成静态的时候，由于他们的生命周期跟应用程序一样长，这时候就有可能发生内存泄漏。 
 
 ```java
 // 例子 
@@ -2523,51 +2496,59 @@ class StaticTest
 } 
 ```
 
-在上面的代码中，循环申请了Object对象，并添加到Vector中，然后设置为null，可是这些对象呗vector引用着，因此必能被GC回收，因此造成内存泄漏。因此要释放这些对象，还需要将它们从vector删除，最简单的方法就是将vector设置为null 
+　　在上面的代码中，循环申请object对象，并添加到Vector中，然后设置object=null（就是清除栈中引用变量object）,但是这些对象被vector引用着，必然不能被GC回收，造成内存泄露。因此要释放这些对象，还需要将它们从vector中删除，最简单的方法就是将vector=null,清空集合类中的引用。 
 
  
 
-- 监听器： 在Java编程中，我们都需要和监听器打交道，通常一个应用中会用到很多监听器，我们会调用一个控件，诸如addXXXListener()等方法来增加监听器，但往往在释放的时候却没有去删除这些监听器，从而增加了内存泄漏的机会。 
+#### 监听器
 
-- 物理连接：一些物理连接，比如[数据库](http://lib.csdn.net/base/mysql)连接和网络连接，除非其显式的关闭了连接，否则是不会自动被GC 回收的。Java 数据库连接一般用DataSource.getConnection()来创建，当不再使用时必须用Close()方法来释放，因为这些连接是独立于JVM的。对于Resultset 和Statement 对象可以不进行显式回收，但Connection 一定要显式回收，因为Connection 在任何时候都无法自动回收，而Connection一旦回收，Resultset 和Statement 对象就会立即为NULL。但是如果使用连接池，情况就不一样了，除了要显式地关闭连接，还必须显式地关闭Resultset Statement 对象（关闭其中一个，另外一个也会关闭），否则就会造成大量的Statement 对象无法释放，从而引起内存泄漏。。一般情况下，在try代码块里创建连接，在finally里释放连接，就能够避免此类内存泄漏。 
-
-- 内部类和外部模块等的引用：内部类的引用是比较容易遗忘的一种，而且一旦没释放可能导致一系列的后继类对象没有释放。在调用外部模块的时候，也应该注意防止内存泄漏，如果模块A调用了外部模块B的一个方法，如： 
-
-public void register(Object o) 
-
-这个方法有可能就使得A模块持有传入对象的引用，这时候需要查看B模块是否提供了出去引用的方法，这种情况容易忽略，而且发生内存泄漏的话，还比较难察觉。 
-
-- 单例模式：因为单利对象初始化后将在JVM的整个生命周期内存在，如果它持有一个外部对象的（生命周期比较短）引用，那么这个外部对象就不能被回收，从而导致内存泄漏。如果这个外部对象还持有其他对象的引用，那么内存泄漏更严重。 
+　　在 Java 编程中，我们都需要和监听器打交道，通常一个应用中会用到很多监听器，我们会调用一个控件，诸如 `addXXXListener()` 等方法来增加监听器，但往往在释放的时候却没有去删除这些监听器，从而增加了内存泄漏的机会。 
 
 
 
-### 
+#### 各种连接
 
-## 15. 线程间通信和进程间通信？
-
-#### 线程间通信
-
-- synchronized同步
-
-  - 这种方式，本质上就是“共享内存”式的通信。多个线程需要访问同一个共享变量，谁拿到了锁（获得了访问权限），谁就可以执行。
-
-- while轮询的方式
-
-  - 在这种方式下，线程A不断地改变条件，线程ThreadB不停地通过while语句检测这个条件(list.size()==5)是否成立 ，从而实现了线程间的通信。但是这种方式会浪费CPU资源。之所以说它浪费资源，是因为JVM调度器将CPU交给线程B执行时，它没做啥“有用”的工作，只是在不断地测试 某个条件是否成立。就类似于现实生活中，某个人一直看着手机屏幕是否有电话来了，而不是： 在干别的事情，当有电话来时，响铃通知TA电话来了。
-
-- wait/notify机制
-
-  - 当条件未满足时，线程A调用wait() 放弃CPU，并进入阻塞状态。（不像while轮询那样占用CPU）
-
-    当条件满足时，线程B调用 notify()通知 线程A，所谓通知线程A，就是唤醒线程A，并让它进入可运行状态。
-
-- 管道通信
-
-  - java.io.PipedInputStream 和 java.io.PipedOutputStream进行通信
+　　比如数据库连接（dataSourse.getConnection()），网络连接 (socket) 和 IO 连接，除非其显式的调用了其close() 方 法将其连接关闭，否则是不会自动被 GC 回收的。对于 Resultset 和 Statement 对象可以不进行显式回收，但 Connection 一定要显式回收，因为 Connection 在任何时候都无法自动回收，而 Connection一旦回收，Resultset 和 Statement 对象就会立即为 NULL。但是如果使用连接池，情况就不一样了，除了要显式地关闭连接，还必须显式地关闭 Resultset Statement 对象（关闭其中一个，另外一个也会关闭），否则就会造成大量的 Statement 对象无法释放，从而引起内存泄漏。这种情况下一般都会在 try 里面去的连接，在 finally 里面释放连接。 
 
 
 
-#### 进程间通信
+#### 内部类和外部模块等的引用
+
+　　内部类的引用是比较容易遗忘的一种，而且一旦没释放可能导致一系列的后继类对象没有释放。在调用外部模块的时候，也应该注意防止内存泄漏，如果模块A调用了外部模块B的一个方法，如： `public void register(Object o) ` 这个方法有可能就使得A模块持有传入对象的引用，这时候需要查看B模块是否提供了出去引用的方法，这种情况容易忽略，而且发生内存泄漏的话，还比较难察觉。 
+
+
+
+#### 单例模式
+
+　　因为单利对象初始化后将在 JVM 的整个生命周期内存在，如果它持有一个外部对象的（生命周期比较短）引用，那么这个外部对象就不能被回收，从而导致内存泄漏。如果这个外部对象还持有其他对象的引用，那么内存泄漏更严重。 
+
+
+
+## 7. 线程间通信和进程间通信？
+
+### 线程间通信
+
+- **synchronized 同步**
+
+  - 这种方式，本质上就是 “共享内存” 式的通信。多个线程需要访问同一个共享变量，谁拿到了锁（获得了访问权限），谁就可以执行。
+
+- **while 轮询的方式**
+
+  - 在这种方式下，线程A不断地改变条件，线程 ThreadB 不停地通过 while 语句检测这个条件`(list.size()==5)` 是否成立 ，从而实现了线程间的通信。但是这种方式会浪费 CPU 资源。之所以说它浪费资源，是因为 JVM 调度器将 CPU 交给线程B执行时，它没做啥“有用”的工作，只是在不断地测试某个条件是否成立。就类似于现实生活中，某个人一直看着手机屏幕是否有电话来了，而不是： 在干别的事情，当有电话来时，响铃通知TA电话来了。
+
+- **wait/notify 机制**
+
+  - 当条件未满足时，线程A调用 wait() 放弃CPU，并进入阻塞状态。（不像 while 轮询那样占用 CPU）
+
+    当条件满足时，线程B调用 notify() 通知线程A，所谓通知线程A，就是唤醒线程A，并让它进入可运行状态。
+
+- **管道通信**
+
+  - java.io.PipedInputStream 和 java.io.PipedOutputStream 进行通信
+
+
+
+### 进程间通信
 
 - **管道（Pipe）** ：管道可用于具有亲缘关系进程间的通信，允许一个进程和另一个与它有共同祖先的进程之间进行通信。
 - **命名管道（named pipe）** ：命名管道克服了管道没有名字的限制，因此，除具有管道所具有的功能外，它还允许无亲缘关 系 进程间的通信。命名管道在文件系统中有对应的文件名。命名管道通过命令mkfifo或系统调用mkfifo来创建。
@@ -2587,18 +2568,16 @@ public void register(Object o)
 
 
 
-## 16. 什么是同步和异步，阻塞和非阻塞？
-
-
+## 8. 什么是同步和异步，阻塞和非阻塞？
 
 > 同步和异步关注的是消息通信机制 (synchronous communication/ asynchronous communication)
 
-#### 同步
+### 同步
 
 - 在发出一个同步调用时，在没有得到结果之前，该调用就不返回。
 - 例如：按下电饭锅的煮饭按钮，然后等待饭煮好，把饭盛出来，然后再去炒菜。
 
-#### 异步
+### 异步
 
 - 在发出一个异步调用后，调用者不会立刻得到结果，该调用就返回了。
 - 例如：按下电钮锅的煮饭按钮，直接去炒菜或者做别的事情，当电饭锅“滴滴滴”响的时候，再回去把饭盛出来。显然，异步式编程要比同步式编程高效得多。
@@ -2607,12 +2586,12 @@ public void register(Object o)
 
 > 阻塞和非阻塞关注的是程序在等待调用结果（消息，返回值）时的状态.
 
-#### 阻塞
+### 阻塞
 
 - 调用结果返回之前，当前线程会被挂起。调用线程只有在得到结果之后才会返回。
 - 例子：你打电话问书店老板有没有《分布式系统》这本书，你如果是阻塞式调用，你会一直把自己“挂起”，直到得到这本书有没有的结果 
 
-#### 非阻塞
+### 非阻塞
 
 - 在不能立刻得到结果之前，该调用不会阻塞当前线程。
 - 例子：你打电话问书店老板有没有《分布式系统》这本书，你不管老板有没有告诉你，你自己先一边去玩了， 当然你也要偶尔过几分钟check一下老板有没有返回结果。 
@@ -2625,25 +2604,209 @@ public void register(Object o)
 
 
 
-## 认识的锁
+## 9. Java中的锁
 
-认识的“*锁”偏向锁轻量级锁重量级锁重入锁自旋锁共享锁独占锁排他锁读写锁公平锁非公平锁死锁活锁
+本小结参考：[Java 中的锁 - Java 并发性和多线程 - 极客学院Wiki](http://wiki.jikexueyuan.com/project/java-concurrent/locks-in-java.html)
 
-## 17. 并发包（非常重要！！！待整理）
+　　锁像 synchronized 同步块一样，是一种线程同步机制，但比 Java 中的 synchronized 同步块更复杂。因为锁（以及其它更高级的线程同步机制）是由 synchronized 同步块的方式实现的，所以我们还不能完全摆脱 synchronized 关键字（译者注：这说的是 Java 5 之前的情况）。
 
-## concurrenthashmap分段锁的细节？【蚂蚁金服面经】
+　　自 Java 5 开始，java.util.concurrent.locks 包中包含了一些锁的实现，因此你不用去实现自己的锁了。但是你仍然需要去了解怎样使用这些锁，且了解这些实现背后的理论也是很有用处的。可以参考我对 java.util.concurrent.locks.Lock 的介绍，以了解更多关于锁的信息。
+
+### 一个简单的锁
+
+让我们从 java 中的一个同步块开始：
+
+```java
+public class Counter{
+    private int count = 0;
+
+    public int inc(){
+        synchronized(this){
+            return ++count;
+        }
+    }
+}
+```
+
+可以看到在 inc()方法中有一个 synchronized(this)代码块。该代码块可以保证在同一时间只有一个线程可以执行 return ++count。虽然在 synchronized 的同步块中的代码可以更加复杂，但是++count 这种简单的操作已经足以表达出线程同步的意思。
+
+以下的 Counter 类用 Lock 代替 synchronized 达到了同样的目的：
+
+```java
+public class Counter{
+    private Lock lock = new Lock();
+    private int count = 0;
+
+    public int inc(){
+        lock.lock();
+        int newCount = ++count;
+        lock.unlock();
+        return newCount;
+    }
+}
+```
+
+lock()方法会对 Lock 实例对象进行加锁，因此所有对该对象调用 lock()方法的线程都会被阻塞，直到该 Lock 对象的 unlock()方法被调用。
+
+这里有一个 Lock 类的简单实现：
+
+```java
+public class Counter{
+public class Lock{
+    private boolean isLocked = false;
+
+    public synchronized void lock()
+        throws InterruptedException{
+        while(isLocked){
+            wait();
+        }
+        isLocked = true;
+    }
+
+    public synchronized void unlock(){
+        isLocked = false;
+        notify();
+    }
+}
+```
+
+注意其中的 while(isLocked) 循环，它又被叫做 “**自旋锁**”。自旋锁以及 wait() 和 notify() 方法在[线程通信](http://wiki.jikexueyuan.com/project/java-concurrent/thread-communication.html)这篇文章中有更加详细的介绍。当 isLocked 为 true 时，调用 lock() 的线程在 wait() 调用上阻塞等待。为防止该线程没有收到 notify() 调用也从 wait() 中返回（也称作[虚假唤醒](http://wiki.jikexueyuan.com/project/java-concurrent/race-conditions-and-critical-sections.html)），这个线程会重新去检查 isLocked 条件以决定当前是否可以安全地继续执行还是需要重新保持等待，而不是认为线程被唤醒了就可以安全地继续执行了。如果 isLocked 为 false，当前线程会退出 while(isLocked) 循环，并将 isLocked 设回 true，让其它正在调用 lock() 方法的线程能够在 Lock 实例上加锁。
+
+当线程完成了[临界区](http://wiki.jikexueyuan.com/project/java-concurrent/race-conditions-and-critical-sections.html)（位于 lock()和 unlock()之间）中的代码，就会调用 unlock()。执行 unlock()会重新将 isLocked 设置为 false，并且通知（唤醒）其中一个（若有的话）在 lock()方法中调用了 wait()函数而处于等待状态的线程。
+
+### 锁的可重入性
+
+Java 中的 synchronized 同步块是可重入的。这意味着如果一个 Java 线程进入了代码中的 synchronized 同步块，并因此获得了该同步块使用的同步对象对应的管程上的锁，那么这个线程可以进入由同一个管程对象所同步的另一个 java 代码块。下面是一个例子：
+
+```java
+public class Reentrant{
+    public synchronized outer(){
+        inner();
+    }
+
+    public synchronized inner(){
+        //do something
+    }
+}
+```
+
+注意 outer()和 inner()都被声明为 synchronized，这在 Java 中和 synchronized(this) 块等效。如果一个线程调用了 outer()，在 outer()里调用 inner()就没有什么问题，因为这两个方法（代码块）都由同一个管程对象（”this”) 所同步。如果一个线程已经拥有了一个管程对象上的锁，那么它就有权访问被这个管程对象同步的所有代码块。这就是可重入。线程可以进入任何一个它已经拥有的锁所同步着的代码块。
+
+前面给出的锁实现不是可重入的。如果我们像下面这样重写 Reentrant 类，当线程调用 outer() 时，会在 inner()方法的 lock.lock() 处阻塞住。
+
+```java
+public class Reentrant2{
+    Lock lock = new Lock();
+
+    public outer(){
+        lock.lock();
+        inner();
+        lock.unlock();
+    }
+
+    public synchronized inner(){
+        lock.lock();
+        //do something
+        lock.unlock();
+    }
+}
+```
+
+调用 outer() 的线程首先会锁住 Lock 实例，然后继续调用 inner()。inner()方法中该线程将再一次尝试锁住 Lock 实例，结果该动作会失败（也就是说该线程会被阻塞），因为这个 Lock 实例已经在 outer()方法中被锁住了。
+
+两次 lock()之间没有调用 unlock()，第二次调用 lock 就会阻塞，看过 lock() 实现后，会发现原因很明显：
+
+```java
+public class Lock{
+    boolean isLocked = false;
+
+    public synchronized void lock()
+        throws InterruptedException{
+        while(isLocked){
+            wait();
+        }
+        isLocked = true;
+    }
+
+    ...
+}
+```
+
+一个线程是否被允许退出 lock()方法是由 while 循环（自旋锁）中的条件决定的。当前的判断条件是只有当 isLocked 为 false 时 lock 操作才被允许，而没有考虑是哪个线程锁住了它。
+
+为了让这个 Lock 类具有可重入性，我们需要对它做一点小的改动：
+
+```java
+public class Lock{
+    boolean isLocked = false;
+    Thread  lockedBy = null;
+    int lockedCount = 0;
+
+    public synchronized void lock()
+        throws InterruptedException{
+        Thread callingThread =
+            Thread.currentThread();
+        while(isLocked && lockedBy != callingThread){
+            wait();
+        }
+        isLocked = true;
+        lockedCount++;
+        lockedBy = callingThread;
+  }
+
+    public synchronized void unlock(){
+        if(Thread.curentThread() ==
+            this.lockedBy){
+            lockedCount--;
+
+            if(lockedCount == 0){
+                isLocked = false;
+                notify();
+            }
+        }
+    }
+
+    ...
+}
+```
+
+注意到现在的 while 循环（自旋锁）也考虑到了已锁住该 Lock 实例的线程。如果当前的锁对象没有被加锁(isLocked = false)，或者当前调用线程已经对该 Lock 实例加了锁，那么 while 循环就不会被执行，调用 lock()的线程就可以退出该方法（译者注：“被允许退出该方法”在当前语义下就是指不会调用 wait()而导致阻塞）。
+
+除此之外，我们需要记录同一个线程重复对一个锁对象加锁的次数。否则，一次 unblock()调用就会解除整个锁，即使当前锁已经被加锁过多次。在 unlock()调用没有达到对应 lock()调用的次数之前，我们不希望锁被解除。
+
+现在这个 Lock 类就是可重入的了。
+
+### 锁的公平性
+
+Java 的 synchronized 块并不保证尝试进入它们的线程的顺序。因此，如果多个线程不断竞争访问相同的 synchronized 同步块，就存在一种风险，其中一个或多个线程永远也得不到访问权 —— 也就是说访问权总是分配给了其它线程。这种情况被称作线程饥饿。为了避免这种问题，锁需要实现公平性。本文所展现的锁在内部是用 synchronized 同步块实现的，因此它们也不保证公平性。[饥饿和公平](http://wiki.jikexueyuan.com/project/java-concurrent/starvation-and-fairness.html)中有更多关于该内容的讨论。
+
+
+
+### 在 finally 语句中调用 unlock()
+
+如果用 Lock 来保护临界区，并且临界区有可能会抛出异常，那么在 finally 语句中调用 unlock()就显得非常重要了。这样可以保证这个锁对象可以被解锁以便其它线程能继续对其加锁。以下是一个示例：
+
+```java
+lock.lock();
+try{
+    //do critical section code,
+    //which may throw exception
+} finally {
+    lock.unlock();
+}
+```
+
+这个简单的结构可以保证当临界区抛出异常时 Lock 对象可以被解锁。如果不是在 finally 语句中调用的 unlock()，当临界区抛出异常时，Lock 对象将永远停留在被锁住的状态，这会导致其它所有在该 Lock 对象上调用 lock()的线程一直阻塞。
+
+
+
+## 10. concurrenthashmap分段锁的细节？【蚂蚁金服面经】
 
 
 
 
 
-## 并发包里了解哪些 【蚂蚁金服面经】
-
-> 待补充
-
-
-
-## concurrent包下面，都用过什么？
+## 11. 并发包(J.U.C)下面，都用过什么【蚂蚁金服面经】
 
 - concurrent下面的包 
   - Executor  用来创建线程池，在实现Callable接口时，添加线程。 
@@ -2656,24 +2819,14 @@ public void register(Object o)
 
 
 
-## AQS
+## 12. AQS
 
 Java并发之AQS详解 - CodesGeek - 博客园
-https://www.cnblogs.com/daydaynobug/p/6752837.html
-
-
-
-## -----------------------------分割线-----------------------
 
 
 
 
-
-
-
-## 从volatile说到,i++原子操作,线程安全问题
-
-
+## 13. 从volatile说到,i++原子操作,线程安全问题
 
 从volatile说到,i++原子操作,线程安全问题 - CSDN博客
 https://blog.csdn.net/zbw18297786698/article/details/53420780
@@ -2682,7 +2835,7 @@ https://blog.csdn.net/zbw18297786698/article/details/53420780
 
 
 
-## 附录：参考资料
+# 附录：参考资料
 
 - [Interview-Notebook/Java 并发.md at master · CyC2018/Interview-Notebook](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md)
 - [Java 并发编程-极客学院Wiki](http://wiki.jikexueyuan.com/project/java-concurrency/)
