@@ -118,11 +118,9 @@
 
 
 
-Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)
+　　Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)　|　Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sheet/)
 
-Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sheet/)
-
-from 2018年5月20日
+　　from 2018年5月20日
 
 
 
