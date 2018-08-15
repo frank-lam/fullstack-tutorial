@@ -1,3 +1,105 @@
+
+<!-- TOC -->
+
+- [前言](#前言)
+- [第一部分：MySQL基础](#第一部分mysql基础)
+    - [MySQL的多存储引擎架构](#mysql的多存储引擎架构)
+    - [1. 什么是事务](#1-什么是事务)
+        - [AUTOCOMMIT](#autocommit)
+    - [2. 数据库ACID](#2-数据库acid)
+        - [1. 原子性（Atomicity）](#1-原子性atomicity)
+        - [2. 一致性（Consistency）](#2-一致性consistency)
+        - [3. 隔离性（Isolation）](#3-隔离性isolation)
+        - [4. 持久性（Durability）](#4-持久性durability)
+    - [3. 数据库中的范式](#3-数据库中的范式)
+    - [4. 脏读、不可重复读和幻读](#4-脏读不可重复读和幻读)
+        - [1. 脏读](#1-脏读)
+        - [2. 不可重复读](#2-不可重复读)
+        - [3. 幻读](#3-幻读)
+    - [5. 事务隔离级别](#5-事务隔离级别)
+        - [1. 串行化 (Serializable)](#1-串行化-serializable)
+        - [2. 可重复读 (Repeated Read)](#2-可重复读-repeated-read)
+        - [3. 读已提交 (Read Committed)](#3-读已提交-read-committed)
+        - [4. 读未提交 (Read Uncommitted)](#4-读未提交-read-uncommitted)
+    - [6. 存储引擎](#6-存储引擎)
+        - [简介](#简介)
+        - [1. MyISAM](#1-myisam)
+        - [2. InnoDB](#2-innodb)
+        - [3. CSV](#3-csv)
+        - [4. Archive](#4-archive)
+        - [5. Memory](#5-memory)
+        - [6. Federated](#6-federated)
+        - [问：独立表空间和系统表空间应该如何抉择](#问独立表空间和系统表空间应该如何抉择)
+        - [问：如何选择存储引擎](#问如何选择存储引擎)
+        - [问：MyISAM和InnoDB引擎的区别](#问myisam和innodb引擎的区别)
+        - [问：为什么不建议 InnoDB 使用亿级大表](#问为什么不建议-innodb-使用亿级大表)
+    - [7. MySQL数据类型](#7-mysql数据类型)
+        - [1. 整型](#1-整型)
+        - [2. 浮点数](#2-浮点数)
+        - [3. 字符串](#3-字符串)
+        - [4. 时间和日期](#4-时间和日期)
+            - [DATATIME](#datatime)
+            - [TIMESTAMP](#timestamp)
+    - [8. 索引](#8-索引)
+        - [1. 索引使用的场景](#1-索引使用的场景)
+        - [2. B Tree 原理](#2-b-tree-原理)
+            - [B-Tree](#b-tree)
+            - [B+Tree](#btree)
+            - [顺序访问指针](#顺序访问指针)
+            - [优势](#优势)
+        - [3. 索引分类](#3-索引分类)
+            - [B+Tree 索引](#btree-索引)
+            - [哈希索引](#哈希索引)
+            - [全文索引](#全文索引)
+            - [空间数据索引（R-Tree）](#空间数据索引r-tree)
+        - [4. 索引的特点](#4-索引的特点)
+        - [5. 索引的优点](#5-索引的优点)
+        - [6. 索引的缺点](#6-索引的缺点)
+        - [7. 索引失效](#7-索引失效)
+        - [8. 在什么情况下适合建立索引](#8-在什么情况下适合建立索引)
+    - [9. 联合索引](#9-联合索引)
+        - [1. 什么是联合索引](#1-什么是联合索引)
+        - [2. 命名规则](#2-命名规则)
+        - [3. 创建索引](#3-创建索引)
+        - [4. 索引类型](#4-索引类型)
+        - [5. 删除索引](#5-删除索引)
+        - [6. 什么情况下使用索引](#6-什么情况下使用索引)
+    - [11. 数据库中的分页查询语句怎么写？【阿里面经】](#11-数据库中的分页查询语句怎么写阿里面经)
+    - [12. 常用的数据库有哪些？Redis用过吗？【阿里面经】](#12-常用的数据库有哪些redis用过吗阿里面经)
+    - [11. Redis的数据结构](#11-redis的数据结构)
+    - [12. 分库分表](#12-分库分表)
+        - [1. 垂直切分](#1-垂直切分)
+            - [（1）垂直切分的优点](#1垂直切分的优点)
+            - [（2）垂直切分的缺点](#2垂直切分的缺点)
+        - [2. 水平切分](#2-水平切分)
+            - [（1）水平切分的优点](#1水平切分的优点)
+            - [（2）水平切分的缺点](#2水平切分的缺点)
+            - [（3）垂直切分和水平切分的共同点](#3垂直切分和水平切分的共同点)
+        - [Sharding 策略](#sharding-策略)
+        - [Sharding 存在的问题及解决方案](#sharding-存在的问题及解决方案)
+            - [1. 事务问题](#1-事务问题)
+            - [2. JOIN](#2-join)
+            - [3. ID 唯一性](#3-id-唯一性)
+    - [13. 主从复制与读写分离](#13-主从复制与读写分离)
+        - [主从复制](#主从复制)
+        - [读写分离](#读写分离)
+    - [14. 查询性能优化](#14-查询性能优化)
+        - [1. 使用 Explain 进行分析](#1-使用-explain-进行分析)
+        - [2. 优化数据访问](#2-优化数据访问)
+            - [1. 减少请求的数据量](#1-减少请求的数据量)
+            - [2. 减少服务器端扫描的行数](#2-减少服务器端扫描的行数)
+        - [3. 重构查询方式](#3-重构查询方式)
+            - [1. 切分大查询](#1-切分大查询)
+            - [2. 分解大连接查询](#2-分解大连接查询)
+- [第二部分：高性能MySQL实践](#第二部分高性能mysql实践)
+    - [1. 如何解决秒杀的性能问题和超卖的讨论](#1-如何解决秒杀的性能问题和超卖的讨论)
+            - [解决方案1](#解决方案1)
+            - [解决方案2](#解决方案2)
+            - [解决方案3](#解决方案3)
+    - [2. 数据库主从不一致，怎么解？](#2-数据库主从不一致怎么解)
+- [附录：参考资料](#附录参考资料)
+
+<!-- /TOC -->
 # 前言
 
 在本文将讨论数据库原理和MySQL核心知识，MySQL性能优化等，包含 “MySQL基础” 和 “高性能MySQL实践” 两部分。
@@ -461,7 +563,7 @@ MySQL 5.5 及之后版本的默认存储引擎
 
 ## 7. MySQL数据类型
 
-### 整型
+### 1. 整型
 
 | 类型      | 存储 | 存储 | 最小值                        | 最大值                        |
 | --------- | ---- | ---- | ----------------------------- | ----------------------------- |
@@ -474,19 +576,21 @@ MySQL 5.5 及之后版本的默认存储引擎
 
 
 
-
-
 TINYINT, SMALLINT, MEDIUMINT, INT, BIGINT 分别使用 8, 16, 24, 32, 64 位存储空间，一般情况下越小的列越好。
 
 INT(11) 中的数字只是规定了交互工具显示字符的个数，对于存储和计算来说是没有意义的。
 
-### 浮点数
+
+
+### 2. 浮点数
 
 FLOAT 和 DOUBLE 为浮点类型，DECIMAL 为高精度小数类型。CPU 原生支持浮点运算，但是不支持 DECIMAl 类型的计算，因此 DECIMAL 的计算比浮点类型需要更高的代价。
 
 FLOAT、DOUBLE 和 DECIMAL 都可以指定列宽，例如 DECIMAL(18, 9) 表示总共 18 位，取 9 位存储小数部分，剩下 9 位存储整数部分。
 
-### 字符串
+
+
+### 3. 字符串
 
 主要有 CHAR 和 VARCHAR 两种类型，一种是定长的，一种是变长的。
 
@@ -494,11 +598,13 @@ VARCHAR 这种变长类型能够节省空间，因为只需要存储必要的内
 
 VARCHAR 会保留字符串末尾的空格，而 CHAR 会删除。
 
-### 时间和日期
+
+
+### 4. 时间和日期
 
 MySQL 提供了两种相似的日期时间类型：DATATIME 和 TIMESTAMP。
 
-#### 1. DATATIME
+#### DATATIME
 
 能够保存从 1001 年到 9999 年的日期和时间，精度为秒，使用 8 字节的存储空间。
 
@@ -506,7 +612,9 @@ MySQL 提供了两种相似的日期时间类型：DATATIME 和 TIMESTAMP。
 
 默认情况下，MySQL 以一种可排序的、无歧义的格式显示 DATATIME 值，例如“2008-01-16 22:37:08”，这是 ANSI 标准定义的日期和时间表示方法。
 
-#### 2. TIMESTAMP
+
+
+#### TIMESTAMP
 
 和 UNIX 时间戳相同，保存从 1970 年 1 月 1 日午夜（格林威治时间）以来的秒数，使用 4 个字节，只能表示从 1970 年 到 2038 年。
 
@@ -522,23 +630,24 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 
 ## 8. 索引
 
-### （1）索引使用的场景
+### 1. 索引使用的场景
 
 索引能够轻易将查询性能提升几个数量级。
 
-（1）对于非常小的表、大部分情况下简单的全表扫描比建立索引更高效。（2）对于中到大型的表，索引就非常有效。（3）但是对于特大型的表，建立和维护索引的代价将会随之增长。这种情况下，需要用到一种技术可以直接区分出需要查询的一组数据，而不是一条记录一条记录地匹配，例如可以使用分区技术。
+1. 对于非常小的表、大部分情况下简单的全表扫描比建立索引更高效。
+2. 对于中到大型的表，索引就非常有效。
+3. 但是对于特大型的表，建立和维护索引的代价将会随之增长。这种情况下，需要用到一种技术可以直接区分出需要查询的一组数据，而不是一条记录一条记录地匹配，例如可以使用分区技术。
 
 索引是在存储引擎层实现的，而不是在服务器层实现的，所以不同存储引擎具有不同的索引类型和实现。
 
 
 
-### （2）B Tree 原理
+### 2. B Tree 原理
 
-#### 1. B-Tree
+#### B-Tree
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/06976908-98ab-46e9-a632-f0c2760ec46c.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/06976908-98ab-46e9-a632-f0c2760ec46c.png)
+<div align="center"><img src="assets/06976908-98ab-46e9-a632-f0c2760ec46c.png" width=""/></div><br/>
 
- 
 
 定义一条数据记录为一个二元组 [key, data]，B-Tree 是满足下列条件的数据结构：
 
@@ -550,11 +659,11 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 
 由于插入删除新的数据记录会破坏 B-Tree 的性质，因此在插入删除时，需要对树进行一个分裂、合并、旋转等操作以保持 B-Tree 性质。
 
-#### 2. B+Tree
+#### B+Tree
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/7299afd2-9114-44e6-9d5e-4025d0b2a541.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/7299afd2-9114-44e6-9d5e-4025d0b2a541.png)
 
- 
+<div align="center"><img src="assets/7299afd2-9114-44e6-9d5e-4025d0b2a541.png" width=""/></div><br/>
+
 
 与 B-Tree 相比，B+Tree 有以下不同点：
 
@@ -562,17 +671,19 @@ MySQL 提供了 FROM_UNIXTIME() 函数把 UNIX 时间戳转换为日期，并提
 - 内节点不存储 data，只存储 key；
 - 叶子节点不存储指针。
 
-#### 3. 顺序访问指针
+#### 顺序访问指针
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/061c88c1-572f-424f-b580-9cbce903a3fe.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/061c88c1-572f-424f-b580-9cbce903a3fe.png)
 
- 
+<div align="center"><img src="assets/061c88c1-572f-424f-b580-9cbce903a3fe.png" width=""/></div><br/>
+
+
+
 
 一般在数据库系统或文件系统中使用的 B+Tree 结构都在经典 B+Tree 基础上进行了优化，在叶子节点增加了顺序访问指针，做这个优化的目的是为了提高区间访问的性能。
 
 
 
-#### 4. 优势
+#### 优势
 
 红黑树等平衡树也可以用来实现索引，但是文件系统及数据库系统普遍采用 B Tree 作为索引结构，主要有以下两个原因：
 
@@ -594,16 +705,16 @@ B+Tree 相比于 B-Tree 更适合外存索引，因为 B+Tree 内节点去掉了
 
 
 
-### （3）索引分类
+### 3. 索引分类
 
-| 特性                        | InnoDB | MyISAM | MEMORY |
-| --------------------------- | ------ | ------ | ------ |
-| B树索引(B-tree indexes)     | √      | √      | √      |
-| R树索引(R-tree indexes)     |        | √      |        |
-| 哈希索引(Hash indexes)      | √      |        | √      |
-| 全文索引(Full-text indexes) | √      | √      |        |
+| 特性                         | InnoDB | MyISAM | MEMORY |
+| ---------------------------- | ------ | ------ | ------ |
+| B树索引 (B-tree indexes)     | √      | √      | √      |
+| R树索引 (R-tree indexes)     |        | √      |        |
+| 哈希索引 (Hash indexes)      | √      |        | √      |
+| 全文索引 (Full-text indexes) | √      | √      |        |
 
-#### 1. B+Tree 索引
+#### B+Tree 索引
 
 B+Tree 索引是大多数 MySQL 存储引擎的默认索引类型。
 
@@ -619,26 +730,30 @@ InnoDB 的 B+Tree 索引分为**主索引**和**辅助索引**。
 
 主索引的叶子节点 data 域记录着完整的数据记录，这种索引方式被称为聚簇索引。因为无法把数据行存放在两个不同的地方，所以一个表只能有一个聚簇索引。
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/c28c6fbc-2bc1-47d9-9b2e-cf3d4034f877.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/c28c6fbc-2bc1-47d9-9b2e-cf3d4034f877.jpg)
+<div align="center"><img src="assets/c28c6fbc-2bc1-47d9-9b2e-cf3d4034f877.jpg" width=""/></div><br/>
 
- 
+
 
 辅助索引的叶子节点的 data 域记录着主键的值，因此在使用辅助索引进行查找时，需要先查找到主键值，然后再到主索引中进行查找。
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/7ab8ca28-2a41-4adf-9502-cc0a21e63b51.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/7ab8ca28-2a41-4adf-9502-cc0a21e63b51.jpg)
+<div align="center"><img src="assets/7ab8ca28-2a41-4adf-9502-cc0a21e63b51.jpg" width=""/></div><br/>
 
- 
 
-#### 2. 哈希索引
 
-InnoDB 引擎有一个特殊的功能叫“自适应哈希索引”，当某个索引值被使用的非常频繁时，会在 B+Tree 索引之上再创建一个哈希索引，这样就让 B+Tree 索引具有哈希索引的一些优点，比如快速的哈希查找。
+
+
+#### 哈希索引
+
+InnoDB 引擎有一个特殊的功能叫 “自适应哈希索引”，当某个索引值被使用的非常频繁时，会在 B+Tree 索引之上再创建一个哈希索引，这样就让 B+Tree 索引具有哈希索引的一些优点，比如快速的哈希查找。
 
 哈希索引能以 O(1) 时间进行查找，但是失去了有序性，它具有以下限制：
 
 - 无法用于排序与分组；
 - 只支持精确查找，无法用于部分查找和范围查找；
 
-#### 3. 全文索引
+
+
+#### 全文索引
 
 MyISAM 存储引擎支持全文索引，用于查找文本中的关键词，而不是直接比较是否相等。查找条件使用 MATCH AGAINST，而不是普通的 WHERE。
 
@@ -646,7 +761,9 @@ MyISAM 存储引擎支持全文索引，用于查找文本中的关键词，而�
 
 InnoDB 存储引擎在 MySQL 5.6.4 版本中也开始支持全文索引。
 
-#### 4. 空间数据索引（R-Tree）
+
+
+#### 空间数据索引（R-Tree）
 
 MyISAM 存储引擎支持空间数据索引，可以用于地理数据存储。空间数据索引会从所有维度来索引数据，可以有效地使用任意维度来进行组合查询。
 
@@ -654,7 +771,7 @@ MyISAM 存储引擎支持空间数据索引，可以用于地理数据存储。�
 
 
 
-### （4）索引的特点 
+### 4. 索引的特点 
 
 - 可以加快数据库的检索速度 
 - 降低数据库插入、修改、删除等维护的速度 
@@ -665,7 +782,7 @@ MyISAM 存储引擎支持空间数据索引，可以用于地理数据存储。�
 
 
 
-### （5）索引的优点 
+### 5. 索引的优点 
 
 - 创建唯一性索引，保证数据库表中每一行数据的唯一性 
 - 大大加快数据的检索速度，这是创建索引的最主要的原因 
@@ -675,7 +792,7 @@ MyISAM 存储引擎支持空间数据索引，可以用于地理数据存储。�
 
 
 
-### （6）索引的缺点 
+### 6. 索引的缺点 
 
 - 创建索引和维护索引要耗费时间，这种时间随着数据量的增加而增加 
 - 索引需要占用物理空间，除了数据表占用数据空间之外，每一个索引还要占一定的物理空间，如果建立聚簇索引，那么需要的空间就会更大 
@@ -683,9 +800,9 @@ MyISAM 存储引擎支持空间数据索引，可以用于地理数据存储。�
 
 
 
-### （7）索引失效 
+### 7. 索引失效 
 
-- 如果条件中有or，即使其中有条件带索引也不会使用(这就是问什么尽量少使用or的原因) 
+- 如果条件中有or，即使其中有条件带索引也不会使用 (这就是问什么尽量少使用or的原因) 
 - 对于多列索引，不是使用的第一部分，则不会使用索引 
 - like查询是以%开头 
 - 如果列类型是字符串，那一定要在条件中使用引号引起来，否则不会使用索引 
@@ -693,71 +810,154 @@ MyISAM 存储引擎支持空间数据索引，可以用于地理数据存储。�
 
 
 
-### （8）在什么情况下适合建立索引？
+### 8. 在什么情况下适合建立索引
 
 - 为经常出现在关键字order by、group by、distinct后面的字段，建立索引。 
 - 在union等集合操作的结果集字段上，建立索引。其建立索引的目的同上。 
-- 为经常用作查询选择的字段，建立索引。 
-- 在经常用作表连接的属性上，建立索引。 
+- 为经常用作查询选择 where 后的字段，建立索引。 
+- 在经常用作表连接 join 的属性上，建立索引。 
 - 考虑使用索引覆盖。对数据很少被更新的表，如果用户经常只查询其中的几个字段，可以考虑在这几个字段上建立索引，从而将表的扫描改变为索引的扫描。 
 
 
 
-## ★ 联合索引用法【阿里面经】
+更多资料：[MySQL索引背后的数据结构及算法原理](https://www.kancloud.cn/kancloud/theory-of-mysql-index/41846)
+
+
+## 9. 联合索引
+
+### 1. 什么是联合索引
+
+两个或更多个列上的索引被称作联合索引，联合索引又叫复合索引。对于复合索引：Mysql 从左到右的使用索引中的字段，一个查询可以只使用索引中的一部份，但只能是最左侧部分。
+
+例如索引是key index (a,b,c)，可以支持[a]、[a,b]、[a,b,c] 3种组合进行查找，但不支 [b,c] 进行查找。当最左侧字段是常量引用时，索引就十分有效。
+
+### 2. 命名规则
+
+1. 需要加索引的字段，要在 where 条件中
+2. 数据量少的字段不需要加索引
+3. 如果 where 条件中是OR关系，加索引不起作用
+4.  符合最左原则
+
+### 3. 创建索引
+
+在执行 CREATE TABLE 语句时可以创建索引，也可以单独用 CREATE INDEX 或 ALTER TABLE 来为表增加索引。
+
+**ALTER TABLE**
+
+ALTER TABLE 用来创建普通索引、UNIQUE 索引或 PRIMARY KEY 索引。
+
+例如：
+
+```mysql
+ ALTER TABLE table_name ADD INDEX index_name (column_list)
+ ALTER TABLE table_name ADD UNIQUE (column_list)
+ ALTER TABLE table_name ADD PRIMARY KEY (column_list)
+```
+
+其中 table_name 是要增加索引的表名，column_list 指出对哪些列进行索引，多列时各列之间用逗号分隔。索引名 index_name 可选，缺省时，MySQL将根据第一个索引列赋一个名称。另外，ALTER TABLE 允许在单个语句中更改多个表，因此可以在同时创建多个索引。
 
 
 
-## 9. MySQL索引背后的数据结构及算法原理
+**CREATE INDEX**
 
-摘要 · MySQL索引背后的数据结构及算法原理 · 看云
-https://www.kancloud.cn/kancloud/theory-of-mysql-index/41846
+CREATE INDEX 可对表增加普通索引或 UNIQUE 索引。
+
+例如：
+
+```mysql
+ CREATE INDEX index_name ON table_name (column_list)
+ CREATE UNIQUE INDEX index_name ON table_name (column_list)
+```
+
+table_name、index_name 和 column_list 具有与 ALTER TABLE 语句中相同的含义，索引名不可选。另外，不能用 CREATE INDEX 语句创建 PRIMARY KEY 索引。
+
+### 4. 索引类型
+
+在创建索引时，可以规定索引能否包含重复值。如果不包含，则索引应该创建为 PRIMARY KEY 或 UNIQUE 索引。对于单列惟一性索引，这保证单列不包含重复的值。对于多列惟一性索引，保证多个值的组合不重复。
+PRIMARY KEY 索引和 UNIQUE 索引非常类似。
+
+事实上，PRIMARY KEY 索引仅是一个具有名称 PRIMARY 的 UNIQUE 索引。这表示一个表只能包含一个 PRIMARY KEY，因为一个表中不可能具有两个同名的索引。
+   下面的SQL语句对 students 表在 sid 上添加 PRIMARY KEY 索引。
+     ALTER TABLE students ADD PRIMARY KEY (sid)
+
+### 5. 删除索引
+
+可利用 ALTER TABLE 或 DROP INDEX 语句来删除索引。类似于 CREATE INDEX 语句，DROP INDEX 可以在 ALTER TABLE 内部作为一条语句处理，语法如下。
+
+```mysql
+ DROP INDEX index_name ON talbe_name
+ ALTER TABLE table_name DROP INDEX index_name
+ ALTER TABLE table_name DROP PRIMARY KEY
+```
+
+其中，前两条语句是等价的，删除掉 table_name 中的索引 index_name。
+
+第3条语句只在删除 PRIMARY KEY 索引时使用，因为一个表只可能有一个 PRIMARY KEY 索引，因此不需要指定索引名。如果没有创建 PRIMARY KEY 索引，但表具有一个或多个 UNIQUE 索引，则 MySQL 将删除第一个 UNIQUE 索引。
+
+如果从表中删除了某列，则索引会受到影响。对于多列组合的索引，如果删除其中的某列，则该列也会从索引中删除。如果删除组成索引的所有列，则整个索引将被删除。
+
+
+
+### 6. 什么情况下使用索引
+
+1. 为了快速查找匹配WHERE条件的行。
+2. 为了从考虑的条件中消除行。
+3. 如果表有一个multiple-column索引，任何一个索引的最左前缀可以通过使用优化器来查找行。
+4. 查询中与其它表关联的字，字段常常建立了外键关系
+5. 查询中统计或分组统计的字段
+   - select max(hbs_bh) from zl_yhjbqk
+   - select qc_bh,count(*) from zl_yhjbqk group by qc_bh
+
+
+
+ 更多请转向：[MySQL-联合索引 - 简书](https://www.jianshu.com/p/f65be52d5e2b)
 
 
 
 
 
-CodingLabs - MySQL索引背后的数据结构及算法原理
-http://blog.codinglabs.org/articles/theory-of-mysql-index.html
+## 11. 数据库中的分页查询语句怎么写？【阿里面经】
 
-
-
-## 9. 数据库中的分页查询语句怎么写？【阿里面经OneNote】
-
-- Mysql的limit用法 
+- Mysql 的 limit 用法 
   - SELECT * FROM table LIMIT [offset,] rows | rows OFFSET offset 
   - LIMIT 接受一个或两个数字参数。参数必须是一个整数常量。如果给定两个参数，第一个参数指定第一个返回记录行的偏移量，第二个参数指定返回记录行的最大数目。初始记录行的偏移量是 0(而不是 1) 
 - 最基本的分页方式：SELECT ... FROM ... WHERE ... ORDER BY ... LIMIT ...  
 
 
 
-## 10. 常用的数据库有哪些？Redis用过吗？【阿里面经OneNote】
+## 12. 常用的数据库有哪些？Redis用过吗？【阿里面经】
 
 - 常用的数据库有哪些？Redis用过吗？ 
   - 常用的数据库 
     - MySQL
     - SQLServer 
   - Redis
-    - Redis是一个速度非常快的非关系型数据库，他可以存储键(key)与5种不同类型的值（value）之间的映射，可以将存储在内存中的键值对数据持久化到硬盘中。 
-    - 与Memcached相比 
+    - Redis 是一个速度非常快的非关系型数据库，他可以存储键(key)与5种不同类型的值（value）之间的映射，可以将存储在内存中的键值对数据持久化到硬盘中。 
+    - 与 Memcached 相比 
       - 两者都可用于存储键值映射，彼此性能也相差无几 
-      - Redis能够自动以两种不同的方式将数据写入硬盘 
-      - Redis除了能存储普通的字符串键之外，还可以存储其他4种数据结构，memcached只能存储字符串键 
-      - Redis既能用作主数据库，由可以作为其他存储系统的辅助数据库 
+      - Redis 能够自动以两种不同的方式将数据写入硬盘 
+      - Redis 除了能存储普通的字符串键之外，还可以存储其他4种数据结构，memcached 只能存储字符串键 
+      - Redis 既能用作主数据库，由可以作为其他存储系统的辅助数据库 
   - Redis应用场景
     - 缓存、任务队列、应用排行榜、网站访问统计、数据过期处理、分布式集群架构中的session分离
   - Redis特点
-    - （1）高并发读写；（2）海量数据的高效存储和访问；（3）高可扩展性和高可用性
+    - 高并发读写
+    - 海量数据的高效存储和访问
+    - 高可扩展性和高可用性
 
 
 
-## 11. Redis的存储结构，或者说如何工作的，与mysql的区别？有哪些数据类型？ 【阿里面经OneNote】
+## 11. Redis的数据结构 
 
-- Redis的数据结构 
-  - STRING：可以是字符串、整数或者浮点数 
-  - LIST：一个链表，链表上的每个节点都包含了一个字符串 
-  - SET：包含字符串的无序收集器（unordered collection），并且被包含的每个字符串都是独一无二、各不相同的 
-  - HAST：包含键值对的无序散列表 
-  - ZSET：字符串成员（member）与浮点数分值（score）之间的有序映射，元素的排列顺序由分值的大小决定 
+- STRING：可以是字符串、整数或者浮点数 
+- LIST：一个链表，链表上的每个节点都包含了一个字符串 
+- SET：包含字符串的无序收集器（unordered collection），并且被包含的每个字符串都是独一无二、各不相同的 
+- HAST：包含键值对的无序散列表 
+- ZSET：字符串成员（member）与浮点数分值（score）之间的有序映射，元素的排列顺序由分值的大小决定 
+
+<div align="center"><img src="pics/redis-data-structure-types.jpeg" width=""/></div><br/>
+
+注：更多 Redis 相关内容将在 [Redis](redis.md) 中进行展开，请转向。
 
 
 
@@ -772,9 +972,7 @@ http://blog.codinglabs.org/articles/theory-of-mysql-index.html
 
 ### 1. 垂直切分
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/e130e5b8-b19a-4f1e-b860-223040525cf6.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/e130e5b8-b19a-4f1e-b860-223040525cf6.jpg)
-
- 
+<div align="center"><img src="assets/e130e5b8-b19a-4f1e-b860-223040525cf6.jpg" width=""/></div><br/>
 
 垂直切分是将一张表按列切分成多个表，通常是按照列的关系密集程度进行切分，也可以利用垂直切分将经常被使用的列和不经常被使用的列切分到不同的表中。
 
@@ -782,7 +980,7 @@ http://blog.codinglabs.org/articles/theory-of-mysql-index.html
 
 
 
-#### （1）垂直切分的优点如下：
+#### （1）垂直切分的优点
 
 - 拆分后业务清晰，拆分规则明确
 
@@ -796,7 +994,7 @@ http://blog.codinglabs.org/articles/theory-of-mysql-index.html
 
   
 
-#### （2）垂直切分的缺点如下：
+#### （2）垂直切分的缺点
 
 - 部分业务表无法关联（Join），只能通过接口方式解决，提高了系统的复杂度
 - 受每种业务的不同限制，存在单库性能瓶颈，不易进行数据扩展和提升性能
@@ -806,9 +1004,9 @@ http://blog.codinglabs.org/articles/theory-of-mysql-index.html
 
 ### 2. 水平切分
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/63c2909f-0c5f-496f-9fe5-ee9176b31aba.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/63c2909f-0c5f-496f-9fe5-ee9176b31aba.jpg)
+<div align="center"><img src="assets/63c2909f-0c5f-496f-9fe5-ee9176b31aba.jpg" width=""/></div><br/>
 
- 
+
 
 水平切分又称为 Sharding，它是将同一个表中的记录拆分到多个结构相同的表中。
 
@@ -816,7 +1014,7 @@ http://blog.codinglabs.org/articles/theory-of-mysql-index.html
 
 
 
-#### （1）水平切分的优点如下：
+#### （1）水平切分的优点
 
 - 单库单表的数据保持在一定的量级，有助于性能的提高
 - 切分的表的结构相同，应用层改造较少，只需要增加路由规则即可
@@ -824,7 +1022,7 @@ http://blog.codinglabs.org/articles/theory-of-mysql-index.html
 
 
 
-#### （2）水平切分的缺点如下：
+#### （2）水平切分的缺点
 
 - 切分后，数据是分散的，很难利用数据库的Join操作，跨库Join性能较差
 - 拆分规则难以抽象
@@ -833,7 +1031,7 @@ http://blog.codinglabs.org/articles/theory-of-mysql-index.html
 
 
 
-#### （3）综上所述，垂直切分和水平切分的共同点如下：
+#### （3）垂直切分和水平切分的共同点
 
 - 存在分布式事务的问题
 - 存在跨节点Join的问题
@@ -884,9 +1082,11 @@ http://blog.codinglabs.org/articles/theory-of-mysql-index.html
 - **I/O 线程** ：负责从主服务器上读取二进制日志文件，并写入从服务器的中继日志中。
 - **SQL 线程** ：负责读取中继日志并重放其中的 SQL 语句。
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/master-slave.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/master-slave.png)
+<div align="center"><img src="assets/master-slave.png" width=""/></div><br/>
 
- 
+
+
+
 
 ### 读写分离
 
@@ -900,13 +1100,13 @@ MySQL 读写分离能提高性能的原因在于：
 - 从服务器可以配置 MyISAM 引擎，提升查询性能以及节约系统开销；
 - 增加冗余，提高可用性。
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/master-slave-proxy.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/master-slave-proxy.png)
+<div align="center"><img src="assets/master-slave-proxy.png" width=""/></div><br/>
 
 
 
 ## 14. 查询性能优化
 
-### （1）使用 Explain 进行分析
+### 1. 使用 Explain 进行分析
 
 Explain 用来分析 SELECT 查询语句，开发人员可以通过分析 Explain 结果来优化查询语句。
 
@@ -938,7 +1138,7 @@ possible_keys: PRIMARY
 
 
 
-### （2）优化数据访问
+### 2. 优化数据访问
 
 #### 1. 减少请求的数据量
 
@@ -960,7 +1160,7 @@ possible_keys: PRIMARY
 
 
 
-### （3）重构查询方式
+### 3. 重构查询方式
 
 #### 1. 切分大查询
 
@@ -1024,11 +1224,9 @@ SELECT * FROM post WHERE post.id IN (123,456,567,9098,8904);
 
 
 
+#### 解决方案1
 
-
-#### 解决方案1：
-
-　　将存库从MySQL前移到Redis中，所有的写操作放到内存中，由于Redis中不存在锁故不会出现互相等待，并且由于Redis的写性能和读性能都远高于MySQL，这就解决了高并发下的性能问题。然后通过队列等异步手段，将变化的数据异步写入到DB中。
+　　将存库MySQL前移到Redis中，所有的写操作放到内存中，由于Redis中不存在锁故不会出现互相等待，并且由于Redis的写性能和读性能都远高于MySQL，这就解决了高并发下的性能问题。然后通过队列等异步手段，将变化的数据异步写入到DB中。
 
 　　优点：解决性能问题
 
@@ -1036,7 +1234,7 @@ SELECT * FROM post WHERE post.id IN (123,456,567,9098,8904);
 
 
 
-#### 解决方案2：
+#### 解决方案2
 
 　　**引入队列，然后将所有写DB操作在单队列中排队，完全串行处理。当达到库存阀值的时候就不在消费队列，并关闭购买功能。这就解决了超卖问题。**
 
@@ -1046,7 +1244,7 @@ SELECT * FROM post WHERE post.id IN (123,456,567,9098,8904);
 
 
 
-#### 解决方案3：
+#### 解决方案3
 
 　　**将提交操作变成两段式，先申请后确认。然后利用Redis的原子自增操作（相比较MySQL的自增来说没有空洞），同时利用Redis的事务特性来发号，保证拿到小于等于库存阀值的号的人都可以成功提交订单。**然后数据异步更新到DB中。
 
@@ -1056,9 +1254,10 @@ SELECT * FROM post WHERE post.id IN (123,456,567,9098,8904);
 
 
 
-https://mp.weixin.qq.com/s/waGRvyhab2z8b-BIw9bJeA
+参考资料：
 
-[如何解决秒杀的性能问题和超卖的讨论 - CSDN博客](https://blog.csdn.net/zhoudaxia/article/details/38067003)
+- [库存扣多了，到底怎么整 | 架构师之路](https://mp.weixin.qq.com/s/waGRvyhab2z8b-BIw9bJeA)
+- [如何解决秒杀的性能问题和超卖的讨论 - CSDN博客](https://blog.csdn.net/zhoudaxia/article/details/38067003)
 
 
 
@@ -1074,15 +1273,11 @@ https://mp.weixin.qq.com/s/waGRvyhab2z8b-BIw9bJeA
 
 
 
-**详细请参考：**
+参考资料：
 
-- https://mp.weixin.qq.com/s/5JYtta9aMGcic7o_ejna-A
-
-
+- [数据库主从不一致，怎么解？](https://mp.weixin.qq.com/s/5JYtta9aMGcic7o_ejna-A)
 
 
-
-## 3. binlog文件
 
 # 附录：参考资料
 
