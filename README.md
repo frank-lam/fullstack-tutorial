@@ -118,7 +118,7 @@
 
 
 
-　　Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)　|　Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sheet/)
+　　Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)　|　Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sheet/) , [Emojipedia](https://emojipedia.org/)
 
 　　from 2018年5月20日
 
