@@ -106,33 +106,15 @@
 
 
 
-## 关于我 :boy:
-
-珞珈CS硕士，秋招备战狗，致力成为一个会编程的文艺青年。
-
- - CSDN博客：http://blog.csdn.net/u012104219
- - 知乎专栏：https://zhuanlan.zhihu.com/frankfeekr
- - Github：https://github.com/frank-lam
- - Email：frank_lin@whu.edu.cn
- - QQ备战秋招，火箭交流群：862619503
-
-
-
-💰 当然，如果你觉得不错的话，不妨打赏一下，这样我就有更大的动力去完善它，优化它。
-
-<div align="center"><img src="pics/tipping.jpg" width="700"/></div><br/>
-
-
-
 ## 本仓库 :rocket:
 
 <div align="center"><img src="pics/rocket6.png" width=""/></div><br/>
 
-在仓库中的观点和知识参考了部分的优秀的Github仓库、博客、书籍等，个人的知识和能力有限，这里做了一些学习笔记，知识整合优化，仅供大家参考。在编写的过程中难免遇到错误和不足，你可以在issue中提出，或是提交你的commit。
+　　在仓库中的观点和知识参考了部分的优秀的Github仓库、博客、书籍等，个人的知识和能力有限，这里做了一些学习笔记，知识整合优化，仅供大家参考。在编写的过程中难免遇到错误和不足，你可以在issue中提出，或是提交你的commit。
 
-如果适合你，欢迎star一下啦，这是对我最大的鼓励了~
+　　如果适合你，欢迎star一下啦，这是对我最大的鼓励了~
 
-秋招之路不易，让我们，一起造火箭，一起飞！:muscle:
+　　秋招之路不易，让我们，一起造火箭，一起飞！:muscle:
 
 
 
@@ -141,3 +123,22 @@ Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)
 Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sheet/)
 
 from 2018年5月20日
+
+
+
+## 关于我 👦
+
+珞珈CS硕士，秋招备战狗，致力成为一个会编程的文艺青年。
+
+- CSDN博客：http://blog.csdn.net/u012104219
+- 知乎专栏：https://zhuanlan.zhihu.com/frankfeekr
+- Github：https://github.com/frank-lam
+- Email：frank_lin@whu.edu.cn
+- QQ备战秋招，火箭交流群：862619503
+
+
+
+💰 当然，如果你觉得不错的话，不妨打赏一下，这样我就有更大的动力去完善它，优化它。
+
+<div align="center"><img src="pics/tipping.jpg" width="700"/></div><br/>
+
