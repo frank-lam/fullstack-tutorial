@@ -330,9 +330,13 @@ Sname, Sdept 和 Mname 都部分依赖于键码，当一个学生选修了多门
 
 　　把数据库的事务隔离级别调整到 READ_COMMITTED
 
-<div align="center"><img src="assets/c8d18ca9-0b09-441a-9a0c-fb063630d708.png" width="450"/></div><br/>
 
 
+**图解：**
+
+T1 修改一个数据，T2 随后读取这个数据。如果 T1 撤销了这次修改，那么 T2 读取的数据是脏数据。
+
+<div align="center"><img src="assets/dd782132-d830-4c55-9884-cfac0a541b8e.png" width="450"/></div><br/>
 
 
 
@@ -371,6 +375,10 @@ select salary from employee empId ="Mary";
 　　如果只有在修改事务完全提交之后才可以读取数据，则可以避免该问题。把数据库的事务隔离级别调整到REPEATABLE_READ
 
 
+
+**图解：**
+
+T2 读取一个数据，T1 对该数据做了修改。如果 T2 再次读取这个数据，此时读取的结果和第一次读取的结果不同。
 
 <div align="center"><img src="assets/c8d18ca9-0b09-441a-9a0c-fb063630d708-1534474726485.png" width="400"/></div><br/>
 
@@ -414,6 +422,12 @@ select * from employee where salary =1000;
 **解决办法：**
 
 　　如果在操作事务完成数据处理之前，任何其他事务都不可以添加新数据，则可避免该问题。把数据库的事务隔离级别调整到 SERIALIZABLE_READ
+
+
+
+**图解：**
+
+T1 读取某个范围的数据，T2 在这个范围内插入新的数据，T1 再次读取这个范围的数据，此时读取的结果和和第一次读取的结果不同。
 
 <div align="center"><img src="assets/72fe492e-f1cb-4cfc-92f8-412fb3ae6fec.png" width="400"/></div><br/>
 
