@@ -57,7 +57,7 @@
 
 ## 三、数据库 
 
-- [MySQL](notes/MySQL.md)
+- [MySQL v2](notes/MySQL.md)
 - Redis
 - SQL
 
