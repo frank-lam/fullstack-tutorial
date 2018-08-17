@@ -1,8 +1,10 @@
+<div align="center"><img src="pics/rocket-art.png" width="300"/></div><br/>
+
 *Work like a Trojan, from zero to hero.* 
 
 |              Ⅰ               |           Ⅱ           |            Ⅲ             |            Ⅳ            |        Ⅴ         |         Ⅵ         |            Ⅶ             |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
-| 数据结构与算法<br />[:pencil:](#一数据结构与算法) | Java基础<br/>[:coffee:](#二java基础) | 数据库<br/>[:floppy_disk:](#三数据库) | 操作系统<br/>[:computer:](#四操作系统linux) | 网络<br/>[:cloud:](#五网络部分) |  系统架构<br/>[:page_with_curl:](#六系统架构) |工具<br/>[:hammer:](#七工具) |
+| 数据结构与算法<br />[:pencil:](#一数据结构与算法) | Java<br/>[:coffee:](#二java基础) | 数据库<br/>[:floppy_disk:](#三数据库) | 操作系统<br/>[:computer:](#四操作系统linux) | 网络<br/>[:cloud:](#五网络部分) |  系统架构<br/>[:page_with_curl:](#六系统架构) |工具<br/>[:hammer:](#七工具) |
 
 注：下文链接中标识 `v2` 字样的为整理完整第2版，未带链接的暂未更新。
 
@@ -35,7 +37,7 @@
 
 
 
-## 二、Java基础
+## 二、Java
 
 > 大纲：[Overview](notes/JavaArchitecture/Overview.md)
 
@@ -107,8 +109,6 @@
 
 
 ## 本仓库 :rocket:
-
-<div align="center"><img src="pics/rocket2.png" width=""/></div><br/>
 
 　　在仓库中的观点和知识参考了部分的优秀的Github仓库、博客、书籍等，个人的知识和能力有限，这里做了一些学习笔记，知识整合优化，仅供大家参考。在编写的过程中难免遇到错误和不足，你可以在issue中提出，或是提交你的commit。
 
