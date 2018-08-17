@@ -2,7 +2,7 @@
 
 |              Ⅰ               |           Ⅱ           |            Ⅲ             |            Ⅳ            |        Ⅴ         |         Ⅵ         |            Ⅶ             |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
-| 数据结构与算法<br />[:pencil:](#一数据结构与算法) | Java<br/>[:coffee:](#二java基础) | 数据库<br/>[:floppy_disk:](#三数据库) | 操作系统<br/>[:computer:](#四操作系统linux) | 网络<br/>[:cloud:](#五网络部分) |  系统架构<br/>[:page_with_curl:](#六系统架构) |工具<br/>[:hammer:](#七工具) |
+| 数据结构与算法<br />[:pencil:](#一数据结构与算法) | Java<br/>[:coffee:](#二java) | 数据库<br/>[:floppy_disk:](#三数据库) | 操作系统<br/>[:computer:](#四操作系统linux) | 网络<br/>[:cloud:](#五网络部分) |  系统架构<br/>[:page_with_curl:](#六系统架构) |工具<br/>[:hammer:](#七工具) |
 
 注：下文链接中标识 `v2` 字样的为整理完整第2版，未带链接的暂未更新。
 
@@ -49,9 +49,8 @@
 - [设计模式](notes/JavaArchitecture/06%20设计模式.md)
 - Web框架
   - [Spring](notes/JavaWeb/Spring.md)
-  - SpringMVC
-  - MyBatis
-- 系统架构
+  - [SpringMVC](https://github.com/frank-lam/SpringMVC_MyBatis_Learning)
+  - [MyBatis](https://github.com/frank-lam/SpringMVC_MyBatis_Learning)
 
 
 

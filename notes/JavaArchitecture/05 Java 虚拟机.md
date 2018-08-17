@@ -1,116 +1,49 @@
-[TOC]
+# 前言
 
-<!-- TOC -->
-
-- [深入浅出Java虚拟机](#深入浅出java虚拟机)
-    - [1. 运行时数据区域（Java虚拟机内存的划分，每个区域的功能）？](#1-运行时数据区域java虚拟机内存的划分每个区域的功能)
-        - [（1）程序计数器（线程私有）](#1程序计数器线程私有)
-        - [（2）虚拟机栈（线程私有）](#2虚拟机栈线程私有)
-        - [（3）本地方法栈（线程私有）](#3本地方法栈线程私有)
-            - [★ 什么是native方法？](#★-什么是native方法)
-        - [（4）堆](#4堆)
-            - [新生代 （Young Generation）](#新生代-young-generation)
-            - [老年代 （Old Generation）](#老年代-old-generation)
-            - [永久代 （Permanent Generation）](#永久代-permanent-generation)
-        - [（5）方法区](#5方法区)
-        - [（6）运行时常量池](#6运行时常量池)
-        - [（7）直接内存](#7直接内存)
-    - [2. 判断一个对象是否存活？（对象已死吗）](#2-判断一个对象是否存活对象已死吗)
-        - [1. 引用计数算法](#1-引用计数算法)
-        - [2. 可达性分析算法](#2-可达性分析算法)
-            - [★ GC用的引用可达性分析算法中，哪些对象可作为GC Roots对象？【阿里面经】](#★-gc用的引用可达性分析算法中哪些对象可作为gc-roots对象阿里面经)
-        - [3. 引用类型](#3-引用类型)
-        - [4. 方法区的回收](#4-方法区的回收)
-        - [5. finalize()](#5-finalize)
-    - [3. 垃圾收集算法（垃圾处理方法3种）](#3-垃圾收集算法垃圾处理方法3种)
-        - [1. 标记 - 清除](#1-标记---清除)
-        - [2. 标记 - 整理](#2-标记---整理)
-        - [3. 复制](#3-复制)
-        - [*. 分代收集](#-分代收集)
-    - [4. 垃圾收集器有哪些？【阿里面经OneNote】](#4-垃圾收集器有哪些阿里面经onenote)
-        - [1. Serial 收集器](#1-serial-收集器)
-        - [2. ParNew 收集器](#2-parnew-收集器)
-        - [3. Parallel Scavenge 收集器（吞吐量优先收集器）](#3-parallel-scavenge-收集器吞吐量优先收集器)
-        - [4. Serial Old 收集器](#4-serial-old-收集器)
-        - [5. Parallel Old 收集器](#5-parallel-old-收集器)
-        - [6. CMS 收集器](#6-cms-收集器)
-        - [7. G1 收集器](#7-g1-收集器)
-        - [8. 比较](#8-比较)
-    - [5. 内存分配与回收策略](#5-内存分配与回收策略)
-        - [1. 什么时候进行MinGC，FullGC？【阿里面经】](#1-什么时候进行mingcfullgc阿里面经)
-        - [2. 内存分配策略](#2-内存分配策略)
-            - [（一）对象优先在 Eden 分配](#一对象优先在-eden-分配)
-            - [（二）大对象直接进入老年代](#二大对象直接进入老年代)
-            - [（三）长期存活的对象进入老年代](#三长期存活的对象进入老年代)
-            - [（四）动态对象年龄判定](#四动态对象年龄判定)
-            - [（五）空间分配担保](#五空间分配担保)
-        - [3. Full GC 的触发条件](#3-full-gc-的触发条件)
-            - [（一）调用 System.gc()](#一调用-systemgc)
-            - [（二）老年代空间不足](#二老年代空间不足)
-            - [（三）空间分配担保失败](#三空间分配担保失败)
-            - [（四）JDK 1.7 及以前的永久代空间不足](#四jdk-17-及以前的永久代空间不足)
-            - [（五）Concurrent Mode Failure](#五concurrent-mode-failure)
-    - [6. 类加载机制](#6-类加载机制)
-        - [类的生命周期](#类的生命周期)
-        - [类初始化时机](#类初始化时机)
-        - [类加载过程](#类加载过程)
-            - [1. 加载](#1-加载)
-            - [2. 验证](#2-验证)
-            - [3. 准备](#3-准备)
-            - [4. 解析](#4-解析)
-            - [5. 初始化](#5-初始化)
-        - [类加载器](#类加载器)
-            - [1. 类与类加载器](#1-类与类加载器)
-            - [2. 类加载器分类](#2-类加载器分类)
-            - [3. 双亲委派模型](#3-双亲委派模型)
-                - [JVM如何加载一个类的过程，双亲委派模型中有哪些方法有没有可能父类加载器和子类加载器，加载同一个类？如果加载同一个类，该使用哪一个类？](#jvm如何加载一个类的过程双亲委派模型中有哪些方法有没有可能父类加载器和子类加载器加载同一个类如果加载同一个类该使用哪一个类)
-    - [7. Student s = new Student();在内存中做了哪些事情?](#7-student-s--new-student在内存中做了哪些事情)
-    - [8. Java虚拟机工具](#8-java虚拟机工具)
-        - [（1）jps](#1jps)
-        - [（2）jstat](#2jstat)
-        - [（3）jinfo](#3jinfo)
-        - [（4）jmap](#4jmap)
-        - [（5）jhat](#5jhat)
-        - [（6）jstack【阿里实习生面试】](#6jstack阿里实习生面试)
-        - [（7）jconsole【阿里面经OneNote】](#7jconsole阿里面经onenote)
-        - [（8）jvisualvm](#8jvisualvm)
-    - [9. 了解过JVM调优没，基本思路是什么](#9-了解过jvm调优没基本思路是什么)
-    - [10. JVM线程死锁，你该如何判断是因为什么？如果用VisualVM，dump线程信息出来，会有哪些信息](#10-jvm线程死锁你该如何判断是因为什么如果用visualvmdump线程信息出来会有哪些信息)
-    - [11. 什么是内存泄露？用什么工具可以查出内存泄漏](#11-什么是内存泄露用什么工具可以查出内存泄漏)
-    - [* 虚拟机参数](#-虚拟机参数)
-- [附录1](#附录1)
-    - [JVM基本结构](#jvm基本结构)
-- [附录2：参考资料](#附录2参考资料)
-- [更新说明](#更新说明)
-
-<!-- /TOC -->
-
-# 深入浅出Java虚拟机
-
-## 1. 运行时数据区域（Java虚拟机内存的划分，每个区域的功能）？
-
-<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/540631a4-6018-40a5-aed7-081e2eeeaeea.png" width="500"/> </div><br>
+在本文将深入讨论 Java 虚拟机相关核心知识
 
 
 
-### （1）程序计数器（线程私有）
+参考书籍：
 
-- 记录正在执行的虚拟机字节码指令的地址（行号）（如果正在执行的是本地方法时其值为undefined）
-
-- 唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域
-
-  
-
-### （2）虚拟机栈（线程私有）
-
-- （栈内存）为虚拟机执行java方法服务：方法被调用时创建栈帧-->局部变量表->局部变量、对象引用 
-- 如果线程请求的栈深度超出了虚拟机所允许的深度，就会出现StackOverFlowError。-Xss规定了栈的最大空间 
-- 虚拟机栈可以动态扩展，如果扩展到无法申请到足够的内存，会出现OutOfMemoryError（OOM）
+- 《深入理解 Java 虚拟机》周志明，机械工业出版社
 
 
 
+学习课程：
 
-<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/f5757d09-88e7-4bbd-8cfb-cecf55604854.png" width="500"/> </div><br>
+- 【炼数成金】深入 JVM 内核—原理、诊断与优化
+- 【龙果学院】深入理解 Java 虚拟机（ JVM 性能调优+内存模型+虚拟机原理）
+- 【尚学堂】白鹤翔 JVM 虚拟机优化
+
+
+
+# 核心知识
+
+## 1. 运行时数据区域
+
+<div align="center"> <img src="assets/540631a4-6018-40a5-aed7-081e2eeeaeea.png" width="500"/> </div><br>
+
+
+
+### 1. 程序计数器（线程私有）
+
+记录正在执行的虚拟机字节码指令的地址（如果正在执行的是本地方法则为空）。
+
+- 多个线程竞争时被挂起，程序计数器记录执行到哪里
+- 唯一一个在 Java 虚拟机规范中没有规定任何 OutOfMemoryError 情况的区域
+
+
+
+### 2. 虚拟机栈（线程私有）
+
+每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息，从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。 
+
+
+<div align="center"> <img src="assets/926c7438-c5e1-4b94-840a-dcb24ff1dafe.png" width="500"/> </div><br>
+
+* 补充：栈帧中还存在动态链接、出口（返回地址）等。
+
 
 
 可以通过 -Xss 这个虚拟机参数来指定一个程序的 Java 虚拟机栈内存大小：
@@ -127,45 +60,30 @@ java -Xss=512M HackTheJava
 
   
 
-### （3）本地方法栈（线程私有）
+### 3. 本地方法栈（线程私有）
 
-- java虚拟机栈是为虚拟机执行Java方法服务的，**而本地方法栈则为虚拟机执使用到的Native方法服务**。 
-- Java虚拟机没有对本地方法栈的使用和数据结构做强制规定。Sun HotSpot把Java虚拟机栈和本地方法栈合二为一 
-- 本地方法不是用 Java 实现，对待这些方法需要特别处理。
-- 与 Java 虚拟机栈类似，它们之间的区别只不过是本地方法栈为本地方法服务。
-- 会抛出StackOverFlowError和OutOfMemoryError 
+本地方法一般是用其它语言（C、C++ 或汇编语言等）编写的，并且被编译为基于本机硬件和操作系统的程序，对待这些方法需要特别处理。
 
+本地方法栈与 Java 虚拟机栈类似，它们之间的区别只不过是本地方法栈为本地方法服务。
 
-
-#### ★ 什么是native方法？
-
-JNI 即Java native interface，是一种技术，提供了丰富的接口，可以在Java层调用native代码，也可以在native层调用Java代码，native代码一般是指C/C++程序。JNI就像是一座桥，连通着Java与native。阅读Android源代码的时候可以发现其用了大量的JNI技术，如果要深入学习Android了解JNI技术是必不可少的。在追求性能，对安全性要求高或者计算密集型的模块，使用JNI技术是一种不错的选择。 
-
-参考：
-
-- [Java Native Interface(JNI)从零开始详细教程 - CSDN博客](https://blog.csdn.net/createchance/article/details/53783490)
-- [理解 JNI 技术 - Pqpo's Notes](https://pqpo.me/2017/05/17/jni/)
-
-<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/JNIFigure1.gif" width="450"/> </div><br>
+<div align="center"><img src="assets/JNI-Java-Native-Interface.jpg" width="350"/></div><br/>
 
 
 
-
-
-### （4）堆
+### 4. 堆
 
 所有对象实例都在这里分配内存。
 
-是垃圾收集的主要区域（"GC 堆"）。现代的垃圾收集器基本都是采用分代收集算法，主要思想是针对不同的对象采取不同的垃圾回收算法。虚拟机把 Java 堆分成以下三块：
+是垃圾收集的主要区域（"GC 堆"）。现代的垃圾收集器基本都是采用分代收集算法（因为对象的生命周期不一样），主要思想是针对不同的对象采取不同的垃圾回收算法。虚拟机把 Java 堆分成以下三块：
 
 #### 新生代 （Young Generation）
 
-- 在方法中去new一个对象，那这方法调用完毕后，对象就会被回收，这就是一个典型的新生代对象。 
+- 在方法中去 new 一个对象，那这方法调用完毕后，对象就会被回收，这就是一个典型的新生代对象。 
 
 #### 老年代 （Old Generation）
 
-- 在新生代中经历了N次垃圾回收后仍然存活的对象就会被放到老年代中。而且大对象直接进入老年代 
-- 当Survivor空间不够用时，需要依赖于老年代进行分配担保，所以大对象直接进入老年代 
+- 在新生代中经历了 N 次垃圾回收后仍然存活的对象就会被放到老年代中。而且大对象直接进入老年代 
+- 当 Survivor 空间不够用时，需要依赖于老年代进行分配担保，所以大对象直接进入老年代 
 
 #### 永久代 （Permanent Generation）
 
@@ -182,7 +100,9 @@ JNI 即Java native interface，是一种技术，提供了丰富的接口，可�
 - To Survivor
 
 
-<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/ppt_img.gif" width=""/> </div><br>
+
+
+<div align="center"> <img src="assets/ppt_img.gif" width=""/> </div><br>
 
 Java 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
 
@@ -192,11 +112,13 @@ Java 堆不需要连续内存，并且可以动态增加其内存，增加失败
 java -Xms=1M -Xmx=2M HackTheJava
 ```
 
+- 思考：为什么是 8:1:1
 
 
-### （5）方法区
 
-**用于存放已被加载的类信息*（包含：类版本、字段、方法、接口）*、常量、静态变量、即时编译器编译后的代码等数据。**
+### 5. 方法区
+
+用于存放已被加载的类信息（包含：类版本、字段、方法、接口）、常量 (final)、静态变量 (static)、即时编译器 (JIT) 编译后的代码等数据。因为都是共享的数据，所有要放在方法区。
 
 和 Java 堆一样不需要连续的内存，并且可以动态扩展，动态扩展失败一样会抛出 OutOfMemoryError 异常。
 
@@ -206,7 +128,7 @@ JDK 1.7 之前，HotSpot 虚拟机把它当成永久代来进行垃圾回收，J
 
 
 
-### （6）运行时常量池
+### 6. 运行时常量池
 
 运行时常量池是方法区的一部分。
 
@@ -225,17 +147,17 @@ System.out.println(s1 == s1);  //  true
 
 
 
-### （7）直接内存
+### 7. 直接内存
 
 在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在 Java 堆和 Native 堆中来回复制数据。
 
-![running-jvm](assets/running-jvm.png)
+
+
+<div align="center"><img src="assets/running-jvm.png" width=""/></div><br/>
 
 
 
-
-
-## 2. 判断一个对象是否存活？（对象已死吗）
+## 2. 判断一个对象是否可被回收
 
 **程序计数器、虚拟机栈和本地方法栈**这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后也会消失，因此不需要对这三个区域进行垃圾回收。垃圾回收主要是针对 **Java 堆和方法区**进行。
 
@@ -268,30 +190,73 @@ System.out.println(s1 == s1);  //  true
 
 无论是通过引用计算算法判断对象的引用数量，还是通过可达性分析算法判断对象是否可达，判定对象是否可被回收都与引用有关。
 
-在 JDK 1.2 之后，Java 对引用的概念进行了扩充，将引用分为**强引用（Strong Reference）、软引用（Soft Reference）、弱引用（Weak Reference）、虚引用（Phantom Reference）**4种，这4种引用强度依次逐渐减弱。 
+在 JDK 1.2 之后，Java 对引用的概念进行了扩充，将引用分为 强引用（Strong Reference）、软引用（Soft Reference）、弱引用（Weak Reference）、虚引用（Phantom Reference）4种，这4种引用强度依次逐渐减弱。 
 
-- **强引用** ：在程序代码中普遍存在，垃圾收集器永远不会回收被引用的对象。
-- **软引用** ：是用来描述一些还有用但并非必须的对象。在系统将要**发生内存溢出异常之前**，将会把这些对象列进回收范围之中进行第二次回收。如果这次回收还没有足够的内存，才会抛出内存溢出异常。
-- **弱引用**：也是用来描述非必须对象的，强度比软引用更弱一些，被弱引用关联的对象只能生存到下一次垃圾收集发生之前。
-- **虚引用**：也称为幽灵引用或者幻影引用，它是最弱的一种引用关系。唯一的目的就是能在这个对象被收集器回收时收到一个系统通知。
+#### 1. 强引用（Strong Reference）
+
+被强引用关联的对象不会被回收。
+
+使用 new 一个新对象的方式来创建强引用。
+
+```java
+Object obj = new Object();
+```
+
+#### 2. 软引用（Soft Reference）
+
+被软引用关联的对象只有在内存不够的情况下才会被回收。
+
+使用 SoftReference 类来创建软引用。
+
+```java
+Object obj = new Object();
+SoftReference<Object> sf = new SoftReference<Object>(obj);
+obj = null;  // 使对象只被软引用关联
+```
+
+#### 3. 弱引用（Weak Reference）
+
+被弱引用关联的对象一定会被回收，也就是说它只能存活到下一次垃圾回收发生之前。
+
+使用 WeakReference 类来实现弱引用。
+
+```java
+Object obj = new Object();
+WeakReference<Object> wf = new WeakReference<Object>(obj);
+obj = null;
+```
+
+#### 4. 虚引用（Phantom Reference）
+
+又称为幽灵引用或者幻影引用。一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用取得一个对象。
+
+为一个对象设置虚引用关联的唯一目的就是能在这个对象被回收时收到一个系统通知。
+
+使用 PhantomReference 来实现虚引用。
+
+```java
+Object obj = new Object();
+PhantomReference<Object> pf = new PhantomReference<Object>(obj);
+obj = null;
+```
 
 
 
 ### 4. 方法区的回收
 
-Java虚拟机规范中确实说过可以**不要求虚拟机在方法区实现垃圾收集**，而且在方法区中进行垃圾收集的**“性价比”一般比较低**：在堆中，尤其在新生代中，常规的应用一次垃圾收集一般可以回收**70% ~ 95%的空间**，而永久代的垃圾收集效率远低于此。
+Java虚拟机规范中确实说过可以**不要求虚拟机在方法区实现垃圾收集**，而且在方法区中进行垃圾收集的 “性价比” 一般比较低：在堆中，尤其在新生代中，常规的应用一次垃圾收集一般可以回收 70% ~ 95%的空间，而永久代的垃圾收集效率远低于此。
 
 永久代的垃圾收集主要回收两部分：**废弃常量** 和 **无用的类**。
 
 - 回收废弃常量与回收 Java 堆中的对象非常类似。
-- 要判定一个类是否是“无用的类”的条件相对苛刻许多。类需要同时满足下面3个条件才能算“无用的类”
+- 要判定一个类是否是 “无用的类” 的条件相对苛刻许多。类需要同时满足下面3个条件才能算 “无用的类”
   - 该类的所有实例都已经被回收。
-  - 加载该类的 ClassLoader 已经被回收。
-  - 该类对应的 java.lang.Class 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。
+  - 加载该类的 `ClassLoader` 已经被回收。
+  - 该类对应的 `java.lang.Class` 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。
 
 在大量使用反射、动态代理、GGLib 等 ByteCode 框架、动态生成 Jsp 以及 OSGI 这类频繁自定义 ClassLoader 的场景都需要虚拟机具备类卸载的功能，以保证永久代不会溢出。     
 
-   
+
 
 ### 5. finalize()
 
@@ -305,9 +270,7 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 1. 标记 - 清除
 
-
-
-<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg" width="800"/> </div><br>
+<div align="center"> <img src="assets/a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg" width=""/> </div><br>
 
 
 首先标记出所有需要回收的对象，在标记完成后统一回收所有标记的对象。
@@ -321,21 +284,19 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 ### 2. 标记 - 整理
 
-
-
-<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg" width="800"/> </div><br>
+<div align="center"> <img src="assets/902b83ab-8054-4bd2-898f-9a4a0fe52830.jpg" width=""/> </div><br>
 
 
 复制收集算法在对象存活率较高时就要进行较多的复制操作，效率会变低。更关键的是，如果不想浪费 50% 的空间，就需要有额外的空间进行分配担保，所以老年代一般不能直接选用这种算法。
 
-“标记-整理”算法的标记过程仍然与“标记-清除”算法一样，而后续是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
+“标记-整理” 算法的标记过程仍然与 “标记-清除” 算法一样，而后续是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
 
 
 ### 3. 复制
 
 
-<div align="center"> <img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg" width="800"/> </div><br>
+<div align="center"> <img src="assets/e6b733ad-606d-4028-b3e8-83c3a73a3797.jpg" width=""/> </div><br>
 
 现在的商业虚拟机都采用这种收集算法来回收新生代。
 
@@ -347,7 +308,7 @@ HotSopt 虚拟机默认 Eden 和 Survivor 的大小比例是 8:1，也就是新�
 
 
 
-### *. 分代收集
+### ★ 分代收集
 
 现在的商业虚拟机采用分代收集算法，它根据对象存活周期将内存划分为几块，不同块采用适当的收集算法。（类似于分段锁）
 
@@ -360,7 +321,7 @@ HotSopt 虚拟机默认 Eden 和 Survivor 的大小比例是 8:1，也就是新�
 
 
 
-## 4. 垃圾收集器有哪些？【阿里面经OneNote】
+## 4. 垃圾收集器
 
 <div align="center"> <img src="../pics/gc-collector.png" width=""/> </div><br>
 
@@ -378,7 +339,7 @@ HotSopt 虚拟机默认 Eden 和 Survivor 的大小比例是 8:1，也就是新�
 
 
 
-### 1. Serial 收集器
+### 1. Serial
 
 Serial 收集器是最基本，发展历史最悠久的收集器，曾经（在 JDk1.3.1之前）是虚拟机新生代收集的唯一选择。它是一个**单线程收集器**。在它进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束。
 
@@ -390,7 +351,7 @@ Serial 收集器是最基本，发展历史最悠久的收集器，曾经（在 
 
 
 
-### 2. ParNew 收集器
+### 2. ParNew
 
 它是 Serial 收集器的多线程版本。
 
@@ -406,9 +367,9 @@ Serial 收集器是最基本，发展历史最悠久的收集器，曾经（在 
 
 
 
-### 3. Parallel Scavenge 收集器（吞吐量优先收集器）
+### 3. Parallel Scavenge
 
-Parallel Scavenge 收集器是一个新生代收集器，它也是使用复制算法的收集器，又是并行的多线程收集器。
+Parallel Scavenge 收集器是一个新生代收集器（吞吐量优先收集器），它也是使用复制算法的收集器，又是并行的多线程收集器。
 
  **与 ParNew 的不同之处：**
 
@@ -441,7 +402,7 @@ Parallel Scavenge 收集器气提供了两个参数用于**精确控制吞吐量
 
 
 
-### 4. Serial Old 收集器
+### 4. Serial Old
 
 Serial Old 是 Serial 收集器的老年代版本，它同样是一个单线程收集器，使用”标记-整理“算法。
 
@@ -455,7 +416,7 @@ Serial Old 是 Serial 收集器的老年代版本，它同样是一个单线程�
 
 
 
-### 5. Parallel Old 收集器
+### 5. Parallel Old
 
 Parallel Old 是 Parallel Scavenge 收集器的老年代版本，使用多线程和”标记-整理“算法。
 
@@ -465,7 +426,7 @@ Parallel Old 是 Parallel Scavenge 收集器的老年代版本，使用多线程
 
 
 
-### 6. CMS 收集器
+### 6. CMS
 
 CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。
 
@@ -501,28 +462,28 @@ CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。
 
 
 
-### 7. G1 收集器
+### 7. G1
 
 G1（Garbage-First），它是一款**面向服务端应用的垃圾收集器**，在多 CPU 和大内存的场景下有很好的性能。HotSpot 开发团队赋予它的使命是未来可以替换掉 CMS 收集器。
 
 Java 堆被分为新生代、老年代和永久代，其它收集器进行收集的范围都是整个新生代或者老年代，而 G1 可以直接对新生代和老年代一起回收。
 
 
-<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/4cf711a8-7ab2-4152-b85c-d5c226733807.png" width="800"/> </div><br>
+
+
+<div align="center"> <img src="assets/4cf711a8-7ab2-4152-b85c-d5c226733807.png" width="800"/> </div><br>
 
 G1 把堆划分成多个大小相等的独立区域（Region），新生代和老年代不再物理隔离。
 
 
 
-<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png" width="800"/> </div><br>
+<div align="center"> <img src="assets/9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png" width="800"/> </div><br>
 
 通过引入 Region 的概念，从而将原来的一整块内存空间划分成多个的小空间，使得每个小空间可以单独进行垃圾回收。这种划分方法带来了很大的灵活性，使得可预测的停顿时间模型成为可能。通过记录每个 Region 垃圾回收时间以及回收所获得的空间（这两个值是通过过去回收的经验获得），并维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的 Region。
 
 每个 Region 都有一个 Remembered Set，用来记录该 Region 对象的引用对象所在的 Region。通过使用 Remembered Set，在做可达性分析的时候就可以避免全堆扫描。
 
-
-
-<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/f99ee771-c56f-47fb-9148-c0036695b5fe.jpg" width=""/> </div><br>
+<div align="center"> <img src="assets/f99ee771-c56f-47fb-9148-c0036695b5fe.jpg" width=""/> </div><br>
 
  
 
@@ -647,7 +608,7 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 ### 类的生命周期
 
 
-<div align="center"> <img src="https://raw.githubusercontent.com/CyC2018/Interview-Notebook/master/pics/32b8374a-e822-4720-af0b-c0f485095ea2.jpg" width="800"/> </div><br>
+<div align="center"> <img src="assets/32b8374a-e822-4720-af0b-c0f485095ea2.jpg" width=""/> </div><br>
 
 
 
@@ -1135,3 +1096,4 @@ https://blog.csdn.net/wtt945482445/article/details/52483944
 
 v1.0 2018/7/21 初版完成
 
+v2.5 2018/8/17 基础版
