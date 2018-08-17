@@ -1,4 +1,4 @@
-<div align="center"><img src="pics/rocket-art.png" width="300"/></div><br/>
+<div align="center"><img src="pics/rocket2.png" width=""/></div><br/>
 
 *Work like a Trojan, from zero to hero.* 
 
