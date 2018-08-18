@@ -698,7 +698,9 @@ G1 把堆划分成多个大小相等的独立区域（Region），新生代和�
 ### 类的生命周期
 
 
-<div align="center"> <img src="assets/1534562023962.png" width="650"/> </div><br>
+
+
+<div align="center"> <img src="assets/1534576247083.png" width="650"/> </div><br>
 
 
 

@@ -133,7 +133,8 @@
 - 知乎专栏：https://zhuanlan.zhihu.com/frankfeekr
 - Github：https://github.com/frank-lam
 - Email：frank_lin@whu.edu.cn
-- QQ备战秋招，火箭交流群：862619503
+- 新浪微博：https://weibo.com/frankfeekr
+- 秋招交流群：QQ 862619503
 
 
 
