@@ -266,11 +266,11 @@ finalize() 类似 C++ 的析构函数，用来做关闭外部资源等工作。�
 
 
 
-## 3. 垃圾收集算法（垃圾处理方法3种）
+## 3. 垃圾收集算法（垃圾处理方法）
 
 ### 1. 标记 - 清除
 
-<div align="center"> <img src="assets/a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg" width=""/> </div><br>
+<div align="center"> <img src="assets/a4248c4b-6c1d-4fb8-a557-86da92d3a294.jpg" width=""/> </div><br> 
 
 
 首先标记出所有需要回收的对象，在标记完成后统一回收所有标记的对象。
@@ -1096,4 +1096,4 @@ https://blog.csdn.net/wtt945482445/article/details/52483944
 
 v1.0 2018/7/21 初版完成
 
-v2.5 2018/8/17 基础版
+v2.5 2018/8/18 基础版
