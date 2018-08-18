@@ -1,4 +1,6 @@
-*Work like a Trojan, from zero to hero.* 
+*Don't aim for success if you really want it. Just stick to what you love and believe in,and it will come naturally.*
+
+*Work like a Trojan, from zero to hero.*
 
 |              Ⅰ               |           Ⅱ           |            Ⅲ             |            Ⅳ            |        Ⅴ         |         Ⅵ         |            Ⅶ             |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
@@ -87,6 +89,7 @@
 ## 七、工具
 
 - Git
+- Docker
 - 正则表达式
 
 
