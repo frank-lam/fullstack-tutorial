@@ -134,7 +134,7 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 
 
-## 关于仓库 :octocat:
+## 关于仓库 🚀
 
 <div align="center"><img src="pics/rocket2.png" width="450"/></div><br/>
 
@@ -147,8 +147,6 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 　　Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)　|　Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sheet/) , [Emojipedia](https://emojipedia.org/)
 
 　　from 2018年5月20日
-
-
 
 
 
