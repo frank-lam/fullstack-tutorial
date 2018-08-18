@@ -134,7 +134,7 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 
 
-## 关于仓库 🚀
+## 关于仓库 :octocat:
 
 <div align="center"><img src="pics/rocket2.png" width="450"/></div><br/>
 
@@ -144,11 +144,11 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 　　秋招之路不易，让我们，一起造火箭，一起飞！💪
 
-
-
 　　Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)　|　Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sheet/) , [Emojipedia](https://emojipedia.org/)
 
 　　from 2018年5月20日
+
+
 
 
 
@@ -158,7 +158,7 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 - CSDN：http://blog.csdn.net/u012104219
 - 知乎专栏：https://zhuanlan.zhihu.com/frankfeekr
-- Github：https://github.com/frank-lam
+- Github ：https://github.com/frank-lam
 - Email：frank_lin@whu.edu.cn
 - 新浪微博：https://weibo.com/frankfeekr
 - 交流群：QQ 862619503
