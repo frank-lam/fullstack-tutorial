@@ -156,12 +156,12 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 珞珈CS硕士，秋招备战狗，致力成为一个会编程的文艺青年。
 
-- CSDN博客：http://blog.csdn.net/u012104219
+- CSDN：http://blog.csdn.net/u012104219
 - 知乎专栏：https://zhuanlan.zhihu.com/frankfeekr
 - Github：https://github.com/frank-lam
 - Email：frank_lin@whu.edu.cn
 - 新浪微博：https://weibo.com/frankfeekr
-- 秋招交流群：QQ 862619503
+- 交流群：QQ 862619503
 
 
 
