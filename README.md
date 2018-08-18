@@ -63,11 +63,11 @@
 
 - [Java 设计模式](notes/JavaArchitecture/06%20设计模式.md)
 
-　　Java 中最频繁使用的设计模式，全 23 种设计模式逐步更新
+　　Java 常见的 10 余种设计模式，全 23 种设计模式逐步更新
 
 - [Java Web](notes/JavaArchitecture/07%20Java%20Web.md)
 
-　　包含 Servlet & JSP、Spring、SpringMVC、Mybatis、Hibernate、Structs2 核心思想，如 AOP、IOC 等思想。SSM 更详细请转向：[Spring](notes/JavaWeb/Spring.md) | [SpringMVC](https://github.com/frank-lam/SpringMVC_MyBatis_Learning) | [MyBatis](https://github.com/frank-lam/SpringMVC_MyBatis_Learning)
+　　包含 Servlet & JSP、Spring、SpringMVC、Mybatis、Hibernate、Structs2 核心思想，如 IOC、AOP 等思想。SSM 更详细请转向：[Spring](notes/JavaWeb/Spring.md) | [SpringMVC](https://github.com/frank-lam/SpringMVC_MyBatis_Learning) | [MyBatis](https://github.com/frank-lam/SpringMVC_MyBatis_Learning)
 
 
 
@@ -110,7 +110,19 @@
 
 
 
-## 一些话 :sound:
+
+
+## 学习资源 📚
+
+- 推荐阅读书籍
+
+- 推荐学习课程
+
+这部分的资源正在整理中...，请关注仓库动态
+
+
+
+## 想说的话 :sound:
 
 　　都说好记性不如烂笔头，定期的学习和整理必然对学习巩固有所帮助，在这里主要通过索引的方式对 Java 研发工程师的技术栈做一个系统的整理，方便随时巩固和应对随时到来的面试。在学习这条路上难免会有很多盲点和学不完的知识，不要把大脑当成硬盘，也不要做高速运转的 CPU，而修行自己的大脑成为一个搜索引擎，学会分析解决问题。
 
@@ -122,7 +134,7 @@
 
 
 
-## 本仓库 :rocket:
+## 关于仓库 🚀
 
 <div align="center"><img src="pics/rocket2.png" width="450"/></div><br/>
 
@@ -130,7 +142,7 @@
 
 　　如果适合你，欢迎star一下啦，这是对我最大的鼓励了~
 
-　　秋招之路不易，让我们，一起造火箭，一起飞！:muscle:
+　　秋招之路不易，让我们，一起造火箭，一起飞！💪
 
 
 
@@ -140,7 +152,7 @@
 
 
 
-## 关于我 👦
+## 关于作者 👦
 
 珞珈CS硕士，秋招备战狗，致力成为一个会编程的文艺青年。
 
