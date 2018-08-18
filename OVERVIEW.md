@@ -10,12 +10,12 @@
 |                        | [集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md) |      | v2.5 | 基础版 |      | 8/2 复习                 |
 |                        | [并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md) |      | v2.5 | 基础版 |      | 8/14 复习                |
 |                        | [IO流](notes/JavaArchitecture/04%20Java%20IO.md)           |      | v2.5 | 基础版 |      | 8/6 复习                 |
-|                        | [虚拟机](notes/JavaArchitecture/05%20Java%20虚拟机.md)     |      |      |        |      |                          |
+|                        | [虚拟机](notes/JavaArchitecture/05%20Java%20虚拟机.md)     |      | v2.4 | 基础版 |      | 8/18 复习                |
 |                        | [设计模式](notes/JavaArchitecture/06%20设计模式.md)        |      | v0.5 |        |      |                          |
 |                        | [Java Web](notes/JavaArchitecture/07%20Java%20Web.md)      |      | v1.0 |        |      |                          |
 |                        | [Spring](notes/JavaWeb/Spring.md)                          |      | v1.0 |        |      |                          |
 |                        | SpringMVC                                                  |      |      |        |      |                          |
-|                        | Mybatis                                                    |      |      |        |      | 8/6 完成部分             |
+|                        | Mybatis                                                    |      |      |        |      |                          |
 |                        | 系统架构                                                   |      |      |        |      |                          |
 |                        |                                                            |      |      |        |      |                          |
 | **三、数据库**         |                                                            |      |      |        |      |                          |

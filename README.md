@@ -47,7 +47,7 @@
 - [集合框架 v2](notes/JavaArchitecture/02%20Java%20集合框架.md)
 - [并发编程 v2](notes/JavaArchitecture/03%20Java%20并发编程.md)
 - [IO流 v2](notes/JavaArchitecture/04%20Java%20IO.md)
-- [虚拟机](notes/JavaArchitecture/05%20Java%20虚拟机.md)
+- [虚拟机 v2](notes/JavaArchitecture/05%20Java%20虚拟机.md)
 - [设计模式](notes/JavaArchitecture/06%20设计模式.md)
 - Web框架
   - [Spring](notes/JavaWeb/Spring.md)
