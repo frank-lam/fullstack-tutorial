@@ -35,24 +35,39 @@
 
 
 
-
-
 ## 二、Java
 
-> 大纲：[Overview](notes/JavaArchitecture/Overview.md)
+- [Java 基础概念 v2](notes/JavaArchitecture/01%20Java%20基础.md)
 
-### 知识框架
+　　基本概念、面相对象、关键字、基本数据类型与运算、字符串与数组、异常处理、Object通用方法
 
-- [Java基础 v2](notes/JavaArchitecture/01%20Java%20基础.md)
-- [集合框架 v2](notes/JavaArchitecture/02%20Java%20集合框架.md)
-- [并发编程 v2](notes/JavaArchitecture/03%20Java%20并发编程.md)
-- [IO流 v2](notes/JavaArchitecture/04%20Java%20IO.md)
-- [虚拟机 v2](notes/JavaArchitecture/05%20Java%20虚拟机.md)
-- [设计模式](notes/JavaArchitecture/06%20设计模式.md)
-- Web框架
-  - [Spring](notes/JavaWeb/Spring.md)
-  - [SpringMVC](https://github.com/frank-lam/SpringMVC_MyBatis_Learning)
-  - [MyBatis](https://github.com/frank-lam/SpringMVC_MyBatis_Learning)
+- [Java 集合框架 v2](notes/JavaArchitecture/02%20Java%20集合框架.md)
+
+　　数据结构 & 源码分析：ArrayList、Vector、LinkedList、HashMap、ConcurrentHashMap、HashSet、LinkedHashSet and LinkedHashMap
+
+   
+
+   
+
+- [Java 并发编程 v2](notes/JavaArchitecture/03%20Java%20并发编程.md)
+
+　　线程状态、线程机制、线程通信、J.U.C组件、JMM、线程安全、锁优化
+
+- [Java I/O v2](notes/JavaArchitecture/04%20Java%20IO.md)
+
+　　磁盘操作、字节操作、字符操作、对象操作、网络操作、NIO
+
+- [Java 虚拟机 v2](notes/JavaArchitecture/05%20Java%20虚拟机.md)
+
+　　运行时数据区域、垃圾收集、内存分配机制、类加载机制、性能调优监控工具
+
+- [Java 设计模式](notes/JavaArchitecture/06%20设计模式.md)
+
+　　Java 中最频繁使用的设计模式，全 23 种设计模式逐步更新
+
+- [Java Web](notes/JavaArchitecture/07%20Java%20Web.md)
+
+　　包含 Servlet & JSP、Spring、SpringMVC、Mybatis、Hibernate、Structs2 核心思想，如 AOP、IOC 等思想。SSM 更详细请转向：[Spring](notes/JavaWeb/Spring.md) | [SpringMVC](https://github.com/frank-lam/SpringMVC_MyBatis_Learning) | [MyBatis](https://github.com/frank-lam/SpringMVC_MyBatis_Learning)
 
 
 
