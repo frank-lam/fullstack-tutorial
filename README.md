@@ -105,7 +105,7 @@
 
 ## 本仓库 :rocket:
 
-<div align="center"><img src="pics/rocket2.png" width="400"/></div><br/>
+<div align="center"><img src="pics/rocket2.png" width="450"/></div><br/>
 
 　　在仓库中的观点和知识参考了部分的优秀的Github仓库、博客、书籍等，个人的知识和能力有限，这里做了一些学习笔记，知识整合优化，仅供大家参考。在编写的过程中难免遇到错误和不足，你可以在issue中提出，或是提交你的commit。
 
