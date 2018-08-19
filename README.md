@@ -8,7 +8,7 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
 | 数据结构与算法<br />[:pencil:](#一数据结构与算法) | Java<br/>[:coffee:](#二java) | 数据库<br/>[:floppy_disk:](#三数据库) | 操作系统<br/>[:computer:](#四操作系统linux) | 网络<br/>[:cloud:](#五网络部分) |  系统架构<br/>[:page_with_curl:](#六系统架构) |工具<br/>[:hammer:](#七工具) |
 
-注：下文链接中标识 `v2` 字样的为整理完整第2版，未带链接的暂未更新。
+注：下文带有链接即为已经整理完善，未带链接的暂未更新。
 
 
 
@@ -39,27 +39,23 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 ## 二、Java
 
-- [Java 基础概念 v2](notes/JavaArchitecture/01%20Java%20基础.md)
+- [Java 基础概念](notes/JavaArchitecture/01%20Java%20基础.md)
 
 　　基本概念、面相对象、关键字、基本数据类型与运算、字符串与数组、异常处理、Object通用方法
 
-- [Java 集合框架 v2](notes/JavaArchitecture/02%20Java%20集合框架.md)
+- [Java 集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md)
 
 　　数据结构 & 源码分析：ArrayList、Vector、LinkedList、HashMap、ConcurrentHashMap、HashSet、LinkedHashSet and LinkedHashMap
 
-   
-
-   
-
-- [Java 并发编程 v2](notes/JavaArchitecture/03%20Java%20并发编程.md)
+- [Java 并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md)
 
 　　线程状态、线程机制、线程通信、J.U.C组件、JMM、线程安全、锁优化
 
-- [Java I/O v2](notes/JavaArchitecture/04%20Java%20IO.md)
+- [Java I/O](notes/JavaArchitecture/04%20Java%20IO.md)
 
 　　磁盘操作、字节操作、字符操作、对象操作、网络操作、NIO
 
-- [Java 虚拟机 v2](notes/JavaArchitecture/05%20Java%20虚拟机.md)
+- [Java 虚拟机](notes/JavaArchitecture/05%20Java%20虚拟机.md)
 
 　　运行时数据区域、垃圾收集、内存分配机制、类加载机制、性能调优监控工具
 
@@ -75,7 +71,7 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 ## 三、数据库 
 
-- [MySQL v2](notes/MySQL.md)
+- [MySQL](notes/MySQL.md)
 - Redis
 - SQL
 
@@ -91,9 +87,9 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 ## 五、网络部分
 
-- [计算机网络 v2](notes/计算机网络.md)
+- [计算机网络](notes/计算机网络.md)
 
-　　传输层、应用层（HTTP）、网络层、网络安全等内容
+　　传输层、应用层（HTTP）、网络层、网络安全
 
 
 
