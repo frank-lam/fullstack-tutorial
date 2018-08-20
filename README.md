@@ -9,7 +9,7 @@
 
 
 
-## 一、数据结构与算法 :pencil:
+## 数据结构与算法 :pencil:
 
 - [数据结构与算法](notes/数据结构与算法.md)
 
@@ -17,7 +17,7 @@
 
 
 
-## 二、Java :coffee:
+## Java :coffee:
 
 - [Java 基础概念](notes/JavaArchitecture/01%20Java%20基础.md)
 
@@ -49,7 +49,7 @@
 
 
 
-## 三、数据库 :floppy_disk:
+## 数据库 :floppy_disk:
 
 - [MySQL](notes/MySQL.md)
 - Redis
@@ -57,7 +57,7 @@
 
 
 
-## 四、操作系统 :computer:
+## 操作系统 :computer:
 
 - [Linux](notes/Linux.md)
 - [操作系统](notes/操作系统.md)
@@ -65,7 +65,7 @@
 
 
 
-## 五、计算机网络 :cloud:
+## 计算机网络 :cloud:
 
 - [计算机网络](notes/计算机网络.md)
 
@@ -73,20 +73,20 @@
 
 
 
-## 六、系统架构 :page_with_curl:
+## 系统架构 :page_with_curl:
 
 - Nginx
 - Tomcat
 
 
 
-## 七、机器学习 :mag:
+## 机器学习 :mag:
 - 经典机器学习算法
 
 
 
 
-## 八、工具 :hammer:
+## 工具 :hammer:
 
 - Git
 - Docker
