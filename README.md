@@ -1,8 +1,11 @@
-*Don't aim for success if you really want it. Just stick to what you love and believe in,and it will come naturally.*
-
-*Work like a Trojan, from zero to hero.*
-
-Hey，欢迎来做客，即刻开始 CS 学习之旅.
+<div align="center">  
+    <p>
+       Work like a Trojan, from zero to hero.
+    </p>
+    <p>
+        Hey，欢迎来做客，即刻开始 CS 学习之旅.
+    </p>
+</div>
 
 |              Ⅰ               |           Ⅱ           |            Ⅲ             |            Ⅳ            |        Ⅴ         |         Ⅵ         |            Ⅶ             |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
