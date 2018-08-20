@@ -153,7 +153,9 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 珞珈CS硕士，秋招备战狗。致力成为会编程的文青，懂写作的程序员。
 
-[![Discourse topics](https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg)](https://zhuanlan.zhihu.com/frankfeekr) [![Discourse topics](https://img.shields.io/badge/CSDN-东风牧野-red.svg)](http://blog.csdn.net/u012104219) [![Discourse topics](https://img.shields.io/badge/sina-Lam__Frank-orange.svg)](https://weibo.com/frankfeekr) [![Discourse topics](https://img.shields.io/badge/Github-frank--lam-lightgrey.svg)](https://github.com/frank-lam) [![Discourse topics](https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-yellow.svg)](frank_lin@whu.edu.cn) [![QQ交流群](https://img.shields.io/badge/QQ群-862619503-green.svg)](https://jq.qq.com/?_wv=1027&k=593WvX0)
+[![Discourse topics](https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg)](https://zhuanlan.zhihu.com/frankfeekr) [![Discourse topics](https://img.shields.io/badge/CSDN-东风牧野-red.svg)](http://blog.csdn.net/u012104219) [![Discourse topics](https://img.shields.io/badge/sina-Lam__Frank-orange.svg)](https://weibo.com/frankfeekr) 
+
+[![Discourse topics](https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-lightgrey.svg)](mailto:frank_lin@whu.edu.cn) [![QQ交流群](https://img.shields.io/badge/QQ群-862619503-green.svg)](https://jq.qq.com/?_wv=1027&k=593WvX0)
 
 
 
