@@ -1,3 +1,6 @@
+
+
+
 *Don't aim for success if you really want it. Just stick to what you love and believe in,and it will come naturally.*
 
 *Work like a Trojan, from zero to hero.*
@@ -114,7 +117,7 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 - 推荐学习课程
 
-正在整理中... 请关注仓库动态
+正在整理中，请密切关注动态...
 
 
 
@@ -140,7 +143,7 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 　　秋招之路不易，让我们，一起造火箭，一起飞！💪
 
-　　Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)　|　Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sheet/) , [Emojipedia](https://emojipedia.org/)
+　　Github：[2019_campus_appy](https://github.com/frank-lam/2019_campus_appy)　|　Emoji from ：[EMOJI CHEAT SHEET](https://www.webpagefx.com/tools/emoji-cheat-sheet/) , [Emojipedia](https://emojipedia.org/)  | [Shields.io](https://shields.io/#/)
 
 　　from 2018年5月20日
 
@@ -148,16 +151,13 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 ## 关于作者 👦
 
-珞珈CS硕士，秋招备战狗，致力成为一个会编程的文艺青年。
+珞珈CS硕士，秋招备战狗。致力成为会编程的文青，懂写作的程序员。
 
-- CSDN：http://blog.csdn.net/u012104219
-- 知乎专栏：https://zhuanlan.zhihu.com/frankfeekr
-- Github ：https://github.com/frank-lam
-- Email：frank_lin@whu.edu.cn
-- 新浪微博：https://weibo.com/frankfeekr
-- 交流群：QQ 862619503
+[![Discourse topics](https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg)](https://zhuanlan.zhihu.com/frankfeekr)[![Discourse topics](https://img.shields.io/badge/CSDN-东风牧野-red.svg)](http://blog.csdn.net/u012104219)[![Discourse topics](https://img.shields.io/badge/sina-Lam__Frank-orange.svg)](https://weibo.com/frankfeekr)[![Discourse topics](https://img.shields.io/badge/Github-frank--lam-lightgrey.svg)](https://github.com/frank-lam)[![Discourse topics](https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-yellow.svg)](frank_lin@whu.edu.cn)[![QQ交流群](https://img.shields.io/badge/QQ群-862619503-green.svg)](https://jq.qq.com/?_wv=1027&k=593WvX0)
 
 
+
+last but not least...
 
 💰 当然，如果你觉得不错的话，不妨打赏一下，这样我就有更大的动力去完善它，优化它。
 
