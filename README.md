@@ -153,7 +153,7 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
         珞珈CS硕士，秋招备战狗
     </p>
     <p>
-        致力成为一个：会编程的文青，懂写作的程序员
+        致力成为一个：会编程的文青，懂拍照的码农
     </p>
 <a  target="_blank" href="https://zhuanlan.zhihu.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="http://blog.csdn.net/u012104219" rel="nofollow"><img src="https://img.shields.io/badge/CSDN-东风牧野-red.svg" alt="CSDN" data-canonical-src="" style="max-width:100%;"></a>
@@ -167,7 +167,7 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
     <p>
         💰 嘿嘿，如何对你有帮助的话，不妨打赏一下，这样我就有更大的动力去完善它，优化它
     </p>
-</div><br/>
+</div>
 
 <div align="center"><img src="pics/tipping.jpg" width="700"/></div><br/>
 
