@@ -1,6 +1,3 @@
-
-
-
 *Don't aim for success if you really want it. Just stick to what you love and believe in,and it will come naturally.*
 
 *Work like a Trojan, from zero to hero.*
@@ -151,21 +148,26 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 ## 关于作者 👦
 
-珞珈CS硕士，秋招备战狗。致力成为会编程的文青，懂写作的程序员。
-
 <div align="center">  
+    <p>
+        珞珈CS硕士，秋招备战狗
+    </p>
+    <p>
+        致力成为一个：会编程的文青，懂写作的程序员
+    </p>
 <a  target="_blank" href="https://zhuanlan.zhihu.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="http://blog.csdn.net/u012104219" rel="nofollow"><img src="https://img.shields.io/badge/CSDN-东风牧野-red.svg" alt="CSDN" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="https://weibo.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/sina-Lam__Frank-orange.svg" alt="新浪微博" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="mailto:frank_lin@whu.edu.cn" rel="nofollow"><img src="https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-lightgrey.svg" alt="邮箱" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=593WvX0" rel="nofollow"><img src="https://img.shields.io/badge/QQ群-862619503-green.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
+    <br/><br/><br/>
+    <p>
+        from zero to hero... 持续更新中
+    </p>
+    <p>
+        💰 嘿嘿，如何对你有帮助的话，不妨打赏一下，这样我就有更大的动力去完善它，优化它
+    </p>
 </div><br/>
-
-
-
-last but not least...
-
-💰 当然，如果你觉得不错的话，不妨打赏一下，这样我就有更大的动力去完善它，优化它。
 
 <div align="center"><img src="pics/tipping.jpg" width="700"/></div><br/>
 
