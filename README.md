@@ -114,7 +114,7 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
 
 　　都说好记性不如烂笔头，定期的学习和整理必然对学习巩固有所帮助，在这里主要通过索引的方式对 Java 研发工程师的技术栈做一个系统的整理，方便随时巩固和应对随时到来的面试。在学习这条路上难免会有很多盲点和学不完的知识，不要把大脑当成硬盘，也不要做高速运转的 CPU，而修行自己的大脑成为一个搜索引擎，学会分析解决问题。
 
-　　本仓库系统整理 Java 面试过程中遇到的技能，对所有知识点进行深入串联，而后通过面经进行巩固，也推荐了学习的书籍和学习课程。在文章中，我都将附着上最清晰形象的配图进行讲解。文章中的观点和知识参考了部分的优秀的 Github 仓库、博客、书籍等，个人的知识和能力有限，这里做了一些学习笔记，知识体系化整理，仅供大家参考。在编写的过程中难免遇到错误和不足，你可以在 issue 中提出，或是提交你的 commit。
+　　本仓库系统整理 Java 面试过程中遇到的技能，对所有知识点进行深入串联，而后通过面经进行巩固，也推荐了学习的书籍和学习课程。在文章中，我都将附着上最清晰形象的配图进行讲解。文章中的观点和知识参考了部分的优秀的 Github 仓库、博客、书籍等，个人的知识和能力有限，这里做了一些学习笔记，知识体系化整理，仅供大家参考。该项目还在萌芽起步阶段，在编写的过程中难免遇到错误和不足，你可以在 issue 中提出，或是提交你的 commit。
 
 　　持续开源，永久免费。由于知识体系庞大，目前仍在持续编写中。如果对你有帮助，右上角 star 一下，这是对我最大的鼓励了~
 
@@ -138,15 +138,14 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
 <a target="_blank" href="https://weibo.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/Sina-Lam__Frank-orange.svg" alt="新浪微博" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="mailto:frank_lin@whu.edu.cn" rel="nofollow"><img src="https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-lightgrey.svg" alt="邮箱" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=593WvX0" rel="nofollow"><img src="https://img.shields.io/badge/QQ群-862619503-green.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
-    <br/><br/><br/>
+    <br/><br/>
     <p>
-        from zero to hero...  持续更新中
+        from zero to hero.
     </p>
     <p>
-        💰 嘿嘿，如何对你有帮助的话，不妨打赏一下，这样我就有更大的动力去完善它，优化它
+        💰 嘿嘿，如何觉得有帮助有收获的话，不妨打赏一下，这样我就有更大的动力去完善它，优化它。
     </p>
 </div>
 
 
 <div align="center"><img src="pics/tipping.jpg" width="700"/></div><br/>
-
