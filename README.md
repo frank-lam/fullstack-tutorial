@@ -2,9 +2,9 @@ Work like a Trojan, from zero to hero.
 
 Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
-|              Ⅰ               |           Ⅱ           |            Ⅲ             |            Ⅳ            |        Ⅴ         |         Ⅵ         |            Ⅶ             |
-| :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: |
-| 数据结构与算法<br />[:pencil:](#一数据结构与算法) | Java<br/>[:coffee:](#二java) | 数据库<br/>[:floppy_disk:](#三数据库) | 操作系统<br/>[:computer:](#四操作系统linux) | 网络<br/>[:cloud:](#五网络部分) |  系统架构<br/>[:page_with_curl:](#六系统架构) |工具<br/>[:hammer:](#七工具) |
+|              Ⅰ               |           Ⅱ           |            Ⅲ             |            Ⅳ            |        Ⅴ         |         Ⅵ         | Ⅶ |            Ⅷ            |            Ⅹ            |
+| :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: | :----------------------: | ------------------------ |
+| 数据结构与算法<br />[:pencil:](#一数据结构与算法) | Java<br/>[:coffee:](#二java) | 数据库<br/>[:floppy_disk:](#三数据库) | 操作系统<br/>[:computer:](#四操作系统linux) | 网络<br/>[:cloud:](#五网络部分) |  系统架构<br/>[:page_with_curl:](#六系统架构) | 机器学习<br/> [:mag:](#七机器学习) |工具<br/>[:hammer:](#八工具) |Talking<br />:bulb: |
 
 注：下文带有链接即为已经整理完善，未带链接的暂未更新。
 
@@ -98,18 +98,19 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 
 
-## 七、工具
+
+
+## 七、机器学习
+- 经典机器学习算法
+
+
+
+
+## 八、工具
 
 - Git
 - Docker
 - 正则表达式
-
-
-
-## 八、机器学习
-
-- 经典机器学习算法
-
 
 
 
@@ -124,7 +125,7 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
 
 
 
-## 想说的话 :sound:
+## 想说的话 :bulb:
 
 　　都说好记性不如烂笔头，定期的学习和整理必然对学习巩固有所帮助，在这里主要通过索引的方式对 Java 研发工程师的技术栈做一个系统的整理，方便随时巩固和应对随时到来的面试。在学习这条路上难免会有很多盲点和学不完的知识，不要把大脑当成硬盘，也不要做高速运转的 CPU，而修行自己的大脑成为一个搜索引擎，学会分析解决问题。
 
@@ -163,7 +164,7 @@ Hey，欢迎来做客，即刻开始 CS 学习之旅.
     </p>
 <a  target="_blank" href="https://zhuanlan.zhihu.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="http://blog.csdn.net/u012104219" rel="nofollow"><img src="https://img.shields.io/badge/CSDN-东风牧野-red.svg" alt="CSDN" data-canonical-src="" style="max-width:100%;"></a>
-<a target="_blank" href="https://weibo.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/sina-Lam__Frank-orange.svg" alt="新浪微博" data-canonical-src="" style="max-width:100%;"></a>
+<a target="_blank" href="https://weibo.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/Sina-Lam__Frank-orange.svg" alt="新浪微博" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="mailto:frank_lin@whu.edu.cn" rel="nofollow"><img src="https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-lightgrey.svg" alt="邮箱" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=593WvX0" rel="nofollow"><img src="https://img.shields.io/badge/QQ群-862619503-green.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
     <br/><br/><br/>
