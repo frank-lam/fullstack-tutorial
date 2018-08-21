@@ -89,11 +89,15 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
 
 ## 八、工具
 
-- Git
 - Docker
-- 正则表达式
 
+- [Git](notes/EfficiencyTools/Git.md)
 
+  常见命令，速查表
+
+- [正则表达式](notes/EfficiencyTools/正则表达式.md)
+
+  常见符号含义，速查表
 
 
 
