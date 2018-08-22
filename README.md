@@ -60,9 +60,15 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
 
 ## 四、操作系统
 
+- [操作系统原理](notes/操作系统.md)
+
+　　进程管理、死锁、内存管理、磁盘设备
+
 - [Linux](notes/Linux.md)
-- [操作系统](notes/操作系统.md)
-- 汇编语言
+
+- 网络 I/O 模型
+
+　　4 种网络 IO 模型、select、poll、epoll
 
 
 
@@ -104,7 +110,7 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
 
 ## 学习资源 :books:
 
-- [LEARN_LIST](LEARNLIST.md)
+- [LEARN_LIST](notes/LEARNLIST.md)
 
 
 　　包含阅读清单，学习课程两部分。整理中...
