@@ -1,65 +1,6 @@
-<!-- TOC -->
-
-- [前言](#前言)
-- [一、Servlet & JSP](#一servlet--jsp)
-    - [1. Servlet执行流程](#1-servlet执行流程)
-    - [2. Servlet生命周期【阿里面经OneNote】](#2-servlet生命周期阿里面经onenote)
-    - [3. Tomcat装载Servlet的三种情况](#3-tomcat装载servlet的三种情况)
-    - [4. Servlet中forward和redirect有什么区别【B172】](#4-servlet中forward和redirect有什么区别b172)
-    - [5. Jsp和Servlet的区别](#5-jsp和servlet的区别)
-    - [6. tomcat和Servlet的联系](#6-tomcat和servlet的联系)
-    - [7. cookie和session的区别](#7-cookie和session的区别)
-    - [8. JavaEE中的三层结构和MVC](#8-javaee中的三层结构和mvc)
-- [二、Spring](#二spring)
-    - [1. Spring IOC、AOP的理解、实现的原理，以及优点 【蚂蚁金服面经】](#1-spring-iocaop的理解实现的原理以及优点-蚂蚁金服面经)
-        - [IOC](#ioc)
-        - [AOP](#aop)
-    - [2. 什么是依赖注入，注入的方式有哪些](#2-什么是依赖注入注入的方式有哪些)
-    - [3. Spring IOC初始化过程](#3-spring-ioc初始化过程)
-    - [4. 项目中Spring AOP用在什么地方，为什么这么用，切点，织入，通知用自己的话描述一下](#4-项目中spring-aop用在什么地方为什么这么用切点织入通知用自己的话描述一下)
-    - [5. AOP动态代理2种实现原理，他们的区别是什么？](#5-aop动态代理2种实现原理他们的区别是什么)
-    - [6. Struts拦截器和Spring AOP区别](#6-struts拦截器和spring-aop区别)
-    - [7. Spring 是如何管理事务的，事务管理机制](#7-spring-是如何管理事务的事务管理机制)
-        - [如何管理的](#如何管理的)
-    - [8. Spring中bean加载机制，生命周期](#8-spring中bean加载机制生命周期)
-        - [加载机制](#加载机制)
-        - [生命周期](#生命周期)
-    - [9. Bean实例化的三种方式](#9-bean实例化的三种方式)
-    - [10. BeanFactory 和 FactoryBean的区别](#10-beanfactory-和-factorybean的区别)
-    - [11. BeanFactory和ApplicationContext的区别](#11-beanfactory和applicationcontext的区别)
-        - [BeanFactory](#beanfactory)
-        - [两者装载bean的区别](#两者装载bean的区别)
-        - [我们该用BeanFactory还是ApplicationContent](#我们该用beanfactory还是applicationcontent)
-        - [ApplicationContext其他特点](#applicationcontext其他特点)
-        - [spring的AOP（常用的是拦截器）](#spring的aop常用的是拦截器)
-        - [spring载入多个上下文](#spring载入多个上下文)
-    - [12. ApplicationContext 上下文的生命周期](#12-applicationcontext-上下文的生命周期)
-    - [13. Spring中autowire和resourse关键字的区别](#13-spring中autowire和resourse关键字的区别)
-    - [14. Spring的注解讲一下，介绍Spring中的熟悉的注解](#14-spring的注解讲一下介绍spring中的熟悉的注解)
-        - [一： 组件类注解](#一-组件类注解)
-        - [二：装配bean时常用的注解](#二装配bean时常用的注解)
-    - [15. Spring 中用到了那些设计模式？](#15-spring-中用到了那些设计模式)
-        - [工厂模式（Factory Method）](#工厂模式factory-method)
-        - [单态模式【单例模式】（Singleton）](#单态模式单例模式singleton)
-        - [适配器（Adapter）](#适配器adapter)
-        - [代理（Proxy）](#代理proxy)
-        - [观察者（Observer）](#观察者observer)
-    - [16. Spring 的优点有哪些](#16-spring-的优点有哪些)
-- [二、SpringMVC](#二springmvc)
-    - [1. Spring MVC的工作原理](#1-spring-mvc的工作原理)
-    - [2. SpringMVC流程具体叙述下](#2-springmvc流程具体叙述下)
-    - [3. Spring MVC注解的优点](#3-spring-mvc注解的优点)
-- [三、Hibernate](#三hibernate)
-    - [1. 简述Hibernate常见优化策略。](#1-简述hibernate常见优化策略)
-    - [2. Hibernate一级缓存与二级缓存之间的区别](#2-hibernate一级缓存与二级缓存之间的区别)
-    - [3. Hibernate的理解](#3-hibernate的理解)
-- [附录：参考资料](#附录参考资料)
-
-<!-- /TOC -->
-
 # 前言
 
-在本文中将总结Java Web开发技术和相关框架的核心知识和面试指南。因框架知识体系比较庞大，具体每个框架的使用我将放在`../JavaWeb`这个目录下，包含Spring、Strust2、Hibernate、Spring Boot等框架。
+在本文中将总结 Java Web 开发技术和相关框架的核心知识。因框架知识体系比较庞大，具体每个框架的使用我将放在`../JavaWeb`这个目录下，包含Spring、Strust2、Hibernate、Spring Boot 等框架。
 
 
 
@@ -73,7 +14,7 @@
 
 
 
-> 在面试指南中将罗列面试中常见的考点，包含Servlet、JSP、Spring、中间件等常考Java Web框架知识
+> 在面试指南中将列举面试中常见的考点，包含Servlet、JSP、Spring、中间件等常考Java Web框架知识
 >
 
 
@@ -100,9 +41,9 @@ https://www.cnblogs.com/zhangyinhua/p/7625851.html
 
 特性：
 
-​	单例，一个类只有一个对象，当然可能存在多个Servlet类
+	单例，一个类只有一个对象，当然可能存在多个Servlet类
 
-​	线程不安全的，所以它的效率高。
+	线程不安全的，所以它的效率高。
 
 Servlet类由自己编写，但对象由服务器来创建，并由服务器来调用相应的方法　
 
@@ -126,17 +67,15 @@ Servlet类由自己编写，但对象由服务器来创建，并由服务器来�
 
 1）Servlet何时创建
 
-​	默认第一次访问servlet时创建该对象（调用init()方法）
+	默认第一次访问servlet时创建该对象（调用init()方法）
 
 2）Servlet何时销毁
 
-​	服务器关闭servlet就销毁了(调用destroy()方法)
+	服务器关闭servlet就销毁了(调用destroy()方法)
 
 3）每次访问必须执行的方法
 
-​	public void service(ServletRequest arg0, ServletResponse arg1)
-
-
+	public void service(ServletRequest arg0, ServletResponse arg1)
 
 
 
@@ -182,7 +121,7 @@ https://www.cnblogs.com/iOS-mt/p/5619440.html
 
 ## 6. tomcat和Servlet的联系
 
-​	Tomcat 是Web应用服务器,是一个Servlet/JSP容器. Tomcat 作为Servlet容器,负责处理客户请求,把请求传送给Servlet,并将Servlet的响应传送回给客户.而Servlet是一种运行在支持Java语言的服务器上的组件.。
+	Tomcat 是Web应用服务器,是一个Servlet/JSP容器. Tomcat 作为Servlet容器,负责处理客户请求,把请求传送给Servlet,并将Servlet的响应传送回给客户.而Servlet是一种运行在支持Java语言的服务器上的组件.。
 
 　　Servlet最常见的用途是扩展Java Web服务器功能,提供非常安全的,可移植的,易于使用的CGI替代品。
 
@@ -194,7 +133,7 @@ https://www.cnblogs.com/iOS-mt/p/5619440.html
 
 <div align="center"> <img src="D:/gitdoc/2019_campus_appy/notes/pics/servlet-tomcat.png" width=""/></div><br/>
 
-​	1）Tomcat将http请求文本接收并解析，然后封装成HttpServletRequest类型的request对象，所有的HTTP头数据读可以通过request对象调用对应的方法查询到。
+	1）Tomcat将http请求文本接收并解析，然后封装成HttpServletRequest类型的request对象，所有的HTTP头数据读可以通过request对象调用对应的方法查询到。
 
 　　2）Tomcat同时会要响应的信息封装为HttpServletResponse类型的response对象，通过设置response属性就可以控制要输出到浏览器的内容，然后将response交给tomcat，tomcat就会将其变成响应文本的格式发送给浏览器。
 
@@ -261,8 +200,6 @@ Spring的IoC容器是Spring的核心，Spring AOP是spring框架的重要组成�
   - 通过反射创建实例； 
   - 获取需要注入的接口实现类并将其赋值给该接口。 
 
-  
-
 - **优点**
 
   - 解耦合，开发更方便组织分工
@@ -281,8 +218,6 @@ Spring的IoC容器是Spring的核心，Spring AOP是spring框架的重要组成�
   - 面向切面编程提供声明式事务管理
   - AOP就是典型的代理模式的体现
 
-  
-
 - **Spring AOP实现原理** 
 
   - 动态代理（利用**反射和动态编译**将代理模式变成动态的） 
@@ -296,8 +231,6 @@ Spring的IoC容器是Spring的核心，Spring AOP是spring框架的重要组成�
 
     - CGLibProxy返回的动态代理类，则是目标代理类的一个子类（代理类扩展了UserDaoImpl类） 
     - cglib继承被代理的类，重写方法，织入通知，动态生成字节码并运行
-
-    
 
 - **优点**
 
@@ -320,7 +253,6 @@ Spring的IoC容器是Spring的核心，Spring AOP是spring框架的重要组成�
   - 使用接口注入
   - 注解注入(@Autowire) 
 
-  
 
 ## 3. Spring IOC初始化过程
 
