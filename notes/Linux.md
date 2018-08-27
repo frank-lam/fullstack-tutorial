@@ -21,30 +21,29 @@
     - [6. 文件权限](#6-文件权限)
     - [7. chmod 修改权限](#7-chmod-修改权限)
     - [8. 文件与目录的基本操作](#8-文件与目录的基本操作)
-        - [1. ls](#1-ls)
-        - [2. cd](#2-cd)
-        - [3. mkdir](#3-mkdir)
-        - [4. rmdir](#4-rmdir)
-        - [5. touch](#5-touch)
-        - [6. cp](#6-cp)
-        - [7. rm](#7-rm)
-        - [8. mv](#8-mv)
+        - [ls](#1-ls)
+        - [cd](#2-cd)
+        - [mkdir](#3-mkdir)
+        - [rmdir](#4-rmdir)
+        - [touch](#5-touch)
+        - [cp](#6-cp)
+        - [rm](#7-rm)
+        - [mv](#8-mv)
     - [9. 获取文件内容](#9-获取文件内容)
-        - [1. cat](#1-cat)
-        - [2. tac](#2-tac)
-        - [3. more](#3-more)
-        - [4. less](#4-less)
-        - [5. head](#5-head)
-        - [6. tail](#6-tail)
-        - [7. od](#7-od)
+        - [cat](#1-cat)
+        - [tac](#2-tac)
+        - [more](#3-more)
+        - [less](#4-less)
+        - [head](#5-head)
+        - [tail](#6-tail)
+        - [od](#7-od)
         - [问：Linux查看日志文件的方式](#问linux查看日志文件的方式)
     - [10. 指令与文件搜索](#10-指令与文件搜索)
-        - [1. which](#1-which)
-        - [2. whereis](#2-whereis)
-        - [3. locate](#3-locate)
-        - [4. find](#4-find)
+        - [which](#1-which)
+        - [whereis](#2-whereis)
+        - [locate](#3-locate)
+        - [find](#4-find)
         - [*. grep的使用，一定要掌握，每次都会问在文件中查找（包含匹配）](#-grep的使用一定要掌握每次都会问在文件中查找包含匹配)
-        - [](#)
         - [*. 管道](#-管道)
     - [11. 压缩与解压缩命令](#11-压缩与解压缩命令)
         - [.zip](#zip)
@@ -67,10 +66,10 @@
         - [sed](#sed)
     - [14. 进程管理](#14-进程管理)
         - [查看进程](#查看进程)
-            - [1. ps](#1-ps)
-            - [2. top](#2-top)
-            - [3. pstree](#3-pstree)
-            - [4. netstat](#4-netstat)
+            - [ps](#1-ps)
+            - [top](#2-top)
+            - [pstree](#3-pstree)
+            - [netstat](#4-netstat)
         - [进程状态](#进程状态)
             - [SIGCHLD](#sigchld)
             - [wait()](#wait)
@@ -836,8 +835,6 @@ locate ~/m
 locate -i ~/m
 ```
 
-
-
 ### 4. find
 
 - find 搜索范围
@@ -891,10 +888,6 @@ mtime  修改文件内容
   查找/etc/目录下，大于20k并且小于50k的文件，并显示详细信息
   -exec/ 命令 {} ;　 对搜索结果执行操作
 
-
-
-
-
 ### *. grep的使用，一定要掌握，每次都会问在文件中查找（包含匹配）
 
 **grep**（global search regular expression(RE) and print out the line，全面搜索正则表达式并把行打印出来）是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。
@@ -909,8 +902,6 @@ $ grep -Rn "hello" ~/test
 /home/slot/test/cc:1:hello world!
 /home/slot/test/bb:1:hello world!
 ```
-
-### 
 
 ### *. 管道
 
