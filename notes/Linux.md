@@ -1,3 +1,103 @@
+<!-- TOC -->
+
+- [前言](#前言)
+- [Linux](#linux)
+    - [1. 顶层目录结构](#1-顶层目录结构)
+    - [2. 深入理解 inode](#2-深入理解-inode)
+        - [inode是什么](#inode是什么)
+        - [inode的内容](#inode的内容)
+        - [inode的大小](#inode的大小)
+        - [inode号码](#inode号码)
+        - [目录文件](#目录文件)
+        - [inode的特殊作用](#inode的特殊作用)
+    - [3. 什么是硬链接与软链接](#3-什么是硬链接与软链接)
+        - [硬链接](#硬链接)
+        - [软链接](#软链接)
+    - [4. Linux查看CPU、内存占用的命令](#4-linux查看cpu内存占用的命令)
+        - [top](#top)
+        - [cat /proc/meminfo](#cat-procmeminfo)
+        - [free](#free)
+    - [5. 定时任务 crontab](#5-定时任务-crontab)
+    - [6. 文件权限](#6-文件权限)
+    - [7. chmod 修改权限](#7-chmod-修改权限)
+    - [8. 文件与目录的基本操作](#8-文件与目录的基本操作)
+        - [1. ls](#1-ls)
+        - [2. cd](#2-cd)
+        - [3. mkdir](#3-mkdir)
+        - [4. rmdir](#4-rmdir)
+        - [5. touch](#5-touch)
+        - [6. cp](#6-cp)
+        - [7. rm](#7-rm)
+        - [8. mv](#8-mv)
+    - [9. 获取文件内容](#9-获取文件内容)
+        - [1. cat](#1-cat)
+        - [2. tac](#2-tac)
+        - [3. more](#3-more)
+        - [4. less](#4-less)
+        - [5. head](#5-head)
+        - [6. tail](#6-tail)
+        - [7. od](#7-od)
+        - [问：Linux查看日志文件的方式](#问linux查看日志文件的方式)
+    - [10. 指令与文件搜索](#10-指令与文件搜索)
+        - [1. which](#1-which)
+        - [2. whereis](#2-whereis)
+        - [3. locate](#3-locate)
+        - [4. find](#4-find)
+        - [*. grep的使用，一定要掌握，每次都会问在文件中查找（包含匹配）](#-grep的使用一定要掌握每次都会问在文件中查找包含匹配)
+        - [](#)
+        - [*. 管道](#-管道)
+    - [11. 压缩与解压缩命令](#11-压缩与解压缩命令)
+        - [.zip](#zip)
+        - [.gz](#gz)
+        - [.bz2](#bz2)
+        - [tar](#tar)
+        - [.tar.gz](#targz)
+        - [.tar.bz2](#tarbz2)
+    - [12. Bash](#12-bash)
+        - [特性](#特性)
+        - [变量操作](#变量操作)
+        - [指令搜索顺序](#指令搜索顺序)
+        - [输出重定向](#输出重定向)
+        - [输入重定向](#输入重定向)
+    - [13. 正则表达式](#13-正则表达式)
+        - [cut](#cut)
+        - [grep](#grep)
+        - [printf](#printf)
+        - [awk](#awk)
+        - [sed](#sed)
+    - [14. 进程管理](#14-进程管理)
+        - [查看进程](#查看进程)
+            - [1. ps](#1-ps)
+            - [2. top](#2-top)
+            - [3. pstree](#3-pstree)
+            - [4. netstat](#4-netstat)
+        - [进程状态](#进程状态)
+            - [SIGCHLD](#sigchld)
+            - [wait()](#wait)
+            - [waitpid()](#waitpid)
+            - [孤儿进程](#孤儿进程)
+            - [僵尸进程](#僵尸进程)
+    - [15. 进程和线程的区别](#15-进程和线程的区别)
+    - [16. kill用法，某个进程杀不掉的原因（进入内核态，忽略kill信号）](#16-kill用法某个进程杀不掉的原因进入内核态忽略kill信号)
+    - [17. 包管理工具](#17-包管理工具)
+        - [软件类型](#软件类型)
+        - [发行版](#发行版)
+    - [18. 网络配置和网络诊断命令](#18-网络配置和网络诊断命令)
+    - [19. 磁盘管理](#19-磁盘管理)
+    - [20. VIM 三个模式](#20-vim-三个模式)
+    - [21. Screen命令](#21-screen命令)
+        - [screen命令是什么](#screen命令是什么)
+        - [安装](#安装)
+        - [使用方法](#使用方法)
+        - [远程演示](#远程演示)
+        - [常用快捷键](#常用快捷键)
+    - [22. 常用快捷方式](#22-常用快捷方式)
+    - [23. 高并发网络编程之epoll详解](#23-高并发网络编程之epoll详解)
+- [参考资料](#参考资料)
+- [更新日志](#更新日志)
+
+<!-- /TOC -->
+
 # 前言
 
 在本文将讲解常用的 Linux 核心知识，但并不保证知识的系统性，只列举最常见的命令和知识点。
@@ -671,6 +771,14 @@ cp [-adfilprsu] source destination
 
 指令搜索。
 
+- 搜索系统命令所在路径及别名
+
+- PATH环境变量：定义的是系统搜索命令的路径
+
+```
+echo $PATH 
+```
+
 ```
 # which [-a] command
 -a ：将所有指令列出，而不是只列第一个
@@ -678,11 +786,16 @@ cp [-adfilprsu] source destination
 
 ### 2. whereis
 
-文件搜索。速度比较快，因为它只搜索几个特定的目录。
+文件搜索。搜索系统命令所在路径及帮助文档所在位置。速度比较快，因为它只搜索几个特定的目录。
 
 ```
 # whereis [-bmsu] dirname/filename
 ```
+
+选项：
+
+- -b 只查找可执行文件
+- -m 只查找帮助文件
 
 ### 3. locate
 
@@ -723,51 +836,64 @@ locate ~/m
 locate -i ~/m
 ```
 
-### 
+
 
 ### 4. find
 
-文件搜索。可以使用文件的属性和权限进行搜索。
+- find 搜索范围
+  搜索文件
+- `find / -name install.log`
+  避免大范围搜索，会非常耗费系统资源
+  find 是在系统当中搜索符合条件的文件名。如果需要匹配，使用通配符匹配，通配符是完全匹配。
+- Linux 通配符
 
 ```
-# find [basedir] [option]
-example: find . -name "shadow*"
+*    匹配任意内容
+?    匹配任意一个字符
+[]   匹配任意一个中括号内的字符
 ```
 
-（一）与时间有关的选项
+- `find /root -iname install.log`
+  不区分大小写
+- `find /root -user root`
+  按照所有者搜索
+- `find /root -nouser`
+  查找没有所有者的文件
+- `find /var/log/ -mtime +10`
+  查找 10 天前修改的文件
 
 ```
--mtime  n ：列出在 n 天前的那一天修改过内容的文件
--mtime +n ：列出在 n 天之前 (不含 n 天本身) 修改过内容的文件
--mtime -n ：列出在 n 天之内 (含 n 天本身) 修改过内容的文件
--newer file ： 列出比 file 更新的文件
+-10    10天内修改的文件
+10	   10天当天修改的文件
++10    10天前修改的文件
+
+atime  文件访问时间
+ctime  改变文件属性
+mtime  修改文件内容  
 ```
 
-+4. 4 和 -4 的指示的时间范围如下：
-
-<div align="center"><img src="assets/658fc5e7-79c0-4247-9445-d69bf194c539.png" width=""/></div>
-
-（二）与文件拥有者和所属群组有关的选项
+- `find . -size 25k`
+  查找文件大小是 25kb 的文件
 
 ```
--uid n
--gid n
--user name
--group name
--nouser ：搜索拥有者不存在 /etc/passwd 的文件
--nogroup：搜索所属群组不存在于 /etc/group 的文件
+-25k	小于25kb的文件
+25k	    等于25kb的文件
++25k	大于25kb的文件
 ```
 
-（三）与文件权限和名称有关的选项
+- `find . -inum 262422`
+  查找 i 节点是 262422 的文件
+- `find /etc/ -size +20k -a -size -50k`
+  查找 /etc/ 目录下，大于 20k 并且小于 50k 的文件
+  - -a and 逻辑与，两个条件都满足
+  - -o or 逻辑或，两个条件满足一个即可
+- `find /etc/ -size +20k -a -size -50k -exec ls -lh {} ;`
+  查找/etc/目录下，大于20k并且小于50k的文件，并显示详细信息
+  -exec/ 命令 {} ;　 对搜索结果执行操作
 
-```
--name filename
--size [+-]SIZE：搜寻比 SIZE 还要大 (+) 或小 (-) 的文件。这个 SIZE 的规格有：c: 代表 byte，k: 代表 1024bytes。所以，要找比 50KB 还要大的文件，就是 -size +50k
--type TYPE
--perm mode  ：搜索权限等于 mode 的文件
--perm -mode ：搜索权限包含 mode 的文件
--perm /mode ：搜索权限包含任一 mode 的文件
-```
+
+
+
 
 ### *. grep的使用，一定要掌握，每次都会问在文件中查找（包含匹配）
 
@@ -820,92 +946,150 @@ netstat -an | grep ESTABLISHED| wc -l
 
 
 
-## 11. 压缩与打包
+## 11. 压缩与解压缩命令
 
-### 压缩文件名
-
-Linux 底下有很多压缩文件名，常见的如下：
+常用压缩格式如下：
 
 | 扩展名    | 压缩程序                              |
 | --------- | ------------------------------------- |
-| *.Z       | compress                              |
 | *.zip     | zip                                   |
 | *.gz      | gzip                                  |
 | *.bz2     | bzip2                                 |
-| *.xz      | xz                                    |
 | *.tar     | tar 程序打包的数据，没有经过压缩      |
 | *.tar.gz  | tar 程序打包的文件，经过 gzip 的压缩  |
 | *.tar.bz2 | tar 程序打包的文件，经过 bzip2 的压缩 |
-| *.tar.xz  | tar 程序打包的文件，经过 xz 的压缩    |
 
-### 压缩指令
+### .zip
 
-#### 1. gzip
+（一）压缩
 
-gzip 是 Linux 使用最广的压缩指令，可以解开 compress、zip 与 gzip 所压缩的文件。
+- zip 压缩文件名 源文件
+  压缩文件
+- zip -r 压缩文件名 源目录
+  压缩目录
 
-经过 gzip 压缩过，源文件就不存在了。
+（二）解压缩
 
-有 9 个不同的压缩等级可以使用。
+- unzip 压缩文件
+  解压.zip文件
 
-可以使用 zcat、zmore、zless 来读取压缩文件的内容。
+### .gz
+
+（一）压缩
+
+- gzip 源文件
+  压缩为.gz格式的压缩文件，源文件会消失
+- gzip -c 源文件 > 压缩文件
+  压缩为.gz格式的压缩文件，源文件保留
+
+> 注：-c是将压缩的格式不写入新文件，打印到屏幕上，利用输出重定向造成一个既压缩.gz格式源文件也不消失的现象。但是gzip本身是不支持保留源文件压缩的。
+
+- gzip -r 目录
+  压缩目录下所有的子文件，但是不能压缩目录
+
+（二）解压缩
+
+- gzip -d 压缩文件
+  解压缩文件
+- gunzip 压缩文件
+  解压缩文件
+
+### .bz2
+
+（一）压缩
+
+- bzip2 源文件
+  压缩为.bz2格式，不能保留源文件
+- bzip2 -k 源文件
+  压缩之后保留源文件
+- 注意：bzip2命令不能压缩目录
+
+（二）解压缩
+
+- bzip2 -d 压缩文件
+  解压缩，-k保留压缩文件
+- bunzip2 压缩文件
+  解压缩，-k保留压缩文件
+
+### tar
+
+将一个目录打包成文件.tar格式，这样 `.gz` 和 `.bz2` 可压缩，解压缩目录 
+
+- tar -cvf 打包文件名 源文件
+- 选项：
 
 ```
-$ gzip [-cdtv#] filename
--c ：将压缩的数据输出到屏幕上
--d ：解压缩
--t ：检验压缩文件是否出错
--v ：显示压缩比等信息
--# ： # 为数字的意思，代表压缩等级，数字越大压缩比越高，默认为 6
+-c   打包   
+-x   解打包
+-v   显示过程   
+-f   指定打包后的文件名  
 ```
 
-#### 2. bzip2
+解打包命令
 
-提供比 gzip 更高的压缩比。
+- tar -xvf 打包文件名
 
-查看命令：bzcat、bzmore、bzless、bzgrep。
+### .tar.gz
 
+- 其实.tar.gz格式是先打包为.tar格式，再压缩为.gz格式
+- tar -zcvf 压缩包名.tar.gz 源文件
+- 选项：
+  -z： 压缩为.tar.gz格式
+- tar -zxvf 压缩包名.tar.gz
+- 选项：
+  -x： 解压缩.tar.gz格式
+
+### .tar.bz2
+
+其实 `.tar.gz` 格式是先打包成 `.tar` 格式，再压缩为 `.gz` 格式
+
+- tar -jcvf 压缩包名 .tar.bz2 源文件
+
+- 选项：
+  -z：压缩为.tar.gz格式
+
+  -j：支持bzip2解压文件
+
+- tar -jxvf 压缩包名.tar.bz2
+
+- 选项：
+  -x： 解压缩.tar.gz格式
+
+
+
+tar命令参考选项
+
+```shell
+-A或--catenate：新增文件到以存在的备份文件；
+-B：设置区块大小；
+-c或--create：建立新的备份文件；
+-C <目录>：这个选项用在解压缩，若要在特定目录解压缩，可以使用这个选项。
+-d：记录文件的差别；
+-x或--extract或--get：从备份文件中还原文件；
+-t或--list：列出备份文件的内容；
+-z或--gzip或--ungzip：通过gzip指令处理备份文件；
+-Z或--compress或--uncompress：通过compress指令处理备份文件；
+-f<备份文件>或--file=<备份文件>：指定备份文件；
+-v或--verbose：显示指令执行过程；
+-r：添加文件到已经压缩的文件；
+-u：添加改变了和现有的文件到已经存在的压缩文件；
+-j：支持bzip2解压文件；
+-v：显示操作过程；
+-l：文件系统边界设置；
+-k：保留原有文件不覆盖；
+-m：保留文件不被覆盖；
+-w：确认压缩文件的正确性；
+-p或--same-permissions：用原来的文件权限还原文件；
+-P或--absolute-names：文件名使用绝对名称，不移除文件名称前的“/”号；
+-N <日期格式> 或 --newer=<日期时间>：只将较指定日期更新的文件保存到备份文件里；
+--exclude=<范本样式>：排除符合范本样式的文件。
 ```
-$ bzip2 [-cdkzv#] filename
--k ：保留源文件
-```
 
-#### 3. xz
 
-提供比 bzip2 更佳的压缩比。
 
-可以看到，gzip、bzip2. xz 的压缩比不断优化。不过要注意的是，压缩比越高，压缩的时间也越长。
+参考资料：
 
-查看命令：xzcat、xzmore、xzless、xzgrep。
-
-```
-$ xz [-dtlkc#] filename
-```
-
-### 打包
-
-压缩指令只能对一个文件进行压缩，而打包能够将多个文件打包成一个大文件。tar 不仅可以用于打包，也可以使用 gip、bzip2. xz 将打包文件进行压缩。
-
-```
-$ tar [-z|-j|-J] [cv] [-f 新建的 tar 文件] filename...  ==打包压缩
-$ tar [-z|-j|-J] [tv] [-f 已有的 tar 文件]              ==查看
-$ tar [-z|-j|-J] [xv] [-f 已有的 tar 文件] [-C 目录]    ==解压缩
--z ：使用 zip；
--j ：使用 bzip2；
--J ：使用 xz；
--c ：新建打包文件；
--t ：查看打包文件里面有哪些文件；
--x ：解打包或解压缩的功能；
--v ：在压缩/解压缩的过程中，显示正在处理的文件名；
--f : filename：要处理的文件；
--C 目录 ： 在特定目录解压缩。
-```
-
-| 使用方式 | 命令                                                  |
-| -------- | ----------------------------------------------------- |
-| 打包压缩 | tar -jcv -f filename.tar.bz2 要被压缩的文件或目录名称 |
-| 查 看    | tar -jtv -f filename.tar.bz2                          |
-| 解压缩   | tar -jxv -f filename.tar.bz2 -C 要解压缩的目录        |
+- [Linux达人养成记课程笔记](https://github.com/wangworld/hexo-blog/blob/8e95371d51f18a06b2800caf45b14c4505a6a8db/source/_posts/Linux%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0.md)
 
 
 
@@ -919,7 +1103,7 @@ Ken Thompson 的 sh 是第一种 Unix Shell，Windows Explorer 是一个典型�
 
 
 
-Shell 编程跟 java、php 编程一样，只要有一个能编写代码的文本编辑器和一个能解释执行的脚本解释器就可以了。
+Shell 编程跟 Java、php 编程一样，只要有一个能编写代码的文本编辑器和一个能解释执行的脚本解释器就可以了。
 
 Linux 的 Shell 种类众多，常见的有：
 
@@ -952,6 +1136,8 @@ Linux 的 Shell 种类众多，常见的有：
 - shell scripts
 - 通配符：例如 ls -l /usr/bin/X* 列出 /usr/bin 下面所有以 X 开头的文件
 
+
+
 ### 变量操作
 
 对一个变量赋值直接使用 =。
@@ -969,7 +1155,7 @@ $ echo ${x}
 变量内容如果有空格，必须使用双引号或者单引号。
 
 - **双引号内的特殊字符可以保留原本特性**，例如 x="lang is $LANG"，则 x 的值为 lang is zh_TW.UTF-8；
-- **单引号内的特殊字符就是特殊字符本身**，例如 x='lang is $LANG'，则 x 的值为 lang is $LANG。
+- **单引号内的特殊字符就是特殊字符本身**，例如 x='lang is \$LANG'，则 x 的值为 lang is $LANG。
 
 可以使用 `指令` 或者 (指令) 的方式将指令的执行结果赋值给变量。例如 version=(uname -r)，则 version 的值为 4.15.0-22-generic。
 
@@ -1000,32 +1186,28 @@ $ echo ${array[1]}
 - 由 Bash 内建的指令来执行；
 - 按 $PATH 变量指定的搜索路径的顺序找到第一个指令来执行。
 
-### 数据流重定向
+### 输出重定向
 
 重定向指的是使用文件代替标准输入、标准输出和标准错误输出。
 
-| 1                          | 代码 | 运算符    |
-| -------------------------- | ---- | --------- |
-| 标准输入 (/dev/stdin)      | 0    | < 或 <<   |
-| 标准输出 (/dev/stdout)     | 1    | > 或 >>   |
-| 标准错误输出 (/dev/stderr) | 2    | 2> 或 2>> |
+| 设备   | 类型         | 设备文件名  | 文件描述符 | 运算符    |
+| ------ | ------------ | ----------- | ---------- | --------- |
+| 键盘   | 标准输入     | /dev/stdin  | 0          | < 或 <<   |
+| 显示器 | 标准输出     | /dev/stdout | 1          | > 或 >>   |
+| 显示器 | 标准错误输出 | /dev/stderr | 2          | 2> 或 2>> |
 
-其中，**有一个箭头的表示以覆盖的方式重定向**，**而有两个箭头的表示以追加的方式重定向**。
+其中，**有一个箭头（>或者<）的表示以覆盖的方式重定向**，**而有两个箭头（>>或者<<）的表示以追加的方式重定向**。
 
-可以将不需要的标准输出以及标准错误输出重定向到 /dev/null，相当于扔进垃圾箱。
+可以将不需要的标准输出以及标准错误输出重定向到 `/dev/null`（黑洞），相当于扔进垃圾箱。
 
-**注意：**在错误输出的时候 `2>`或`2>>`后加文件名不能出现空格
+**注意：**在错误输出的时候 `2>` 或 `2>>` 后加文件名不能出现空格
 
 ```
-biod@biod-HP-Z640-Workstation:~/test$ llc 2>index.txt
-biod@biod-HP-Z640-Workstation:~/test$ cat index.txt
+$ llc 2>index.txt
+$ cat index.txt
 程序“llc”尚未安装。 您可以使用以下命令安装：
 sudo apt install llvm
-biod@biod-HP-Z640-Workstation:~/test$
-
 ```
-
-
 
 在实际的应用中，上面的写法有一定问题，因为我们编写的时候并不能确定我们写的是正确的还是错误的，也就无法确定写入正确的文件还是错误的文件，因此这里仅作了解，用处不大。
 
@@ -1039,9 +1221,7 @@ biod@biod-HP-Z640-Workstation:~/test$
 | **命令&>>文件**          | llc &>> abby.txt                   | 以追加的方式，把正确输出和错误输出都保存到同一个文件当中 |
 | **命令>>文件1 2>>文件2** | netstat >>success.txt 2>>error.txt | 把正确的输出追加到文件1中，把错误的输出追加到文件2中     |
 
-
-
-如果需要将标准输出以及标准错误输出同时重定向到一个文件，需要将某个输出转换为另一个输出，例如 2>&1 表示将标准错误输出转换为标准输出。
+如果需要将标准输出以及标准错误输出同时重定向到一个文件，需要将某个输出转换为另一个输出，例如 `2>&1` 表示将标准错误输出转换为标准输出。
 
 ```
 $ find /home -name .bashrc > list 2>&1
@@ -1049,7 +1229,7 @@ $ find /home -name .bashrc > list 2>&1
 
 ### 输入重定向
 
-**wc命令**用来计算数字。利用wc指令我们可以计算文件的Byte数、字数或是列数，若不指定文件名称，或是所给予的文件名为“-”，则wc指令会从标准输入设备读取数据。
+**wc命令** 用来计算数字。利用 wc 指令我们可以计算文件的 Byte 数、字数或是列数，若不指定文件名称，或是所给予的文件名为 “-”，则 wc 指令会从标准输入设备读取数据。
 
  语法 
 
@@ -1071,12 +1251,6 @@ wc(选项)(参数)
 
 
 
-
-
-
-
-
-
 参考资料：
 
 - [Shell 教程 | 菜鸟教程](http://www.runoob.com/linux/linux-shell.html)
@@ -1085,13 +1259,11 @@ wc(选项)(参数)
 
 ## 13. 正则表达式
 
-
-
 ### cut
 
 cut 对数据进行切分，取出想要的部分。切分过程一行一行地进行。
 
-```
+```shell
 $ cut
 -d ：分隔符
 -f ：经过 -d 分隔后，使用 -f n 取出第 n 个区间
@@ -1102,46 +1274,46 @@ $ cut
 
 例如有一个学生报表信息，包含No、Name、Mark、Percent：
 
-```
-[root@localhost text]# cat test.txt 
+```shell
+$ cat test.txt 
 No Name Mark Percent
 01 tom 69 91
 02 jack 71 87
 03 alex 68 98
 ```
 
-使用 **-f** 选项提取指定字段：
+使用 `-f` 选项提取指定字段：
 
-```
-[root@localhost text]# cut -f 1 test.txt 
+```shell
+$ cut -f 1 test.txt 
 No
 01
 02
 03
 ```
 
-```
-[root@localhost text]# cut -f2,3 test.txt 
+```shell
+$ cut -f2,3 test.txt 
 Name Mark
 tom 69
 jack 71
 alex 68
 ```
 
-**--complement** 选项提取指定字段之外的列（打印除了第二列之外的列）：
+`--complement` 选项提取指定字段之外的列（打印除了第二列之外的列）：
 
-```
-[root@localhost text]# cut -f2 --complement test.txt 
+```shell
+$ cut -f2 --complement test.txt 
 No Mark Percent
 01 69 91
 02 71 87
 03 68 98
 ```
 
-使用 **-d** 选项指定字段分隔符：
+使用 `-d` 选项指定字段分隔符：
 
 ```shell
-[root@localhost text]# cat test2.txt 
+$ cat test2.txt 
 No;Name;Mark;Percent
 01;tom;69;91
 02;jack;71;87
@@ -1149,7 +1321,7 @@ No;Name;Mark;Percent
 ```
 
 ```shell
-[root@localhost text]# cut -f2 -d";" test2.txt 
+$ cut -f2 -d";" test2.txt 
 Name
 tom
 jack
@@ -1209,11 +1381,11 @@ $ printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt)
 
 是由 Alfred Aho，Peter Weinberger, 和 Brian Kernighan 创造，awk 这个名字就是这三个创始人名字的首字母。
 
-awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：$n，n 为字段号，从 1 开始，$0 表示一整行。
+awk 每次处理一行，处理的最小单位是字段，每个字段的命名方式为：\$n，n 为字段号，从 1 开始，$0 表示一整行。
 
 示例 1：取出登录用户的用户名和 ip
 
-```
+```shell
 $ last -n 5
 dmtsai pts/0 192.168.1.100 Tue Jul 14 17:32 still logged in
 dmtsai pts/0 192.168.1.100 Thu Jul 9 23:36 - 02:58 (03:22)
@@ -1226,13 +1398,13 @@ $ last -n 5 | awk '{print $1 "\t" $3}
 
 可以根据字段的某些条件进行匹配，例如匹配字段小于某个值的那一行数据。
 
-```
+```shell
 $ awk '条件类型 1 {动作 1} 条件类型 2 {动作 2} ...' filename
 ```
 
 示例 2：/etc/passwd 文件第三个字段为 UID，对 UID 小于 10 的数据进行处理。
 
-```
+```shell
 $ cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t " $3}'
 root 0
 bin 1
@@ -1249,7 +1421,7 @@ awk 变量：
 
 示例 3：输出正在处理的行号，并显示每一行有多少字段
 
-```
+```shell
 $ last -n 5 | awk '{print $1 "\t lines: " NR "\t columns: " NF}'
 dmtsai lines: 1 columns: 10
 dmtsai lines: 2 columns: 10
@@ -1257,8 +1429,6 @@ dmtsai lines: 3 columns: 10
 dmtsai lines: 4 columns: 10
 dmtsai lines: 5 columns: 9
 ```
-
-![1532334466709](C:\Users\Frank\AppData\Local\Temp\1532334466709.png)
 
 
 
@@ -1306,8 +1476,6 @@ sed -i 's/原字符串/替换字符串/g' filename
 
 
 
-
-
 ## 14. 进程管理
 
 ### 查看进程
@@ -1332,6 +1500,12 @@ sed -i 's/原字符串/替换字符串/g' filename
 
 ```
 # ps aux | grep threadx
+```
+
+```
+-a：显示所有终端机下执行的程序，除了阶段作业领导者之外。
+-u<用户识别码>：此选项的效果和指定"-U"选项相同。
+x：显示所有程序，不以终端机来区分。
 ```
 
 #### 2. top
@@ -1376,9 +1550,7 @@ sed -i 's/原字符串/替换字符串/g' filename
 
 ### 进程状态
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/76a49594323247f21c9b3a69945445ee.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/76a49594323247f21c9b3a69945445ee.png)
-
- 
+<div align="center"><img src="assets/76a49594323247f21c9b3a69945445ee.png" width=""/></div>
 
 | 状态 | 说明                                                         |
 | ---- | ------------------------------------------------------------ |
@@ -1397,7 +1569,7 @@ sed -i 's/原字符串/替换字符串/g' filename
 - 得到 SIGCHLD 信号；
 - waitpid() 或者 wait() 调用会返回。
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/flow.png)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/flow.png)
+<div align="center"><img src="assets/flow.png" width=""/></div>
 
 其中子进程发送的 SIGCHLD 信号包含了子进程的信息，包含了进程 ID、进程状态、进程使用 CPU 的时间等。
 
@@ -1407,7 +1579,7 @@ sed -i 's/原字符串/替换字符串/g' filename
 
 #### wait()
 
-```
+```c
 pid_t wait(int *status)
 ```
 
@@ -1425,7 +1597,7 @@ pid = wait(NULL);
 
 #### waitpid()
 
-```
+```c
 pid_t waitpid(pid_t pid, int *status, int options)
 ```
 
@@ -1466,9 +1638,9 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 - [Linux系统学习笔记：异常控制流 - CSDN博客](https://blog.csdn.net/yangxuefeng09/article/details/10066357)
 - [Linux 之守护进程、僵死进程与孤儿进程 | LiuYongbin](http://liubigbin.github.io/2016/03/11/Linux-%E4%B9%8B%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E3%80%81%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B/)
 - [CSAPP笔记第八章异常控制流 呕心沥血千行笔记- DDUPzy - 博客园](https://www.cnblogs.com/zy691357966/p/5480537.html)
-  
 
-## 15. 进程和线程的区别【腾讯】
+
+## 15. 进程和线程的区别
 
 **进程：**CPU资源分配的最小单位
 
@@ -1484,7 +1656,11 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 通俗的讲：“进程是爹妈，管着众多的线程儿子”...
 
-[进程与线程的一个简单解释 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html)
+
+
+参考资料：
+
+- [进程与线程的一个简单解释 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html)
 
 
 
@@ -1498,8 +1674,6 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 参考资料：
 
 - [linux kill -9 杀不掉的进程 - CSDN博客](https://blog.csdn.net/lemontree1945/article/details/79169178)
-
-
 
 
 
@@ -1531,18 +1705,31 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 
 
 
-## 18. 系统管理命令（如查看内存使用、网络情况）
+## 18. 网络配置和网络诊断命令
 
-free -m
+- 第一个命令ifconfig，这个命令可以查看当前主机的ip地址和网卡信息。（附加网卡的启用ifup eth0与停用stop eth0命令）
 
-ifconfig、ping、netstat、traceroute、dig和nslookup、host、hostname、route、arp、ethtool、GUI管理命令system-config-network
+- 第二个命令ping，ping命令可以用来测试网络的连通性，使用非常广泛，不论是一般用户还是黑客都喜欢钟爱这个命令。 
+
+- 第三个命令netstat，netstat(网络统计)命令显示连接信息,路由表信息等，通常配合使用参数，这里只演示一个参数。 
+
+- 第四个命令traceroute，traceroute是路由跟踪命令，可以查看到你从源到目的的所经过的路由。  
+
+- 第五、六个命令dig与nslookup，为什么放在一起讲呢?原因是它们既有联系又有区别，dig查询DNS相关信息记录,CNAME,MX记录等等。这个命令主要用于解决相关DNS查询；nslookup也具备查询DNS的功能，还可以显示一个ip地址的记录！
+
+- 第七、八个命令host和hostname，host命令可以用来查找到IP的名称或IP的名字在IPv4和IPv6 DNS记录和查询，hostname命令查看主机名，或者你可以到/etc/sysconfig/network中修改主机名。
+
+- 第九个命令route，可以用来查看路由表，也可以用来增加和删除路由条目。 
+
+- 第十个命令arp，ARP为地址解析协议，可以看到默认的表使用。
+- 第十一个命令ethtool，ethtool查看到网络模式和网络速度等信息。有关配置可以到/etc/sysconfig/network-scripts/ifcfg-eth0下进行修改。
+- GUI管理命令system-config-network，图形化的管理界面调用命令。配置网络设置也可以使用配置IP地址、网关、DNS等。
 
 
 
-Linux网络配置和网络诊断命令介绍_百度经验
-https://jingyan.baidu.com/article/c1465413b694d90bfcfc4c87.html
+参考资料：
 
-
+- [Linux网络配置和网络诊断命令介绍_百度经验](https://jingyan.baidu.com/article/c1465413b694d90bfcfc4c87.html)
 
 ## 19. 磁盘管理
 
@@ -1559,7 +1746,7 @@ tmpfs                  1032204         0   1032204   0% /dev/shm
 /dev/sdb1            2884284108 218826068 2518944764   8% /data1
 ```
 
-使用`-h`选项以KB以上的单位来显示，可读性高：
+使用`-h` 选项以 KB 以上的单位来显示，可读性高：
 
 ```shell
 [root@LinServ-1 ~]# df -h
@@ -1578,9 +1765,9 @@ tmpfs                1009M     0 1009M   0% /dev/shm
 - 编辑模式（Insert mode）：按下 "i" 等按键之后进入，可以对文本进行编辑；
 - 指令列模式（Bottom-line mode）：按下 ":" 按键之后进入，用于保存退出等操作。
 
-[![img](https://github.com/CyC2018/Interview-Notebook/raw/master/pics/5942debd-fc00-477a-b390-7c5692cc8070.jpg)](https://github.com/CyC2018/Interview-Notebook/blob/master/pics/5942debd-fc00-477a-b390-7c5692cc8070.jpg)
+<div align="center"><img src="assets/5942debd-fc00-477a-b390-7c5692cc8070.jpg" width="400"/></div>
 
- 
+
 
 在指令列模式下，有以下命令用于离开或者保存文件。
 
@@ -1597,15 +1784,68 @@ tmpfs                1009M     0 1009M   0% /dev/shm
 
 
 
-
-
 ## 21. Screen命令
 
+> 经常我们通过SecureCRT、Puty这样的工具连上服务器进行命令操作，但是安装的过程中很可能会出现断网或者是不小心关闭窗口，造成安装中断，为了防止这种现象，接下来介绍screen命令的使用。
 
 
 
+### screen命令是什么
 
+- Screen 是一个可以在多个进程之间多路复用一个物理终端的全屏窗口管理器。Screen 中有会话的概念，用户可以在一个 screen 会话中创建多个 screen 窗口，在每一个 screen 窗口中就像操作一个真实的 telnet/SSH 连接窗口那样。
 
+### 安装
+
+- CentOS系统可以执行：`yum install screen`
+- Debian/Ubuntu系统执行：`apt-get install screen`
+
+### 使用方法
+
+1、常用的使用方法
+
+- 用来解决文章开始我们遇到的问题，比如在安装lnmp时。
+
+  1.1 创建 screen 会话
+
+  - 可以先执行：`screen -S lnmp` ，screen就会创建一个名字为 lnmp 的会话。
+
+  1.2 暂时离开，保留screen会话中的任务或程序
+
+  - 当需要临时离开时（会话中的程序不会关闭，仍在运行）可以用快捷键 Ctrl+a+d (即按住Ctrl，依次再按a,d)
+
+  1.3 恢复screen会话
+
+  - 当回来时可以再执行执行：`screen -r lnmp`即可恢复到离开前创建的 lnmp 会话的工作界面。
+  - 如果忘记了，或者当时没有指定会话名，可以执行：`screen -ls` screen会列出当前存在的会话列表，如下图：
+
+```shell
+$ screen -ls
+There are screens on:
+		11791.lnmp     (Attached)
+        27620.frank     (Attached)
+        27545.pts-0.chengchi    (Attached)
+3 Sockets in /var/run/screen/S-root.
+```
+
+- `11791.lnmp` 即为刚才的 screen 创建的 lnmp 会话，目前已经暂时退出了 lnmp 会话，所以状态为Detached，当使用 `screen -r lnmp` 后状态就会变为 Attached，11791 是这个 screen 的会话的进程 ID，恢复会话时也可以使用：`screen -r 11791`
+
+  1.4 关闭screen的会话
+
+  - 执行：exit ，会提示：[screen is terminating]，表示已经成功退出screen会话。
+
+### 远程演示
+
+- 首先演示者先在服务器上执行 `screen -S test`
+- 创建一个screen会话 
+  观众可以链接到远程服务器上执行 `screen -x test` 观众屏幕上就会出现和演示者同步。
+
+### 常用快捷键
+
+- `Ctrl+a c` ：在当前screen会话中创建窗口
+- `Ctrl+a w` ：窗口列表
+- `Ctrl+a n` ：下一个窗口
+- `Ctrl+a p` ：上一个窗口
+- `Ctrl+a 0-9` ：在第0个窗口和第9个窗口之间切换
 
 
 
@@ -1629,34 +1869,16 @@ ctrl + r：在历史命令中搜索
 
 
 
+## 23. 高并发网络编程之epoll详解
 
-
-
-
-## 23. 高并发网络编程之epoll详解 - CSDN博客
-
-https://blog.csdn.net/shenya1314/article/details/73691088
-
-
-
+详情请转向：[高并发网络编程之epoll详解 - CSDN博客](https://blog.csdn.net/shenya1314/article/details/73691088)
 
 
 # 参考资料
 
-【Linux】初踏足Linux的大门 - CSDN博客
+- [【Linux】初踏足Linux的大门 - CSDN博客](https://blog.csdn.net/qq_41035588/article/details/80947383)
 
-https://blog.csdn.net/qq_41035588/article/details/80947383
-
-
-
-(2 封私信 / 18 条消息)如何学习（记住）linux命令（常用选项）？ - 知乎
-https://www.zhihu.com/question/21690166/answer/66721478
-
-
-
-
-
-
+- [如何学习（记住）linux命令（常用选项）？ - 知乎](https://www.zhihu.com/question/21690166/answer/66721478)
 
 # 更新日志
 
@@ -1664,4 +1886,4 @@ https://www.zhihu.com/question/21690166/answer/66721478
 
 2018/8/23 v2.0 基础版1
 
-2018/8/26 v2.5 基础版2
+2018/8/26 - 27 v2.5 基础版2
