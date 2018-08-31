@@ -1,13 +1,102 @@
+<!-- TOC -->
+
+- [前言](#前言)
+- [一、基本概念](#一基本概念)
+    - [1. Java程序初始化的顺序是怎么样的【B50】](#1-java程序初始化的顺序是怎么样的b50)
+    - [2. Java和C++的区别](#2-java和c的区别)
+    - [3. 反射](#3-反射)
+        - [先看一个知乎回答](#先看一个知乎回答)
+        - [什么是反射](#什么是反射)
+        - [主要用途](#主要用途)
+        - [获得Class对象](#获得class对象)
+    - [4. 注解](#4-注解)
+        - [什么是注解](#什么是注解)
+        - [为什么要用注解](#为什么要用注解)
+        - [基本Annotation](#基本annotation)
+        - [自定义注解类编写规则](#自定义注解类编写规则)
+        - [自定义注解实例](#自定义注解实例)
+    - [5. 泛型](#5-泛型)
+        - [通俗解释](#通俗解释)
+        - [泛型方法](#泛型方法)
+        - [泛型类](#泛型类)
+        - [类型通配符](#类型通配符)
+    - [6. 字节与字符的区别](#6-字节与字符的区别)
+    - [7. 有哪些访问修饰符](#7-有哪些访问修饰符)
+    - [8. 深拷贝与浅拷贝](#8-深拷贝与浅拷贝)
+- [二、面向对象](#二面向对象)
+    - [1. Java的四个基本特性，对多态的理解，在项目中哪些地方用到多态](#1-java的四个基本特性对多态的理解在项目中哪些地方用到多态)
+    - [2. 什么是重载和重写](#2-什么是重载和重写)
+    - [3. 面向对象和面向过程的区别？用面向过程可以实现面向对象吗？](#3-面向对象和面向过程的区别用面向过程可以实现面向对象吗)
+    - [4. 面向对象开发的六个基本原则，在项目中用过哪些原则](#4-面向对象开发的六个基本原则在项目中用过哪些原则)
+    - [5. 内部类有哪些](#5-内部类有哪些)
+        - [（一）成员内部类](#一成员内部类)
+        - [（二）局部内部类](#二局部内部类)
+        - [（三）匿名内部类](#三匿名内部类)
+        - [（四）静态内部类](#四静态内部类)
+    - [6. 组合、继承和代理的区别](#6-组合继承和代理的区别)
+        - [定义](#定义)
+        - [使用场合](#使用场合)
+    - [7. 什么是构造函数](#7-什么是构造函数)
+    - [8. 向上造型和向下造型](#8-向上造型和向下造型)
+- [三、关键字](#三关键字)
+    - [1. final与static的区别](#1-final与static的区别)
+        - [final](#final)
+        - [static](#static)
+    - [2. break、continue、return](#2-breakcontinuereturn)
+        - [break](#break)
+        - [continue](#continue)
+        - [return](#return)
+    - [3. final、finally和finalize区别【B77】](#3-finalfinally和finalize区别b77)
+        - [final](#final-1)
+        - [finally](#finally)
+        - [finalize](#finalize)
+            - [判定死亡](#判定死亡)
+            - [最后的救赎](#最后的救赎)
+            - [finalize()的作用](#finalize的作用)
+    - [4. assert有什么作用](#4-assert有什么作用)
+    - [5. volatile](#5-volatile)
+    - [6. instanceof](#6-instanceof)
+    - [7. strictfp](#7-strictfp)
+    - [8. transient](#8-transient)
+    - [9. native](#9-native)
+- [四、基本数据类型与运算](#四基本数据类型与运算)
+    - [1. Java的基本数据类型和引用类型，自动装箱和拆箱](#1-java的基本数据类型和引用类型自动装箱和拆箱)
+    - [2. ValueOf缓存池](#2-valueof缓存池)
+    - [3. i++和++i有什么区别【B97】](#3-i和i有什么区别b97)
+        - [i++](#i)
+        - [++i](#i)
+    - [4. 位运算符](#4-位运算符)
+    - [5. 原码、补码、反码是什么](#5-原码补码反码是什么)
+        - [机器数](#机器数)
+        - [真值](#真值)
+        - [原码](#原码)
+        - [反码](#反码)
+        - [补码](#补码)
+    - [6. 不用额外变量交换两个整数的值](#6-不用额外变量交换两个整数的值)
+    - [7. 不使用运算符进行a+b操作](#7-不使用运算符进行ab操作)
+    - [8. &和&& 、|和||的区别](#8-和-和的区别)
+- [五、字符串与数组](#五字符串与数组)
+    - [1. String,StringBuffer,StringBuilder，以及对String不变性的理解](#1-stringstringbufferstringbuilder以及对string不变性的理解)
+    - [2. String有重写Object的hashcode和toString吗？如果重写equals不重写hashcode会出现什么问题？](#2-string有重写object的hashcode和tostring吗如果重写equals不重写hashcode会出现什么问题)
+    - [3. 如果你定义一个类，包括学号，姓名，分数，如何把这个对象作为key？要重写equals和hashcode吗](#3-如果你定义一个类包括学号姓名分数如何把这个对象作为key要重写equals和hashcode吗)
+    - [4. 字面量](#4-字面量)
+- [六、异常处理](#六异常处理)
+    - [1. 常见异常分为那两种(Exception，Error)，常见异常的基类以及常见的异常](#1-常见异常分为那两种exceptionerror常见异常的基类以及常见的异常)
+- [七、Object 通用方法](#七object-通用方法)
+    - [equals()](#equals)
+    - [hashCode()](#hashcode)
+    - [toString()](#tostring)
+    - [clone()](#clone)
+- [更新日志](#更新日志)
+
+<!-- /TOC -->
+
 # 前言
 
 为了更好的总结Java面试中的系统知识结构，本文根据以下资料整理学习笔记。
 
 - 《Java程序员面试笔试宝典》以下索引中`B`代表该书。
 - [《阿里面经OneNote》](https://blog.csdn.net/sinat_22797429/article/details/76293284)
-
-
-
-from 2018/7/11
 
  
 
@@ -1630,15 +1719,16 @@ B（13）：0000 1101
 
 如果给定整数 a 和 b，用以下三行代码即可交换 a 和b 的值
 
-```
+```java
 a = a ^ b;
 b = a ^ b;
 a = a ^ b;
 ```
 
-- 假设 a 异或 b 的结果记为 c，**c 就是 a 整数位信息和 b 整数位信息的所有不同信息**。比如：a=4=100，b=3=011，ab=c=111
-- a异或c的结果就是b，比如：a=4=100，c=111，a^c=011=3=b
-- b异或c的结果就是a，比如：b=3=011，c=111，b^c=100=4=a
+- 假设 a 异或 b 的结果记为 c，**c 就是 a 整数位信息和 b 整数位信息的所有不同信息**。
+  - 比如：a = 4 = 100，b = 3 = 011，a^b = c = 111
+- a 异或 c 的结果就是 b，比如：a = 4 = 100，c = 111，a^c = 011 = 3 = b
+- b 异或c 的结果就是 a，比如：b = 3 = 011，c = 111，b^c = 100 = 4 = a
 
 说明：位运算的题目基本上都带有靠经验积累才会做的特征，也就是准备阶段需要做足够多的题，面试时才会有良好的感觉。
 
@@ -1646,57 +1736,58 @@ a = a ^ b;
 
 ## 7. 不使用运算符进行a+b操作
 
-- a^b; 得到不含进位之和
-- (a&b)<<1; 进位
+- a^b;  得到不含进位之和
+- (a & b)<<1;  进位
 - 只要进位不为零，则迭代；否则返回
 
 ```java
-public class Solution {
-    /*
-     * @param : An integer
-     * @param : An integer
-     * @return: The sum of a and b
-     */
-    public int aplusb(int a, int b) {
+#include <stdio.h>
 
-        int sum_without_carry, carry;
-        sum_without_carry = a^b; //没有进位的和
-        carry = (a&b)<<1; //进位
-        if(carry==0)
-            return sum_without_carry;
-        else 
-            return aplusb(sum_without_carry, carry);   
+int add(int a, int b)
+{
+    int c = a & b;
+    int r = a ^ b;
+    if(c == 0){
+        return r;
     }
-};
+    else{
+        return add(r, c << 1);
+    }
+}
+
+int main(int argn, char *argv[])
+{
+    printf("sum = %d\n", add(-10000, 56789));
+    return 0;
+}
 ```
 
 
 
-## 8. &和&& 、|和||的区别？【阿里实习生面试】
+## 8. &和&& 、|和||的区别
 
-
-	（1）&&和&都是表示与，区别是&&只要第一个条件不满足，后面条件就不再判断。而&要对所有的条件都进行判断。
+（1）&& 和 & 都是表示与，区别是 && 只要第一个条件不满足，后面条件就不再判断。而 & 要对所有的条件都进行判断。
 
 ```java
 // 例如：
 public static void main(String[] args) {  
-    if((23!=23)&&(100/0==0)){  
-    	System.out.println("运算没有问题。");  
+    if((23!=23) && (100/0==0)){  
+        System.out.println("运算没有问题。");  
     }else{  
-    	System.out.println("没有报错");  
+        System.out.println("没有报错");  
     }  
 }  
-// 输出的是“没有报错”。而将&&改为&就会如下错误：
+// 输出的是“没有报错”。而将 && 改为 & 就会如下错误：
 // Exception in thread "main" java.lang.ArithmeticException: / by zero
 ```
 
 - 原因：
-  - &&时判断第一个条件为false，后面的100/0==0这个条件就没有进行判断。
+  - &&时判断第一个条件为 false，后面的 100/0==0 这个条件就没有进行判断。
 
-  - &时要对所有的条件进行判断，所以会对后面的条件进行判断，所以会报错。
+  - & 时要对所有的条件进行判断，所以会对后面的条件进行判断，所以会报错。
 
 
-  （2）||和|都是表示“或”，区别是||只要满足第一个条件，后面的条件就不再判断，而|要对所有的条件进行判断。 看下面的程序： 
+  （2）|| 和 | 都是表示 “或”，区别是 || 只要满足第一个条件，后面的条件就不再判断，而 | 要对所有的条件进行判断。 看下面的程序： 
 
 ```java
 public static void main(String[] args) {  
@@ -1710,8 +1801,8 @@ public static void main(String[] args) {
 ```
 
  - 原因
-    - ||判断第一个条件为true，后面的条件就没有进行判断就执行了括号中的代码
-    - 而|要对所有的条件进行判断， 所以会报错
+    - || 判断第一个条件为 true，后面的条件就没有进行判断就执行了括号中的代码
+    - 而 | 要对所有的条件进行判断，所以会报错
 
 
 
@@ -1719,42 +1810,46 @@ public static void main(String[] args) {
 
 # 五、字符串与数组
 
-## 1. String、StringBuffer、StringBuilder以及对String不变性的理解
+## 1. String,StringBuffer,StringBuilder，以及对String不变性的理解
 
 - String、StringBuffer、StringBuilder 
-  - 都是 final 类, 都不允许被继承; 
-  - String 长度是不可变的, StringBuffer、StringBuilder 长度是可变的; 
-  - StringBuffer 是线程安全的, StringBuilder 不是线程安全的，但它们两个中的所有方法都是相同的，StringBuffer在StringBuilder的方法之上添加了synchronized修饰，保证线程安全。 
-  - StringBuilder比StringBuffer拥有更好的性能。 
-  - 如果一个String类型的字符串，在编译时就可以确定是一个字符串常量，则编译完成之后，字符串会自动拼接成一个常量。此时String的速度比StringBuffer和StringBuilder的性能好的多。 
-- String不变性的理解 
-  - String 类是被final进行修饰的，不能被继承。 
-  - 在用+号链接字符串的时候会创建新的字符串。 
-  - String s = new String("Hello world"); 可能创建两个对象也可能创建一个对象。如果静态区中有“Hello world”字符串常量对象的话，则仅仅在堆中创建一个对象。如果静态区中没有“Hello world”对象，则堆上和静态区中都需要创建对象。 
-  - 在 java 中, 通过使用 "+" 符号来串联字符串的时候, 实际上底层会转成通过 StringBuilder 实例的 append() 方法来实现。 
+  - 都是 final 类，都不允许被继承
+  - String 长度是不可变的，StringBuffer、StringBuilder 长度是可变的
+  - StringBuffer 是线程安全的，StringBuilder 不是线程安全的，但它们两个中的所有方法都是相同的，StringBuffer 在 StringBuilder 的方法之上添加了 synchronized 修饰，保证线程安全
+  - StringBuilder 比 StringBuffer 拥有更好的性能
+  - 如果一个 String 类型的字符串，在编译时就可以确定是一个字符串常量，则编译完成之后，字符串会自动拼接成一个常量。此时 String 的速度比 StringBuffer 和 StringBuilder 的性能好的多
+
+
+
+- String 不变性的理解 
+  - String 类是被 final 进行修饰的，不能被继承 
+  - 在用 + 号链接字符串的时候会创建新的字符串
+  - String s = new String("Hello world"); 可能创建两个对象也可能创建一个对象。如果静态区中有 “Hello world” 字符串常量对象的话，则仅仅在堆中创建一个对象。如果静态区中没有 “Hello world” 对象，则堆上和静态区中都需要创建对象。 
+  - 在 Java 中, 通过使用 "+" 符号来串联字符串的时候,，实际上底层会转成通过 StringBuilder 实例的 append() 方法来实现。
 
  
 
 ## 2. String有重写Object的hashcode和toString吗？如果重写equals不重写hashcode会出现什么问题？
 
-- String有重写Object的hashcode和toString吗？ 
+- String 有重写 Object 的 hashcode 和 toString吗？ 
 
-  - String重写了Object类的hashcode和toString方法。 
+  - String 重写了 Object 类的 hashcode 和 toString 方法。 
 
-- 当equals方法被重写时，通常有必要重写hashCode方法，以维护hashCode方法的常规协定，该协定声明相对等的两个对象必须有相同的hashCode 
+- 当 equals 方法被重写时，通常有必要重写 hashCode 方法，以维护 hashCode 方法的常规协定，该协定声明相对等的两个对象必须有相同的 hashCode 
 
-  - object1.euqal(object2)时为true， object1.hashCode() ==  object2.hashCode() 为true 
-  - object1.hashCode() ==  object2.hashCode() 为false时，object1.euqal(object2)必定为false 
-  - object1.hashCode() ==  object2.hashCode() 为true时，但object1.euqal(object2)不一定定为true 
+  - object1.euqal(object2) 时为 true， object1.hashCode() ==  object2.hashCode() 为 true 
+  - object1.hashCode() ==  object2.hashCode() 为 false 时，object1.euqal(object2) 必定为 false 
+  - object1.hashCode() ==  object2.hashCode() 为 true时，但 object1.euqal(object2) 不一定定为 true 
 
-- 重写equals不重写hashcode会出现什么问题 
+- 重写 equals 不重写 hashcode 会出现什么问题 
 
-  - 在存储散列集合时(如Set类)，如果原对象.equals(新对象)，但没有对hashCode重写，即两个对象拥有不同的hashCode，则在集合中将会存储两个值相同的对象，从而导致混淆。因此在重写equals方法时，必须重写hashCode方法。 
+  - 在存储散列集合时(如 Set 类)，如果原对象.equals(新对象)，但没有对 hashCode 重写，即两个对象拥有不同的 hashCode，则在集合中将会存储两个值相同的对象，从而导致混淆。因此在重写 equals 方法时，必须重写 hashCode 方法。 
+
 
 
 ## 3. 如果你定义一个类，包括学号，姓名，分数，如何把这个对象作为key？要重写equals和hashcode吗
 
-- 需要重写equals方法和hashcode，必须保证对象的属性改变时，其hashcode不能改变。 
+- 需要重写 equals 方法和 hashcode，必须保证对象的属性改变时，其 hashcode 不能改变。 
 
 
 
@@ -1762,14 +1857,15 @@ public static void main(String[] args) {
 
 在编程语言中，字面量（literal）指的是在源代码中直接表示的一个固定的值。 
 
-八进制是用在整数字面量之前添加“0”来表示的。 
+八进制是用在整数字面量之前添加 “0” 来表示的。 
 
-十六进制用在整数字面量之前添加“0x”或者“0X”来表示的
+十六进制用在整数字面量之前添加 “0x” 或者 “0X” 来表示的
 
- Java 7中新增了二进制：用在整数字面量之前添加“0b”或者“0B”来表示的。  
+ Java 7 中新增了二进制：用在整数字面量之前添加 “0b” 或者 “0B” 来表示的。  
 
 **在数值字面量中使用下划线**
-在Java7中，数值字面量，不管是证书还是浮点数都允许在数字之间插入任意多个下划线。并且不会对数值产生影响，目的是方便阅读，规则只能在数字之间使用。
+
+在 Java7 中，数值字面量，不管是整数还是浮点数都允许在数字之间插入任意多个下划线。并且不会对数值产生影响，目的是方便阅读，规则只能在数字之间使用。
 
 ```java
 public class BinaryIntegralLiteral {
@@ -1799,31 +1895,26 @@ public class BinaryIntegralLiteral {
 
 ## 1. 常见异常分为那两种(Exception，Error)，常见异常的基类以及常见的异常
 
-- Throwable是java语言中所有错误和异常的超类（万物即可抛）。它有两个子类：Error、Exception。 
-
+- Throwable 是 Java 语言中所有错误和异常的超类（万物即可抛）。它有两个子类：Error、Exception。 
 - 异常种类 
 
-  - **Error**：Error为错误，是程序无法处理的，如OutOfMemoryError、ThreadDeath等，出现这种情况你唯一能做的就是听之任之，交由JVM来处理，不过JVM在大多数情况下会选择终止线程。 
-  - **Exception**：Exception是程序可以处理的异常。它又分为两种CheckedException（受捡异常），一种是UncheckedException（不受检异常）。 
-    - **受检异常**（CheckException）：<u>发生在编译阶段，必须要使用try…catch（或者throws）否则编译不通过。</u> 
-    - **非受检异常** （UncheckedException）：<u>是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。</u> （发生在运行期，具有不确定性，主要是由于程序的逻辑问题所引起的，难以排查，我们一般都需要纵观全局才能够发现这类的异常错误，所以在程序设计中我们需要认真考虑，好好写代码，尽量处理异常，即使产生了异常，也能尽量保证程序朝着有利方向发展。 ）
-
+  - **Error**：Error 为错误，是程序无法处理的，如 OutOfMemoryError、ThreadDeath 等，出现这种情况你唯一能做的就是听之任之，交由 JVM 来处理，不过 JVM 在大多数情况下会选择终止线程。 
+  - **Exception**：Exception 是程序可以处理的异常。它又分为两种 CheckedException（受捡异常），一种是 UncheckedException（不受检异常）。 
+    - **受检异常**（CheckException）：发生在编译阶段，必须要使用 try…catch（或者throws）否则编译不通过。 
+    - **非受检异常** （UncheckedException）：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。 （发生在运行期，具有不确定性，主要是由于程序的逻辑问题所引起的，难以排查，我们一般都需要纵观全局才能够发现这类的异常错误，所以在程序设计中我们需要认真考虑，好好写代码，尽量处理异常，即使产生了异常，也能尽量保证程序朝着有利方向发展。 ）
 - 常见异常的基类（Exception）
 
   - IOException 
   - RuntimeException 
+- 常见的异常
 
-- 常见的异常 
-
-  ![图像](../pics/exception_and_error.png)
-
-
+<div align="center"><img src="../pics/exception_and_error.png" width="650"/></div>
 
 
 
 # 七、Object 通用方法
 
-以下为Object中的通用方法
+以下为 Object 中的通用方法
 
 ```java
 public final native Class<?> getClass()
@@ -1853,8 +1944,8 @@ protected void finalize() throws Throwable {} // JVM内存回收之finalize()方
 
 **1. equals() 与 == 的区别**
 
-- 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
-- 对于引用类型，== 判断两个实例是否引用同一个对象，而 equals() 判断引用的对象是否等价。
+- 对于基本类型，==  判断两个值是否相等，基本类型没有 equals() 方法。
+- 对于引用类型，==  判断两个实例是否引用同一个对象，而 equals() 判断引用的对象是否等价。
 
 ```java
 Integer x = new Integer(1);
@@ -1935,11 +2026,11 @@ public class EqualExample {
 
 ## hashCode()
 
-hasCode() 返回散列值，而 equals() 是用来判断两个实例是否等价。<u>等价的两个实例散列值一定要相同，但是散列值相同的两个实例不一定等价。</u>
+　　hasCode() 返回散列值，而 equals() 是用来判断两个实例是否等价。**等价的两个实例散列值一定要相同，但是散列值相同的两个实例不一定等价。**
 
-在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证等价的两个实例散列值也相等。
+　　在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证等价的两个实例散列值也相等。
 
-下面的代码中，新建了两个等价的实例，并将它们添加到 HashSet 中。我们希望将这两个实例当成一样的，只在集合中添加一个实例，但是因为 EqualExample 没有实现 hasCode() 方法，因此这两个实例的散列值是不同的，最终导致集合添加了两个等价的实例。
+　　下面的代码中，新建了两个等价的实例，并将它们添加到 HashSet 中。我们希望将这两个实例当成一样的，只在集合中添加一个实例，但是因为 EqualExample 没有实现 hasCode() 方法，因此这两个实例的散列值是不同的，最终导致集合添加了两个等价的实例。
 
 ```java
 EqualExample e1 = new EqualExample(1, 1, 1);
@@ -1951,9 +2042,9 @@ set.add(e2);
 System.out.println(set.size());   // 2
 ```
 
-理想的散列函数应当具有均匀性，即不相等的实例应当均匀分布到所有可能的散列值上。这就要求了散列函数要把所有域的值都考虑进来，可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位。
+　　理想的散列函数应当具有均匀性，即不相等的实例应当均匀分布到所有可能的散列值上。这就要求了散列函数要把所有域的值都考虑进来，可以将每个域都当成 R 进制的某一位，然后组成一个 R 进制的整数。R 一般取 31，因为它是一个奇素数，如果是偶数的话，当出现乘法溢出，信息就会丢失，因为与 2 相乘相当于向左移一位。
 
-一个数与 31 相乘可以转换成移位和减法：`31\*x == (x<<5)-x`，编译器会自动进行这个优化。
+　　一个数与 31 相乘可以转换成移位和减法：`31\*x == (x<<5)-x`，编译器会自动进行这个优化。
 
 ```java
 @Override
@@ -1968,7 +2059,7 @@ public int hashCode() {
 
 ## toString()
 
-默认返回 ToStringExample@4554617c 这种形式，其中 @ 后面的数值为散列码的无符号十六进制表示。
+默认返回 ToStringExample@4554617c 这种形式，其中 @ 后面的数值为**散列码的无符号十六进制**表示。
 
 ```java
 public class ToStringExample {
@@ -2059,6 +2150,8 @@ public class CloneExample implements Cloneable {
 
 
 
-# 更新说明
+# 更新日志
 
-- 2018/8/30
+- 2018/7/11 v1.0 第一版
+
+- 2018/8/30-31 v3.0 初版

@@ -6,7 +6,7 @@
 |                        | [数据结构与算法](notes/数据结构与算法.md)                  |      | v0.5 |        | 8/4  |                       |
 |                        |                                                            |      |      |        |      |                       |
 | **二、Java核心知识**   |                                                            |      |      |        |      |                       |
-|                        | [Java基础](notes/JavaArchitecture/01%20Java%20基础.md)     |      | v2.5 | 基础版 |      | 7/31 复习             |
+|                        | [Java基础](notes/JavaArchitecture/01%20Java%20基础.md)     |      | v3.0 | 初稿版 |      | 7/31 ; 8/31           |
 |                        | [集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md) |      | v2.5 | 基础版 |      | 8/2 复习              |
 |                        | [并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md) |      | v2.5 | 基础版 |      | 8/14 复习             |
 |                        | [IO流](notes/JavaArchitecture/04%20Java%20IO.md)           |      | v2.5 | 基础版 |      | 8/6 复习              |
