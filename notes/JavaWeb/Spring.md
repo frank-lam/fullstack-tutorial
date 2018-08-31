@@ -314,8 +314,6 @@ public class Factory {
 
 
 
-
-
 ### 1.5 Spring中怎么用
 
 #### （1）配置文件方式
@@ -588,9 +586,9 @@ AOP（Aspect Oriented Programming ）称为面向切面编程，扩展功能不�
 
 **spring的底层采用两种方式进行增强**
 
-​         第一：Spring传统AOP 纯java实现，在运行期，对目标对象进行代理，织入增强代码
+         第一：Spring传统AOP 纯java实现，在运行期，对目标对象进行代理，织入增强代码
 
-​         第二：AspectJ第三方开源技术，Spring已经整合AspectJ，提供对AspectJ注解的支持，开发AOP程序 更加容易（企业主流）
+         第二：AspectJ第三方开源技术，Spring已经整合AspectJ，提供对AspectJ注解的支持，开发AOP程序 更加容易（企业主流）
 
 ### 3.2 底层原理
 
@@ -638,40 +636,27 @@ public class User {
 - **Joinpoint（连接点）（重要）**
   - 类里面可以被增强的方法，这些方法称为连接点
 
-    
-
 - **Pointcut（切入点）（重要）**
   - 所谓切入点是指我们要对哪些Joinpoint进行拦截的定义
-
-  
 
 - **Advice（通知/增强）（重要）**
 
   - 所谓通知是指拦截到Joinpoint之后所要做的事情就是通知.通知分为前置通知，后置通知，异常通知，最终通知，环绕通知（切面要完成的功能）
 
-  
-
 - **Aspect（切面）**：
   - 是切入点和通知（引介）的结合
-
-  
 
 - **Introduction（引介）**
   - 引介是一种特殊的通知在不修改类代码的前提下， Introduction可以在运行期为类动态地添加一些方法或Field.
 
-  
-
 - **Target（目标对象）**
   - 代理的目标对象（要增强的类）
-
-  
 
 - **Weaving（织入）**
   - 是把增强应用到目标的过程，把advice 应用到 target的过程
 
-  
-
 - **Proxy（代理）**
+
   - 一个类被AOP织入增强后，就产生一个结果代理类
 
 
@@ -837,8 +822,6 @@ public class AOPTest {
    
    </beans>
    ```
-
-   
 
 3. 在增强类上面使用注解完成aop操作
    （1）类上面加上`@Aspect`
