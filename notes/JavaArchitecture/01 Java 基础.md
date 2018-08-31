@@ -2146,12 +2146,11 @@ public class CloneExample implements Cloneable {
 参考资料：
 
 - [【必读】搞懂 Java equals 和 hashCode 方法 - 掘金](https://juejin.im/post/5ac4d8abf265da23a4050ae3)
-  
 
 
 
 # 更新日志
 
 - 2018/7/11 v1.0 第一版
-
+- 2018/7/31 v2.0 基础版
 - 2018/8/30-31 v3.0 初版
