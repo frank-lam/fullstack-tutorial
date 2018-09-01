@@ -1,94 +1,10 @@
-<!-- TOC -->
-
-- [前言](#前言)
-- [一、概述](#一概述)
-    - [集合框架图](#集合框架图)
-    - [Collection](#collection)
-    - [Map](#map)
-    - [工具类](#工具类)
-    - [通用实现](#通用实现)
-- [二、深入源码分析](#二深入源码分析)
-    - [ArrayList](#arraylist)
-        - [1. 概览](#1-概览)
-        - [2. 序列化](#2-序列化)
-        - [3. 扩容](#3-扩容)
-        - [4. 删除元素](#4-删除元素)
-        - [5. Fail-Fast](#5-fail-fast)
-    - [Vector](#vector)
-        - [1. 同步](#1-同步)
-        - [2. ArrayList 与 Vector](#2-arraylist-与-vector)
-        - [3. Vector 替代方案](#3-vector-替代方案)
-            - [synchronizedList](#synchronizedlist)
-            - [CopyOnWriteArrayList](#copyonwritearraylist)
-    - [LinkedList](#linkedlist)
-        - [1. 概览](#1-概览-1)
-        - [2. add()](#2-add)
-        - [3. remove()](#3-remove)
-        - [4. get()](#4-get)
-        - [5. 总结](#5-总结)
-        - [6. ArrayList 与 LinkedList](#6-arraylist-与-linkedlist)
-    - [HashMap](#hashmap)
-        - [1. 存储结构](#1-存储结构)
-            - [JDK1.7 的存储结构](#jdk17-的存储结构)
-            - [JDK1.8 的存储结构](#jdk18-的存储结构)
-        - [2. 重要参数](#2-重要参数)
-        - [3. 确定哈希桶数组索引位置](#3-确定哈希桶数组索引位置)
-        - [4. 分析HashMap的put方法](#4-分析hashmap的put方法)
-        - [5. 扩容机制](#5-扩容机制)
-        - [6. 线程安全性](#6-线程安全性)
-        - [7. JDK1.8与JDK1.7的性能对比](#7-jdk18与jdk17的性能对比)
-        - [8. Hash较均匀的情况](#8-hash较均匀的情况)
-        - [9. Hash极不均匀的情况](#9-hash极不均匀的情况)
-        - [10. HashMap 与 HashTable](#10-hashmap-与-hashtable)
-        - [11. 小结](#11-小结)
-    - [ConcurrentHashMap](#concurrenthashmap)
-        - [1. 概述](#1-概述)
-        - [2. 存储结构](#2-存储结构)
-        - [2. size 操作](#2-size-操作)
-        - [3. 同步方式](#3-同步方式)
-        - [4. JDK 1.8 的改动](#4-jdk-18-的改动)
-    - [HashSet](#hashset)
-        - [1. 成员变量](#1-成员变量)
-        - [2. 构造函数](#2-构造函数)
-        - [3. add()](#3-add)
-        - [4. 总结](#4-总结)
-    - [LinkedHashSet and LinkedHashMap](#linkedhashset-and-linkedhashmap)
-        - [1. 概览](#1-概览-2)
-        - [2. get()](#2-get)
-        - [3. put()](#3-put)
-        - [4. remove()](#4-remove)
-        - [5. LinkedHashSet](#5-linkedhashset)
-        - [6. LinkedHashMap经典用法](#6-linkedhashmap经典用法)
-- [三、容器中的设计模式](#三容器中的设计模式)
-    - [迭代器模式](#迭代器模式)
-    - [适配器模式](#适配器模式)
-- [四、面试指南](#四面试指南)
-    - [1. ArrayList和LinkedList是常用的两种存储结构，有哪些区别呢？【阿里面试】](#1-arraylist和linkedlist是常用的两种存储结构有哪些区别呢阿里面试)
-    - [2. HashMap和HashTable的区别，HashMap中的key可以是任何对象或数据类型吗？HashTable是线程安全的么？](#2-hashmap和hashtable的区别hashmap中的key可以是任何对象或数据类型吗hashtable是线程安全的么)
-    - [3. HashMap和ConcurrentHashMap区别， ConcurrentHashMap 线程安全吗， ConcurrentHashMap如何保证线程安全？](#3-hashmap和concurrenthashmap区别 concurrenthashmap 线程安全吗 concurrenthashmap如何保证线程安全)
-    - [4. Hashtable的原理是什么？深入分析底层源码【阿里内推面试】](#4-hashtable的原理是什么深入分析底层源码阿里内推面试)
-    - [5. Hash冲突的解决办法有哪些？](#5-hash冲突的解决办法有哪些)
-    - [6. 什么是迭代器？【面试宝典】](#6-什么是迭代器面试宝典)
-    - [7. 构造相同hash的字符串进行攻击，这种情况应该怎么处理？JDK7如何处理？](#7-构造相同hash的字符串进行攻击这种情况应该怎么处理jdk7如何处理)
-    - [8. Hashmap为什么大小是2的幂次？【阿里面经】](#8-hashmap为什么大小是2的幂次阿里面经)
-
-<!-- /TOC -->
-
 # 前言
 
-　　Java集合框架(Java Collections Framework, JCF)也称容器，这里可以类比C++中的STL，在市面上似乎还没能找到一本详细介绍的书籍。在这里主要对如下部分进行源码分析，及在面试中常见的问题。
+　　Java集合框架 (Java Collections Framework, JCF) 也称容器，这里可以类比 C++ 中的 STL，在市面上似乎还没能找到一本详细介绍的书籍。在这里主要对如下部分进行源码分析，及在面试中常见的问题。
 
-　　例如，在阿里面试常问到的HashMap和ConcurrentHashMap原理等等。深入源码分析是面试中必备的技能，通过本文的阅读会对集合框架有更深一步的了解。
+　　例如，在阿里面试常问到的 HashMap 和 ConcurrentHashMap 原理等等。深入源码分析是面试中必备的技能，通过本文的阅读会对集合框架有更深一步的了解。
 
-- ArrayList
-- Vector
-- LinkedList
-- HashMap
-- ConcurrentHashMap
-- HashSet
-- LinkedHashMap
 
- 
 
 本文参考：
 
@@ -98,29 +14,27 @@
 
 
 
-
-
 # 一、概述
 
-　　Java集合框架提供了数据持有对象的方式，提供了对数据集合的操作。Java集合框架位于 java.util 包下，主要有三个大类：**Collection(接口)**、**Map(接口)**、**集合工具类**。
+　　Java集合框架提供了数据持有对象的方式，提供了对数据集合的操作。Java 集合框架位于 ` java.util` 包下，主要有三个大类：**Collection(接口)**、**Map(接口)**、**集合工具类**。
 
 
 
 ## 集合框架图
 
-<div align="center"> <img src="../pics/java_collection_framework.jpg" width=""/></div><br/>
+<div align="center"> <img src="../pics/java_collection_framework2.png" width=""/></div>
 
 
 
 ## Collection
 
-<div align="center"> <img src="../pics/collection.png" width=""/></div><br/>
+<div align="center"> <img src="../pics/collection.png" width=""/></div>
 
-- `ArrayList`：**线程不同步**。默认初始容量为10，当数组大小不足时容量扩大为1.5倍。为追求效率，ArrayList没有实现同步（synchronized），如果需要多个线程并发访问，用户可以手动同步，也可使用Vector替代。 
-- `LinkedList`：**线程不同步**。**双向链接实现**。*LinkedList*同时实现了*List*接口和*Deque*接口，也就是说它既可以看作一个顺序容器，又可以看作一个队列（*Queue*），同时又可以看作一个栈（*Stack*）。这样看来，*LinkedList*简直就是个全能冠军。当你需要使用栈或者队列时，可以考虑使用*LinkedList*，一方面是因为Java官方已经声明不建议使用*Stack*类，更遗憾的是，Java里根本没有一个叫做*Queue*的类（它是个接口名字）。关于栈或队列，现在的首选是*ArrayDeque*，它有着比*LinkedList*（当作栈或队列使用时）有着更好的性能。 
+- `ArrayList`：**线程不同步**。默认初始容量为 10，当数组大小不足时容量扩大为 1.5 倍。为追求效率，ArrayList 没有实现同步（synchronized），如果需要多个线程并发访问，用户可以手动同步，也可使用 Vector 替代。 
+- `LinkedList`：**线程不同步**。**双向链接实现**。LinkedList 同时实现了 List 接口和 Deque 接口，也就是说它既可以看作一个顺序容器，又可以看作一个队列（Queue），同时又可以看作一个栈（Stack）。这样看来，LinkedList 简直就是个全能冠军。当你需要使用栈或者队列时，可以考虑使用 LinkedList，一方面是因为 Java 官方已经声明不建议使用 Stack 类，更遗憾的是，Java 里根本没有一个叫做 Queue 的类（它是个接口名字）。关于栈或队列，现在的首选是 ArrayDeque，它有着比 LinkedList（当作栈或队列使用时）有着更好的性能。 
 - `Stack and Queue`：Java里有一个叫做*Stack*的类，却没有叫做*Queue*的类（它是个接口名字）。当需要使用栈时，Java已不推荐使用*Stack*，而是推荐使用更高效的*ArrayDeque*；既然*Queue*只是一个接口，当需要使用队列时也就首选*ArrayDeque*了（次选是*LinkedList*）。 
-- `Vector`：**线程同步**。默认初始容量为10，当数组大小不足时容量扩大为2倍。它的同步是通过`Iterator`方法加`synchronized`实现的。
-- `Stack`：**线程同步**。继承自`Vector`，添加了几个方法来完成栈的功能。现在已经不推荐使用Stack，在栈和队列中有限使用ArrayDeque，其次是LinkedList。
+- `Vector`：**线程同步**。默认初始容量为10，当数组大小不足时容量扩大为2倍。它的同步是通过 `Iterator` 方法加 `synchronized` 实现的。
+- `Stack`：**线程同步**。继承自 `Vector`，添加了几个方法来完成栈的功能。现在已经不推荐使用Stack，在栈和队列中有限使用ArrayDeque，其次是LinkedList。
 - `TreeSet`：**线程不同步**，内部使用`NavigableMap`操作。默认元素“自然顺序”排列，可以通过`Comparator`改变排序。*TreeSet里面有一个TreeMap*（适配器模式）
 - `HashSet`：**线程不同步**，内部使用`HashMap`进行数据存储，提供的方法基本都是调用`HashMap`的方法，所以两者本质是一样的。**集合元素可以为**`NULL`。
 - `Set`：Set是一种不包含重复元素的Collection，Set最多只有一个null元素。Set集合通常可以通过Map集合通过适配器模式得到。
@@ -134,8 +48,6 @@
 ## Map
 
 <div align="center"> <img src="../pics/map.png" width=""/></div><br/>
-
-
 
 - `TreeMap`：线程不同步，基于 **红黑树** （Red-Black tree）的NavigableMap 实现，**能够把它保存的记录根据键排序,默认是按键值的升序排序，也可以指定排序的比较器，当用Iterator 遍历TreeMap时，得到的记录是排过序的。**
 
@@ -1774,11 +1686,11 @@ List list = Arrays.asList(1,2,3);
 ## 6. 什么是迭代器？【面试宝典】
 
       Java集合框架的集合类，我们有时候称之为容器。容器的种类有很多种，比如ArrayList、LinkedList、HashSet...，每种容器都有自己的特点，ArrayList底层维护的是一个数组；LinkedList是链表结构的；HashSet依赖的是哈希表，每种容器都有自己特有的数据结构。
-
+    
       因为容器的内部结构不同，很多时候可能不知道该怎样去遍历一个容器中的元素。所以为了使对容器内元素的操作更为简单，Java引入了迭代器模式！ 
-
+    
       把访问逻辑从不同类型的集合类中抽取出来，从而避免向外部暴露集合的内部结构。
-
+    
       **迭代器模式**：就是提供一种方法对一个容器对象中的各个元素进行访问，而又不暴露该对象容器的内部细。
 
 ```java
