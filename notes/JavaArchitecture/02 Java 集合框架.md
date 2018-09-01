@@ -22,7 +22,7 @@
 
 ## 集合框架图
 
-<div align="center"> <img src="../pics/java_collection_framework2.png" width=""/></div>
+<div align="center"> <img src="assets/1535785576589.png" width=""/></div>
 
 
 
