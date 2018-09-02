@@ -31,6 +31,8 @@
         - [synchronized 和 ReentrantLock 比较](#synchronized-和-reentrantlock-比较)
         - [synchronized与lock的区别，使用场景。看过synchronized的源码没？](#synchronized与lock的区别使用场景看过synchronized的源码没)
         - [什么是CAS](#什么是cas)
+            - [入门例子](#入门例子)
+            - [Compare And Swap](#compare-and-swap)
         - [什么是乐观锁和悲观锁](#什么是乐观锁和悲观锁)
         - [Synchronized（对象锁）和Static Synchronized（类锁）区别](#synchronized对象锁和static-synchronized类锁区别)
     - [6. 线程之间的协作](#6-线程之间的协作)
@@ -42,6 +44,7 @@
         - [CountdownLatch](#countdownlatch)
         - [CyclicBarrier](#cyclicbarrier)
         - [Semaphore](#semaphore)
+        - [总结](#总结)
     - [8. J.U.C - 其它组件](#8-juc---其它组件)
         - [FutureTask](#futuretask)
         - [BlockingQueue](#blockingqueue)
@@ -137,11 +140,10 @@
         - [锁的可重入性](#锁的可重入性)
         - [锁的公平性](#锁的公平性)
         - [在 finally 语句中调用 unlock()](#在-finally-语句中调用-unlock)
-    - [12. concurrenthashmap分段锁的细节？【蚂蚁金服面经】](#12-concurrenthashmap分段锁的细节蚂蚁金服面经)
-    - [13. 并发包(J.U.C)下面，都用过什么【蚂蚁金服面经】](#13-并发包juc下面都用过什么蚂蚁金服面经)
-    - [14. AQS](#14-aqs)
-    - [15. 从volatile说到,i++原子操作,线程安全问题](#15-从volatile说到i原子操作线程安全问题)
-- [附录：参考资料](#附录参考资料)
+    - [12. 并发包(J.U.C)下面，都用过什么【蚂蚁金服面经】](#12-并发包juc下面都用过什么蚂蚁金服面经)
+    - [13. 从volatile说到,i++原子操作,线程安全问题](#13-从volatile说到i原子操作线程安全问题)
+- [参考资料](#参考资料)
+- [更新日志](#更新日志)
 
 <!-- /TOC -->
 
@@ -696,6 +698,8 @@ public synchronized static void fun() {
 
 ### ReentrantLock
 
+重入锁（ReentrantLock）是一种递归无阻塞的同步机制。
+
 ```java
 public class LockExample {
     private Lock lock = new ReentrantLock();
@@ -766,30 +770,69 @@ ReentrantLock 多了一些高级功能。
 
 ### synchronized与lock的区别，使用场景。看过synchronized的源码没？
 
-- （用法）synchronized（隐式锁）：在需要同步的对象中加入此控制，synchronized可以加在方法上，也可以加在特定代码块中，括号中表示需要锁的对象。 
+- （用法）synchronized（隐式锁）：在需要同步的对象中加入此控制，synchronized 可以加在方法上，也可以加在特定代码块中，括号中表示需要锁的对象。 
 - （用法）lock（显示锁）：需要显示指定起始位置和终止位置。一般使用 ReentrantLock 类做为锁，多个线程中必须要使用一个 ReentrantLock 类做为对象才能保证锁的生效。且在加锁和解锁处需要通过 lock() 和 unlock() 显示指出。所以一般会在 finally 块中写 unlock() 以防死锁。 
-- （性能）synchronized 是托管给 JVM 执行的，而 lock 是 Java 写的控制锁的代码。在 Java1.5 中，synchronize 是性能低效的。因为这是一个重量级操作，需要调用操作接口，导致有可能加锁消耗的系统时间比加锁以外的操作还多。相比之下使用 Java 提供的 Lock 对象，性能更高一些。但是到了 Java1.6 ，发生了变化。synchronize 在语义上很清晰，可以进行很多优化，有<u>适应自旋，锁消除，锁粗化，轻量级锁，偏向锁</u>等等。导致 在Java1.6上synchronize的性能并不比Lock差。 
-- （机制）**synchronized原始采用的是CPU悲观锁机制，即线程获得的是独占锁**。独占锁意味着其他线程只能依靠阻塞来等待线程释放锁。**Lock用的是乐观锁方式**。所谓乐观锁就是，每次不加锁而是假设没有冲突而去完成某项操作，如果因为冲突失败就重试，直到成功为止。乐观锁实现的机制就是CAS操作（Compare and Swap）。 
+- （性能）synchronized 是托管给 JVM 执行的，而 lock 是 Java 写的控制锁的代码。在 Java1.5 中，synchronize 是性能低效的。因为这是一个重量级操作，需要调用操作接口，导致有可能加锁消耗的系统时间比加锁以外的操作还多。相比之下使用 Java 提供的 Lock 对象，性能更高一些。但是到了 Java1.6 ，发生了变化。synchronize 在语义上很清晰，可以进行很多优化，有<u>适应自旋，锁消除，锁粗化，轻量级锁，偏向锁</u>等等。导致 在 Java1.6 上 synchronize 的性能并不比 Lock 差。 
+- （机制）**synchronized 原始采用的是 CPU 悲观锁机制，即线程获得的是独占锁**。独占锁意味着其他线程只能依靠阻塞来等待线程释放锁。**Lock 用的是乐观锁方式**。所谓乐观锁就是，每次不加锁而是假设没有冲突而去完成某项操作，如果因为冲突失败就重试，直到成功为止。乐观锁实现的机制就是 CAS 操作（Compare and Swap）。 
 
  
 
 ### 什么是CAS
 
-在计算机科学中，比较和交换（Conmpare And Swap）是用于实现多线程同步的原子指令。 它将内存位置的内容与给定值进行比较，只有在相同的情况下，将该内存位置的内容修改为新的给定值。 这是作为单个原子操作完成的。原子性保证新值基于最新信息计算；如果该值在同一时间被另一个线程更新，则写入将失败。 操作结果必须说明是否进行替换; 这可以通过一个简单的布尔响应（这个变体通常称为比较和设置），或通过返回从内存位置读取的值来完成 
+> 蘑菇街面试，这里简单论述一下
+
+#### 入门例子
+
+在 Java 并发包中有这样一个包，java.util.concurrent.atomic，该包是对 Java 部分数据类型的原子封装，在原有数据类型的基础上，提供了原子性的操作方法，保证了线程安全。下面以 AtomicInteger 为例，来看一下是如何实现的。
+
+```java
+public final int incrementAndGet() {
+    for (;;) {
+        int current = get();
+        int next = current + 1;
+        if (compareAndSet(current, next))
+            return next;
+    }
+}
+
+public final int decrementAndGet() {
+    for (;;) {
+        int current = get();
+        int next = current - 1;
+        if (compareAndSet(current, next))
+            return next;
+    }
+}
+```
+
+以这两个方法为例，incrementAndGet 方法相当于原子性的 ++i，decrementAndGet 方法相当于原子性的 --i，这两个方法中都没有使用阻塞式的方式来保证原子性（如 Synchronized ），那它们是如何保证原子性的呢，下面引出 CAS。
+
+#### Compare And Swap
+
+CAS 指的是现代 CPU 广泛支持的一种对内存中的共享数据进行操作的一种特殊指令。这个指令会对内存中的共享数据做原子的读写操作。
+
+简单介绍一下这个指令的操作过程：
+
+- 首先，CPU 会将内存中将要被更改的数据与期望的值做比较。
+- 然后，当这两个值相等时，CPU 才会将内存中的数值替换为新的值。否则便不做操作。
+- 最后，CPU 会将旧的数值返回。
+
+这一系列的操作是原子的。它们虽然看似复杂，但却是 Java 5 并发机制优于原有锁机制的根本。简单来说，CAS 的含义是：我认为原有的值应该是什么，如果是，则将原有的值更新为新值，否则不做修改，并告诉我原来的值是多少。
+       简单的来说，CAS 有 3 个操作数，内存值 V，旧的预期值 A，要修改的新值 B。当且仅当预期值 A 和内存值 V 相同时，将内存值 V 修改为 B，否则返回 V。这是一种乐观锁的思路，它相信在它修改之前，没有其它线程去修改它；而 Synchronized 是一种悲观锁，它认为在它修改之前，一定会有其它线程去修改它，悲观锁效率很低。
 
 
 
 ### 什么是乐观锁和悲观锁
 
-- 为什么需要锁（并发控制）？
+- 为什么需要锁（并发控制）
   - 在多用户环境中，在同一时间可能会有多个用户更新相同的记录，这会产生冲突。这就是著名的并发性问题。
   - 典型的冲突有：
-    - 丢失更新：一个事务的更新覆盖了其它事务的更新结果，就是所谓的更新丢失。例如：用户A把值从6改为2，用户B把值从2改为6，则用户A丢失了他的更新。
-    - 脏读：当一个事务读取其它完成一半事务的记录时，就会发生脏读取。例如：用户A,B看到的值都是6，用户B把值改为2，用户A读到的值仍为6。
+    - 丢失更新：一个事务的更新覆盖了其它事务的更新结果，就是所谓的更新丢失。例如：用户 A 把值从 6 改为 2，用户 B 把值从 2 改为 6，则用户 A 丢失了他的更新。
+    - 脏读：当一个事务读取其它完成一半事务的记录时，就会发生脏读取。例如：用户 A,B 看到的值都是6，用户 B 把值改为 2，用户 A 读到的值仍为 6。
   - 为了解决这些并发带来的问题。 我们需要引入并发控制机制。
 - 并发控制机制
-  - **悲观锁：假定会发生并发冲突，**屏蔽一切可能违反数据完整性的操作。
-  - **乐观锁：假设不会发生并发冲突，**只在提交操作时检查是否违反数据完整性。乐观锁不能解决脏读的问题。
+  - **悲观锁：假定会发生并发冲突**，独占锁，屏蔽一切可能违反数据完整性的操作。
+  - **乐观锁：假设不会发生并发冲突**，只在提交操作时检查是否违反数据完整性。乐观锁不能解决脏读的问题。
 
 参考资料：
 
@@ -801,7 +844,7 @@ ReentrantLock 多了一些高级功能。
 
 - 一个是实例锁（锁在某一个实例对象上，如果该类是单例，那么该锁也具有全局锁的概念），一个是全局锁（该锁针对的是类，无论实例多少个对象，那么线程都共享该锁）。
 
-  实例锁对应的就是synchronized关键字，而类锁（全局锁）对应的就是static synchronized（或者是锁在该类的class或者classloader对象上）。
+  实例锁对应的就是 synchronized关 键字，而类锁（全局锁）对应的就是 static synchronized（或者是锁在该类的 class 或者 classloader 对象上）。
 
 ```java
 /**
@@ -831,19 +874,18 @@ public class StaticSynchronized {
     }
 
     public static void main(String[] args) {
-        StaticSynchronized x=new StaticSynchronized();
-        StaticSynchronized y=new StaticSynchronized();
+        StaticSynchronized x = new StaticSynchronized();
+        StaticSynchronized y = new StaticSynchronized();
         /**
-         *  x.isSynA()与x.isSynB() :不能同时访问(同一个对象访问synchronized方法)
-         *  x.isSynA()与y.isSynB() :能同时访问(不同对象访问synchronized方法)
-         *  x.cSynA()与y.cSynB() :不能同时访问(不同对象也不能访问static synchronized方法)
-         *  x.isSynA()与y.cSynA() :能同时访问(static synchronized方法占用的是类锁，而访问synchronized方法占用的是对象锁，不存在互斥现象)
+         *  x.isSynA()与x.isSynB(); 不能同时访问(同一个对象访问synchronized方法)
+         *  x.isSynA()与y.isSynB(); 能同时访问(不同对象访问synchronized方法)
+         *  x.cSynA()与y.cSynB(); 不能同时访问(不同对象也不能访问static synchronized方法)
+         *  x.isSynA()与y.cSynA(); 能同时访问(static synchronized方法占用的是类锁，
+         *                        而访问synchronized方法占用的是对象锁，不存在互斥现象)
          */
     }
 }
 ```
-
-
 
 
 
@@ -912,7 +954,7 @@ B
 
 它们都属于 Object 的一部分，而不属于 Thread。
 
-**只能**用在**同步方法**或者**同步控制块**中使用！否则会在运行时抛出 IllegalMonitorStateExeception。
+只能用在**同步方法**或者**同步控制块**中使用！否则会在运行时抛出 IllegalMonitorStateExeception。
 
 使用 wait() 挂起期间，线程会释放锁。这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 notify() 或者 notifyAll() 来唤醒挂起的线程，造成死锁。
 
@@ -1003,7 +1045,7 @@ after
 
 ### sleep和wait有什么区别
 
-- sleep和wait
+- sleep 和 wait
   - wait() 是 Object 的方法，而 sleep() 是 Thread 的静态方法；
   - wait() 会释放锁，sleep() 不会。
 - 有什么区别
@@ -1014,40 +1056,75 @@ after
 
 ## 7. J.U.C - AQS
 
-java.util.concurrent（J.U.C）大大提高了并发性能，AQS 被认为是 J.U.C 的核心。
+AQS 是  AbstractQueuedSynchronizer 的简称，java.util.concurrent（J.U.C）大大提高了并发性能，AQS (AbstractQueuedSynchronizer) 被认为是 J.U.C 的核心。它提供了一个基于 FIFO 队列，这个队列可以用来构建锁或者其他相关的同步装置的基础框架。下图是 AQS 底层的数据结构：
+
+
+
+<div align="center"><img src="assets/616953-20160403170136176-573839888.png" width="600"/></div>
+
+它底层使用的是双向列表，是队列的一种实现 , 因此也可以将它当成一种队列。
+
+- Sync queue 是同步列表，它是双向列表 , 包括 head，tail 节点。其中 head 节点主要用来后续的调度 ;
+- Condition queue 是单向链表 , 不是必须的 , 只有当程序中需要 Condition 的时候，才会存在这个单向链表 , 并且可能会有多个 Condition queue。
+
+
+
+简单的来说：
+
+- AQS其实就是一个可以给我们实现锁的**框架**
+
+- 内部实现的关键是：**先进先出的队列、state 状态**
+
+- 定义了内部类 ConditionObject
+
+- 拥有两种线程模式
+
+- - 独占模式
+  - 共享模式
+
+- 在 LOCK 包中的相关锁（常用的有 ReentrantLock、 ReadWriteLock ）都是基于 AQS 来构建
+- 一般我们叫 AQS 为同步器。
+
+
 
 ### CountdownLatch
 
-用来控制一个线程等待多个线程。
+CountDownLatch 类位于 java.util.concurrent 包下，利用它可以实现类似计数器的功能。比如有一个任务 A，它要等待其他 4 个任务执行完毕之后才能执行，此时就可以利用 CountDownLatch 来实现这种功能了。
 
 维护了一个计数器 cnt，每次调用 countDown() 方法会让计数器的值减 1，减到 0 的时候，那些因为调用 await() 方法而在等待的线程就会被唤醒。
 
-<div align="center"> <img src="assets/CountdownLatch.png" width=""/></div><br/>
+<div align="center"> <img src="assets/CountdownLatch.png" width=""/></div>
 
 
 
+CountDownLatch 类只提供了一个构造器：
 
 ```java
-public class CountdownLatchExample {
-    public static void main(String[] args) throws InterruptedException {
-        final int totalThread = 10;
-        CountDownLatch countDownLatch = new CountDownLatch(totalThread);
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        for (int i = 0; i < totalThread; i++) {
-            executorService.execute(() -> {
-                System.out.print("run..");
-                countDownLatch.countDown();
-            });
-        }
-        countDownLatch.await();
-        System.out.println("end");
-        executorService.shutdown();
-    }
-}
+public CountDownLatch(int count) {  };  // 参数count为计数值
 ```
 
+然后下面这 3 个方法是 CountDownLatch 类中最重要的方法：
+
+```java
+`public` `void` `await() ``throws` `InterruptedException { };   ``//调用await()方法的线程会被挂起，它会等待直到count值为0才继续执行``public` `boolean` `await(``long` `timeout, TimeUnit unit) ``throws` `InterruptedException { };  ``//和await()类似，只不过等待一定的时间后count值还没变为0的话就会继续执行``public` `void` `countDown() { };  ``//将count值减1`
 ```
-run..run..run..run..run..run..run..run..run..run..end
+
+下面看一个例子大家就清楚 CountDownLatch 的用法了：
+
+```java
+`public` `class` `Test {``     ``public` `static` `void` `main(String[] args) {   ``         ``final` `CountDownLatch latch = ``new` `CountDownLatch(``2``);``         ` `         ``new` `Thread(){``             ``public` `void` `run() {``                 ``try` `{``                     ``System.out.println(``"子线程"``+Thread.currentThread().getName()+``"正在执行"``);``                    ``Thread.sleep(``3000``);``                    ``System.out.println(``"子线程"``+Thread.currentThread().getName()+``"执行完毕"``);``                    ``latch.countDown();``                ``} ``catch` `(InterruptedException e) {``                    ``e.printStackTrace();``                ``}``             ``};``         ``}.start();``         ` `         ``new` `Thread(){``             ``public` `void` `run() {``                 ``try` `{``                     ``System.out.println(``"子线程"``+Thread.currentThread().getName()+``"正在执行"``);``                     ``Thread.sleep(``3000``);``                     ``System.out.println(``"子线程"``+Thread.currentThread().getName()+``"执行完毕"``);``                     ``latch.countDown();``                ``} ``catch` `(InterruptedException e) {``                    ``e.printStackTrace();``                ``}``             ``};``         ``}.start();``         ` `         ``try` `{``             ``System.out.println(``"等待2个子线程执行完毕..."``);``            ``latch.await();``            ``System.out.println(``"2个子线程已经执行完毕"``);``            ``System.out.println(``"继续执行主线程"``);``        ``} ``catch` `(InterruptedException e) {``            ``e.printStackTrace();``        ``}``     ``}``}`
+```
+
+执行结果：
+
+```
+线程Thread-0正在执行
+线程Thread-1正在执行
+等待2个子线程执行完毕...
+线程Thread-0执行完毕
+线程Thread-1执行完毕
+2个子线程已经执行完毕
+继续执行主线程
 ```
 
 
@@ -1060,9 +1137,7 @@ run..run..run..run..run..run..run..run..run..run..end
 
 下图应该从下往上看才正确。
 
-<div align="center"><img src="assets/CyclicBarrier.png" width=""/></div><br/>
-
-
+<div align="center"><img src="assets/CyclicBarrier.png" width=""/></div>
 
 
 ```java
@@ -1097,40 +1172,74 @@ before..before..before..before..before..before..before..before..before..before..
 
 ### Semaphore
 
-Semaphore 就是操作系统中的信号量，可以控制对互斥资源的访问线程数。
+Semaphore 就是操作系统中的信号量，可以控制对互斥资源的访问线程数。Semaphore 可以控同时访问的线程个数，通过 acquire() 获取一个许可，如果没有就等待，而 release() 释放一个许可。
 
 <div align="center"><img src="assets/Semaphore.png" width=""/></div><br/>
 
-
-以下代码模拟了对某个服务的并发请求，每次只能有 3 个客户端同时访问，请求总数为 10。
+Semaphore 类位于 java.util.concurrent 包下，它提供了2个构造器：
 
 ```java
-public class SemaphoreExample {
-    public static void main(String[] args) {
-        final int clientCount = 3;
-        final int totalRequestCount = 10;
-        Semaphore semaphore = new Semaphore(clientCount);
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        for (int i = 0; i < totalRequestCount; i++) {
-            executorService.execute(()->{
-                try {
-                    semaphore.acquire();
-                    System.out.print(semaphore.availablePermits() + " ");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                    semaphore.release();
-                }
-            });
-        }
-        executorService.shutdown();
-    }
-}
+`public` `Semaphore(``int` `permits) {          ``//参数permits表示许可数目，即同时可以允许多少线程进行访问``    ``sync = ``new` `NonfairSync(permits);``}``public` `Semaphore(``int` `permits, ``boolean` `fair) {    ``//这个多了一个参数fair表示是否是公平的，即等待时间越久的越先获取许可``    ``sync = (fair)? ``new` `FairSync(permits) : ``new` `NonfairSync(permits);``}`
 ```
 
+下面说一下 Semaphore 类中比较重要的几个方法，首先是 acquire()、release() 方法：
+
+```java
+`public` `void` `acquire() ``throws` `InterruptedException {  }     ``//获取一个许可``public` `void` `acquire(``int` `permits) ``throws` `InterruptedException { }    ``//获取permits个许可``public` `void` `release() { }          ``//释放一个许可``public` `void` `release(``int` `permits) { }    ``//释放permits个许可`
 ```
-2 1 2 2 2 2 2 1 2 2
+
+　　acquire() 用来获取一个许可，若无许可能够获得，则会一直等待，直到获得许可。
+
+　　release() 用来释放许可。注意，在释放许可之前，必须先获获得许可。
+
+这 4 个方法都会被阻塞，如果想立即得到执行结果，可以使用下面几个方法：
+
+```java
+`public` `boolean` `tryAcquire() { };    ``//尝试获取一个许可，若获取成功，则立即返回true，若获取失败，则立即返回false``public` `boolean` `tryAcquire(``long` `timeout, TimeUnit unit) ``throws` `InterruptedException { };  ``//尝试获取一个许可，若在指定的时间内获取成功，则立即返回true，否则则立即返回false``public` `boolean` `tryAcquire(``int` `permits) { }; ``//尝试获取permits个许可，若获取成功，则立即返回true，若获取失败，则立即返回false``public` `boolean` `tryAcquire(``int` `permits, ``long` `timeout, TimeUnit unit) ``throws` `InterruptedException { }; ``//尝试获取permits个许可，若在指定的时间内获取成功，则立即返回true，否则则立即返回false`
 ```
+
+　　另外还可以通过 availablePermits() 方法得到可用的许可数目。
+
+　　下面通过一个例子来看一下 Semaphore 的具体使用：
+
+　　假若一个工厂有 5 台机器，但是有 8 个工人，一台机器同时只能被一个工人使用，只有使用完了，其他工人才能继续使用。那么我们就可以通过 Semaphore 来实现：
+
+```java
+`public` `class` `Test {``    ``public` `static` `void` `main(String[] args) {``        ``int` `N = ``8``;            ``//工人数``        ``Semaphore semaphore = ``new` `Semaphore(``5``); ``//机器数目``        ``for``(``int` `i=``0``;i<N;i++)``            ``new` `Worker(i,semaphore).start();``    ``}``    ` `    ``static` `class` `Worker ``extends` `Thread{``        ``private` `int` `num;``        ``private` `Semaphore semaphore;``        ``public` `Worker(``int` `num,Semaphore semaphore){``            ``this``.num = num;``            ``this``.semaphore = semaphore;``        ``}``        ` `        ``@Override``        ``public` `void` `run() {``            ``try` `{``                ``semaphore.acquire();``                ``System.out.println(``"工人"``+``this``.num+``"占用一个机器在生产..."``);``                ``Thread.sleep(``2000``);``                ``System.out.println(``"工人"``+``this``.num+``"释放出机器"``);``                ``semaphore.release();           ``            ``} ``catch` `(InterruptedException e) {``                ``e.printStackTrace();``            ``}``        ``}``    ``}``}`
+```
+
+执行结果：
+
+```
+工人0占用一个机器在生产...
+工人1占用一个机器在生产...
+工人2占用一个机器在生产...
+工人4占用一个机器在生产...
+工人5占用一个机器在生产...
+工人0释放出机器
+工人2释放出机器
+工人3占用一个机器在生产...
+工人7占用一个机器在生产...
+工人4释放出机器
+工人5释放出机器
+工人1释放出机器
+工人6占用一个机器在生产...
+工人3释放出机器
+工人7释放出机器
+工人6释放出机器
+```
+
+
+
+### 总结
+
+下面对上面说的三个辅助类进行一个总结：
+
+- CountDownLatch 和 CyclicBarrier 都能够实现线程之间的等待，只不过它们侧重点不同：
+  - CountDownLatch 一般用于某个线程A等待若干个其他线程执行完任务之后，它才执行；
+  - CyclicBarrier 一般用于一组线程互相等待至某个状态，然后这一组线程再同时执行；
+  - 另外，CountDownLatch 是不能够重用的，而 CyclicBarrier 是可以重用的。
+- Semaphore 其实和锁有点类似，它一般用于控制对某组资源的访问权限。
 
 
 
@@ -1363,7 +1472,7 @@ Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，
 
 加入高速缓存带来了一个新的问题：缓存一致性。如果多个缓存共享同一块主内存区域，那么多个缓存的数据可能会不一致，需要一些协议来解决这个问题。
 
-<div align="center"> <img src="assets/1195582-20180508173147029-1341787720.png" width="700"/></div><br/>
+<div align="center"> <img src="assets/1195582-20180508173147029-1341787720.png" width="700"/></div>
 
 所有的变量都存储在**主内存**中，每个线程还有自己的**工作内存**，工作内存存储在高速缓存或者寄存器中，保存了该线程使用的变量的主内存副本拷贝。
 
@@ -1373,11 +1482,11 @@ Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，
 
 **Java内存模型和硬件关系图**
 
-<div align="center"> <img src="assets/v2-4015322359279c5568263aeb7f41c36d.jpg" width="600"/></div><br/>
+<div align="center"> <img src="assets/v2-4015322359279c5568263aeb7f41c36d.jpg" width="600"/></div>
 
 **Java内存模型抽象结构图**
 
-<div align="center"><img src="assets/1135283-20170403195814660-1521573510.png" width="450"/></div><br/>
+<div align="center"><img src="assets/1135283-20170403195814660-1521573510.png" width="400"/></div>
 
 
 
@@ -1385,7 +1494,7 @@ Java 内存模型试图屏蔽各种硬件和操作系统的内存访问差异，
 
 Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互操作。
 
-<div align="center"> <img src="assets/536c6dfd-305a-4b95-b12c-28ca5e8aa043.png" width="650"/></div><br/>
+<div align="center"> <img src="assets/536c6dfd-305a-4b95-b12c-28ca5e8aa043.png" width="650"/></div>
 
 - read：把一个变量的值从主内存传输到工作内存中
 - load：在 read 之后执行，把 read 得到的值放入工作内存的变量副本中
@@ -1777,7 +1886,7 @@ Thread 对象的结束先行发生于 join() 方法返回。
 
 #### 1. 不可变
 
-不可变（Immutable）的对象一定是线程安全的，无论是对象的方法实现还是方法的调用者，都不需要再采取任何的线程安全保障措施，只要一个不可变的对象被正确地构建出来，那其外部的可见状态永远也不会改变，永远也不会看到它在多个线程之中处于不一致的状态。
+**不可变（Immutable）的对象一定是线程安全的**，无论是对象的方法实现还是方法的调用者，都不需要再采取任何的线程安全保障措施，只要一个不可变的对象被正确地构建出来，那其外部的可见状态永远也不会改变，永远也不会看到它在多个线程之中处于不一致的状态。
 
 不可变的类型：
 
@@ -2327,13 +2436,13 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 下图左侧是一个线程的虚拟机栈，其中有一部分称为 Lock Record 的区域，这是在轻量级锁运行过程创建的，用于存放锁对象的 Mark Word。而右侧就是一个锁对象，包含了 Mark Word 和其它信息。
 
-<div align="center"><img src="assets/051e436c-0e46-4c59-8f67-52d89d656182-1534158643175.png" width="500"/></div><br/>
+<div align="center"><img src="assets/051e436c-0e46-4c59-8f67-52d89d656182-1534158643175.png" width="500"/></div>
 
 轻量级锁是相对于传统的重量级锁而言，它使用 CAS 操作来避免重量级锁使用互斥量的开销。对于绝大部分的锁，在整个同步周期内都是不存在竞争的，因此也就不需要都使用互斥量进行同步，可以先采用 CAS 操作进行同步，如果 CAS 失败了再改用互斥量进行同步。
 
 当尝试获取一个锁对象时，如果锁对象标记为 0 01，说明锁对象的锁未锁定（unlocked）状态。此时虚拟机在当前线程栈中创建 Lock Record，然后使用 CAS 操作将对象的 Mark Word 更新为 Lock Record 指针。如果 CAS 操作成功了，那么线程就获取了该对象上的锁，并且对象的 Mark Word 的锁标记变为 00，表示该对象处于轻量级锁状态。
 
-<div align="center"><img src="assets/baaa681f-7c52-4198-a5ae-303b9386cf47-1534158703049.png" width="500"/></div><br/>
+<div align="center"><img src="assets/baaa681f-7c52-4198-a5ae-303b9386cf47-1534158703049.png" width="500"/></div>
 
 如果 CAS 操作失败了，虚拟机首先会检查对象的 Mark Word 是否指向当前线程的虚拟机栈，如果是的话说明当前线程已经拥有了这个锁对象，那就可以直接进入同步块继续执行，否则说明这个锁对象已经被其他线程线程抢占了。如果有两条以上的线程争用同一个锁，那轻量级锁就不再有效，要膨胀为重量级锁。
 
@@ -2347,7 +2456,7 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 当有另外一个线程去尝试获取这个锁对象时，偏向状态就宣告结束，此时撤销偏向（Revoke Bias）后恢复到未锁定状态或者轻量级锁状态。
 
-<div align="center"><img src="assets/390c913b-5f31-444f-bbdb-2b88b688e7ce-1534158712253.jpg" width="600"/></div><br/>
+<div align="center"><img src="assets/390c913b-5f31-444f-bbdb-2b88b688e7ce-1534158712253.jpg" width="600"/></div>
 
 
 
@@ -3093,13 +3202,7 @@ try{
 
 
 
-## 12. concurrenthashmap分段锁的细节？【蚂蚁金服面经】
-
-
-
-
-
-## 13. 并发包(J.U.C)下面，都用过什么【蚂蚁金服面经】
+## 12. 并发包(J.U.C)下面，都用过什么【蚂蚁金服面经】
 
 - concurrent下面的包 
   - Executor  用来创建线程池，在实现Callable接口时，添加线程。 
@@ -3112,25 +3215,24 @@ try{
 
 
 
-## 14. AQS
 
-Java并发之AQS详解 - CodesGeek - 博客园
+## 13. 从volatile说到,i++原子操作,线程安全问题
 
-
-
-
-## 15. 从volatile说到,i++原子操作,线程安全问题
-
-从volatile说到,i++原子操作,线程安全问题 - CSDN博客
+从 volatile 说到，i++原子操作，线程安全问题 - CSDN博客
 https://blog.csdn.net/zbw18297786698/article/details/53420780
 
 
 
 
 
-# 附录：参考资料
+# 参考资料
 
 - [Interview-Notebook/Java 并发.md at master · CyC2018/Interview-Notebook](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md)
 - [Java 并发编程-极客学院Wiki](http://wiki.jikexueyuan.com/project/java-concurrency/)
   
 
+
+
+# 更新日志
+
+- 2018/9/2 v3.0
