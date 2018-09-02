@@ -59,7 +59,7 @@
             - [as-if-serial语义](#as-if-serial语义)
             - [程序顺序规则](#程序顺序规则)
             - [重排序对多线程的影响](#重排序对多线程的影响)
-        - [先行发生原则](#先行发生原则)
+        - [先行发生原则（happens-before）](#先行发生原则happens-before)
             - [1. 单一线程原则](#1-单一线程原则)
             - [2. 管程锁定规则](#2-管程锁定规则)
             - [3. volatile 变量规则](#3-volatile-变量规则)
@@ -90,6 +90,19 @@
         - [轻量级锁](#轻量级锁)
         - [偏向锁](#偏向锁)
     - [13. 多线程开发良好的实践](#13-多线程开发良好的实践)
+    - [14. 线程池实现原理](#14-线程池实现原理)
+        - [概念](#概念)
+        - [Executor类图](#executor类图)
+        - [线程池工作原理](#线程池工作原理)
+        - [初始化线程池](#初始化线程池)
+            - [初始化方法](#初始化方法)
+        - [常用方法](#常用方法)
+            - [execute与submit的区别](#execute与submit的区别)
+            - [shutDown与shutDownNow的区别](#shutdown与shutdownnow的区别)
+        - [内部实现](#内部实现)
+        - [线程池的状态](#线程池的状态)
+        - [线程池其他常用方法](#线程池其他常用方法)
+        - [如何合理设置线程池的大小](#如何合理设置线程池的大小)
 - [第二部分：面试指南](#第二部分面试指南)
     - [1. volatile 与 synchronized 的区别](#1-volatile-与-synchronized-的区别)
     - [2. 什么是线程池？如果让你设计一个动态大小的线程池，如何设计，应该有哪些方法？线程池创建的方式？](#2-什么是线程池如果让你设计一个动态大小的线程池如何设计应该有哪些方法线程池创建的方式)
@@ -131,6 +144,7 @@
 - [附录：参考资料](#附录参考资料)
 
 <!-- /TOC -->
+
 # 前言
 
 在本文将总结多线程并发编程中的常见面试题，主要核心线程生命周期、线程通信、并发包部分。主要分成 “并发编程” 和 “面试指南” 两 部分，在面试指南中将讨论并发相关面经。
@@ -1543,17 +1557,23 @@ volatile 关键字通过添加内存屏障的方式来禁止指令重排，即�
 
 ### 指令重排序
 
-在执行程序时为了提高性能，编译器和处理器常常会对指令做重排序。重排序分三种类型：
+在执行程序时为了提高性能，编译器和处理器常常会对指令做重排序。
+
+指令重排序包括：**编译器重排序**和**处理器重排序**
+
+
+
+重排序分三种类型：
 
 1. **编译器优化的重排序**。编译器在不改变单线程程序语义的前提下，可以重新安排语句的执行顺序。
 2. **指令级并行的重排序**。现代处理器采用了指令级并行技术（Instruction-Level Parallelism， ILP）来将多条指令重叠执行。如果不存在数据依赖性，处理器可以改变语句对应机器指令的执行顺序。
 3. **内存系统的重排序**。由于处理器使用缓存和读/写缓冲区，这使得加载和存储操作看上去可能是在乱序执行。
 
-从Java源代码到最终实际执行的指令序列，会分别经历下面三种重排序：
+从 Java 源代码到最终实际执行的指令序列，会分别经历下面三种重排序：
 
-<div align="center"><img src="assets/33-1534150864535.png" width=""/></div><br/>
+<div align="center"><img src="assets/33-1534150864535.png" width=""/></div>
 
-**上述的1属于编译器重排序，2和3属于处理器重排序**。这些重排序都可能会导致多线程程序出现内存可见性问题。对于编译器，JMM 的编译器重排序规则会禁止特定类型的编译器重排序（不是所有的编译器重排序都要禁止）。对于处理器重排序，JMM 的处理器重排序规则会要求 Java 编译器在生成指令序列时，插入特定类型的内存屏障（memory barriers，intel称之为memory fence）指令，通过内存屏障指令来禁止特定类型的处理器重排序（不是所有的处理器重排序都要禁止）。
+**上述的 1 属于编译器重排序，2 和 3 属于处理器重排序**。这些重排序都可能会导致多线程程序出现内存可见性问题。对于编译器，JMM 的编译器重排序规则会禁止特定类型的编译器重排序（不是所有的编译器重排序都要禁止）。对于处理器重排序，JMM 的处理器重排序规则会要求 Java 编译器在生成指令序列时，插入特定类型的内存屏障（memory barriers，intel 称之为 memory fence）指令，通过内存屏障指令来禁止特定类型的处理器重排序（不是所有的处理器重排序都要禁止）。
 
 JMM 属于语言级的内存模型，它确保在不同的编译器和不同的处理器平台之上，通过禁止特定类型的编译器重排序和处理器重排序，为程序员提供一致的内存可见性保证。
 
@@ -1577,9 +1597,9 @@ JMM 属于语言级的内存模型，它确保在不同的编译器和不同的�
 
 as-if-serial 语义的意思指：不管怎么重排序（编译器和处理器为了提高并行度），（单线程）程序的执行结果不能被改变。编译器，runtime 和 处理器 都必须遵守 as-if-serial 语义。
 
-为了遵守as-if-serial语义，编译器和处理器不会对存在数据依赖关系的操作做重排序，因为这种重排序会改变执行结果。但是，如果操作之间不存在数据依赖关系，这些操作可能被编译器和处理器重排序。为了具体说明，请看下面计算圆面积的代码示例：
+为了遵守 as-if-serial 语义，编译器和处理器不会对存在数据依赖关系的操作做重排序，因为这种重排序会改变执行结果。但是，如果操作之间不存在数据依赖关系，这些操作可能被编译器和处理器重排序。为了具体说明，请看下面计算圆面积的代码示例：
 
-```
+```java
 double pi  = 3.14;    //A
 double r   = 1.0;     //B
 double area = pi * r * r; //C
@@ -1587,31 +1607,27 @@ double area = pi * r * r; //C
 
 上面三个操作的数据依赖关系如下图所示：
 
-<div align="center"><img src="assets/11.png" width=""/></div><br/>
+<div align="center"><img src="assets/11.png" width=""/></div>
 
+如上图所示，A 和 C 之间存在数据依赖关系，同时 B 和 C 之间也存在数据依赖关系。因此在最终执行的指令序列中，C 不能被重排序到 A 和 B 的前面（C 排到 A 和 B 的前面，程序的结果将会被改变）。但 A 和 B 之间没有数据依赖关系，编译器和处理器可以重排序 A 和 B 之间的执行顺序。下图是该程序的两种执行顺序：
 
-
-如上图所示，A和C之间存在数据依赖关系，同时B和C之间也存在数据依赖关系。因此在最终执行的指令序列中，C不能被重排序到A和B的前面（C排到A和B的前面，程序的结果将会被改变）。但A和B之间没有数据依赖关系，编译器和处理器可以重排序A和B之间的执行顺序。下图是该程序的两种执行顺序：
-
-<div align="center"><img src="assets/22.png" width=""/></div><br/>
-
-
+<div align="center"><img src="assets/22.png" width=""/></div>
 
 as-if-serial 语义把单线程程序保护了起来，遵守 as-if-serial 语义的编译器，runtime 和处理器共同为编写单线程程序的程序员创建了一个幻觉：单线程程序是按程序的顺序来执行的。as-if-serial 语义使单线程程序员无需担心重排序会干扰他们，也无需担心内存可见性问题。
 
 #### 程序顺序规则
 
-根据happens- before的程序顺序规则，上面计算圆的面积的示例代码存在三个happens- before关系：
+根据 happens- before 的程序顺序规则，上面计算圆的面积的示例代码存在三个 happens- before 关系：
 
 1. A happens- before B；
 2. B happens- before C；
 3. A happens- before C；
 
-这里的第3个happens- before关系，是根据happens- before的传递性推导出来的。
+这里的第 3 个 happens- before 关系，是根据 happens- before 的传递性推导出来的。
 
-这里A happens- before B，但实际执行时B却可以排在A之前执行（看上面的重排序后的执行顺序）。在[第一章](http://www.infoq.com/cn/articles/java-memory-model-1)提到过，如果A happens- before B，JMM并不要求A一定要在B之前执行。JMM仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前。这里操作A的执行结果不需要对操作B可见；而且重排序操作A和操作B后的执行结果，与操作A和操作B按happens- before顺序执行的结果一致。在这种情况下，JMM会认为这种重排序并不非法（not illegal），JMM允许这种重排序。
+这里 A happens- before B，但实际执行时 B 却可以排在 A 之前执行（看上面的重排序后的执行顺序）。如果A happens- before B，JMM 并不要求 A 一定要在 B 之前执行。JMM 仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前。这里操作 A 的执行结果不需要对操作 B 可见；而且重排序操作 A 和操作 B 后的执行结果，与操作 A 和操作 B 按 happens- before 顺序执行的结果一致。在这种情况下， JMM 会认为这种重排序并不非法（not illegal），JMM 允许这种重排序。
 
-在计算机中，软件技术和硬件技术有一个共同的目标：在不改变程序执行结果的前提下，尽可能的开发并行度。编译器和处理器遵从这一目标，从happens- before的定义我们可以看出，JMM同样遵从这一目标。
+在计算机中，软件技术和硬件技术有一个共同的目标：在不改变程序执行结果的前提下，尽可能的开发并行度。编译器和处理器遵从这一目标，从 happens- before 的定义我们可以看出，JMM 同样遵从这一目标。
 
 #### 重排序对多线程的影响
 
@@ -1619,46 +1635,44 @@ as-if-serial 语义把单线程程序保护了起来，遵守 as-if-serial 语�
 
 ```java
 class ReorderExample {
-int a = 0;
-boolean flag = false;
+    int a = 0;
+    boolean flag = false;
 
-public void writer() {
-    a = 1;                   //1
-    flag = true;             //2
-}
-
-Public void reader() {
-    if (flag) {                //3
-        int i =  a * a;        //4
-        ……
+    public void writer() {
+        a = 1;                   // 1
+        flag = true;             // 2
     }
-}
+
+    Public void reader() {
+        if (flag) {                // 3
+            int i =  a * a;        // 4
+            ……
+        }
+    }
 }
 ```
 
-flag变量是个标记，用来标识变量a是否已被写入。这里假设有两个线程A和B，A首先执行writer()方法，随后B线程接着执行reader()方法。线程B在执行操作4时，能否看到线程A在操作1对共享变量a的写入？
+flag 变量是个标记，用来标识变量 a 是否已被写入。这里假设有两个线程 A 和 B，A首先执行 writer() 方法，随后 B 线程接着执行 reader() 方法。线程 B 在执行操作 4 时，能否看到线程 A 在操作 1 对共享变量 a 的写入？
 
 答案是：不一定能看到。
 
-由于操作1和操作2没有数据依赖关系，编译器和处理器可以对这两个操作重排序；同样，操作3和操作4没有数据依赖关系，编译器和处理器也可以对这两个操作重排序。让我们先来看看，当操作1和操作2重排序时，可能会产生什么效果？请看下面的程序执行时序图：
+由于操作 1 和操作 2 没有数据依赖关系，编译器和处理器可以对这两个操作重排序；同样，操作 3 和操作 4 没有数据依赖关系，编译器和处理器也可以对这两个操作重排序。让我们先来看看，当操作 1 和操作 2 重排序时，可能会产生什么效果？请看下面的程序执行时序图：
 
-<div align="center"><img src="assets/33.png" width=""/></div><br/>
+<div align="center"><img src="assets/33.png" width=""/></div>
 
-
-
-如上图所示，操作1和操作2做了重排序。程序执行时，线程A首先写标记变量flag，随后线程B读这个变量。由于条件判断为真，线程B将读取变量a。此时，变量a还根本没有被线程A写入，在这里多线程程序的语义被重排序破坏了！
+如上图所示，操作 1 和操作 2 做了重排序。程序执行时，线程 A 首先写标记变量 flag，随后线程 B 读这个变量。由于条件判断为真，线程 B 将读取变量 a。此时，变量 a 还根本没有被线程 A 写入，在这里多线程程序的语义被重排序破坏了！
 
 ※注：本文统一用红色的虚箭线表示错误的读操作，用绿色的虚箭线表示正确的读操作。
 
-下面再让我们看看，当操作3和操作4重排序时会产生什么效果（借助这个重排序，可以顺便说明控制依赖性）。下面是操作3和操作4重排序后，程序的执行时序图：
+下面再让我们看看，当操作 3 和操作 4 重排序时会产生什么效果（借助这个重排序，可以顺便说明控制依赖性）。下面是操作 3 和操作 4 重排序后，程序的执行时序图：
 
-<div align="center"><img src="assets/44.png" width=""/></div><br/>
+<div align="center"><img src="assets/44.png" width=""/></div>
 
-在程序中，操作3和操作4存在控制依赖关系。当代码中存在控制依赖性时，会影响指令序列执行的并行度。为此，编译器和处理器会采用猜测（Speculation）执行来克服控制相关性对并行度的影响。以处理器的猜测执行为例，执行线程B的处理器可以提前读取并计算a*a，然后把计算结果临时保存到一个名为重排序缓冲（reorder buffer ROB）的硬件缓存中。当接下来操作3的条件判断为真时，就把该计算结果写入变量i中。
+在程序中，操作 3 和操作 4 存在控制依赖关系。当代码中存在控制依赖性时，会影响指令序列执行的并行度。为此，编译器和处理器会采用猜测（Speculation）执行来克服控制相关性对并行度的影响。以处理器的猜测执行为例，执行线程 B 的处理器可以提前读取并计算 a*a，然后把计算结果临时保存到一个名为重排序缓冲（reorder buffer ROB）的硬件缓存中。当接下来操作3的条件判断为真时，就把该计算结果写入变量 i 中。
 
-从图中我们可以看出，猜测执行实质上对操作3和4做了重排序。重排序在这里破坏了多线程程序的语义！
+从图中我们可以看出，猜测执行实质上对操作 3 和 4 做了重排序。重排序在这里破坏了多线程程序的语义！
 
-在单线程程序中，对存在控制依赖的操作重排序，不会改变执行结果（这也是as-if-serial语义允许对存在控制依赖的操作做重排序的原因）；但在多线程程序中，对存在控制依赖的操作重排序，可能会改变程序的执行结果。
+在单线程程序中，对存在控制依赖的操作重排序，不会改变执行结果（这也是 as-if-serial 语义允许对存在控制依赖的操作做重排序的原因）；但在多线程程序中，对存在控制依赖的操作重排序，可能会改变程序的执行结果。
 
 
 
@@ -1670,11 +1684,11 @@ flag变量是个标记，用来标识变量a是否已被写入。这里假设有
 
 
 
-### 先行发生原则
+### 先行发生原则（happens-before）
 
-Happens-before是用来指定两个操作之间的执行顺序。提供跨线程的内存可见性。
+Happens-before 是用来指定两个操作之间的执行顺序。提供跨线程的内存可见性。
 
-在Java内存模型中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必然存在happens-before关系。
+在 Java 内存模型中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必然存在 happens-before 关系。
 
 上面提到了可以用 volatile 和 synchronized 来保证有序性。除此之外，JVM 还规定了先行发生原则，让一个操作无需控制就能先于另一个操作完成。
 
@@ -1688,7 +1702,7 @@ Happens-before是用来指定两个操作之间的执行顺序。提供跨线程
 
 在一个线程内，在程序前面的操作先行发生于后面的操作。
 
-<div align="center"><img src="assets/single-thread-rule-1534148720379.png" width=""/></div><br/>
+<div align="center"><img src="assets/single-thread-rule-1534148720379.png" width=""/></div>
 
 
 
@@ -1696,9 +1710,9 @@ Happens-before是用来指定两个操作之间的执行顺序。提供跨线程
 
 > Monitor Lock Rule
 
-对一个锁的解锁（unlock ），总是happens-before于随后对这个锁的加锁（lock）
+对一个锁的解锁（unlock ），总是 happens-before 于随后对这个锁的加锁（lock）
 
-<div align="center"><img src="assets/monitor-lock-rule-1534148737603.png" width=""/></div><br/>
+<div align="center"><img src="assets/monitor-lock-rule-1534148737603.png" width=""/></div>
 
 
 
@@ -1708,7 +1722,7 @@ Happens-before是用来指定两个操作之间的执行顺序。提供跨线程
 
 对一个 volatile 变量的写操作先行发生于后面对这个变量的读操作。
 
-<div align="center"><img src="assets/volatile-variable-rule-1534148747964.png" width=""/></div><br/>
+<div align="center"><img src="assets/volatile-variable-rule-1534148747964.png" width="600"/></div>
 
 
 
@@ -1718,7 +1732,7 @@ Happens-before是用来指定两个操作之间的执行顺序。提供跨线程
 
 Thread 对象的 start() 方法调用先行发生于此线程的每一个动作。
 
-<div align="center"><img src="assets/thread-start-rule-1534148760654.png" width=""/></div><br/>
+<div align="center"><img src="assets/thread-start-rule-1534148760654.png" width="600"/></div>
 
 
 
@@ -1728,7 +1742,7 @@ Thread 对象的 start() 方法调用先行发生于此线程的每一个动作�
 
 Thread 对象的结束先行发生于 join() 方法返回。
 
-<div align="center"><img src="assets/thread-join-rule-1534148774041.png" width=""/></div><br/>
+<div align="center"><img src="assets/thread-join-rule-1534148774041.png" width=""/></div>
 
 
 
@@ -2354,19 +2368,148 @@ JDK 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
 
 
 
+## 14. 线程池实现原理
+
+> 蘑菇街面试，设计一个线程池
+
+### 概念
+
+线程是稀缺资源，如果被无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，合理的使用线程池对线程进行统一分配、调优和监控，有以下好处：
+
+1. 降低资源消耗；
+2. 提高响应速度；
+3. 提高线程的可管理性。
+
+Java1.5 中引入的 Executor 框架把任务的提交和执行进行解耦，只需要定义好任务，然后提交给线程池，而不用关心该任务是如何执行、被哪个线程执行，以及什么时候执行。
+
+### Executor类图
+
+<div align="center"><img src="assets/820628cf179f4952812da4e8ca5de672.png" width=""/></div>
+
+### 线程池工作原理
+
+线程池中的核心线程数，当提交一个任务时，线程池创建一个新线程执行任务，直到当前线程数等于corePoolSize；如果当前线程数为 corePoolSize，继续提交的任务被保存到阻塞队列中，等待被执行；如果阻塞队列满了，那就创建新的线程执行当前任务；直到线程池中的线程数达到 maxPoolSize，这时再有任务来，只能执行 reject() 处理该任务。
+
+### 初始化线程池
+
+- **newFixedThreadPool()**
+  说明：**初始化一个指定线程数的线程池**，其中 corePoolSize == maxiPoolSize，使用 LinkedBlockingQuene 作为阻塞队列
+  特点：即使当线程池没有可执行任务时，也不会释放线程。
+- **newCachedThreadPool()**
+  说明：**初始化一个可以缓存线程的线程池**，默认缓存60s，线程池的线程数可达到 Integer.MAX_VALUE，即 2147483647，内部使用 SynchronousQueue 作为阻塞队列；
+  特点：在没有任务执行时，当线程的空闲时间超过 keepAliveTime，会自动释放线程资源；当提交新任务时，如果没有空闲线程，则创建新线程执行任务，会导致一定的系统开销；
+  因此，使用时要注意控制并发的任务数，防止因创建大量的线程导致而降低性能。
+- **newSingleThreadExecutor()**
+  说明：**初始化只有一个线程的线程池**，内部使用 LinkedBlockingQueue 作为阻塞队列。
+  特点：如果该线程异常结束，会重新创建一个新的线程继续执行任务，唯一的线程可以保证所提交任务的顺序执行
+- **newScheduledThreadPool()**
+  特点：初始化的线程池可以在指定的时间内周期性的执行所提交的任务，在实际的业务场景中可以使用该线程池定期的同步数据。
+
+#### 初始化方法
+
+```java
+// 使用Executors静态方法进行初始化
+ExecutorService service = Executors.newSingleThreadExecutor();
+// 常用方法
+service.execute(new Thread());
+service.submit(new Thread());
+service.shutDown();
+service.shutDownNow();
+```
+
+### 常用方法
+
+#### execute与submit的区别
+
+1. 接收的参数不一样
+2. submit有返回值，而execute没有
+
+用到返回值的例子，比如说我有很多个做 validation 的 task，我希望所有的 task 执行完，然后每个 task 告诉我它的执行结果，是成功还是失败，如果是失败，原因是什么。然后我就可以把所有失败的原因综合起来发给调用者。
+
+3. submit方便Exception处理
+
+如果你在你的 task 里会抛出 checked 或者 unchecked exception，而你又希望外面的调用者能够感知这些 exception 并做出及时的处理，那么就需要用到 submit，通过捕获 Future.get 抛出的异常。
+
+#### shutDown与shutDownNow的区别
+
+当线程池调用该方法时,线程池的状态则立刻变成 SHUTDOWN 状态。此时，则不能再往线程池中添加任何任务，否则将会抛出 RejectedExecutionException 异常。但是，此时线程池不会立刻退出，直到添加到线程池中的任务都已经处理完成，才会退出。
+
+### 内部实现
+
+```java
+public ThreadPoolExecutor(
+	int corePoolSize,     // 核心线程数
+	int maximumPoolSize,  // 最大线程数
+	long keepAliveTime,   // 线程存活时间（在 corePore<*<maxPoolSize 情况下有用）
+	TimeUnit unit,        // 存活时间的时间单位
+	BlockingQueue<Runnable> workQueue    // 阻塞队列（用来保存等待被执行的任务）
+	ThreadFactory threadFactory,    // 线程工厂，主要用来创建线程；
+	RejectedExecutionHandler handler // 当拒绝处理任务时的策略
+){
+    
+this(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
+         Executors.defaultThreadFactory(), defaultHandler);
+}
+```
+
+关于 workQueue 参数，有四种队列可供选择：
+
+- ArrayBlockingQueue：基于数组结构的有界阻塞队列，按 FIFO 排序任务；
+- LinkedBlockingQuene：基于链表结构的阻塞队列，按 FIFO 排序任务；
+- SynchronousQuene：一个不存储元素的阻塞队列，每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于阻塞状态，吞吐量通常要高于 ArrayBlockingQuene；
+- PriorityBlockingQuene：具有优先级的无界阻塞队列；
+
+关于 handler 参数，线程池的饱和策略，当阻塞队列满了，且没有空闲的工作线程，如果继续提交任务，必须采取一种策略处理该任务，线程池提供了 4 种策略：
+
+- ThreadPoolExecutor.AbortPolicy：丢弃任务并抛出RejectedExecutionException异常。
+- ThreadPoolExecutor.DiscardPolicy：丢弃任务，但是不抛出异常。
+- ThreadPoolExecutor.DiscardOldestPolicy：丢弃队列最前面的任务，然后重新尝试执行任务（重复此过程）
+- ThreadPoolExecutor.CallerRunsPolicy：由调用线程处理该任务
+
+当然也可以根据应用场景实现 RejectedExecutionHandler 接口，自定义饱和策略，如记录日志或持久化存储不能处理的任务。
+
+### 线程池的状态
+
+```java
+private final AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0));
+```
+
+其中 AtomicInteger 变量 ctl 的功能非常强大：利用低 29 位表示线程池中线程数，通过高 3 位表示线程池的运行状态：
+
+- **RUNNING**：-1 << COUNT_BITS，即高 3 位为 111，该状态的线程池会接收新任务，并处理阻塞队列中的任务；
+- **SHUTDOWN**： 0 << COUNT_BITS，即高 3 位为 000，该状态的线程池不会接收新任务，但会处理阻塞队列中的任务；
+- **STOP** ： 1 << COUNT_BITS，即高 3 位为 001，该状态的线程不会接收新任务，也不会处理阻塞队列中的任务，而且会中断正在运行的任务；
+- **TIDYING** ： 2 << COUNT_BITS，即高 3 位为 010，该状态表示线程池对线程进行整理优化；
+- **TERMINATED**： 3 << COUNT_BITS，即高 3 位为 011，该状态表示线程池停止工作；
+
+### 线程池其他常用方法
+
+如果执行了线程池的 prestartAllCoreThreads() 方法，线程池会提前创建并启动所有核心线程。
+ThreadPoolExecutor 提供了动态调整线程池容量大小的方法：setCorePoolSize() 和 setMaximumPoolSize()。
+
+### 如何合理设置线程池的大小
+
+一般需要根据任务的类型来配置线程池大小：
+如果是 CPU 密集型任务，就需要尽量压榨 CPU，参考值可以设为 NCPU+1
+如果是 IO 密集型任务，参考值可以设置为 2*NCPU
+
+
+
+- 参考资料
+  - [Java线程池的使用及原理](http://tangxiaolin.com/learn/show?id=402881d2651d1bdf01651de142df0000)
+  - [深入分析java线程池的实现原理 - 简书](https://www.jianshu.com/p/87bff5cc8d8c)
+
 
 
 # 第二部分：面试指南
 
-在这里将总结面试中和并发编程相关的常见知识点，如在第一部分中出现的这里将不进行详细阐述。
+在这里将总结面试中和并发编程相关的常见知识点，如在第一部分中出现的这里将不进行详细阐述。面试指南中，我将用最简洁的语言描述，更多是以一种大纲的形式列出问答点，根据自己掌握的情况回答。
 
 
 
 参考资料：
 
 - [Java线程面试题 Top 50 - ImportNew](http://www.importnew.com/12773.html)
-
-
 
 
 
@@ -2415,12 +2558,12 @@ synchronized 不仅保证可见性，而且还保证原子性，因为，只有�
 
 - 线程池四种创建方式
 
-  Java通过 Executors 提供四种线程池，分别为：
+  Java 通过 Executors 提供四种线程池，分别为：
 
-  - newCachedThreadPool 创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
-  - newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
-  - newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。
-  - newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
+  - new CachedThreadPool 创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
+  - new FixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
+  - new ScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。
+  - new SingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
 
 
 
