@@ -1096,7 +1096,7 @@ https://www.cnblogs.com/s-b-b/p/8334593.html
 - HAST：包含键值对的无序散列表 
 - ZSET：字符串成员（member）与浮点数分值（score）之间的有序映射，元素的排列顺序由分值的大小决定 
 
-<div align="center"><img src="pics/redis-data-structure-types.jpeg" width=""/></div><br/>
+<div align="center"><img src="pics/redis-data-structure-types.jpeg" width="650"/></div><br/>
 
 注：更多 Redis 相关内容将在 [Redis](redis.md) 中进行展开，请转向。
 

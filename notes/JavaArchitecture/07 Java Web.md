@@ -972,15 +972,15 @@ Spring实现了一种能够通过额外的方法调用完成任务的设计模�
 
 ## 1. Spring MVC的工作原理
 
-Spring MVC的工作原理如下图所示：  
+Spring MVC 的工作原理如下图：  
 
-![这里写图片描述](https://blog.csdn.net/sinat_22797429/article/details/76293284)
+![img](assets/Spring-mvc-framework-1536053968817.png)
 
   
 
 - ① 客户端的所有请求都交给前端控制器DispatcherServlet来处理，它会负责调用系统的其他模块来真正处理用户的请求。  
 - ② DispatcherServlet收到请求后，将根据请求的信息（包括URL、HTTP协议方法、请求头、请求参数、Cookie等）以及HandlerMapping的配置找到处理该请求的Handler（任何一个对象都可以作为请求的Handler）。  
-- ③在这个地方Spring会通过HandlerAdapter对该处理进行封装。  
+- ③ 在这个地方Spring会通过HandlerAdapter对该处理进行封装。  
 - ④ HandlerAdapter是一个适配器，它用统一的接口对各种Handler中的方法进行调用。  
 - ⑤ Handler完成对用户请求的处理后，会返回一个ModelAndView对象给DispatcherServlet，ModelAndView顾名思义，包含了数据模型以及相应的视图的信息。  
 - ⑥ ModelAndView的视图是逻辑视图，DispatcherServlet还要借助ViewResolver完成从逻辑视图到真实视图对象的解析工作。  
@@ -989,9 +989,39 @@ Spring MVC的工作原理如下图所示： 
 
 
 
-## 2. SpringMVC流程具体叙述下  
+**组件及其作用**
 
-## 3. Spring MVC注解的优点
+1. 前端控制器 (DispatcherServlet)
+
+   接收请求，响应结果，相当于转发器，中央处理器。负责调用系统的其他模块来真正处理用户的请求。 
+
+   有了DispatcherServlet减少了其他组件之间的耦合度
+
+2. 处理器映射器 (HandlerMapping)
+
+   作用：根据请求的 url 查找 Handler
+
+3. **处理器 (Handler)**
+
+   注意：编写 Handler 时按照 HandlerAdapter 的要求去做，这样适配器才可以去正确执行 Handler
+
+4. 处理器适配器 (HandlerAdapter)
+
+   作用：按照特定规则（HandlerAdapter要求的规则）执行Handler。
+
+5. 视图解析器 (ViewResolver)
+
+   作用：进行视图解析，根据逻辑视图解析成真正的视图 (View)
+
+6. **视图 (View)**
+
+   View 是一个接口实现类支持不同的 View 类型（jsp,pdf等等）
+
+注意：只需要程序员开发，处理器和视图。
+
+
+
+## 2. Spring MVC注解的优点
 
 
 

@@ -55,8 +55,16 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
 ## 三、数据库
 
 - [MySQL](notes/MySQL.md)
-- Redis
+
+  存储引擎、事务隔离级别、索引、主从复制
+
+- [Redis](notes/Redis.md)
+
+  Redis 核心知识，更新中...
+
 - SQL
+
+  常用 SQL 语句，敬请期待
 
 
 

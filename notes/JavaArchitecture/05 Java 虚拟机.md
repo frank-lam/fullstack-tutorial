@@ -146,7 +146,6 @@ java -Xss=512M HackTheJava
 
 - 栈进行动态扩展时如果无法申请到足够内存，会抛出 OutOfMemoryError 异常。
 
-  
 
 ### 3. 本地方法栈（线程私有）
 
