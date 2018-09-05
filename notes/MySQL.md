@@ -1209,6 +1209,8 @@ https://www.cnblogs.com/s-b-b/p/8334593.html
 
 
 
+
+
 ## 16. 主从复制与读写分离
 
 ### 主从复制
@@ -1426,3 +1428,4 @@ SELECT * FROM post WHERE post.id IN (123,456,567,9098,8904);
 - [关于分库分表，这有一套大而全的轻量级架构设计思路（蚂蚁金服技术专家）](https://www.toutiao.com/a6545626478447428103/?tt_from=weixin&article_category=stock&timestamp=1524029012&app=news_article&iid=26214166927&wxshare_count=1)
 - [Java大型互联网架构-快速搞定大型互联网网站分库分表方案_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili](https://www.bilibili.com/video/av20966672?from=search&seid=6900253656657206494)
 - [MySQL分库分表_ITPUB博客](http://blog.itpub.net/29254281/viewspace-1819422/)
+- 
