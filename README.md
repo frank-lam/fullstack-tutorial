@@ -201,3 +201,43 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
 
 
 <div align="center"><img src="pics/tipping.jpg" width="700"/></div><br/>
+
+
+
+## License
+
+已签署开源协议，不用于任何商业用途。
+
+在对本作品进行演绎时，请署名并以相同方式共享。
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+
+
+
+## reference
+
+个人的能力有限，在编写仓库的过程中引用了很多现有优秀的 Github 仓库。本项目的启发来自 [@CyC2018](https://github.com/CyC2018) 的学习笔记，是一个非常优秀的开源项目，在本仓库中部分大纲都参考了 [CS-Notes](https://github.com/CyC2018/CS-Notes) 中的内容和图片；参考了 [@计算所的小鼠标](http://weibo.com/icttinymouse) 中对于 JCF 的源码分析和理解；参考  [阿里面试题总结](https://www.nowcoder.com/discuss/5949) 一文，并进行了知识拓展；参考了 [牛客网](https://www.nowcoder.com) 上的面试经验贴。也引用了知乎上的热门回答和优秀博客的回答。在这里特别鸣谢，我将每篇文章中做外链引用说明。
+
+参考了这么多开源项目，但本仓库更致力于面试宝类型的高频知识笔记，整理常考的考点，并对其深入理解。
+
+
+
+以下是一些优秀的开源项目，也供大家参考学习：
+
+- [CyC2018/CS-Notes: Computer Science Learning Notes](CyC2018/CS-Notes: Computer Science Learning Notes
+  )
+
+- [CarpenterLee/JCFInternals: 深入理解Java集合框架](CarpenterLee/JCFInternals: 深入理解Java集合框架
+  )
+
+- [Snailclib/JavaGuide: A core knowledge that most Java programmers need to master](Snailclimb/JavaGuide: A core knowledge that most Java programmers need to master
+  )
+
+- [linw7/Skill-Tree:  准备秋招，欢迎来树上取果实](linw7/Skill-Tree:  准备秋招，欢迎来树上取果实
+  )
+
+- [crossoverJie/JCSprout:  Java Core Sprout : basic, concurrent, algorithm](crossoverJie/JCSprout:  Java Core Sprout : basic, concurrent, algorithm
+  )
+
+- [imhuay/Algorithm_Interview_Notes-Chinese](imhuay/Algorithm_Interview_Notes-Chinese
+  )
