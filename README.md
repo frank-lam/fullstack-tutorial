@@ -224,20 +224,14 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
 
 以下是一些优秀的开源项目，也供大家参考学习：
 
-- [CyC2018/CS-Notes: Computer Science Learning Notes](CyC2018/CS-Notes: Computer Science Learning Notes
-  )
+- [CyC2018/CS-Notes: Computer Science Learning Notes](CyC2018/CS-Notes: Computer Science Learning Notes)
 
-- [CarpenterLee/JCFInternals: 深入理解Java集合框架](CarpenterLee/JCFInternals: 深入理解Java集合框架
-  )
+- [CarpenterLee/JCFInternals: 深入理解Java集合框架](CarpenterLee/JCFInternals: 深入理解Java集合框架)
 
-- [Snailclib/JavaGuide: A core knowledge that most Java programmers need to master](Snailclimb/JavaGuide: A core knowledge that most Java programmers need to master
-  )
+- [Snailclib/JavaGuide: A core knowledge that most Java programmers need to master](Snailclimb/JavaGuide: A core knowledge that most Java programmers need to master)
 
-- [linw7/Skill-Tree:  准备秋招，欢迎来树上取果实](linw7/Skill-Tree:  准备秋招，欢迎来树上取果实
-  )
+- [linw7/Skill-Tree:  准备秋招，欢迎来树上取果实](linw7/Skill-Tree:  准备秋招，欢迎来树上取果实)
 
-- [crossoverJie/JCSprout:  Java Core Sprout : basic, concurrent, algorithm](crossoverJie/JCSprout:  Java Core Sprout : basic, concurrent, algorithm
-  )
+- [crossoverJie/JCSprout:  Java Core Sprout : basic, concurrent, algorithm](crossoverJie/JCSprout:  Java Core Sprout : basic, concurrent, algorithm)
 
-- [imhuay/Algorithm_Interview_Notes-Chinese](imhuay/Algorithm_Interview_Notes-Chinese
-  )
+- [imhuay/Algorithm_Interview_Notes-Chinese](imhuay/Algorithm_Interview_Notes-Chinese)
