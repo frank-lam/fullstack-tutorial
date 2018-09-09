@@ -200,6 +200,8 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
   - [crossoverJie/JCSprout](https://github.com/crossoverJie/JCSprout)
   - [imhuay/Algorithm_Interview_Notes-Chinese](https://github.com/imhuay/Algorithm_Interview_Notes-Chinese)
 
+  - [xingshaocheng/architect-awesome](https://github.com/xingshaocheng/architect-awesome)
+
 
 
 ## 关于作者 :boy:
