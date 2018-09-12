@@ -86,13 +86,13 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
 
 　　传输层、应用层（HTTP）、网络层、网络安全
 
+- [RESTful API](notes/RESTful%20API.md)
+
+  软件架构风格、格设计原则和约束条件
+
 - 网络 I/O 模型
 
 　　4 种网络 IO 模型、select、poll、epoll
-
-- RESTful API
-
-  软件架构风格、格设计原则和约束条件
 
 
 
