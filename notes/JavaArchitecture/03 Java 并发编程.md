@@ -163,7 +163,7 @@
 
 ## 1. 线程状态转换
 
-<div align="center"> <img src="assets/1536767960941.png" width="750"/></div>
+<div align="center"> <img src="assets/ace830df-9919-48ca-91b5-60b193f593d2.png" width=""/></div>
 
 ### 新建（New）
 
