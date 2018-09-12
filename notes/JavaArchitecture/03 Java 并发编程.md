@@ -165,6 +165,8 @@
 
 <div align="center"> <img src="assets/ace830df-9919-48ca-91b5-60b193f593d2.png" width=""/></div>
 
+这里笔者也绘制了一张中文版的图，[点击查看](https://raw.githubusercontent.com/frank-lam/2019_campus_apply/master/notes/JavaArchitecture/assets/1536767960941.png)
+
 ### 新建（New）
 
 创建后尚未启动。
