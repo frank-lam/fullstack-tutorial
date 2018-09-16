@@ -215,13 +215,13 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
         珞珈CS硕士，秋招备战狗
     </p>
     <p>
-        致力成为一个：会编程的文青，懂拍照的码农
+        在颠覆世界的同时，也要好好关照自己。
     </p>
 <a  target="_blank" href="https://zhuanlan.zhihu.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="http://blog.csdn.net/u012104219" rel="nofollow"><img src="https://img.shields.io/badge/CSDN-东风牧野-red.svg" alt="CSDN" data-canonical-src="" style="max-width:100%;"></a>
-<a target="_blank" href="https://weibo.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/Sina-Lam__Frank-orange.svg" alt="新浪微博" data-canonical-src="" style="max-width:100%;"></a>
+<a target="_blank" href="https://weibo.com/frankfeekr" rel="nofollow" style="display:none"><img src="https://img.shields.io/badge/Sina-Lam__Frank-orange.svg" alt="新浪微博" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="mailto:frank_lin@whu.edu.cn" rel="nofollow"><img src="https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-lightgrey.svg" alt="邮箱" data-canonical-src="" style="max-width:100%;"></a>
-<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=593WvX0" rel="nofollow"><img src="https://img.shields.io/badge/QQ群-862619503-green.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
+<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=593WvX0" rel="nofollow" ><img src="https://img.shields.io/badge/QQ群-862619503-green.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
     <br/><br/>
     <p>
         from zero to hero.
@@ -230,6 +230,7 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
         💰💰💰 嗯，我的梦想是被读者的稿费包养，嘿嘿~ 打赏不准超过你的早饭钱
     </p>
 </div>
+
 
 
 
