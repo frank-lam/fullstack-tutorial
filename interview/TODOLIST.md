@@ -41,3 +41,15 @@ https://mp.weixin.qq.com/s/hnstE9WgvShE3qZcWWbUJQ
 系统容灾设计
 
 高可用系统
+
+
+
+
+
+
+
+## README
+
+- 网络 I/O 模型
+
+　　4 种网络 IO 模型、select、poll、epoll

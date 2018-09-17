@@ -90,9 +90,9 @@ Hi，欢迎来做客，即刻开始 CS 学习之旅.
 
   软件架构风格、格设计原则和约束条件
 
-- 网络 I/O 模型
+- [Web网络安全](notes/网络安全.md)
 
-　　4 种网络 IO 模型、select、poll、epoll
+  web前后端漏洞分析与防御，XSS攻击、CSRF攻击、DDoS攻击、SQL注入
 
 
 
