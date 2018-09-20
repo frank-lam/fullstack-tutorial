@@ -555,6 +555,13 @@ Java面向对象的基本思想之一是封装细节并且公开接口。Java语
 - [细说 Java 的深拷贝和浅拷贝 - 承香墨影 - SegmentFault 思否](https://segmentfault.com/a/1190000010648514)
 - [（基础系列）object clone 的用法、原理和用途 - 掘金](https://juejin.im/post/59bfc707f265da0646188bca)
 
+## 9. Lamda表达式
+
+跟上Java8 - 了解lambda
+https://zhuanlan.zhihu.com/p/28093333
+
+
+
 
 
 # 二、面向对象

@@ -2125,6 +2125,15 @@ public static void main(String[] args) {
 
 
 
+这是一个非常好的例题，请参考整理：
+
+[关于ThreadLocal类以下说法正确的是?_迅雷笔试题_牛客网](https://www.nowcoder.com/questionTerminal/b82e4a85a66e4dc488a5ab49094976e9?orderByHotValue=0&pos=73&mutiTagIds=171)
+
+
+
+
+
+
 **示例用法**
 
 先通过下面这个实例来理解 ThreadLocal 的用法。先声明一个 ThreadLocal 对象，存储布尔类型的数值。然后分别在main线程、Thread1、Thread2中为 ThreadLocal 对象设置不同的数值：
