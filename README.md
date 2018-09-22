@@ -247,5 +247,5 @@
         💰💰💰 嗯，我的梦想是被读者的稿费包养，嘿嘿~ 打赏不准超过你的早饭钱
     </p>
 </div>
-<div align="center"><img src="pics/tipping.png" width=""/></div><br/>
+<div align="center"><img src="pics/tipping.png" width="560"/></div><br/>
 
