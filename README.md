@@ -1,10 +1,13 @@
-![1537591331591](assets/1537591331591.png)
+![1537592021705](assets/1537592021705.png)
 
 
 
 <div align="center">  
     <p>
         Hi，欢迎来做客，即刻开始 CS 学习之旅.
+    </p>
+    <p>
+        Hey, welcome to visit and start the computer science learning journey.
     </p>
 </div>
 
