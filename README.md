@@ -4,7 +4,7 @@
 
 <div align="center">  
     <p>
-        Hi，欢迎来做客，即刻开始 CS 学习之旅.
+        嗨，欢迎来做客，即刻开始 CS 学习之旅.
     </p>
     <p>
         Hey, welcome to visit and start the computer science learning journey.
@@ -15,7 +15,7 @@
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: |
 | 算法<br />[:pencil:](#一数据结构与算法) | Java<br/>[:coffee:](#二java) | 数据库<br/>[:floppy_disk:](#三数据库) | 操作系统<br/>[:computer:](#四操作系统) | 网络通信<br/>[:cloud:](#五网络通信) | 分布式<br/>[:page_with_curl:](#六分布式) | 机器学习<br/> [:mag:](#七机器学习) |工具<br/>[:hammer:](#八工具) |学习资源<br/>[:books:](#学习资源-books) |Talking<br />[:bulb:](#想说的话-bulb) |Author<br/>[:boy:](#关于作者-boy)|
 
-注：下文带有链接即为已经整理完善，未带链接的暂未更新，本仓库长期更新。欢迎大家一起 contribution。
+注：下文带有链接即为已经完善，本仓库长期更新。
 
 
 
@@ -71,7 +71,7 @@
 
 - [Redis](notes/Redis.md)
 
-  Redis 核心知识，更新中...
+  Redis 核心知识
 
 - SQL
 
@@ -201,21 +201,27 @@
 
 ## reference
 
-　　个人的能力有限，在编写的过程中引用了诸多优秀的 Github 仓库。本项目的启发来自 [@CyC2018](https://github.com/CyC2018) 的学习笔记，是一个非常优秀的开源项目，在本仓库中部分内容引用其文字和图片；引用了 [@计算所的小鼠标](http://weibo.com/icttinymouse) 中对于 JCF 的源码分析和理解；引用  [阿里面试题总结](https://www.nowcoder.com/discuss/5949) 中全部得面试题，并对面经进行了整理勘误，并进行了知识拓展和修改；引用了 [牛客网](https://www.nowcoder.com) 上的面试经验贴。也引用了知乎上的热门回答和优秀博客的回答。在这里特别鸣谢，我将每篇文章中做外链引用说明。
+　　个人的能力有限，在编写的过程中引用了诸多优秀的 Github 仓库。本项目的启发来自 [@CyC2018](https://github.com/CyC2018) 的学习笔记，是一个非常优秀的开源项目，在本仓库中部分内容引用其文字和图片；引用了 [@计算所的小鼠标](http://weibo.com/icttinymouse) 中对于 JCF 的源码分析和理解；引用了  [阿里面试题总结](https://www.nowcoder.com/discuss/5949) 中全部的面试题，并对面经进行了整理勘误，并进行了知识拓展和修改；引用了 [牛客网](https://www.nowcoder.com) 上的面试经验贴。也引用了知乎上的热门回答和优秀博客的回答。在这里特别鸣谢，我将每篇文章中做外链引用说明。
 
-　　参考了这么多开源项目，但本仓库更致力于面试类型的高频知识笔记，整理常考的考点并对其深入分析。在文中的配图都来自自己绘制的、博客、Github、PDF书籍等等，这里没法一一感谢，谢谢你们。
+　　本仓库更致力于面试类型的高频知识笔记，整理常考的考点并对其深入分析。在文中的配图都来自自己绘制的、博客、Github、PDF书籍等等，这里没法一一感谢，谢谢你们。
+
+　　这里推荐一些优秀的开源项目，供大家参考，请转向 [reference](notes/reference.md)。
 
 
 
-- 以下是一些优秀的开源项目，也供大家参考学习：
-  - [CyC2018/CS-Notes](https://github.com/CyC2018/CS-Notes)
-  - [CarpenterLee/JCFInternals](https://github.com/CarpenterLee/JCFInternals)
-  - [Snailclib/JavaGuide](https://github.com/Snailclimb/JavaGuide)
-  - [linw7/Skill-Tree](https://github.com/Snailclimb/JavaGuide)
-  - [crossoverJie/JCSprout](https://github.com/crossoverJie/JCSprout)
-  - [imhuay/Algorithm_Interview_Notes-Chinese](https://github.com/imhuay/Algorithm_Interview_Notes-Chinese)
+## contribution
 
-  - [xingshaocheng/architect-awesome](https://github.com/xingshaocheng/architect-awesome)
+感谢以下伙伴们对于本仓库的贡献，如想加入本开源项目，请邮件与我联系。[【开源贡献】如何给我的仓库贡献？](notes/docs/如何给我的仓库贡献.md)
+
+<a href="https://github.com/RThymer">
+ <img src="https://avatars1.githubusercontent.com/u/37107266?s=88&v=4" width="50px">
+</a> 
+<a href="https://github.com/liuenci">
+<img src="https://avatars3.githubusercontent.com/u/32006433?s=460&v=4" width="50px">
+</a>
+<a href="https://github.com/FrankLLC">
+<img src="https://avatars0.githubusercontent.com/u/42835340?s=460&v=4" width="50px">
+</a> 
 
 
 
