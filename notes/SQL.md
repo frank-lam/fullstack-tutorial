@@ -1,3 +1,9 @@
+# 前言
+
+在这部分将整理 SQL 语句的使用
+
+
+
 # SQL基础
 
 ## 1. INNER JOIN、LEFT JOIN、RIGHT JOIN、FULL JOIN
@@ -31,7 +37,7 @@ ORDER BY Persons.LastName
 
 ![20150603222827804](assets/20150603222827804.png)
 
-此种连接方式 Orders 表中 Id_P 字段在 Persons 表中找不到匹配的，则不会列出来。
+此种连接方式 Orders 表中 Id_P 字段在 Persons 表中找不到匹配的，则不会列出来。
 
 
 
