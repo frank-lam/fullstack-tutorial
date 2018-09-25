@@ -36,6 +36,8 @@
   - [Java 微服务架构](https://www.bilibili.com/video/av29384041)
   - [Java 微服务实战](https://www.bilibili.com/video/av29882762)
 
+- [【Gitbook】《微服务：从设计到部署》中文版](https://docshome.gitbooks.io/microservices/content/)
+
 
 
 
