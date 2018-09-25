@@ -75,9 +75,9 @@
 
   Redis 核心知识
 
-- SQL
+- [SQL](notes/SQL.md)
 
-  常用 SQL 语句，敬请期待
+  常用 SQL 语句
 
 
 
