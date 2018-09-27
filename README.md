@@ -220,13 +220,16 @@
 感谢以下伙伴们对于本仓库的贡献，如想加入本开源项目，请邮件与笔者联系。[【开源贡献】如何给我的仓库贡献？](notes/docs/如何给我的仓库贡献.md)
 
 <a href="https://github.com/RThymer">
- <img src="https://avatars1.githubusercontent.com/u/37107266?s=88&v=4" width="50px">
+ <img src="https://avatars3.githubusercontent.com/u/37107266?s=460&v=4" width="50px">
 </a> 
 <a href="https://github.com/liuenci">
 <img src="https://avatars3.githubusercontent.com/u/32006433?s=460&v=4" width="50px">
 </a>
 <a href="https://github.com/FrankLLC">
 <img src="https://avatars0.githubusercontent.com/u/42835340?s=460&v=4" width="50px">
+</a> 
+<a href="https://github.com/wyn-lin">
+<img src="https://avatars1.githubusercontent.com/u/32236252?s=400&v=4" width="50px">
 </a> 
 
 
