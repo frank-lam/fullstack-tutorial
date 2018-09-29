@@ -2,7 +2,7 @@
 
 - [前言](#前言)
 - [一、基本概念](#一基本概念)
-    - [1. Java程序初始化的顺序是怎么样的【B50】](#1-java程序初始化的顺序是怎么样的b50)
+    - [1. Java程序初始化的顺序是怎么样的](#1-java程序初始化的顺序是怎么样的)
     - [2. Java和C++的区别](#2-java和c的区别)
     - [3. 反射](#3-反射)
         - [先看一个知乎回答](#先看一个知乎回答)
@@ -23,6 +23,8 @@
     - [6. 字节与字符的区别](#6-字节与字符的区别)
     - [7. 有哪些访问修饰符](#7-有哪些访问修饰符)
     - [8. 深拷贝与浅拷贝](#8-深拷贝与浅拷贝)
+    - [9. Lamda表达式](#9-lamda表达式)
+    - [10. 字符串常量池](#10-字符串常量池)
 - [二、面向对象](#二面向对象)
     - [1. Java的四个基本特性，对多态的理解，在项目中哪些地方用到多态](#1-java的四个基本特性对多态的理解在项目中哪些地方用到多态)
     - [2. 什么是重载和重写](#2-什么是重载和重写)
@@ -46,7 +48,7 @@
         - [break](#break)
         - [continue](#continue)
         - [return](#return)
-    - [3. final、finally和finalize区别【B77】](#3-finalfinally和finalize区别b77)
+    - [3. final、finally和finalize区别](#3-finalfinally和finalize区别)
         - [final](#final-1)
         - [finally](#finally)
         - [finalize](#finalize)
@@ -62,7 +64,7 @@
 - [四、基本数据类型与运算](#四基本数据类型与运算)
     - [1. Java的基本数据类型和引用类型，自动装箱和拆箱](#1-java的基本数据类型和引用类型自动装箱和拆箱)
     - [2. ValueOf缓存池](#2-valueof缓存池)
-    - [3. i++和++i有什么区别【B97】](#3-i和i有什么区别b97)
+    - [3. i++和++i有什么区别](#3-i和i有什么区别)
         - [i++](#i)
         - [++i](#i)
     - [4. 位运算符](#4-位运算符)
@@ -95,14 +97,14 @@
 
 为了更好的总结Java面试中的系统知识结构，本文根据以下资料整理学习笔记。
 
-- 《Java程序员面试笔试宝典》以下索引中`B`代表该书。
+- 《Java程序员面试笔试宝典》
 - [《阿里面经OneNote》](https://blog.csdn.net/sinat_22797429/article/details/76293284)
 
  
 
 # 一、基本概念
 
-## 1. Java程序初始化的顺序是怎么样的【B50】
+## 1. Java程序初始化的顺序是怎么样的
 
 　　在 Java 语言中，当实例化对象时，对象所在类的所有成员变量首先要进行初始化，只有当所有类成员完成初始化后，才会调用对象所在类的构造函数创建象。
 
@@ -352,7 +354,7 @@ public String toLocaleString() {
 3. 参数成员只能用基本类型 byte,short,char,int,long,float,double,boolean 八种基本数据类型和 String、Enum、Class、annotations 等数据类型，以及这一些类型的数组
 4. 要获取类方法和字段的注解信息，必须通过 Java 的反射技术来获取 Annotation 对象，因为你除此之外没有别的获取注解对象的方法
 5. 注解也可以没有定义成员, 不过这样注解就没啥用了
-  PS：自定义注解需要使用到元注解
+    PS：自定义注解需要使用到元注解
 
 
 
@@ -469,11 +471,11 @@ public class Box<T> {
 
 ### 类型通配符
 
-1. 类型通配符一般是使用 `?` 代替具体的类型参数。例如  `List<?>` 在逻辑上是 `List<String>`，`List<Integer>` 等所有 **List<具体类型实参>** 的父类。  
+1. 类型通配符一般是使用 `?` 代替具体的类型参数。例如  `List<?>` 在逻辑上是 `List<String>`，`List<Integer>` 等所有 **List<具体类型实参>** 的父类。  
 
 2. 类型通配符上限通过形如 List 来定义，如此定义就是通配符泛型值接受 Number 及其下层子类类型。  
 
-3. 类型通配符下限通过形如 List<? super Number> 来定义，表示类型只能接受 Number 及其三层父类类型，如 Objec 类型的实例。  
+3. 类型通配符下限通过形如 List<? super Number> 来定义，表示类型只能接受 Number 及其三层父类类型，如 Objec 类型的实例。  
 
 
 
@@ -561,6 +563,39 @@ Java面向对象的基本思想之一是封装细节并且公开接口。Java语
 https://zhuanlan.zhihu.com/p/28093333
 
 
+
+## 10. 字符串常量池
+
+Java 中字符串对象创建有两种形式，一种为字面量形式，如 `String str = "droid";`，另一种就是使用 new 这种标准的构造对象的方法，如 `String str = new String("droid");`，这两种方式我们在代码编写时都经常使用，尤其是字面量的方式。然而这两种实现其实存在着一些性能和内存占用的差别。这一切都是源于 JVM 为了减少字符串对象的重复创建，其维护了一个特殊的内存，这段内存被成为**字符串常量池**或者**字符串字面量池**。
+
+**工作原理**
+
+当代码中出现字面量形式创建字符串对象时，JVM首先会对这个字面量进行检查，如果字符串常量池中存在相同内容的字符串对象的引用，则将这个引用返回，否则新的字符串对象被创建，然后将这个引用放入字符串常量池，并返回该引用。
+
+```java
+public class Test {
+    public static void main(String[] args) {
+
+        String s1 = "abc";
+        String s2 = "abc";
+
+        // 以上两个局部变量都存在了常量池中
+        System.out.println(s1 == s2); // true
+
+
+        // new出来的对象不会放到常量池中,内存地址是不同的
+        String s3 = new String();
+        String s4 = new String();
+
+        /**
+     	* 字符串的比较不可以使用双等号,这样会比较内存地址
+     	* 字符串比较应当用equals,可见String重写了equals
+     	*/
+        System.out.println(s3 == s4); // false
+        System.out.println(s3.equals(s4)); // true、
+    }
+}
+```
 
 
 
@@ -1255,7 +1290,7 @@ for (int i = 0; i < 10; i++) {
 
 
 
-## 3. final、finally和finalize区别【B77】
+## 3. final、finally和finalize区别
 
 ### final
 
@@ -1422,7 +1457,7 @@ public class Main {
 
 ## 7. strictfp
 
-strictfp，即 **strict float point** (精确浮点)。 
+strictfp，即 **strict float point** (精确浮点)。 
 
 strictfp 关键字可应用于类、接口或方法。使用 strictfp 关键字声明一个方法时，该方法中所有的 float 和 double 表达式都严格遵守 FP-strict 的限制,符合 IEEE-754 规范。当对一个类或接口使用 strictfp 关键字时，该类中的所有代码，包括嵌套类型中的初始设定值和代码，都将严格地进行计算。严格约束意味着所有表达式的结果都必须是 IEEE 754 算法对操作数预期的结果，以单精度和双精度格式表示。
 
@@ -1598,7 +1633,7 @@ Java 还将一些其它基本类型的值放在缓冲池中，包含以下这些
 
 
 
-## 3. i++和++i有什么区别【B97】
+## 3. i++和++i有什么区别
 
 ### i++
 
@@ -1862,9 +1897,9 @@ public static void main(String[] args) {
 
 ## 4. 字面量
 
-在编程语言中，字面量（literal）指的是在源代码中直接表示的一个固定的值。 
+在编程语言中，字面量（literal）指的是在源代码中直接表示的一个固定的值。 
 
-八进制是用在整数字面量之前添加 “0” 来表示的。 
+八进制是用在整数字面量之前添加 “0” 来表示的。 
 
 十六进制用在整数字面量之前添加 “0x” 或者 “0X” 来表示的
 
@@ -1908,7 +1943,7 @@ public class BinaryIntegralLiteral {
   - **Error**：Error 为错误，是程序无法处理的，如 OutOfMemoryError、ThreadDeath 等，出现这种情况你唯一能做的就是听之任之，交由 JVM 来处理，不过 JVM 在大多数情况下会选择终止线程。 
   - **Exception**：Exception 是程序可以处理的异常。它又分为两种 CheckedException（受捡异常），一种是 UncheckedException（不受检异常）。 
     - **受检异常**（CheckException）：发生在编译阶段，必须要使用 try…catch（或者throws）否则编译不通过。 
-    - **非受检异常** （UncheckedException）：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。 （发生在运行期，具有不确定性，主要是由于程序的逻辑问题所引起的，难以排查，我们一般都需要纵观全局才能够发现这类的异常错误，所以在程序设计中我们需要认真考虑，好好写代码，尽量处理异常，即使产生了异常，也能尽量保证程序朝着有利方向发展。 ）
+    - **非受检异常** （UncheckedException）：是程序运行时错误，例如除 0 会引发 Arithmetic Exception，此时程序奔溃并且无法恢复。 （发生在运行期，具有不确定性，主要是由于程序的逻辑问题所引起的，难以排查，我们一般都需要纵观全局才能够发现这类的异常错误，所以在程序设计中我们需要认真考虑，好好写代码，尽量处理异常，即使产生了异常，也能尽量保证程序朝着有利方向发展。 ）
 - 常见异常的基类（Exception）
 
   - IOException 

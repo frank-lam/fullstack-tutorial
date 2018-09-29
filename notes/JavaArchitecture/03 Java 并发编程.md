@@ -141,7 +141,7 @@
         - [锁的可重入性](#锁的可重入性)
         - [锁的公平性](#锁的公平性)
         - [在 finally 语句中调用 unlock()](#在-finally-语句中调用-unlock)
-    - [12. 并发包(J.U.C)下面，都用过什么【蚂蚁金服面经】](#12-并发包juc下面都用过什么蚂蚁金服面经)
+    - [12. 并发包(J.U.C)下面，都用过什么](#12-并发包juc下面都用过什么)
     - [13. 从volatile说到,i++原子操作,线程安全问题](#13-从volatile说到i原子操作线程安全问题)
 - [参考资料](#参考资料)
 - [更新日志](#更新日志)
@@ -3237,7 +3237,7 @@ try{
 
 
 
-## 12. 并发包(J.U.C)下面，都用过什么【蚂蚁金服面经】
+## 12. 并发包(J.U.C)下面，都用过什么
 
 - concurrent下面的包 
   - Executor  用来创建线程池，在实现Callable接口时，添加线程。 
@@ -3263,8 +3263,9 @@ https://blog.csdn.net/zbw18297786698/article/details/53420780
 # 参考资料
 
 - [Interview-Notebook/Java 并发.md at master · CyC2018/Interview-Notebook](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md)
+
 - [Java 并发编程-极客学院Wiki](http://wiki.jikexueyuan.com/project/java-concurrency/)
-  
+
 
 
 

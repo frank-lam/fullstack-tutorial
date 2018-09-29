@@ -1,3 +1,77 @@
+<!-- TOC -->
+
+- [前言](#前言)
+- [一、Servlet / JSP / Web](#一servlet--jsp--web)
+    - [1. 什么是Servlet](#1-什么是servlet)
+    - [2. Tomcat容器等级](#2-tomcat容器等级)
+    - [3. Servlet执行流程](#3-servlet执行流程)
+        - [浏览器请求](#浏览器请求)
+        - [服务器创建对象](#服务器创建对象)
+        - [调用init方法](#调用init方法)
+        - [调用service方法](#调用service方法)
+        - [向浏览器响应](#向浏览器响应)
+    - [4. Servlet生命周期](#4-servlet生命周期)
+    - [5. Tomcat装载Servlet的三种情况](#5-tomcat装载servlet的三种情况)
+    - [6. forward和redirect](#6-forward和redirect)
+    - [7. Jsp和Servlet的区别](#7-jsp和servlet的区别)
+    - [8. tomcat和Servlet的联系](#8-tomcat和servlet的联系)
+    - [9. cookie和session的区别](#9-cookie和session的区别)
+    - [10. JavaEE中的三层结构和MVC](#10-javaee中的三层结构和mvc)
+    - [11. RESTful 架构](#11-restful-架构)
+        - [什么是REST](#什么是rest)
+        - [什么是RESTful API](#什么是restful-api)
+        - [RESTful 风格](#restful-风格)
+- [二、Spring](#二spring)
+    - [1. Spring IOC、AOP的理解、实现的原理，以及优点](#1-spring-iocaop的理解实现的原理以及优点)
+        - [IOC](#ioc)
+        - [AOP](#aop)
+    - [2. 什么是依赖注入，注入的方式有哪些](#2-什么是依赖注入注入的方式有哪些)
+    - [3. Spring IOC初始化过程](#3-spring-ioc初始化过程)
+    - [4. 项目中Spring AOP用在什么地方，为什么这么用，切点，织入，通知用自己的话描述一下](#4-项目中spring-aop用在什么地方为什么这么用切点织入通知用自己的话描述一下)
+    - [5. AOP动态代理2种实现原理，他们的区别是什么？](#5-aop动态代理2种实现原理他们的区别是什么)
+    - [6. Struts拦截器和Spring AOP区别](#6-struts拦截器和spring-aop区别)
+    - [7. Spring 是如何管理事务的，事务管理机制](#7-spring-是如何管理事务的事务管理机制)
+        - [如何管理的](#如何管理的)
+    - [8. Spring中bean加载机制，生命周期](#8-spring中bean加载机制生命周期)
+        - [加载机制](#加载机制)
+        - [生命周期](#生命周期)
+    - [9. Bean实例化的三种方式](#9-bean实例化的三种方式)
+    - [10. BeanFactory 和 FactoryBean的区别](#10-beanfactory-和-factorybean的区别)
+    - [11. BeanFactory和ApplicationContext的区别](#11-beanfactory和applicationcontext的区别)
+        - [BeanFactory](#beanfactory)
+        - [两者装载bean的区别](#两者装载bean的区别)
+        - [我们该用BeanFactory还是ApplicationContent](#我们该用beanfactory还是applicationcontent)
+        - [ApplicationContext其他特点](#applicationcontext其他特点)
+        - [spring的AOP（常用的是拦截器）](#spring的aop常用的是拦截器)
+        - [spring载入多个上下文](#spring载入多个上下文)
+    - [12. ApplicationContext 上下文的生命周期](#12-applicationcontext-上下文的生命周期)
+    - [13. Spring中autowire和resourse关键字的区别](#13-spring中autowire和resourse关键字的区别)
+    - [14. Spring的注解讲一下，介绍Spring中的熟悉的注解](#14-spring的注解讲一下介绍spring中的熟悉的注解)
+        - [一： 组件类注解](#一-组件类注解)
+        - [二：装配bean时常用的注解](#二装配bean时常用的注解)
+    - [15. Spring 中用到了那些设计模式？](#15-spring-中用到了那些设计模式)
+        - [工厂模式（Factory Method）](#工厂模式factory-method)
+        - [单态模式【单例模式】（Singleton）](#单态模式单例模式singleton)
+        - [适配器（Adapter）](#适配器adapter)
+        - [代理（Proxy）](#代理proxy)
+        - [观察者（Observer）](#观察者observer)
+    - [16. Spring 的优点有哪些](#16-spring-的优点有哪些)
+    - [17. IOC和AOP用到的设计模式](#17-ioc和aop用到的设计模式)
+- [二、SpringMVC](#二springmvc)
+    - [1. Spring MVC的工作原理](#1-spring-mvc的工作原理)
+    - [2. Spring MVC注解的优点](#2-spring-mvc注解的优点)
+- [三、Hibernate](#三hibernate)
+    - [1. 简述Hibernate常见优化策略。](#1-简述hibernate常见优化策略)
+    - [2. Hibernate一级缓存与二级缓存之间的区别](#2-hibernate一级缓存与二级缓存之间的区别)
+    - [3. Hibernate的理解](#3-hibernate的理解)
+- [四、MyBatis](#四mybatis)
+    - [1. Mybatis原理](#1-mybatis原理)
+    - [2. Hibernate了解吗，Mybatis和Hibernate的区别](#2-hibernate了解吗mybatis和hibernate的区别)
+- [五、Tomcat](#五tomcat)
+    - [1. tomcat加载基本流程，涉及到的参数](#1-tomcat加载基本流程涉及到的参数)
+- [附录：参考资料](#附录参考资料)
+
+<!-- /TOC -->
 # 前言
 
 在本文中将总结 Java Web 开发技术和相关框架的核心知识。因框架知识体系比较庞大，具体每个框架的使用我将放在 `../JavaWeb` 这个目录下，包含 Spring、Strust2、Hibernate、Spring Boot 等框架。
@@ -376,7 +450,7 @@ Representational State Transfer，翻译是”表现层状态转化”。
 
 # 二、Spring
 
-## 1. Spring IOC、AOP的理解、实现的原理，以及优点 【蚂蚁金服面经】
+## 1. Spring IOC、AOP的理解、实现的原理，以及优点 
 
 Spring的IoC容器是Spring的核心，Spring AOP是spring框架的重要组成部分
 
