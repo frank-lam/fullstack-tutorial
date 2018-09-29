@@ -592,7 +592,7 @@ public class Test {
      	* 字符串比较应当用equals,可见String重写了equals
      	*/
         System.out.println(s3 == s4); // false
-        System.out.println(s3.equals(s4)); // true、
+        System.out.println(s3.equals(s4)); // true
     }
 }
 ```
