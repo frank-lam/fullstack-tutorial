@@ -20,8 +20,9 @@
     <p>
         下文带有链接即为已经完善，本仓库笔者将长期维护。
     </p>
-    <a href="http://cn.mikecrm.com/iAbp7YF" style="font-size:20px;">读者信箱（欢迎留言）</a>
+    <a href="http://cn.mikecrm.com/iAbp7YF" target="_blank">读者信箱（欢迎留言）</a>
 </div>
+
 
 
 ## 一、数据结构与算法
