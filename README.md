@@ -21,13 +21,10 @@
         下文带有链接即为已经完善，本仓库笔者将长期维护。
     </p>
     <div>
-        <span>栏目：</span>
-        <a href="http://cn.mikecrm.com/iAbp7YF" target="_blank">读者留言</a>
-        <span> | </span>
-        <a href="https://github.com/frank-lam/2019_campus_apply/issues/2" target="_blank">匿名信箱</a>
+        <a href="http://cn.mikecrm.com/iAbp7YF" target="_blank" style="display:none;">读者留言</a>
+        <a href="https://github.com/frank-lam/2019_campus_apply/issues/2" target="_blank">读者信箱（资料、意见、想法都可以在这里留言分享）</a>
     </div>
 </div>
-
 
 
 
