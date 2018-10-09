@@ -18,7 +18,7 @@
 
 <div align="center">  
     <p>
-        公告：下文带有链接即为已经完善，本仓库笔者将长期维护，近期将开放 PDF 离线版。
+        公告（2018/10/9）：下文带有链接即为已经完善，本仓库笔者将长期维护，近期将开放 PDF 离线版。
     </p>
     <div>
         <a href="https://github.com/frank-lam/2019_campus_apply/issues/2" target="_blank">读者信箱（资料、意见、想法都可以在这里留言分享）</a>
