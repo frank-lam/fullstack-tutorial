@@ -24,7 +24,11 @@
     - [7. 有哪些访问修饰符](#7-有哪些访问修饰符)
     - [8. 深拷贝与浅拷贝](#8-深拷贝与浅拷贝)
     - [9. Lamda表达式](#9-lamda表达式)
+        - [语法](#语法)
+        - [Lambda 表达式实例](#lambda-表达式实例)
+        - [变量作用域](#变量作用域)
     - [10. 字符串常量池](#10-字符串常量池)
+    - [11. 解释型语言与编译型语言的区别](#11-解释型语言与编译型语言的区别)
 - [二、面向对象](#二面向对象)
     - [1. Java的四个基本特性，对多态的理解，在项目中哪些地方用到多态](#1-java的四个基本特性对多态的理解在项目中哪些地方用到多态)
     - [2. 什么是重载和重写](#2-什么是重载和重写)
@@ -95,12 +99,14 @@
 
 # 前言
 
-为了更好的总结Java面试中的系统知识结构，本文根据以下资料整理学习笔记。
+本文主要包含 Java 核心基础知识，主要根据以下部分进行节选。
 
-- 《Java程序员面试笔试宝典》
+- 《Java程序员面试笔试宝典》何昊，薛鹏，叶向阳 著
 - [《阿里面经OneNote》](https://blog.csdn.net/sinat_22797429/article/details/76293284)
 
- 
+ 主要内容：基本概念、面相对象、关键字、基本数据类型与运算、字符串与数组、异常处理、Object 通用方法
+
+
 
 # 一、基本概念
 
@@ -203,9 +209,9 @@ Derived constructor!
 
 　　反射是什么呢？当我们的程序在运行时，需要动态的加载一些类这些类可能之前用不到所以不用加载到 JVM，而是在运行时根据需要才加载，这样的好处对于服务器来说不言而喻。
 
-　　举个例子我们的项目底层有时是用 mysql，有时用 oracle，需要动态地根据实际情况加载驱动类，这个时候反射就有用了，假设 com.java.dbtest.myqlConnection，com.java.dbtest.oracleConnection 这两个类我们要用，这时候我们的程序就写得比较动态化，通过Class tc = Class.forName("com.java.dbtest.TestConnection"); 通过类的全类名让 JVM 在服务器中找到并加载这个类，而如果是 oracle 则传入的参数就变成另一个了。这时候就可以看到反射的好处了，这个动态性就体现出 Java 的特性了！
+　　举个例子我们的项目底层有时是用 mysql，有时用 oracle，需要动态地根据实际情况加载驱动类，这个时候反射就有用了，假设 com.java.dbtest.myqlConnection，com.java.dbtest.oracleConnection 这两个类我们要用，这时候我们的程序就写得比较动态化，通过 Class tc = Class.forName("com.java.dbtest.TestConnection"); 通过类的全类名让 JVM 在服务器中找到并加载这个类，而如果是 Oracle 则传入的参数就变成另一个了。这时候就可以看到反射的好处了，这个动态性就体现出 Java 的特性了！
 
-　　举多个例子，大家如果接触过spring，会发现当你配置各种各样的bean时，是以配置文件的形式配置的，你需要用到哪些bean就配哪些，spring容器就会根据你的需求去动态加载，你的程序就能健壮地运行。
+　　举多个例子，大家如果接触过 spring，会发现当你配置各种各样的 bean 时，是以配置文件的形式配置的，你需要用到哪些 bean 就配哪些，spring 容器就会根据你的需求去动态加载，你的程序就能健壮地运行。
 
 
 
@@ -221,11 +227,11 @@ Derived constructor!
 
 Java 反射框架主要提供以下功能：
 
-1. 在运行时判断任意一个对象所属的类；
+1. 在运行时判断任意一个对象所属的类
 
-2. 在运行时构造任意一个类的对象；
+2. 在运行时构造任意一个类的对象
 
-3. 在运行时判断任意一个类所具有的成员变量和方法（通过反射甚至可以调用private方法）；
+3. 在运行时判断任意一个类所具有的成员变量和方法（通过反射甚至可以调用 private 方法）
 
 4. 在运行时调用任意一个对象的方法
 
@@ -235,13 +241,13 @@ Java 反射框架主要提供以下功能：
 
 ### 主要用途
 
-　　很多人都认为反射在实际的Java开发应用中并不广泛，其实不然。
+　　很多人都认为反射在实际的 Java 开发应用中并不广泛，其实不然。
 
-当我们在使用IDE(如Eclipse，IDEA)时，当我们输入一个对象或类并想调用它的属性或方法时，一按点号，编译器就会自动列出它的属性或方法，这里就会用到反射。
+当我们在使用 IDE （如Eclipse，IDEA）时，当我们输入一个对象或类并想调用它的属性或方法时，一按点号，编译器就会自动列出它的属性或方法，这里就会用到反射。
 
 　　**反射最重要的用途就是开发各种通用框架**
 
-　　很多框架（比如Spring）都是配置化的（比如通过XML文件配置JavaBean,Action之类的），为了保证框架的通用性，它们可能需要根据配置文件加载不同的对象或类，调用不同的方法，这个时候就必须用到反射——运行时动态加载需要加载的对象。
+　　很多框架（比如 Spring ）都是配置化的（比如通过 XML 文件配置 JavaBean,Action 之类的），为了保证框架的通用性，它们可能需要根据配置文件加载不同的对象或类，调用不同的方法，这个时候就必须用到反射——运行时动态加载需要加载的对象。
 
 　　对与框架开发人员来说，反射虽小但作用非常大，它是各种容器实现的核心。而对于一般的开发者来说，不深入框架开发则用反射用的就会少一点，不过了解一下框架的底层机制有助于丰富自己的编程思想，也是很有益的。
 
@@ -306,8 +312,6 @@ System.out.println(clazz5.getName());
 例如：我们以前编写 Servlet 的时候，需要在 web.xml 文件配置具体的信息。我们使用了注解以后，可以直接在 Servlet 源代码上，增加注解...Servlet 就被配置到 Tomcat 上了。也就是说，注解可以给类、方法上注入信息。
 
 明显地可以看出，这样是非常直观的，并且 Servlet 规范是推崇这种配置方式的。 
-
-
 
 
 
@@ -377,8 +381,6 @@ public @interface FruitName {
     String value() default "";
 }
 ```
-
-
 
  参考资料：[注解Annotation实现原理与自定义注解例子](https://www.cnblogs.com/acm-bingzi/p/javaAnnotation.html)
 
@@ -507,11 +509,11 @@ public class Box<T> {
 
 | 类型    | **概念描述**                                                 |
 | ------- | ------------------------------------------------------------ |
-| ASCII   | 一个英文字母（不分大小写）占一个字节的空间，一个中文汉字占两个字节的空间。一个二进制数字序列，在计算机中作为一个数字单元，一般为8位二进制数，换算为十进制。最小值0，最大值255。 |
+| ASCII   | 一个英文字母（不分大小写）占一个字节的空间，一个中文汉字占两个字节的空间。一个二进制数字序列，在计算机中作为一个数字单元，一般为 8 位二进制数，换算为十进制。最小值 0，最大值 255。 |
 | UTF-8   | 一个英文字符等于一个字节，一个中文（含繁体）等于三个字节     |
-| Unicode | 一个英文等于两个字节，一个中文（含繁体）等于两个字节。符号：英文标点占一个字节，中文标点占两个字节。举例：英文句号“.”占1个字节的大小，中文句号“。”占2个字节的大小。 |
-| UTF-16  | 一个英文字母字符或一个汉字字符存储都需要2个字节（Unicode扩展区的一些汉字存储需要4个字节） |
-| UTF-32  | 世界上任何字符的存储都需要4个字节                            |
+| Unicode | 一个英文等于两个字节，一个中文（含繁体）等于两个字节。符号：英文标点占一个字节，中文标点占两个字节。举例：英文句号“.”占 1 个字节的大小，中文句号“。”占 2 个字节的大小。 |
+| UTF-16  | 一个英文字母字符或一个汉字字符存储都需要 2 个字节（Unicode扩展区的一些汉字存储需要4个字节） |
+| UTF-32  | 世界上任何字符的存储都需要 4 个字节                          |
 
 
 
@@ -523,7 +525,7 @@ public class Box<T> {
 
 ## 7. 有哪些访问修饰符
 
-Java面向对象的基本思想之一是封装细节并且公开接口。Java语言采用访问控制修饰符来控制类及类的方法和变量的访问权限，从而向使用者暴露接口，但隐藏实现细节。访问控制分为四种级别：
+Java 面向对象的基本思想之一是封装细节并且公开接口。Java 语言采用访问控制修饰符来控制类及类的方法和变量的访问权限，从而向使用者暴露接口，但隐藏实现细节。访问控制分为四种级别：
 
 | 修饰符    | 当前类 | 同 包 | 子 类 | 其他包 |
 | --------- | ------ | ----- | ----- | ------ |
@@ -532,21 +534,21 @@ Java面向对象的基本思想之一是封装细节并且公开接口。Java语
 | default   | √      | √     | ×     | ×      |
 | private   | √      | ×     | ×     | ×      |
 
-- 类的成员不写访问修饰时默认为default。默认对于同一个包中的其他类相当于公开（public），对于不是同一个包中的其他类相当于私有（private）。
+- 类的成员不写访问修饰时默认为 default。默认对于同一个包中的其他类相当于公开（public），对于不是同一个包中的其他类相当于私有（private）。
 - 受保护（protected）对子类相当于公开，对不是同一包中的没有父子关系的类相当于私有。
-- Java中，外部类的修饰符只能是public或默认，类的成员（包括内部类）的修饰符可以是以上四种。 
+- Java 中，外部类的修饰符只能是 public 或默认，类的成员（包括内部类）的修饰符可以是以上四种。 
 
 
 
 ## 8. 深拷贝与浅拷贝
 
-- 浅拷贝：被复制对象的所有变量都含有与原来的对象相同的值，而所有的对其他对象的引用仍然指向原来的对象。换言之，浅拷贝仅仅复制所拷贝的对象，而不复制它所引用的对象。
+- **浅拷贝**：被复制对象的所有变量都含有与原来的对象相同的值，而所有的对其他对象的引用仍然指向原来的对象。换言之，浅拷贝仅仅复制所拷贝的对象，而不复制它所引用的对象。
 
 <div align="center"> <img src="../pics/shadow_copy2.jpg" width="550"/></div>
 
 
 
-- 深拷贝：对基本数据类型进行值传递，对引用数据类型，创建一个新的对象，并复制其内容，此为深拷贝。
+- **深拷贝**：对基本数据类型进行值传递，对引用数据类型，创建一个新的对象，并复制其内容，此为深拷贝。
 
 <div align="center"> <img src="../pics/deep_copy2.jpg" width="550"/></div>
 
@@ -559,18 +561,192 @@ Java面向对象的基本思想之一是封装细节并且公开接口。Java语
 
 ## 9. Lamda表达式
 
-跟上Java8 - 了解lambda
-https://zhuanlan.zhihu.com/p/28093333
+
+Lambda 表达式，也可称为闭包，它是推动 Java 8 发布的最重要新特性。
+
+Lambda 允许把函数作为一个方法的参数（函数作为参数传递进方法中）。
+
+使用 Lambda 表达式可以使代码变的更加简洁紧凑。
+
+### 语法
+
+lambda 表达式的语法格式如下：
+
+```java
+(parameters) -> expression
+或
+(parameters) -> { statements; }
+```
+
+以下是 lambda 表达式的重要特征:
+
+- **可选类型声明：**不需要声明参数类型，编译器可以统一识别参数值。
+- **可选的参数圆括号：**一个参数无需定义圆括号，但多个参数需要定义圆括号。
+- **可选的大括号：**如果主体包含了一个语句，就不需要使用大括号。
+- **可选的返回关键字：**如果主体只有一个表达式返回值则编译器会自动返回值，大括号需要指定明表达式返回了一个数值。
+
+### Lambda 表达式实例
+
+Lambda 表达式的简单例子:
+
+```java
+// 1. 不需要参数,返回值为 5  
+() -> 5  
+  
+// 2. 接收一个参数(数字类型),返回其2倍的值  
+x -> 2 * x  
+  
+// 3. 接受2个参数(数字),并返回他们的差值  
+(x, y) -> x – y  
+  
+// 4. 接收2个int型整数,返回他们的和  
+(int x, int y) -> x + y  
+  
+// 5. 接受一个 string 对象,并在控制台打印,不返回任何值(看起来像是返回void)  
+(String s) -> System.out.print(s)
+```
+
+在 Java8Tester.java 文件输入以下代码：
+
+```java
+public class Java8Tester {
+   public static void main(String args[]){
+      Java8Tester tester = new Java8Tester();
+        
+      // 类型声明
+      MathOperation addition = (int a, int b) -> a + b;
+        
+      // 不用类型声明
+      MathOperation subtraction = (a, b) -> a - b;
+        
+      // 大括号中的返回语句
+      MathOperation multiplication = (int a, int b) -> { return a * b; };
+        
+      // 没有大括号及返回语句
+      MathOperation division = (int a, int b) -> a / b;
+        
+      System.out.println("10 + 5 = " + tester.operate(10, 5, addition));
+      System.out.println("10 - 5 = " + tester.operate(10, 5, subtraction));
+      System.out.println("10 x 5 = " + tester.operate(10, 5, multiplication));
+      System.out.println("10 / 5 = " + tester.operate(10, 5, division));
+        
+      // 不用括号
+      GreetingService greetService1 = message ->
+      System.out.println("Hello " + message);
+        
+      // 用括号
+      GreetingService greetService2 = (message) ->
+      System.out.println("Hello " + message);
+        
+      greetService1.sayMessage("Runoob");
+      greetService2.sayMessage("Google");
+   }
+    
+   interface MathOperation {
+      int operation(int a, int b);
+   }
+    
+   interface GreetingService {
+      void sayMessage(String message);
+   }
+    
+   private int operate(int a, int b, MathOperation mathOperation){
+      return mathOperation.operation(a, b);
+   }
+}
+```
+
+执行以上脚本，输出结果为：
+
+```shell
+$ javac Java8Tester.java 
+$ java Java8Tester
+10 + 5 = 15
+10 - 5 = 5
+10 x 5 = 50
+10 / 5 = 2
+Hello Runoob
+Hello Google
+```
+使用 Lambda 表达式需要注意以下两点：
+
+- Lambda 表达式主要用来定义行内执行的方法类型接口，例如，一个简单方法接口。在上面例子中，我们使用各种类型的 Lambda 表达式来定义 MathOperation 接口的方法。然后我们定义了 sayMessage 的执行。
+- Lambda 表达式免去了使用匿名方法的麻烦，并且给予 Java 简单但是强大的函数化的编程能力。
+
+### 变量作用域
+
+lambda 表达式只能引用标记了 final 的外层局部变量，这就是说不能在 lambda 内部修改定义在域外的局部变量，否则会编译错误。
+
+在 Java8Tester.java 文件输入以下代码：
+
+```java
+public class Java8Tester {
+ 
+   final static String salutation = "Hello! ";
+   
+   public static void main(String args[]){
+      GreetingService greetService1 = message -> 
+      System.out.println(salutation + message);
+      greetService1.sayMessage("Runoob");
+   }
+    
+   interface GreetingService {
+      void sayMessage(String message);
+   }
+}
+```
+
+执行以上脚本，输出结果为：
+
+```shell
+$ javac Java8Tester.java 
+$ java Java8Tester
+Hello! Runoob
+```
+
+我们也可以直接在 lambda 表达式中访问外层的局部变量：
+
+```java
+public class Java8Tester {
+    public static void main(String args[]) {
+        final int num = 1;
+        Converter<Integer, String> s = (param) -> System.out.println(String.valueOf(param + num));
+        s.convert(2);  // 输出结果为 3
+    }
+ 
+    public interface Converter<T1, T2> {
+        void convert(int i);
+    }
+}
+```
+
+lambda 表达式的局部变量可以不用声明为 final，但是必须不可被后面的代码修改（即隐性的具有 final 的语义）
+
+```java
+int num = 1;  
+Converter<Integer, String> s = (param) -> System.out.println(String.valueOf(param + num));
+s.convert(2);
+num = 5;  
+//报错信息：Local variable num defined in an enclosing scope must be final or effectively 
+ final
+```
+
+在 Lambda 表达式当中不允许声明一个与局部变量同名的参数或者局部变量。
+
+```java
+String first = ""; 
+Comparator<String> comparator = (first, second) -> Integer.compare(first.length(), second.length());  //编译会出错 
+```
 
 
 
 ## 10. 字符串常量池
 
-Java 中字符串对象创建有两种形式，一种为字面量形式，如 `String str = "droid";`，另一种就是使用 new 这种标准的构造对象的方法，如 `String str = new String("droid");`，这两种方式我们在代码编写时都经常使用，尤其是字面量的方式。然而这两种实现其实存在着一些性能和内存占用的差别。这一切都是源于 JVM 为了减少字符串对象的重复创建，其维护了一个特殊的内存，这段内存被成为**字符串常量池**或者**字符串字面量池**。
+　　Java 中字符串对象创建有两种形式，一种为字面量形式，如 `String str = "abc";`，另一种就是使用 new 这种标准的构造对象的方法，如 `String str = new String("abc");`，这两种方式我们在代码编写时都经常使用，尤其是字面量的方式。然而**这两种实现其实存在着一些性能和内存占用的差别**。这一切都是源于 JVM 为了减少字符串对象的重复创建，其维护了一个特殊的内存，这段内存被成为**字符串常量池**或者**字符串字面量池**。
 
 **工作原理**
 
-当代码中出现字面量形式创建字符串对象时，JVM首先会对这个字面量进行检查，如果字符串常量池中存在相同内容的字符串对象的引用，则将这个引用返回，否则新的字符串对象被创建，然后将这个引用放入字符串常量池，并返回该引用。
+　　当代码中出现字面量形式创建字符串对象时，JVM首先会对这个字面量进行检查，如果字符串常量池中存在相同内容的字符串对象的引用，则将这个引用返回，否则新的字符串对象被创建，然后将这个引用放入字符串常量池，并返回该引用。
 
 ```java
 public class Test {
@@ -596,6 +772,34 @@ public class Test {
     }
 }
 ```
+
+
+
+## 11. 解释型语言与编译型语言的区别
+
+　　我们使用工具编写的字母加符号的代码，是我们能看懂的高级语言，计算机无法直接理解，计算机需要先对我们编写的代码翻译成计算机语言，才能执行我们编写的程序。
+
+　　将高级语言翻译成计算机语言有编译，解释两种方式。两种方式只是翻译的时间不同。
+
+1. **编译型语言**
+
+　　编译型语言写得程序在执行之前，需要借助一个程序，将高级语言编写的程序翻译成计算机能懂的机器语言，然后，这个机器语言就能直接执行了，也就是我们常见的（exe文件）。
+
+2. **解释型语言**
+
+　　解释型语言的程序不需要编译，节省了一道工序，不过解释型的语言在运行的时候需要翻译，每个语句都是执行的时候才翻译，对比编译型语言，效率比较低。通俗来讲，就是借助一个程序，且这个程序能试图理解编写的代码，然后按照编写的代码中的要求执行。
+
+3. **脚本语言**
+
+　　脚本语言也是一种解释型语言，又被称为扩建的语言，或者动态语言不需要编译，可以直接使用，由解释器来负责解释。
+
+脚本语言一般都是以文本形式存在，类似于一种命令。
+
+4. **通俗理解编译型语言和解释型语言**
+
+　　同行讨论编译型语言和解释型语言的时候，这么说过，编译型语言相当于做一桌子菜再吃，解释型语言就是吃火锅。解释型的语言执行效率低，类似火锅需要一边煮一边吃。
+
+
 
 
 
