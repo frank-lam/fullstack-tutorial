@@ -126,10 +126,15 @@ Content-Type告诉客户端资源的表述形式
 2. 应该将 API 的版本号放入 URL 
    `http://api.douban.com/v2`/user/1000001?apikey=XXX
 
-3. 在 RESTful 架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表格名对应。一般来说，数据库中的表都是同种记录的 ”集合”（collection），所以 API 中的名词也应该使用复数。 
+3. 在 RESTful 架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表格名对应。一般来说，数据库中的表都是同种记录的 ”集合”（collection），所以 API 中的名词也应该使用复数。
+
+
    http://api.douban.com/v2/`book`/:id (获取图书信息) 
+
    http://api.douban.com/v2/`movie`/subject/:id (电影条目信息) 
+
    http://api.douban.com/v2/`music`/:id (获取音乐信息) 
+
    http://api.douban.com/v2/`event`/:id (获取同城活动)
 
 4. 对于资源的具体操作类型，由 HTTP 动词表示。常用的 HTTP 动词有下面四个(对应 **增/删/改/查** )。 
@@ -168,12 +173,11 @@ Content-Type告诉客户端资源的表述形式
 
    业务状态码
 
-
+ 
 
 
 
 # 参考资料
 
 - [RESTful 架构详解 | 菜鸟教程](https://www.runoob.com/w3cnote/restful-architecture.html)
-
 - [RESTful API 设计指南 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2014/05/restful_api.html)
