@@ -18,12 +18,13 @@
 
 <div align="center">  
     <p>
-公告（2018/10/9）：下文带有链接即为已经完善，近期将开放 PDF 离线版。
+公告（2018/10/20）：QQ技术交流群 862619503
     </p>
     <div>
         <a href="https://github.com/frank-lam/2019_campus_apply/issues/2" target="_blank">读者信箱（资料、意见、想法都可以在这里留言分享）</a>
     </div>
 </div>
+
 
 
 
@@ -33,6 +34,9 @@
 
   到底学前端好？学 Android、iOS 好？Java、C++、C#、Python、PHP 又如何选择呢？还是机器学习、深度学习更高级一些呢？程序员又如何修炼内功呢？
 
+- [我的秋招之路](notes/archives/我的秋招之路.md)
+
+  一些关于秋招的记忆和建议
 
 
 
