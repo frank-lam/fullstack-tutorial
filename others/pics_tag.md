@@ -32,3 +32,11 @@ pandoc -s --toc FAQ.md -o FAQ.md
 ```
 
 [实用帖 | 如何为 Markdown 文件自动生成目录？ - 简书](https://www.jianshu.com/p/4721ddd27027)
+
+
+
+
+
+[我的秋招之路](notes/archives/我的秋招之路.md)
+
+技术成长过程和秋招的一些记忆
