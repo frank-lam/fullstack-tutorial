@@ -14,7 +14,7 @@
 
 |              I              |           II           |           III           |            IV            |            V            |        VI        |         VII         | VIII |            IX            |            X            |            XI            | XII |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: |
-| 算法<br />[:pencil:](#一数据结构与算法) | Java<br/>[:coffee:](#二java) | Python<br />[:snake:](#三python) | 数据库<br/>[:floppy_disk:](#四数据库) | 操作系统<br/>[:computer:](#五操作系统) | 网络通信<br/>[:cloud:](#六网络通信) | 分布式<br/>[:page_with_curl:](#七分布式) | 机器学习<br/> [:mag:](#八机器学习) |工具<br/>[:hammer:](#九工具) |Talking<br />[:bulb:](#talking-bulb) |learning<br />[:books:](#learning-books) |Author<br/>[:boy:](#关于作者-boy)|
+| 算法<br />[:pencil:](#一数据结构与算法) | Java<br/>[:coffee:](#二java) | Python<br />[:snake:](#三python) | 数据库<br/>[:floppy_disk:](#四数据库) | 操作系统<br/>[:computer:](#五操作系统) | 网络通信<br/>[:cloud:](#六网络通信) | 分布式<br/>[:page_with_curl:](#七分布式) | 机器学习<br/> [:mag:](#八机器学习) |工具<br/>[:hammer:](#九工具) |Learn<br />[:books:](#learning-books) |Talking<br />[:bulb:](#talking-bulb) |Author<br/>[:boy:](#关于作者-boy)|
 
 <div align="center">  
     <p>
@@ -187,7 +187,7 @@
 
 
 
-## 就、工具
+## 九、工具
 
 - [Git](notes/EfficiencyTools/Git.md)
 
@@ -200,7 +200,7 @@
 
 
 
-## learning :books:
+## Learn :books:
 
 - [LEARN_LIST](notes/LEARNLIST.md)
 
@@ -210,7 +210,7 @@
 
 
 
-## talking :bulb:
+## Talking :bulb:
 
 　　本仓库致力于成为一个后台开发爱好者的学习指南，给初学者一个更明确的学习方向，同时也是对自己技能的强化和巩固。特别开源本项目，和希望和大家一起成长，帮助更多的计算机爱好者能够有一个明确的学习路径。我也将不间断的维护本仓库，也欢迎有更多的极客们加入。
 
@@ -222,7 +222,7 @@
 
 
 
-### reference
+### Reference
 
 　　个人的能力有限，在编写的过程中引用了诸多优秀的 Github 仓库。本项目的启发来自 [@CyC2018](https://github.com/CyC2018) 的学习笔记，是一个非常优秀的开源项目，在本仓库中部分内容引用其文字和图片；引用了 [@计算所的小鼠标](http://weibo.com/icttinymouse) 中对于 JCF 的源码分析和理解；引用了  [阿里面试题总结](https://www.nowcoder.com/discuss/5949) 中全部的面试题，并对面经进行了整理勘误，并进行了知识拓展和修改；引用了 [牛客网](https://www.nowcoder.com) 上的面试经验贴。也引用了知乎上的热门回答和优秀博客的回答。在这里特别鸣谢，我将每篇文章中做外链引用说明。
 
@@ -232,7 +232,7 @@
 
 
 
-### contributors
+### Contributors
 
 　　该项目还在萌芽起步阶段，在编写的过程中难免遇到错误和不足，你可以在 issue 中提出，或是提交你的 contribution。[【开源贡献】如何给我的仓库贡献？](notes/docs/如何给我的仓库贡献.md)
 
