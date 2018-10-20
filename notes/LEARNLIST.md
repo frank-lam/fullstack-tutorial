@@ -41,7 +41,6 @@
 ### :books:阅读清单
 
 - [《Java并发编程实战》](https://item.jd.com/10922250.html) 
-- 
 - [《深入分析Java Web技术内幕》](https://item.jd.com/11520670.html)
 - 《阿里巴巴Java开发手册》
 - 《Java程序员面试笔试宝典》
