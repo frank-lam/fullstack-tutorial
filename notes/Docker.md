@@ -6,9 +6,9 @@ Docker 容器化引擎
 >
 > 基于以上部分内容做一定的修改
 
-# Docker 简介
+# 1. Docker 简介
 
-## 什么是 Docker
+## 1.1 什么是 Docker
 
 Docker 最初是 dotCloud 公司创始人 Solomon Hykes 在法国期间发起的一个公司内部项目，它是基于 dotCloud 公司多年云服务技术的一次革新，并于 [2013 年 3 月以 Apache 2.0 授权协议开源](https://en.wikipedia.org/wiki/Docker_(software))，主要项目代码在 [GitHub](https://github.com/moby/moby) 上进行维护。Docker 项目后来还加入了 Linux 基金会，并成立推动 [开放容器联盟（OCI）](https://www.opencontainers.org/)。
 
@@ -26,7 +26,7 @@ Docker 在容器的基础上，进行了进一步的封装，从文件系统、�
 
 
 
-## 为什么要使用 Docker
+## 1.2 为什么要使用 Docker
 
 作为一种新兴的虚拟化方式，Docker 跟传统的虚拟化方式相比具有众多的优势。
 
@@ -67,9 +67,17 @@ Docker 使用的分层存储以及镜像的技术，使得应用重复部分的�
 | 性能       | 接近原生           | 弱于        |
 | 系统支持量 | 单机支持上千个容器 | 一般几十个  |
 
-# Docker 基本概念
+# 2. Docker 基本概念
 
-## Docker 引擎
+Docker 包括三个基本概念
+
+- 镜像（`Image`）
+- 容器（`Container`）
+- 仓库（`Repository`）
+
+理解了这三个概念，就理解了 Docker 的整个生命周期。
+
+## 2.1 Docker 引擎
 
 Docker 引擎是一个包含以下主要组件的客户端服务器应用程序。
 
@@ -83,7 +91,7 @@ Docker 引擎组件的流程如下图所示：
 
 
 
-## Docker 架构
+## 2.2 Docker 架构
 
 Docker 使用客户端-服务器 (C/S) 架构模式，使用远程 API 来管理和创建 Docker 容器。
 
@@ -107,7 +115,7 @@ Docker 容器通过 Docker 镜像来创建。
 | **仓库**(Registry)  | Docker 仓库用来保存镜像，可以理解为代码控制中的代码仓库。Docker Hub([https://hub.docker.com](https://hub.docker.com/)) 提供了庞大的镜像集合供使用。 |
 | **Docker Machine**  | Docker Machine是一个简化Docker安装的命令行工具，通过一个简单的命令行即可在相应的平台上安装Docker，比如VirtualBox、 Digital Ocean、Microsoft Azure。 |
 
-## Docker 镜像
+## 2.3 Docker 镜像
 
 我们都知道，操作系统分为内核和用户空间。对于 Linux 而言，内核启动后，会挂载 `root` 文件系统为其提供用户空间支持。而 Docker 镜像（Image），就相当于是一个 `root` 文件系统。比如官方镜像 `ubuntu:16.04` 就包含了完整的一套 Ubuntu 16.04 最小系统的 `root` 文件系统。
 
@@ -123,7 +131,7 @@ Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需�
 
 关于镜像构建，将会在后续相关章节中做进一步的讲解。
 
-## Docker 容器
+## 2.4 Docker 容器
 
 镜像（`Image`）和容器（`Container`）的关系，就像是面向对象程序设计中的 `类` 和 `实例` 一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。
 
@@ -137,7 +145,7 @@ Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需�
 
 数据卷的生存周期独立于容器，容器消亡，数据卷不会消亡。因此，使用数据卷后，容器删除或者重新运行之后，数据却不会丢失。
 
-## Docker 仓库
+## 2.5 Docker 仓库
 
 镜像构建完成后，可以很容易的在当前宿主机上运行，但是，如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务，`Docker Registry` 就是这样的服务。
 
@@ -167,3 +175,681 @@ Docker Registry 公开服务是开放给用户使用、允许用户管理镜像�
 
 除了官方的 Docker Registry 外，还有第三方软件实现了 Docker Registry API，甚至提供了用户界面以及一些高级功能。比如，[VMWare Harbor](https://github.com/vmware/harbor) 和 [Sonatype Nexus](https://www.sonatype.com/docker)。
 
+# 3. 安装 Docker
+
+Docker 在 1.13 版本之后，从 2017 年的 3 月 1 日开始，版本命名规则变为如下：
+
+| 项目        | 说明         |
+| ----------- | ------------ |
+| 版本格式    | YY.MM        |
+| Stable 版本 | 每个季度发行 |
+| Edge 版本   | 每个月发行   |
+
+同时 Docker 划分为 CE 和 EE。CE 即社区版（免费，支持周期三个月），EE 即企业版，强调安全，付费使用。
+
+Docker CE 每月发布一个 Edge 版本 (17.03, 17.04, 17.05…)，每三个月发布一个 Stable 版本 (17.03, 17.06, 17.09…)，Docker EE 和 Stable 版本号保持一致，但每个版本提供一年维护。
+
+官方网站上有各种环境下的 [安装指南](https://docs.docker.com/engine/installation/)，这里主要介绍 Docker CE 在 Linux 、Windows 10 (PC) 和 macOS 上的安装。
+
+## 3.1 Ubuntu 安装 Docker
+
+> 警告：切勿在没有配置 Docker APT 源的情况下直接使用 apt 命令安装 Docker.
+
+### 准备工作
+
+#### 系统要求
+
+Docker CE 支持以下版本的 [Ubuntu](https://www.ubuntu.com/server) 操作系统：
+
+- Artful 17.10 (Docker CE 17.11 Edge +)
+- Xenial 16.04 (LTS)
+- Trusty 14.04 (LTS)
+
+Docker CE 可以安装在 64 位的 x86 平台或 ARM 平台上。Ubuntu 发行版中，LTS（Long-Term-Support）长期支持版本，会获得 5 年的升级维护支持，这样的版本会更稳定，因此在生产环境中推荐使用 LTS 版本,当前最新的 LTS 版本为 Ubuntu 16.04。
+
+#### 卸载旧版本
+
+旧版本的 Docker 称为 `docker` 或者 `docker-engine`，使用以下命令卸载旧版本：
+
+```
+$ sudo apt-get remove docker \
+               docker-engine \
+               docker.io
+```
+
+#### Ubuntu 14.04 可选内核模块
+
+从 Ubuntu 14.04 开始，一部分内核模块移到了可选内核模块包 (`linux-image-extra-*`) ，以减少内核软件包的体积。正常安装的系统应该会包含可选内核模块包，而一些裁剪后的系统可能会将其精简掉。`AUFS` 内核驱动属于可选内核模块的一部分，作为推荐的 Docker 存储层驱动，一般建议安装可选内核模块包以使用 `AUFS`。
+
+如果系统没有安装可选内核模块的话，可以执行下面的命令来安装可选内核模块包：
+
+```
+$ sudo apt-get update
+
+$ sudo apt-get install \
+    linux-image-extra-$(uname -r) \
+    linux-image-extra-virtual
+```
+
+#### Ubuntu 16.04 +
+
+Ubuntu 16.04 + 上的 Docker CE 默认使用 `overlay2` 存储层驱动,无需手动配置。
+
+### 使用 APT 安装
+
+#### 安装必要的一些系统工具
+
+```
+sudo apt-get update
+sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+```
+
+#### 安装 GPG 证书
+
+```
+curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+```
+
+#### 写入软件源信息
+
+```
+sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+```
+
+#### 更新并安装 Docker CE
+
+```
+sudo apt-get -y update
+sudo apt-get -y install docker-ce
+```
+
+> 以上命令会添加稳定版本的 Docker CE APT 镜像源，如果需要最新或者测试版本的 Docker CE 请将 stable 改为 edge 或者 test。从 Docker 17.06 开始，edge test 版本的 APT 镜像源也会包含稳定版本的 Docker。
+
+### 使用脚本自动安装
+
+在测试或开发环境中 Docker 官方为了简化安装流程，提供了一套便捷的安装脚本，Ubuntu 系统上可以使用这套脚本安装：
+
+```
+$ curl -fsSL get.docker.com -o get-docker.sh
+# 可能会出现 404 错误，请移步下面的特别说明
+$ sudo sh get-docker.sh --mirror Aliyun
+```
+
+执行这个命令后，脚本就会自动的将一切准备工作做好，并且把 Docker CE 的 Edge 版本安装在系统中。
+
+#### 特别说明
+
+2018 年 7 月 21 日，貌似阿里云这边在做调整，故导致 Docker 的 Aliyun 安装脚本不可用，是永久性还是临时性的尚不清除，如果你已经按照之前的操作安装 Docker，请按以下步骤进行修复并重新安装
+
+- 如果已经使用了 Aliyun 脚本安装并成功的
+  - 请先卸载 Docker，命令为：`apt-get autoremove docker-ce`
+  - 删除 `/etc/apt/sources.list.d` 目录下的 `docker.list` 文件
+- 使用 `AzureChinaCloud` 镜像脚本重新安装，命令为：`sudo sh get-docker.sh --mirror AzureChinaCloud`
+
+### 启动 Docker CE
+
+```
+$ sudo systemctl enable docker
+$ sudo systemctl start docker
+```
+
+Ubuntu 14.04 请使用以下命令启动：
+
+```
+$ sudo service docker start
+```
+
+### 建立 docker 用户组
+
+默认情况下，`docker` 命令会使用 [Unix socket](https://en.wikipedia.org/wiki/Unix_domain_socket) 与 Docker 引擎通讯。而只有 `root` 用户和 `docker` 组的用户才可以访问 Docker 引擎的 Unix socket。出于安全考虑，一般 Linux 系统上不会直接使用 `root` 用户。因此，更好地做法是将需要使用 `docker` 的用户加入 `docker` 用户组。
+
+建立 `docker` 组：
+
+```
+$ sudo groupadd docker
+```
+
+将当前用户加入 `docker` 组：
+
+```
+$ sudo usermod -aG docker $USER
+```
+
+退出当前终端并重新登录，进行如下测试。
+
+### 测试 Docker 是否安装正确
+
+```
+$ docker run hello-world
+
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+ca4f61b1923c: Pull complete
+Digest: sha256:be0cd392e45be79ffeffa6b05338b98ebb16c87b255f48e297ec7f98e123905c
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://cloud.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/engine/userguide/
+```
+
+若能正常输出以上信息，则说明安装成功。
+
+### 镜像加速
+
+鉴于国内网络问题，后续拉取 Docker 镜像十分缓慢，强烈建议安装 Docker 之后配置 `国内镜像加速`。
+
+### 参考文档
+
+- [Docker 官方 Ubuntu 安装文档](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/)
+
+## 3.2 CentOS 安装 Docker
+
+> 警告：切勿在没有配置 Docker YUM 源的情况下直接使用 yum 命令安装 Docker.
+
+### 准备工作
+
+#### 系统要求
+
+Docker CE 支持 64 位版本 CentOS 7，并且要求内核版本不低于 3.10。 CentOS 7 满足最低内核的要求，但由于内核版本比较低，部分功能（如 `overlay2` 存储层驱动）无法使用，并且部分功能可能不太稳定。
+
+#### 卸载旧版本
+
+旧版本的 Docker 称为 `docker` 或者 `docker-engine`，使用以下命令卸载旧版本：
+
+```
+$ sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-selinux \
+                  docker-engine-selinux \
+                  docker-engine
+```
+
+### 使用 yum 安装
+
+执行以下命令安装依赖包：
+
+```
+$ sudo yum install -y yum-utils \
+           device-mapper-persistent-data \
+           lvm2
+```
+
+鉴于国内网络问题，强烈建议使用国内源，官方源请在注释中查看。
+
+执行下面的命令添加 `yum` 软件源：
+
+```
+$ sudo yum-config-manager \
+    --add-repo \
+    https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo
+
+
+# 官方源
+# $ sudo yum-config-manager \
+#     --add-repo \
+#     https://download.docker.com/linux/centos/docker-ce.repo    
+```
+
+如果需要最新版本的 Docker CE 请使用以下命令：
+
+```
+$ sudo yum-config-manager --enable docker-ce-edge
+```
+
+如果需要测试版本的 Docker CE 请使用以下命令：
+
+```
+$ sudo yum-config-manager --enable docker-ce-test
+```
+
+#### 安装 Docker CE
+
+更新 `yum` 软件源缓存，并安装 `docker-ce`。
+
+```
+$ sudo yum makecache fast
+$ sudo yum install docker-ce
+```
+
+### 使用脚本自动安装
+
+在测试或开发环境中 Docker 官方为了简化安装流程，提供了一套便捷的安装脚本，CentOS 系统上可以使用这套脚本安装：
+
+```
+$ curl -fsSL get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh --mirror Aliyun
+```
+
+执行这个命令后，脚本就会自动的将一切准备工作做好，并且把 Docker CE 的 Edge 版本安装在系统中。
+
+### 启动 Docker CE
+
+```
+$ sudo systemctl enable docker
+$ sudo systemctl start docker
+```
+
+### 建立 docker 用户组
+
+默认情况下，`docker` 命令会使用 [Unix socket](https://en.wikipedia.org/wiki/Unix_domain_socket) 与 Docker 引擎通讯。而只有 `root` 用户和 `docker` 组的用户才可以访问 Docker 引擎的 Unix socket。出于安全考虑，一般 Linux 系统上不会直接使用 `root` 用户。因此，更好地做法是将需要使用 `docker` 的用户加入 `docker` 用户组。
+
+建立 `docker` 组：
+
+```
+$ sudo groupadd docker
+```
+
+将当前用户加入 `docker` 组：
+
+```
+$ sudo usermod -aG docker $USER
+```
+
+退出当前终端并重新登录，进行如下测试。
+
+### 测试 Docker 是否安装正确
+
+```
+$ docker run hello-world
+
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+ca4f61b1923c: Pull complete
+Digest: sha256:be0cd392e45be79ffeffa6b05338b98ebb16c87b255f48e297ec7f98e123905c
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://cloud.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/engine/userguide/
+```
+
+若能正常输出以上信息，则说明安装成功。
+
+### 镜像加速
+
+鉴于国内网络问题，后续拉取 Docker 镜像十分缓慢，强烈建议安装 Docker 之后配置 `国内镜像加速`。
+
+### 添加内核参数
+
+默认配置下，如果在 CentOS 使用 Docker CE 看到下面的这些警告信息：
+
+```
+WARNING: bridge-nf-call-iptables is disabled
+WARNING: bridge-nf-call-ip6tables is disabled
+```
+
+请添加内核配置参数以启用这些功能。
+
+```
+$ sudo tee -a /etc/sysctl.conf <<-EOF
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+```
+
+然后重新加载 `sysctl.conf` 即可
+
+```
+$ sudo sysctl -p
+```
+
+### 参考文档
+
+- [Docker 官方 CentOS 安装文档](https://docs.docker.com/engine/installation/linux/docker-ce/centos/)。
+
+## 3.3 树莓派卡片电脑安装 Docker
+
+> 警告：切勿在没有配置 Docker APT 源的情况下直接使用 apt 命令安装 Docker.
+
+### 系统要求
+
+Docker CE 不仅支持 `x86_64` 架构的计算机，同时也支持 `ARM` 架构的计算机，本小节内容以树莓派单片电脑为例讲解 `ARM` 架构安装 Docker CE。
+
+Docker CE 支持以下版本的 [Raspbian](https://www.raspberrypi.org/downloads/raspbian/) 操作系统：
+
+- Raspbian Stretch
+- Raspbian Jessie
+
+*注：* `Raspbian` 是树莓派的开发与维护机构 [树莓派基金会](http://www.raspberrypi.org/) 推荐用于树莓派的首选系统，其基于 `Debian`。
+
+### 使用 APT 安装
+
+由于 apt 源使用 HTTPS 以确保软件下载过程中不被篡改。因此，我们首先需要添加使用 HTTPS 传输的软件包以及 CA 证书。
+
+```
+$ sudo apt-get update
+
+$ sudo apt-get install \
+     apt-transport-https \
+     ca-certificates \
+     curl \
+     gnupg2 \
+     lsb-release \
+     software-properties-common
+```
+
+鉴于国内网络问题，强烈建议使用国内源，官方源请在注释中查看。
+
+为了确认所下载软件包的合法性，需要添加软件源的 GPG 密钥。
+
+```
+$ curl -fsSL https://mirrors.ustc.edu.cn/docker-ce/linux/raspbian/gpg | sudo apt-key add -
+
+# 官方源
+# $ curl -fsSL https://download.docker.com/linux/raspbian/gpg | sudo apt-key add -
+```
+
+然后，我们需要向 `source.list` 中添加 Docker CE 软件源：
+
+```
+$ sudo add-apt-repository \
+    "deb [arch=armhf] https://mirrors.ustc.edu.cn/docker-ce/linux/raspbian \
+    $(lsb_release -cs) \
+    stable"
+
+
+# 官方源
+# $ sudo add-apt-repository \
+#    "deb [arch=armhf] https://download.docker.com/linux/raspbian \
+#    $(lsb_release -cs) \
+#    stable"    
+```
+
+> 以上命令会添加稳定版本的 Docker CE APT 源，如果需要最新版本的 Docker CE 请将 stable 改为 edge 或者 test。从 Docker 17.06 开始，edge test 版本的 APT 源也会包含稳定版本的 Docker CE。
+
+#### 安装 Docker CE
+
+更新 apt 软件包缓存，并安装 `docker-ce`。
+
+```
+$ sudo apt-get update
+
+$ sudo apt-get install docker-ce
+```
+
+### 使用脚本自动安装
+
+在测试或开发环境中 Docker 官方为了简化安装流程，提供了一套便捷的安装脚本，Raspbian 系统上可以使用这套脚本安装：
+
+```
+$ curl -fsSL get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh --mirror Aliyun
+```
+
+执行这个命令后，脚本就会自动的将一切准备工作做好，并且把 Docker CE 的 Edge 版本安装在系统中。
+
+### 启动 Docker CE
+
+```
+$ sudo systemctl enable docker
+$ sudo systemctl start docker
+```
+
+### 建立 docker 用户组
+
+默认情况下，`docker` 命令会使用 [Unix socket](https://en.wikipedia.org/wiki/Unix_domain_socket) 与 Docker 引擎通讯。而只有 `root` 用户和 `docker` 组的用户才可以访问 Docker 引擎的 Unix socket。出于安全考虑，一般 Linux 系统上不会直接使用 `root` 用户。因此，更好地做法是将需要使用 `docker` 的用户加入 `docker` 用户组。
+
+建立 `docker` 组：
+
+```
+$ sudo groupadd docker
+```
+
+将当前用户加入 `docker` 组：
+
+```
+$ sudo usermod -aG docker $USER
+```
+
+退出当前终端并重新登录，进行如下测试。
+
+### 测试 Docker 是否安装正确
+
+```
+$ docker run arm32v7/hello-world
+
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+ca4f61b1923c: Pull complete
+Digest: sha256:be0cd392e45be79ffeffa6b05338b98ebb16c87b255f48e297ec7f98e123905c
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://cloud.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/engine/userguide/
+```
+
+若能正常输出以上信息，则说明安装成功。
+
+*注意：* ARM 平台不能使用 `x86` 镜像，查看 Raspbian 可使用镜像请访问 [arm32v7](https://hub.docker.com/u/arm32v7/)。
+
+### 镜像加速
+
+鉴于国内网络问题，后续拉取 Docker 镜像十分缓慢，强烈建议安装 Docker 之后配置 `国内镜像加速`。
+
+## 3.4 macOS 安装 Docker
+
+### 系统要求
+
+[Docker for Mac](https://docs.docker.com/docker-for-mac/) 要求系统最低为 macOS 10.10.3 Yosemite。如果系统不满足需求，可以安装 [Docker Toolbox](https://docs.docker.com/toolbox/overview/)。
+
+### 安装
+
+#### 使用 Homebrew 安装
+
+[Homebrew](http://brew.sh/) 的 [Cask](https://caskroom.github.io/) 已经支持 Docker for Mac，因此可以很方便的使用 Homebrew Cask 来进行安装：
+
+```
+$ brew cask install docker
+```
+
+#### 手动下载安装
+
+如果需要手动下载，请点击以下链接下载 [Stable](https://download.docker.com/mac/stable/Docker.dmg) 或 [Edge](https://download.docker.com/mac/edge/Docker.dmg) 版本的 Docker for Mac。
+
+如同 macOS 其它软件一样，安装也非常简单，双击下载的 `.dmg` 文件，然后将那只叫 [Moby](https://blog.docker.com/2013/10/call-me-moby-dock/) 的鲸鱼图标拖拽到 `Application` 文件夹即可（其间需要输入用户密码）。
+
+![img](assets/install-mac-dmg.png)
+
+### 运行
+
+从应用中找到 Docker 图标并点击运行。
+
+![img](assets/install-mac-apps.png)
+
+运行之后，会在右上角菜单栏看到多了一个鲸鱼图标，这个图标表明了 Docker 的运行状态。
+
+![img](assets/install-mac-menubar.png)
+
+第一次点击图标，可能会看到这个安装成功的界面，点击 “Got it!” 可以关闭这个窗口。
+
+![img](assets/install-mac-success.png)
+
+以后每次点击鲸鱼图标会弹出操作菜单。
+
+![img](assets/install-mac-menu.png)
+
+启动终端后，通过命令可以检查安装后的 Docker 版本。
+
+```
+$ docker --version
+Docker version 17.10.0-ce, build f4ffd25
+$ docker-compose --version
+docker-compose version 1.17.0-rc1, build a0f95af
+$ docker-machine --version
+docker-machine version 0.13.0, build 9ba6da9
+```
+
+如果 `docker version`、`docker info` 都正常的话，可以尝试运行一个 [Nginx 服务器](https://store.docker.com/images/nginx/)：
+
+```
+$ docker run -d -p 80:80 --name webserver nginx
+```
+
+服务运行后，可以访问 [http://localhost](http://localhost/)，如果看到了 “Welcome to nginx!”，就说明 Docker for Mac 安装成功了。
+
+![img](assets/install-mac-example-nginx.png)
+
+要停止 Nginx 服务器并删除执行下面的命令：
+
+```
+$ docker stop webserver
+$ docker rm webserver
+```
+
+### 镜像加速
+
+鉴于国内网络问题，后续拉取 Docker 镜像十分缓慢，强烈建议安装 Docker 之后配置 `国内镜像加速`。
+
+
+
+## 3.5 Windows 安装 Docker
+
+### 系统要求
+
+[Docker for Windows](https://docs.docker.com/docker-for-windows/install/) 支持 64 位版本的 Windows 10 Pro，且必须开启 Hyper-V。
+
+### 安装
+
+点击以下链接下载 [Stable](https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe) 或 [Edge](https://download.docker.com/win/edge/Docker%20for%20Windows%20Installer.exe) 版本的 Docker for Windows。
+
+下载好之后双击 Docker for Windows Installer.exe 开始安装。
+
+### 运行
+
+在 Windows 搜索栏输入 Docker 点击 Docker for Windows 开始运行。
+
+![img](assets/install-win-docker-app-search.png)
+
+Docker CE 启动之后会在 Windows 任务栏出现鲸鱼图标。
+
+![img](assets/install-win-taskbar-circle.png)
+
+等待片刻，点击 Got it 开始使用 Docker CE。
+
+![img](assets/install-win-success-popup-cloud.png)
+
+### 镜像加速
+
+鉴于国内网络问题，后续拉取 Docker 镜像十分缓慢，强烈建议安装 Docker 之后配置 `国内镜像加速`。
+
+## 3.6 Docker 镜像加速器
+
+国内从 Docker Hub 拉取镜像有时会遇到困难，此时可以配置镜像加速器。Docker 官方和国内很多云服务商都提供了国内加速器服务，例如：
+
+- [Docker 官方提供的中国 registry mirror](https://docs.docker.com/registry/recipes/mirror/#use-case-the-china-registry-mirror)
+- [阿里云加速器](https://cr.console.aliyun.com/#/accelerator)
+- [DaoCloud 加速器](https://www.daocloud.io/mirror#accelerator-doc)
+
+我们以 Docker 官方加速器为例进行介绍。
+
+### Ubuntu 14.04、Debian 7 Wheezy
+
+对于使用 [upstart](http://upstart.ubuntu.com/) 的系统而言，编辑 `/etc/default/docker` 文件，在其中的 `DOCKER_OPTS` 中配置加速器地址：
+
+```
+DOCKER_OPTS="--registry-mirror=https://registry.docker-cn.com"
+```
+
+重新启动服务。
+
+```
+$ sudo service docker restart
+```
+
+### Ubuntu 16.04+、Debian 8+、CentOS 7
+
+对于使用 [systemd](https://www.freedesktop.org/wiki/Software/systemd/) 的系统，请在 `/etc/docker/daemon.json` 中写入如下内容（如果文件不存在请新建该文件）
+
+```
+{
+  "registry-mirrors": [
+    "https://registry.docker-cn.com"
+  ]
+}
+```
+
+> 注意，一定要保证该文件符合 json 规范，否则 Docker 将不能启动。
+
+之后重新启动服务。
+
+```
+$ sudo systemctl daemon-reload
+$ sudo systemctl restart docker
+```
+
+> 注意：如果您之前查看旧教程，修改了 `docker.service` 文件内容，请去掉您添加的内容（`--registry-mirror=https://registry.docker-cn.com`），这里不再赘述。
+
+### Windows 10
+
+对于使用 Windows 10 的系统，在系统右下角托盘 Docker 图标内右键菜单选择 `Settings`，打开配置窗口后左侧导航菜单选择 `Daemon`。在 `Registry mirrors`一栏中填写加速器地址 `https://registry.docker-cn.com`，之后点击 `Apply` 保存后 Docker 就会重启并应用配置的镜像地址了。
+
+### macOS
+
+对于使用 macOS 的用户，在任务栏点击 Docker for mac 应用图标 -> Perferences… -> Daemon -> Registry mirrors。在列表中填写加速器地址 `https://registry.docker-cn.com`。修改完成之后，点击 `Apply & Restart` 按钮，Docker 就会重启并应用配置的镜像地址了。
+
+### 检查加速器是否生效
+
+配置加速器之后，如果拉取镜像仍然十分缓慢，请手动检查加速器配置是否生效，在命令行执行 `docker info`，如果从结果中看到了如下内容，说明配置成功。
+
+```
+Registry Mirrors:
+ https://registry.docker-cn.com/
+```
