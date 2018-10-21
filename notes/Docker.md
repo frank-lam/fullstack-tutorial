@@ -1,8 +1,8 @@
 # 前言
 
-Docker 容器化引擎
+Docker 容器化引擎，更详细请转向：[Docker_Tutorial: Docker 容器化引擎入门手册](https://github.com/frank-lam/Docker_Tutorial)
 
-> 本文内容均来自：【千锋-李伟民老师博客，推荐大家学习】http://www.funtl.com/
+> 本文内容均来自：【千锋-李卫民老师博客，推荐大家学习】http://www.funtl.com/
 >
 > 基于以上部分内容做一定的修改
 
@@ -818,7 +818,7 @@ $ sudo service docker restart
 
 对于使用 [systemd](https://www.freedesktop.org/wiki/Software/systemd/) 的系统，请在 `/etc/docker/daemon.json` 中写入如下内容（如果文件不存在请新建该文件）
 
-```
+```json
 {
   "registry-mirrors": [
     "https://registry.docker-cn.com"
@@ -830,7 +830,7 @@ $ sudo service docker restart
 
 之后重新启动服务。
 
-```
+```shell
 $ sudo systemctl daemon-reload
 $ sudo systemctl restart docker
 ```
