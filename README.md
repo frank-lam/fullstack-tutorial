@@ -137,13 +137,13 @@
 
 ## 七、分布式
 
+- [Docker](notes/Docker基础.md)
+
+  容器化引擎服务
+
 - 微服务思想
 
   服务拆分，持续集成、持续交付、持续部署
-
-- [Docker](notes/Docker.md)
-
-  容器化引擎服务
 
 - Kubernetes（k8s）
 
