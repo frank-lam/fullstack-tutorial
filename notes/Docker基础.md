@@ -33,6 +33,8 @@
 <!-- /TOC -->
 # 一、Docker 快速入门
 
+本文部分内容引用来自：【千锋-李卫民老师博客，推荐大家学习】http://www.funtl.com/
+
 ## 初探 Docker
 
 ### 什么是 Docker
@@ -400,7 +402,7 @@ services:
 
 ## 实战3：快速搭建 GitLab
 
-```
+```yml
 version: '3'
 services:
     web:
