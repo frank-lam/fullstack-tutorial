@@ -150,9 +150,8 @@
   容器化部署，管理云平台中多个主机上的容器化的应用
 
 - 云计算
-  - SaaS（Software as a Service–软件即服务） 
-  - PaaS（Platform as a Service–平台即服务） 
-  - IaaS（Infrastructure as a Service–基础架构即服务）
+
+  SaaS（软件即服务） 、PaaS（平台即服务） 、IaaS（基础架构即服务）
 
 - Zookeeper
 
