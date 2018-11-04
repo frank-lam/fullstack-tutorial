@@ -20,7 +20,7 @@
 
 ### 为什么要使用 Docker
 
-![Docker architecture](assets/pasted image 0.png)
+![Docker architecture](assets/docker-architecture.png)
 
 　　作为一种新兴的虚拟化方式，Docker 跟传统的虚拟化方式相比具有众多的优势。
 
