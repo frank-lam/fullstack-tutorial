@@ -304,9 +304,6 @@
     <p>
         from zero to hero.
     </p>
-    <p>
-        💰💰💰 【打赏：不准超过你的早饭钱】和【微信公众号：全栈开发社区】二选一，嘿嘿
-    </p>
 </div>
 <div align="center"><img src="pics/tipping.png" width="620"/></div><br/>
 
