@@ -23,10 +23,14 @@
     <p>
         个人能力有限，欢迎志同道合的朋友们共同维护。感兴趣的同学，可以在 QQ 群中找到我
     </p>
+    <p>
+    招募 PHP，Python，Go，C++，分布式中间件，机器学习等等，板块维护者
+    </p>
     <div>
         <a href="https://github.com/frank-lam/2019_campus_apply/issues/2" target="_blank">读者信箱（资料、意见、想法都可以在这里留言分享）</a>
     </div>
 </div>
+
 
 
 
