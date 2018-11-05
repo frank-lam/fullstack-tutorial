@@ -305,7 +305,8 @@
         from zero to hero.
     </p>
     <p>
-        💰💰💰 嗯，我的梦想是被读者的稿费包养，嘿嘿~ 打赏不准超过你的早饭钱
+        💰💰💰 【打赏：不准超过你的早饭钱】和【微信公众号：全栈开发社区】二选一，嘿嘿
     </p>
 </div>
 <div align="center"><img src="pics/tipping.png" width="620"/></div><br/>
+
