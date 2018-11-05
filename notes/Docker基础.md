@@ -402,6 +402,19 @@ services:
 
 ## 实战3：快速搭建 GitLab
 
+GitLab 使用163邮箱发送邮件 - 刘锐群的笔记 - CSDN博客
+https://blog.csdn.net/liuruiqun/article/details/50000213
+
+
+
+gitlab服务器邮箱配置 - weifengCorp - 博客园
+https://www.cnblogs.com/weifeng1463/p/8489563.html
+
+
+
+twang2218/gitlab-ce-zh - Docker Hub
+https://hub.docker.com/r/twang2218/gitlab-ce-zh/
+
 ```yml
 version: '3'
 services:

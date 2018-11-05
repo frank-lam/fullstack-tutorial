@@ -18,12 +18,16 @@
 
 <div align="center">  
     <p>
-公告（2018/10/20）：QQ技术交流群 862619503
+公告（2018/11/15）：QQ技术交流群 862619503
+    </p>
+    <p>
+        个人能力有限，欢迎志同道合的朋友们共同维护。感兴趣的同学，可以在 QQ 群中找到我
     </p>
     <div>
         <a href="https://github.com/frank-lam/2019_campus_apply/issues/2" target="_blank">读者信箱（资料、意见、想法都可以在这里留言分享）</a>
     </div>
 </div>
+
 
 
 
