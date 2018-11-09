@@ -133,6 +133,45 @@ You have new mail in /var/spool/mail/root
 
 
 
+【意外情况】service docker start 无法启动问题
+
+- centos 安装 docker 显示 No package docker available，原因是 yum 没有找到 docker 的包，需要 epel 第三方软件库，运行下面的命令
+
+  `sudo yum install epel-release`
+
+- [【亲测有效】Centos安装完成docker后启动docker报错docker](http://www.cnblogs.com/ECJTUACM-873284962/p/9362840.html)
+
+
+
+1. 配置yum源
+
+   vim /etc/yum.repos.d/docker.repo
+
+```ini
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/main/centos/$releasever/
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+```
+
+2. 通过yum安装
+
+```
+yum install docker-engine
+service docker start
+service docker status
+```
+
+3. 日志
+
+```
+vim /var/log/docker
+```
+
+
+
 ## Docker 镜像加速器
 
 1. 加速器服务
