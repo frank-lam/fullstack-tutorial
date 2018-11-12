@@ -310,4 +310,3 @@
     </p>
 </div>
 <div align="center"><img src="pics/tipping.png" width="620"/></div><br/>
-
