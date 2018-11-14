@@ -1,11 +1,11 @@
 # Git
 
+一个不错的可视化Cheat sheet:
+[Git Cheat Sheet](http://ndpsoftware.com/git-cheatsheet.html)
+
 一图胜千言
 
 ![img](assets/TQDj8Uo1pj3YkMSoeSitYC1QB4a019V68N6GZFBE.png)
-
-一个不错的Cheat sheet:
-[Git Cheat Sheet](http://ndpsoftware.com/git-cheatsheet.html)
 
 ### 
 
