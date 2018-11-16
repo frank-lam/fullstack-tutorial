@@ -1,13 +1,12 @@
 # Git
 
-一个不错的可视化Cheat sheet:
-[Git Cheat Sheet](http://ndpsoftware.com/git-cheatsheet.html)
-
 一图胜千言
 
 ![img](assets/TQDj8Uo1pj3YkMSoeSitYC1QB4a019V68N6GZFBE.png)
 
-### 
+
+
+推荐一个不错的可视化工具：[Git Cheat Sheet](http://ndpsoftware.com/git-cheatsheet.html)
 
 ### 配置
 
@@ -49,8 +48,6 @@
 - `git push <远程仓库> <分支>` 推送至远程仓库。
 - `git remote add origin https://xxx.git` 新增远程仓库`origin`
 - `git remote set-url origin https://xxx.git` 修改远程仓库`origin`
-
-
 
 
 

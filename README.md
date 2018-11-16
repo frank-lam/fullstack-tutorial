@@ -175,6 +175,8 @@
 
   分布式消息通信
 
+- 熔断，限流，降级机制
+
 - Redis
 
   分布式缓存
@@ -217,7 +219,11 @@
 
 - [Git](notes/EfficiencyTools/Git.md)
 
-  常见命令，速查表
+  基本概念，常见命令，速查表
+
+- GitFlow
+
+  Git 工作流概念
 
 - [正则表达式](notes/EfficiencyTools/正则表达式.md)
 
