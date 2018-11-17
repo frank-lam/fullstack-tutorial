@@ -221,9 +221,9 @@
 
   基本概念，常见命令，速查表
 
-- [GitFlow](notes/GitFLow.md)
+- [Git 工作流](notes/Git工作流.md)
 
-  Git 工作流概念
+  Git 工作流简介，集中式工作流，功能分支工作流， GitFlow 工作流，Forking 工作流，Pull Requests
 
 - [正则表达式](notes/EfficiencyTools/正则表达式.md)
 

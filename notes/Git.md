@@ -289,7 +289,7 @@ $ git remote set-url origin https://xxx.git
 
 # 三、Git 常用场景
 
-## 1. 删除本地文件后，想从远程仓库中重新Pull最新版文件
+## 1. 删除本地文件后，想从远程仓库中重新 Pull 最新版文件
 
 Git提示：up-to-date，但未得到删除的文件
 
