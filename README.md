@@ -217,11 +217,11 @@
 
 ## 九、工具
 
-- [Git](notes/EfficiencyTools/Git.md)
+- [Git](notes/Git.md)
 
   基本概念，常见命令，速查表
 
-- GitFlow
+- [GitFlow](notes/GitFLow.md)
 
   Git 工作流概念
 
