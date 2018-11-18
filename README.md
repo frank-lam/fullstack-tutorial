@@ -223,7 +223,7 @@
 
 - [Git 工作流](notes/Git工作流.md)
 
-  Git 工作流简介，集中式工作流，功能分支工作流， GitFlow 工作流，Forking 工作流，Pull Requests
+  集中式工作流，功能分支工作流， GitFlow 工作流，Forking 工作流，Pull Requests
 
 - [正则表达式](notes/EfficiencyTools/正则表达式.md)
 
@@ -275,6 +275,9 @@
 <img src="https://avatars3.githubusercontent.com/u/32006433?s=460&v=4" width="50px">
 </a>
 <a href="https://github.com/mazyi">
+<img src="https://avatars1.githubusercontent.com/u/24809310?s=460&v=4" width="50px">
+</a> 
+<a href="https://github.com/si9ma">
 <img src="https://avatars2.githubusercontent.com/u/6824119?s=460&v=4" width="50px">
 </a> 
 <a href="https://github.com/FrankLLC">
@@ -291,11 +294,9 @@
 
 ### License
 
-　　本作品采用 [知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议](https://creativecommons.org/licenses/by-nc-sa/4.0/) 进行许可，在对本作品进行演绎时，请署名并以相同方式共享，不作任何商业用途。
+　　本作品采用 [知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议](https://creativecommons.org/licenses/by-nc-sa/4.0/) 进行许可。使用者可以对本创作进行转载、节选、混编、二次创作，但不得运用于商业目的，且使用时须进行署名，采用本创作的内容必须同样采用本协议进行授权。
 
 　　<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
-
-
 
 
 
