@@ -21,28 +21,28 @@
     - [6. 文件权限](#6-文件权限)
     - [7. chmod 修改权限](#7-chmod-修改权限)
     - [8. 文件与目录的基本操作](#8-文件与目录的基本操作)
-        - [ls](#1-ls)
-        - [cd](#2-cd)
-        - [mkdir](#3-mkdir)
-        - [rmdir](#4-rmdir)
-        - [touch](#5-touch)
-        - [cp](#6-cp)
-        - [rm](#7-rm)
-        - [mv](#8-mv)
+        - [1. ls](#1-ls)
+        - [2. cd](#2-cd)
+        - [3. mkdir](#3-mkdir)
+        - [4. rmdir](#4-rmdir)
+        - [5. touch](#5-touch)
+        - [6. cp](#6-cp)
+        - [7. rm](#7-rm)
+        - [8. mv](#8-mv)
     - [9. 获取文件内容](#9-获取文件内容)
-        - [cat](#1-cat)
-        - [tac](#2-tac)
-        - [more](#3-more)
-        - [less](#4-less)
-        - [head](#5-head)
-        - [tail](#6-tail)
-        - [od](#7-od)
+        - [1. cat](#1-cat)
+        - [2. tac](#2-tac)
+        - [3. more](#3-more)
+        - [4. less](#4-less)
+        - [5. head](#5-head)
+        - [6. tail](#6-tail)
+        - [7. od](#7-od)
         - [问：Linux查看日志文件的方式](#问linux查看日志文件的方式)
     - [10. 指令与文件搜索](#10-指令与文件搜索)
-        - [which](#1-which)
-        - [whereis](#2-whereis)
-        - [locate](#3-locate)
-        - [find](#4-find)
+        - [1. which](#1-which)
+        - [2. whereis](#2-whereis)
+        - [3. locate](#3-locate)
+        - [4. find](#4-find)
         - [*. grep的使用，一定要掌握，每次都会问在文件中查找（包含匹配）](#-grep的使用一定要掌握每次都会问在文件中查找包含匹配)
         - [*. 管道](#-管道)
     - [11. 压缩与解压缩命令](#11-压缩与解压缩命令)
@@ -66,10 +66,10 @@
         - [sed](#sed)
     - [14. 进程管理](#14-进程管理)
         - [查看进程](#查看进程)
-            - [ps](#1-ps)
-            - [top](#2-top)
-            - [pstree](#3-pstree)
-            - [netstat](#4-netstat)
+            - [1. ps](#1-ps)
+            - [2. top](#2-top)
+            - [3. pstree](#3-pstree)
+            - [4. netstat](#4-netstat)
         - [进程状态](#进程状态)
             - [SIGCHLD](#sigchld)
             - [wait()](#wait)
@@ -84,14 +84,22 @@
     - [18. 网络配置和网络诊断命令](#18-网络配置和网络诊断命令)
     - [19. 磁盘管理](#19-磁盘管理)
     - [20. VIM 三个模式](#20-vim-三个模式)
-    - [21. Screen命令](#21-screen命令)
+    - [21. 用户管理](#21-用户管理)
+        - [创建用户](#创建用户)
+        - [删除用户](#删除用户)
+        - [查看所有用户](#查看所有用户)
+        - [普通用户改为高级用户](#普通用户改为高级用户)
+        - [创建的用户 SSH 生效](#创建的用户-ssh-生效)
+    - [22. lspci](#22-lspci)
+    - [23. Screen命令](#23-screen命令)
         - [screen命令是什么](#screen命令是什么)
         - [安装](#安装)
         - [使用方法](#使用方法)
         - [远程演示](#远程演示)
         - [常用快捷键](#常用快捷键)
-    - [22. 常用快捷方式](#22-常用快捷方式)
-    - [23. 高并发网络编程之epoll详解](#23-高并发网络编程之epoll详解)
+    - [24. Linux 下如何查看系统版本](#24-linux-下如何查看系统版本)
+    - [25. 常用快捷方式](#25-常用快捷方式)
+    - [26. 高并发网络编程之epoll详解](#26-高并发网络编程之epoll详解)
 - [参考资料](#参考资料)
 - [更新日志](#更新日志)
 
@@ -1926,9 +1934,57 @@ There are screens on:
 
 
 
+## 24. Linux 下如何查看系统版本
+
+Linu x下如何查看版本信息， 包括位数、版本信息以及 CPU 内核信息、CPU 具体型号等等，整个 CPU 信息一目了然。
+
+ 
+
+1. 查看版本当前操作系统内核信息
+
+```shell
+$ uname －a 
+
+Linux vm10-0-0-21.ksc.com 3.10.0-693.21.1.el7.x86_64 #1 SMP Wed Mar 7 19:03:37 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+```
+
+2. 查看当前操作系统版本信息
+
+```shell
+$ cat /proc/version
+
+Linux version 3.10.0-693.21.1.el7.x86_64 (builder@kbuilder.dev.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-16) (GCC) ) #1 SMP Wed Mar 7 19:03:37 UTC 2018
+```
+
+3. 查看版本当前操作系统发行版信息
+
+```shell
+$ cat /etc/issue  或cat /etc/redhat-release
+
+Red Hat Linux release 9 (Shrike)
+```
+
+4. 查看 CPU 相关信息，包括型号、主频、内核信息等
+
+```shell
+$ cat /proc/cpuinfo
+```
+
+5. 查看版本说明当前 CPU 运行在32bit模式下， 但不代表 CPU 不支持64bit
+
+```shell
+$ getconf LONG_BIT 
+```
+
+6. 系统详细信息
+
+```shell
+$ lsb_release -a
+```
 
 
-## 24. 常用快捷方式
+
+## 25. 常用快捷方式
 
 - ctrl + c：强制终止当前命令
 
@@ -1946,9 +2002,10 @@ There are screens on:
 
 
 
-## 25. 高并发网络编程之epoll详解
+## 26. 高并发网络编程之epoll详解
 
 详情请转向：[高并发网络编程之epoll详解 - CSDN博客](https://blog.csdn.net/shenya1314/article/details/73691088)
+
 
 
 # 参考资料
@@ -1956,6 +2013,8 @@ There are screens on:
 - [【Linux】初踏足Linux的大门 - CSDN博客](https://blog.csdn.net/qq_41035588/article/details/80947383)
 
 - [如何学习（记住）linux命令（常用选项）？ - 知乎](https://www.zhihu.com/question/21690166/answer/66721478)
+
+
 
 # 更新日志
 
