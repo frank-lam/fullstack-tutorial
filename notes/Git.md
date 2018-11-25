@@ -124,6 +124,14 @@ $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
 ```
 
+查看配置列表
+
+```shell
+$ git config --list
+```
+
+
+
 ## 基础操作
 
 在指定目录创建仓库，如果没有指定目录名将在当前目录创建仓库
@@ -150,13 +158,13 @@ $ git clone https://github.com/frank-lam/2019_campus_apply.git .
 将文件或目录中已修改的代码添加追暂存区
 
 ```shell
-
+$ git add <目录名|文件名>
 ```
 
 提交暂存区内容
 
 ```shell
-
+$ git commit -m "<注释>"
 ```
 
 查看仓库状态

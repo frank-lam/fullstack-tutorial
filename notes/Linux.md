@@ -546,6 +546,18 @@ crontab 文件的每一行均遵守特定的格式，由空格或 tab 分隔为�
 
 
 
+
+
+### 应用场景：定时备份MySQL数据库
+
+
+
+
+
+
+
+
+
 **参考资料**：
 
 - [crontab命令_Linux crontab 命令用法详解：提交和管理用户的需要周期性执行的任务](http://man.linuxde.net/crontab)
