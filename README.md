@@ -120,6 +120,10 @@
 
   Redis 核心知识
 
+- MongoDB
+
+  基于分布式文件存储的数据库
+
 - [SQL](notes/SQL.md)
 
   常用 SQL 语句
