@@ -133,7 +133,7 @@
   - TypeScript
 
 - 打包工具
-  - Webpack
+  - webpack
   - glup
   - rollup
 
