@@ -1,4 +1,4 @@
-![full stack developer tutorial](pics/1537592021705.png)
+![full stack developer tutorial](assets/1537592021705.png)
 
 
 
@@ -372,4 +372,5 @@
         from zero to hero.
     </p>
 </div>
-<div align="center"><img src="pics/tipping.png" width="620"/></div><br/>
+<div align="center"><img src="assets/wechat-fullstack.png" width="620"/></div><br/>
+
