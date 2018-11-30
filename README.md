@@ -18,7 +18,8 @@
 
 <div align="center">  
     <p>
-公告（2018/11/15）：QQ技术交流群 862619503
+公告（2018/11/15）：
+        <a href="notes/技术交流群.md">QQ技术交流群 862619503</a>
     </p>
     <p>
         个人能力有限，欢迎志同道合的朋友们共同维护。<a href="notes/开源贡献.md">⊱ 开源小组，英雄招募令</a>
@@ -30,6 +31,7 @@
         <a href="https://github.com/frank-lam/2019_campus_apply/issues/2" target="_blank">读者信箱（资料、意见、想法都可以在这里留言分享）</a>
     </div>
 </div>
+
 
 
 
