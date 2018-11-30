@@ -103,10 +103,43 @@
 
 ## 四、前端
 
-- HTML(5) / CSS(3) / JS
-- vue / react / angular
-- node
-- npm / yarn
+- HTML(5)
+
+- CSS(3)
+
+  sass、scss、stylus
+
+- CSS 框架
+
+  BootStarp、LayUI
+
+- JavaScript 
+
+  基础语法、进阶、ES6
+
+- JavaScript 框架
+
+  - Vue
+  - React 
+  - Angular
+  - jQuery
+
+- Node
+
+  常用 api、对象池、异常处理、进程通信、高并发
+
+- 静态编译
+  - Flow
+  - TypeScript
+
+- 打包工具
+  - Webpack
+  - glup
+  - rollup
+
+- 工具
+  - npm
+  - yarn
 
 
 
