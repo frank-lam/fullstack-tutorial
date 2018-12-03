@@ -1,4 +1,4 @@
-▲ [GO HOME](../README.md)
+▲ [GO HOME](https://github.com/frank-lam/2019_campus_apply)
 
 
 

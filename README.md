@@ -1,4 +1,4 @@
-![full stack developer tutorial](pics/1537592021705.png)
+![full stack developer tutorial](assets/1537592021705.png)
 
 
 
@@ -12,13 +12,14 @@
 </div>
 
 
-|              I              |           II           |           III           |            IV            |            V            |        VI        |         VII         | VIII |            IX            |            X            |            XI            | XII |
+|              I              |           II           |           III           |           IV           |            V            |            VI            |        VII        |         VIII         | IX |            X            |            XI            |            XII            |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: |
-| 算法<br />[:pencil:](#一数据结构与算法) | Java<br/>[:coffee:](#二java) | Python<br />[:snake:](#三python) | 数据库<br/>[:floppy_disk:](#四数据库) | 操作系统<br/>[:computer:](#五操作系统) | 网络通信<br/>[:cloud:](#六网络通信) | 分布式<br/>[:page_with_curl:](#七分布式) | 机器学习<br/> [:mag:](#八机器学习) |工具<br/>[:hammer:](#九工具) |Learn<br />[:books:](#learning-books) |Talking<br />[:bulb:](#talking-bulb) |Author<br/>[:boy:](#关于作者-boy)|
+| 算法<br />[:pencil:](#一数据结构与算法) | Java<br/>[:coffee:](#二java) | Python<br />[:snake:](#三python) | 前端<br />[:link:](#四前端) | 数据库<br/>[:floppy_disk:](#五数据库) | 操作系统<br/>[:computer:](#六操作系统) | 网络通信<br/>[:cloud:](#七网络通信) | 分布式<br/>[:page_with_curl:](#八分布式) | 机器学习<br/> [:mag:](#九机器学习) |工具<br/>[:hammer:](#十工具) |Learn<br />[:books:](#learning-books) |Talking<br />[:bulb:](#talking-bulb) |
 
 <div align="center">  
     <p>
-公告（2018/11/15）：QQ技术交流群 862619503
+公告（2018/11/15）：
+        <a href="notes/技术交流群.md">QQ技术交流群</a>
     </p>
     <p>
         个人能力有限，欢迎志同道合的朋友们共同维护。<a href="notes/开源贡献.md">⊱ 开源小组，英雄招募令</a>
@@ -35,11 +36,16 @@
 
 
 
+
 ## 前言
 
 - [全栈修炼手册：如何选择自己的技术栈？](notes/如何选择自己的技术栈.md)
 
   在编程的世界里，该如何选择自己的技术栈呢。学前端？学 APP 开发？对于 Java、C++、C#、Python、PHP 又如何选择呢？人工智能现如今这么火，是不是机器学习、深度学习更高级一些呢？那么程序员又如何修炼内功呢？
+
+- [全栈开发神兵利器](notes/全栈开发神兵利器.md)
+
+  工欲善其事，必先利其器。这里我将推荐开发过程中的提效工具、开发利器、协作工具、文档技术等等。
 
 
 
@@ -97,7 +103,49 @@
 
 
 
-## 四、数据库
+## 四、前端
+
+- HTML(5)
+
+- CSS(3)
+
+  sass、scss、stylus
+
+- CSS 框架
+
+  BootStarp、LayUI
+
+- JavaScript 
+
+  基础语法、进阶、ES6
+
+- JavaScript 框架
+
+  - Vue
+  - React 
+  - Angular
+  - jQuery
+
+- Node
+
+  常用 api、对象池、异常处理、进程通信、高并发
+
+- 静态编译
+  - Flow
+  - TypeScript
+
+- 打包工具
+  - webpack
+  - glup
+  - rollup
+
+- 工具
+  - npm
+  - yarn
+
+
+
+## 五、数据库
 
 - [MySQL](notes/MySQL.md)
 
@@ -107,13 +155,17 @@
 
   Redis 核心知识
 
+- MongoDB
+
+  基于分布式文件存储的数据库
+
 - [SQL](notes/SQL.md)
 
   常用 SQL 语句
 
 
 
-## 五、操作系统
+## 六、操作系统
 
 - [操作系统原理](notes/操作系统.md)
 
@@ -125,7 +177,7 @@
 
 
 
-## 六、网络通信
+## 七、网络通信
 
 - [计算机网络](notes/计算机网络.md)
 
@@ -143,7 +195,7 @@
 
 
 
-## 七、分布式
+## 八、分布式
 
 - [Docker](notes/Docker基础.md)
 
@@ -175,6 +227,8 @@
 
   分布式消息通信
 
+- 熔断，限流，降级机制
+
 - Redis
 
   分布式缓存
@@ -203,21 +257,29 @@
 
 
 
-## 八、机器学习
+## 九、机器学习
 - 经典机器学习算法
-- Scikit-learn
-- Tensorflow
+
+  K 近邻算法、线性回归、梯度下降法、逻辑回归、支持向量机、决策树、集成学习
+
+- 基础框架
+
+  Tensorflow，Scikit-learn
 
 【说明】学习过一段时间算法，但一直未来得及整理。敬请期待
 
 
 
 
-## 九、工具
+## 十、工具
 
-- [Git](notes/EfficiencyTools/Git.md)
+- [Git](notes/Git.md)
 
-  常见命令，速查表
+  基本概念，常见命令，速查表
+
+- [Git 工作流](notes/Git工作流.md)
+
+  集中式工作流，功能分支工作流， GitFlow 工作流，Forking 工作流，Pull Requests
 
 - [正则表达式](notes/EfficiencyTools/正则表达式.md)
 
@@ -269,6 +331,9 @@
 <img src="https://avatars3.githubusercontent.com/u/32006433?s=460&v=4" width="50px">
 </a>
 <a href="https://github.com/mazyi">
+<img src="https://avatars1.githubusercontent.com/u/24809310?s=460&v=4" width="50px">
+</a> 
+<a href="https://github.com/si9ma">
 <img src="https://avatars2.githubusercontent.com/u/6824119?s=460&v=4" width="50px">
 </a> 
 <a href="https://github.com/FrankLLC">
@@ -277,16 +342,20 @@
 <a href="https://github.com/wyn-lin">
 <img src="https://avatars1.githubusercontent.com/u/32236252?s=400&v=4" width="50px">
 </a> 
+<a href="https://github.com/LimitSY">
+<img src="https://avatars2.githubusercontent.com/u/5361364?s=460&v=4" width="50px">
+</a> 
+<a href="https://github.com/librarysong">
+<img src="https://avatars0.githubusercontent.com/u/22957350?s=460&v=4" width="50px">
+</a> 
 
 
 
 ### License
 
-　　本作品采用 [知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议](https://creativecommons.org/licenses/by-nc-sa/4.0/) 进行许可，在对本作品进行演绎时，请署名并以相同方式共享，不作任何商业用途。
+　　本作品采用 [知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议](https://creativecommons.org/licenses/by-nc-sa/4.0/) 进行许可。使用者可以对本创作进行转载、节选、混编、二次创作，但不得运用于商业目的，且使用时须进行署名，采用本创作的内容必须同样采用本协议进行授权。
 
 　　<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
-
-
 
 
 
@@ -298,7 +367,6 @@
     </p>
 <a  target="_blank" href="https://zhuanlan.zhihu.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="http://blog.csdn.net/u012104219" rel="nofollow"><img src="https://img.shields.io/badge/CSDN-东风牧野-red.svg" alt="CSDN" data-canonical-src="" style="max-width:100%;"></a>
-<a target="_blank" href="https://weibo.com/frankfeekr" rel="nofollow" style="display:none"><img src="https://img.shields.io/badge/Sina-Lam__Frank-orange.svg" alt="新浪微博" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="mailto:frank_lin@whu.edu.cn" rel="nofollow"><img src="https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-lightgrey.svg" alt="邮箱" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=593WvX0" rel="nofollow" ><img src="https://img.shields.io/badge/QQ群-862619503-green.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
     <br/><br/>
@@ -306,5 +374,5 @@
         from zero to hero.
     </p>
 </div>
-<div align="center"><img src="pics/tipping.png" width="620"/></div><br/>
+<div align="center"><img src="assets/wechat-fullstack.png" width="620"/></div><br/>
 

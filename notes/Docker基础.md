@@ -439,6 +439,8 @@ services:
 
 
 
+
+
 ## 实战3：快速搭建 GitLab
 
 GitLab 使用163邮箱发送邮件 - 刘锐群的笔记 - CSDN博客
@@ -460,11 +462,11 @@ services:
     web:
       image: 'twang2218/gitlab-ce-zh:10.5'
       restart: always
-      hostname: '120.92.17.12'
+      hostname: '120.131.11.187'
       environment:
         TZ: 'Asia/Shanghai'
         GITLAB_OMNIBUS_CONFIG: |
-          external_url 'http://120.92.17.12:3000'
+          external_url 'http://120.131.11.187:3000'
           gitlab_rails['gitlab_shell_ssh_port'] = 2222
           unicorn['port'] = 8888
           nginx['listen_port'] = 3000
@@ -477,6 +479,14 @@ services:
         - /usr/local/docker/gitlab/data:/var/opt/gitlab
         - /usr/local/docker/gitlab/logs:/var/log/gitlab
 ```
+
+
+
+
+
+
+
+
 
 
 
