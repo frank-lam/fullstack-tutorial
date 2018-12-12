@@ -222,6 +222,8 @@ Redirecting to /bin/systemctl start docker.service
 - -p：端口映射
 - --name：是给容器起一个名字，可省略，省略的话 docker 会随机产生一个名字
 
+- --restart：always
+
 ### 3. 启动的容器列表
 
 ```shell
