@@ -458,3 +458,19 @@ https://lvtao.net/tool/gitftp.html
 
 ## 6. Git 删除文件如何提交
 
+
+
+
+
+## 7. Git 中的 origin 是什么意思
+
+git学习：关于origin和master - mashiqi - 博客园
+https://www.cnblogs.com/mashiqi/p/6002671.html
+
+
+
+Git 里面的 origin 到底代表啥意思? - Not Only DBA. - CSDN博客
+https://blog.csdn.net/u011478909/article/details/77683754
+
+
+
