@@ -20,19 +20,22 @@
 
 <div align="center">  
     <p>
-📣 公告（2018/11/15）：
+📢📢📢<br/> 公告（2018/11/15）：
         <a href="notes/技术交流群.md">QQ技术交流群</a>
     </p>
     <p>
-        个人能力有限，欢迎志同道合的朋友们共同维护。<a href="notes/开源贡献.md">⊱ 开源小组，英雄招募令</a>
+        个人能力有限，欢迎志同道合的小伙伴共同维护。<a href="notes/开源贡献.md">⊱ 开源小组，英雄招募令</a>
     </p>
     <div>
+        <br/>
         <p>
-            🔥 阅读体验更好的在线文档（与 GitHub 实时同步！）<a href="https://frank-lam.github.io/fullstack-tutorial/#/">⊱ 点击阅读体验！</a>
+            🔥🔥🔥 <br/>为极客打造，阅读体验更好的在线文档（与 GitHub 实时同步）
+           <br/>支持手机阅读，目录导航，Gitalk 评论，搜索定位
+            <br/>
+            📖 <a href="https://frank-lam.github.io/fullstack-tutorial/#/">点击，即可开始阅读！</a>
         </p>
     </div>
 </div>
-
 
 
 
