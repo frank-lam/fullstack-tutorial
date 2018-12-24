@@ -317,7 +317,7 @@ MVC 模式在 Web 开发中的好处是非常明显，它规避了 JSP 与 Servl
 
 　　从 http 协议中的请求和响应可以得知，浏览器发出的请求是一个请求文本，而浏览器接收到的也应该是一个响应文本。但是在上面这个图中，并不知道是如何转变的，只知道浏览器发送过来的请求也就是 request，我们响应回去的就用 response。忽略了其中的细节，现在就来探究一下。
 
-<div align="center"><img src="../pics/servlet-tomcat.png" width="600"/></div>
+<div align="center"><img src="assets/servlet-tomcat.png" width="600"/></div>
 
 ① Tomcat 将 http 请求文本接收并解析，然后封装成 HttpServletRequest 类型的 request 对象，所有的 HTTP 头数据读可以通过 request 对象调用对应的方法查询到。
 
@@ -524,7 +524,7 @@ Spring的IoC容器是Spring的核心，Spring AOP是spring框架的重要组成�
 
 ## 3. Spring IOC初始化过程
 
- <div align="center"> <img src="../pics/bean-init2.png" width=""/></div><br/>
+ <div align="center"> <img src="assets/bean-init2.png" width=""/></div><br/>
 
  IOC容器的初始化分为三个过程实现：
 
@@ -661,7 +661,7 @@ https://www.cnblogs.com/weknow619/p/6673667.html
 
 相比之下，Spring容器中的bean的生命周期就显得相对复杂多了。正确理解Spring bean的生命周期非常重要，因为你或许要利用Spring提供的扩展点来自定义bean的创建过程。下图展示了bean装载到Spring应用上下文中的一个典型的生命周期过程。 
 
-<div align="center"> <img src="../pics/bean-life.png" width=""/></div><br/>
+<div align="center"> <img src="assets/bean-life.png" width=""/></div><br/>
 
 上图bean在Spring容器中从创建到销毁经历了若干阶段，每一阶段都可以针对Spring如何管理bean进行个性化定制
 

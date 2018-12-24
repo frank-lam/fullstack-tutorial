@@ -2804,7 +2804,7 @@ synchronized 不仅保证可见性，而且还保证原子性，因为，只有�
 
 ## 3. 什么是并发和并行
 
-<div align="center"> <img src="../pics/concurrent_and_parallel.png" width=""/></div><br/>
+<div align="center"> <img src="assets/concurrent_and_parallel.png" width=""/></div><br/>
 
 ### 并发
 

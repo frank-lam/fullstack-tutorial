@@ -381,7 +381,7 @@ System.out.println(s1 == s1);  //  true
 
 通过 GC Roots 作为起始点进行搜索，能够到达到的对象都是存活的，不可达的对象可被回收。
 
-<div align="center"> <img src="../pics/root-tracing.png" width="650"/> </div><br>
+<div align="center"> <img src="assets/root-tracing.png" width="650"/> </div><br>
 
 
 
@@ -540,7 +540,7 @@ HotSpot 虚拟机的 Eden 和 Survivor 的大小比例默认为 8:1，保证了�
 
 ### 1. Serial
 
-![](../pics/serial.png)
+![](assets/serial.png)
 
 Serial 翻译为串行，也就是说它以串行的方式执行。
 
@@ -554,7 +554,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 ### 2. ParNew
 
-![](../pics/parNew.png)
+![](assets/parNew.png)
 
 它是 Serial 收集器的多线程版本。
 
@@ -572,7 +572,7 @@ Serial 翻译为串行，也就是说它以串行的方式执行。
 
 ### 3. Parallel Scavenge
 
-![](../pics/parallel-scavenge.png)
+![](assets/parallel-scavenge.png)
 
 
 
@@ -613,7 +613,7 @@ Parallel Scavenge 收集器气提供了两个参数用于**精确控制吞吐量
 
 ### 4. Serial Old
 
-![](../pics/serial-old.png)
+![](assets/serial-old.png)
 
 Serial Old 是 Serial 收集器的老年代版本，它同样是一个单线程收集器，使用 ”标记-整理“ 算法。
 
@@ -628,7 +628,7 @@ Serial Old 是 Serial 收集器的老年代版本，它同样是一个单线程�
 
 ### 5. Parallel Old
 
-![](../pics/parallel-old.png)
+![](assets/parallel-old.png)
 
 Parallel Old 是 Parallel Scavenge 收集器的老年代版本，使用多线程和 ”标记-整理“ 算法。
 
@@ -638,7 +638,7 @@ Parallel Old 是 Parallel Scavenge 收集器的老年代版本，使用多线程
 
 ### 6. CMS
 
-![](../pics/cms.png)
+![](assets/cms.png)
 
 CMS（Concurrent Mark Sweep），Mark Sweep 指的是 **标记 - 清除** 算法。CMS 是一款优秀的收集器，主要优点：并发收集、低停顿，Sun公司也称之为**并发低停顿收集器**（Concurrent Low Pause Collection）。
 
@@ -1178,7 +1178,7 @@ jstat [option vmid [interval [s | ms] [count ] ] ]
 
 例如：需要每 1000 毫秒查询一次进程 16418 垃圾收集状况，一共查询 10 次，那命令如下：
 
-![](../pics/tools_stat.png)
+![](assets/tools_stat.png)
 
 参考：[jstat命令详解 - CSDN博客](https://blog.csdn.net/zhaozheng7758/article/details/8623549)
 
@@ -1307,7 +1307,7 @@ jvisualvm 同 jconsole 都是一个基于图形化界面的、可以查看本地
 
 通过分析，我们得知，对于C++，程序员需要自己管理边和顶点，而对于 Java 程序员只需要管理边就可以了(不需要管理顶点的释放)。通过这种方式，Java 提高了编程的效率。
 
-<div align="center"> <img src="../pics/memory-leak.gif" width="600"/> </div><br>
+<div align="center"> <img src="assets/memory-leak.gif" width="600"/> </div><br>
 
 
 

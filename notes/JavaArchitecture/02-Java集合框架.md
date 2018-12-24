@@ -187,7 +187,7 @@ public class ArrayList<E> extends AbstractList<E>
 private static final int DEFAULT_CAPACITY = 10;
 ```
 
-<div align="center"> <img src="../pics/ArrayList_base.png" width="600"/></div>
+<div align="center"> <img src="assets/ArrayList_base.png" width="600"/></div>
 
 
 
@@ -363,7 +363,7 @@ List<String> synList = Collections.synchronizedList(list);
 
 #### CopyOnWriteArrayList
 
-<div align="center"> <img src="../pics/cow.png" width=""/></div><br/>
+<div align="center"> <img src="assets/cow.png" width=""/></div><br/>
 
 
 
@@ -433,7 +433,7 @@ public E get(int index) {
 
 ## LinkedList
 
-<div align="center"> <img src="../pics/LinkedList_base.png" width="600"/></div>
+<div align="center"> <img src="assets/LinkedList_base.png" width="600"/></div>
 
 ### 1. 概览
 
@@ -466,7 +466,7 @@ LinkedList 的实现方式决定了所有跟下标相关的操作都是线性时
 
 ### 2. add()
 
-<div align="center"> <img src="../pics/LinkedList_add.png" width="600"/></div>
+<div align="center"> <img src="assets/LinkedList_add.png" width="600"/></div>
 
 add() 方法有两个版本，一个是 `add(E e)`，该方法在 LinkedList 的末尾插入元素，因为有 last 指向链表末尾，在末尾插入元素的花费是常数时间。只需要简单修改几个相关引用即可；另一个是 `add(int index, E element)`，该方法是在指定下表处插入元素，需要先通过线性查找找到具体位置，然后修改相关引用完成插入操作。
 
@@ -523,7 +523,7 @@ private void checkPositionIndex(int index) {
 
 remove() 方法也有两个版本，一个是删除跟指定元素相等的第一个元素 `remove(Object o)`，另一个是删除指定下标处的元素 `remove(int index)`。
 
-<div align="center"> <img src="../pics/LinkedList_remove.png" width="600"/></div>
+<div align="center"> <img src="assets/LinkedList_remove.png" width="600"/></div>
 
 两个删除操作都要：
 
@@ -602,7 +602,7 @@ HashMap 的内部功能实现很多，本文主要从根据 key 获取哈希桶�
 
 在 1.7 之前 JDK 采用「拉链法」来存储数据，即数组和链表结合的方式：
 
- <div align="center"> <img src="../pics/hashmap-link.jpg" width="550"/></div>
+ <div align="center"> <img src="assets/hashmap-link.jpg" width="550"/></div>
 
  「拉链法」用专业点的名词来说叫做**链地址法**。简单来说，就是数组加链表的结合。在每个数组元素上存储的都是一个链表。
 
@@ -618,13 +618,13 @@ JDK1.7 中新添加进来的元素总是放在数组相应的角标位置，而�
 
 对数据结构很在行的读者应该，知道红黑树是一种易于增删改查的二叉树，他对与数据的查询的时间复杂度是 `O(logn)` 级别，所以利用红黑树的特点就可以更高效的对 `HashMap` 中的元素进行操作。
 
-<div align="center"> <img src="../pics/hashmap-rb-link.jpg" width="550"/></div><br/>
+<div align="center"> <img src="assets/hashmap-rb-link.jpg" width="550"/></div><br/>
 
  
 
 从结构实现来讲，HashMap 是数组+链表+红黑树（JDK1.8增加了红黑树部分）实现的，如下如所示。 
 
-<div align="center"> <img src="../pics/hashMap-datastruct.png" width="400"/></div>
+<div align="center"> <img src="assets/hashMap-datastruct.png" width="400"/></div>
 
 
 
@@ -774,7 +774,7 @@ static int indexFor(int h, int length) {
 
 　　HashMap 的 put 方法执行过程可以通过下图来理解，自己有兴趣可以去对比源码更清楚地研究学习。
 
-<div align="center"> <img src="../pics/hashmap-put.png" width=""/></div><br/>
+<div align="center"> <img src="assets/hashmap-put.png" width=""/></div><br/>
 
 ①.判断键值对数组 table[i] 是否为空或为 null，否则执行 resize() 进行扩容；
 
@@ -897,19 +897,19 @@ newTable[i] 的引用赋给了 e.next，也就是使用了单链表的头插入�
 
 下面举个例子说明下扩容过程。假设了我们的 hash 算法就是简单的用 key mod 一下表的大小（也就是数组的长度）。其中的哈希桶数组 table 的 size=2， 所以 key = 3、7、5，put 顺序依次为 5、7、3。在 mod 2 以后都冲突在 table[1] 这里了。这里假设负载因子 loadFactor=1，即当键值对的实际大小 size 大于 table 的实际大小时进行扩容。接下来的三个步骤是哈希桶数组 resize 成 4，然后所有的 Node 重新 rehash 的过程。
 
-<div align="center"> <img src="../pics/jdk1.7-resize.png" width="600"/></div>
+<div align="center"> <img src="assets/jdk1.7-resize.png" width="600"/></div>
 
 下面我们讲解下 JDK1.8 做了哪些优化。经过观测可以发现，我们使用的是 2 次幂的扩展 (指长度扩为原来 2 倍)，所以，元素的位置要么是在原位置，要么是在原位置再移动 2 次幂的位置。看下图可以明白这句话的意思，n 为 table 的长度，图（a）表示扩容前的 key1 和 key2 两种 key 确定索引位置的示例，图（b）表示扩容后 key1 和 key2 两种 key 确定索引位置的示例，其中 hash1 是 key1 对应的哈希与高位运算结果。
 
-<div align="center"> <img src="../pics/hashMap-1.8-hash1.png" width="700"/></div><br/>
+<div align="center"> <img src="assets/hashMap-1.8-hash1.png" width="700"/></div><br/>
 
 元素在重新计算 hash 之后，因为 n 变为 2 倍，那么 n-1 的 mask 范围在高位多 1bit (红色)，因此新的 index 就会发生这样的变化：
 
-<div align="center"> <img src="../pics/hashMap-1.8-hash2.png" width="600"/></div>
+<div align="center"> <img src="assets/hashMap-1.8-hash2.png" width="600"/></div>
 
 因此，我们在扩充 HashMap 的时候，不需要像 JDK1.7 的实现那样重新计算 hash，只需要看看原来的 hash 值新增的那个 bit 是 1 还是 0 就好了，是 0 的话索引没变，是 1 的话索引变成“原索引+oldCap”，可以看看下图为 16 扩充为 32 的 resize 示意图：
 
-<div align="center"> <img src="../pics/jdk1.8-resize.png" width="700"/></div><br/>
+<div align="center"> <img src="assets/jdk1.8-resize.png" width="700"/></div><br/>
 
 这个设计确实非常的巧妙，既省去了重新计算 hash 值的时间，而且同时，由于新增的 1bit 是 0 还是 1 可以认为是随机的，因此 resize 的过程，均匀的把之前的冲突的节点分散到新的 bucket 了。这一块就是 JDK1.8 新增的优化点。有一点注意区别，JDK1.7 中 rehash 的时候，旧链表迁移新链表的时候，如果在新表的数组索引位置相同，则链表元素会倒置，但是从上图可以看出，JDK1.8 不会倒置。有兴趣的同学可以研究下 JDK1.8 的 resize源 码，写的很赞，如下:
 
@@ -1029,23 +1029,23 @@ public class HashMapInfiniteLoop {
 
 通过设置断点让线程1和线程2同时debug到transfer方法(3.3小节代码块)的首行。注意此时两个线程已经成功添加数据。放开thread1的断点至transfer方法的“Entry next = e.next;” 这一行；然后放开线程2的的断点，让线程2进行resize。结果如下图。
 
-<div align="center"> <img src="../pics/jdk1.7-drop-dead-1.png" width="600"/></div>
+<div align="center"> <img src="assets/jdk1.7-drop-dead-1.png" width="600"/></div>
 
 注意，Thread1的 e 指向了key(3)，而next指向了key(7)，其在线程二rehash后，指向了线程二重组后的链表。
 
 线程一被调度回来执行，先是执行 newTalbe[i] = e， 然后是e = next，导致了e指向了key(7)，而下一次循环的next = e.next导致了next指向了key(3)。
 
-<div align="center"> <img src="../pics/jdk1.7-drop-dead-2.png" width="600"/></div>
+<div align="center"> <img src="assets/jdk1.7-drop-dead-2.png" width="600"/></div>
 
 
 
-<div align="center"> <img src="../pics/jdk1.7-drop-dead-3.png" width="600"/></div>
+<div align="center"> <img src="assets/jdk1.7-drop-dead-3.png" width="600"/></div>
 
 e.next = newTable[i] 导致 key(3).next 指向了 key(7)。注意：此时的key(7).next 已经指向了key(3)， 环形链表就这样出现了。
 
 
 
-<div align="center"> <img src="../pics/jdk1.7-drop-dead-5.png" width="600"/></div>
+<div align="center"> <img src="assets/jdk1.7-drop-dead-5.png" width="600"/></div>
 
 于是，当我们用线程一调用map.get(11)时，悲剧就出现了——Infinite Loop。
 
@@ -1134,7 +1134,7 @@ public static void main(String[] args) {
 
 在测试中会查找不同的值，然后度量花费的时间，为了计算getKey的平均时间，我们遍历所有的get方法，计算总的时间，除以key的数量，计算一个平均值，主要用来比较，绝对值可能会受很多环境因素的影响。结果如下：
 
-<div align="center"> <img src="../pics/hashmap-compare1.png" width=""/></div><br/>
+<div align="center"> <img src="assets/hashmap-compare1.png" width=""/></div><br/>
 
 通过观测测试结果可知，JDK1.8的性能要高于JDK1.7 15%以上，在某些size的区域上，甚至高于100%。由于Hash算法较均匀，JDK1.8引入的红黑树效果不明显，下面我们看看Hash不均匀的的情况。
 
@@ -1156,7 +1156,7 @@ class Key implements Comparable<Key> {
 
 仍然执行main方法，得出的结果如下表所示：
 
-<div align="center"> <img src="../pics/hashmap-compare2.png" width=""/></div><br/>
+<div align="center"> <img src="assets/hashmap-compare2.png" width=""/></div><br/>
 
 从表中结果中可知，随着size的变大，JDK1.7的花费时间是增长的趋势，而JDK1.8是明显的降低趋势，并且呈现对数增长稳定。当一个链表太长的时候，HashMap会动态的将它替换成一个红黑树，这话的话会将时间复杂度从O(n)降为O(logn)。hash算法均匀和不均匀所花费的时间明显也不相同，这两种情况的相对比较，可以说明一个好的hash算法的重要性。
 
@@ -1204,11 +1204,11 @@ class Key implements Comparable<Key> {
 
 　　但是 HashTable 线程安全的策略实现代价却太大了，简单粗暴，get/put 所有相关操作都是 synchronized 的，这相当于给整个哈希表加了一把大锁，多线程访问时候，只要有一个线程访问或操作该对象，那其他线程只能阻塞，相当于将所有的操作串行化，在竞争激烈的并发场景中性能就会非常差。
 
-<div align="center"> <img src="../pics/hashtable-ds.png" width="600"/></div>
+<div align="center"> <img src="assets/hashtable-ds.png" width="600"/></div>
 
 　　HashTable 性能差主要是由于所有操作需要竞争同一把锁，而如果容器中有多把锁，每一把锁锁一段数据，这样在多线程访问时不同段的数据时，就不会存在锁竞争了，这样便可以有效地提高并发效率。这就是ConcurrentHashMap 所采用的 "**分段锁**" 思想。
 
-<div align="center"> <img src="../pics/hashmap-ds.png" width="600"/></div><br/>
+<div align="center"> <img src="assets/hashmap-ds.png" width="600"/></div><br/>
 
 ### 2. 存储结构
 
@@ -1479,7 +1479,7 @@ public class HashSet<E>
 
 　　LinkedHashMap 实现了 Map 接口，即允许放入 key 为 null 的元素，也允许插入 value 为 null 的元素。从名字上可以看出该容器是 LinkedList 和 HashMap 的混合体，也就是说它同时满足 HashMap 和 LinkedList 的某些特性。**可将 LinkedHashMap 看作采用 LinkedList 增强的 HashMap。**
 
-<div align="center"> <img src="../pics/LinkedHashMap_base.png" width="650"/></div><br/>
+<div align="center"> <img src="assets/LinkedHashMap_base.png" width="650"/></div><br/>
 
 
 
@@ -1521,7 +1521,7 @@ void foo(Map m) {
 > 1. 从 table 的角度看，新的 entry 需要插入到对应的 bucket 里，当有哈希冲突时，采用头插法将新的 entry 插入到冲突链表的头部。
 > 2. 从 header 的角度看，新的 entry 需要插入到双向链表的尾部。
 
-<div align="center"> <img src="../pics/LinkedHashMap_addEntry.png" width="650"/></div>
+<div align="center"> <img src="assets/LinkedHashMap_addEntry.png" width="650"/></div>
 
 `addEntry()`代码如下：
 
@@ -1570,7 +1570,7 @@ private void addBefore(Entry<K,V> existingEntry) {
 
 
 
-<div align="center"> <img src="../pics/LinkedList_remove.png" width="700"/></div><br/>
+<div align="center"> <img src="assets/LinkedList_remove.png" width="700"/></div><br/>
 
 `removeEntryForKey()` 对应的代码如下：
 
@@ -1655,7 +1655,7 @@ class FIFOCache<K, V> extends LinkedHashMap<K, V>{
 
 ## 迭代器模式
 
-<div align="center"> <img src="../pics/Iterator-1.jpg" width=""/></div><br/>
+<div align="center"> <img src="assets/Iterator-1.jpg" width=""/></div><br/>
 
 Collection 实现了 Iterable 接口，其中的 iterator() 方法能够产生一个 Iterator 对象，通过这个对象就可以迭代遍历 Collection 中的元素。
 
@@ -1763,7 +1763,7 @@ List list = Arrays.asList(1,2,3);
 
 假设我们现在 Hashtable 的容量为 5，已经存在了 (5,5)，(13,13)，(16,16)，(17,17)，(21,21) 这 5 个键值对，目前他们在 Hashtable 中的位置如下：
 
-<div align="center"> <img src="../pics/hashtable1.png" width=""/></div><br/>
+<div align="center"> <img src="assets/hashtable1.png" width=""/></div><br/>
 
 
 
@@ -1771,13 +1771,13 @@ List list = Arrays.asList(1,2,3);
 
 
 
-<div align="center"> <img src="../pics/hashtable2.png" width=""/></div><br/>
+<div align="center"> <img src="assets/hashtable2.png" width=""/></div><br/>
 
 
 
 然后我们现在再插入一个，put(33,33)，key=33 的索引为 3，并且在链表中也不存在 key=33 的 Entry，所以将该节点插入链表的第一个位置。 
 
-<div align="center"> <img src="../pics/hashtable3.png" width=""/></div><br/>
+<div align="center"> <img src="assets/hashtable3.png" width=""/></div><br/>
 
 
 
@@ -1849,7 +1849,7 @@ public static void main(String[] args) {
 
 　　当客户端发送一个请求到服务器，如果该请求中带有参数，服务器端会将 参数名-参数值 作为 key-value 保存在 HashMap 中。如果有人恶意构造请求，在请求中加入大量相同 hash 值的 String 参数名（key），那么在服务器端用于存储这些 key-value 对的 HashMap 会被强行退化成链表，如图：
 
-<div align="center"> <img src="../pics/hash-to-badlink.png" width=""/></div>
+<div align="center"> <img src="assets/hash-to-badlink.png" width=""/></div>
 
 如果数据量足够大，那么在查找，插入时会占用大量 CPU，达到拒绝服务攻击的目的。
 
