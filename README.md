@@ -20,7 +20,10 @@
 
 <div align="center">  
     <p>
-📢📢📢<br/> 公告（2018/11/15）：
+        📢📢📢
+    </p>
+    <p>
+ 公告（2018/11/15）：
         <a href="notes/技术交流群.md">QQ技术交流群</a>
     </p>
     <p>
@@ -29,9 +32,15 @@
     <div>
         <br/>
         <p>
-            🔥🔥🔥 <br/>为极客打造，阅读体验更好的在线文档（与 GitHub 实时同步）
-           <br/>支持手机阅读，目录导航，Gitalk 评论，搜索定位
-            <br/>
+            🔥🔥🔥
+        </p>
+        <p>
+             为极客打造，阅读体验更好的在线文档（与 GitHub 实时同步）
+        </p>
+        <p>
+            支持手机阅读，目录导航，Gitalk 评论，搜索定位
+        </p>
+        <p>
             📖 <a href="https://frank-lam.github.io/fullstack-tutorial/#/">点击，即可开始阅读！</a>
         </p>
     </div>
