@@ -146,9 +146,9 @@
             isInitialzed = true;
             // Restore active stylesheet
             document.addEventListener('DOMContentLoaded', function () {
-                setTimeout(function () {
-                    imgAdd();
-                }, 300)
+                // setTimeout(function () {
+                //     imgAdd();
+                // }, 300)
                 var activeHref = sessionStorage.getItem(sessionStorageKey);
 
                 if (activeHref) {
@@ -174,9 +174,9 @@
                     handleSwitch(dataHref, dataTitle);
                     evt.preventDefault();
                 }
-                setTimeout(function () {
-                    imgAdd();
-                }, 300)
+                // setTimeout(function () {
+                //     imgAdd();
+                // }, 300)
             });
         }
     }
