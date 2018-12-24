@@ -7,7 +7,8 @@
 - Java技术栈、微服务、分布式系统架构
 - Docker、Git工作流、正则表达式
 - from zero to hero
-- <script type="text/javascript" src="//quote.51.la/q?id=19815069&mb=4"></script>
+
+<script type="text/javascript" src="//quote.51.la/q?id=19815069&mb=4"></script>
 
 [Get Started](introduction)
 [GitHub](https://github.com/frank-lam/fullstack-tutorial)
