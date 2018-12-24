@@ -43,6 +43,12 @@
 
 - **Links**
 <!-- - [![Code](https://icongr.am/feather/code.svg?size=16&color=808080)GitHub](https://codesandbox.io/s/xv36w4695o) -->
-- [![Github](https://icongram.jgog.in/simple/github.svg?size=16)Github](https://github.com/frank-lam/fullstack-tutorial)
-<!-- - [![NPM](https://icongram.jgog.in/simple/npm.svg?colored&size=16)NPM](https://www.npmjs.com/package/docsify-themeable) -->
-<!-- - [![Sina](https://icongram.jgog.in/simple/twitter.svg?colored&size=16)@jhildenbiddle](http://twitter.com/jhildenbiddle) -->
+<!-- - [![Github](https://icongram.jgog.in/simple/github.svg?size=16)Github](https://github.com/frank-lam/fullstack-tutorial) -->
+- <a  target="_blank" href="https://zhuanlan.zhihu.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
+- <a target="_blank" href="http://blog.csdn.net/u012104219" rel="nofollow"><img src="https://img.shields.io/badge/CSDN-东风牧野-red.svg" alt="CSDN" data-canonical-src="" style="max-width:100%;"></a>
+- <a target="_blank" href="mailto:frank_lin@whu.edu.cn" rel="nofollow"><img src="https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-lightgrey.svg" alt="邮箱" data-canonical-src="" style="max-width:100%;"></a>
+- <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=593WvX0" rel="nofollow" ><img src="https://img.shields.io/badge/QQ技术交流群-862619503-green.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
+
+
+- **全栈开发社区**
+- <a  target="_blank" href="https://zhuanlan.zhihu.com/frankfeekr" rel="nofollow"><img src="https://raw.githubusercontent.com/frank-lam/fullstack-tutorial/master/assets/wechat-fullstack3.png" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
