@@ -8,6 +8,7 @@
 - Docker、Git工作流、正则表达式
 - from zero to hero
 
+<span id="page_view"></span>
 <script type="text/javascript" src="//quote.51.la/q?id=19815069&mb=4"></script>
 
 [Get Started](introduction)
