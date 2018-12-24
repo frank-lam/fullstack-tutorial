@@ -64,31 +64,31 @@
 
 ## 二、Java
 
-- [Java 基础概念](notes/JavaArchitecture/01%20Java%20基础.md)
+- [Java 基础概念](notes/JavaArchitecture/01-Java基础.md)
 
 　　基本概念、面向对象、关键字、基本数据类型与运算、字符串与数组、异常处理、Object 通用方法
 
-- [Java 集合框架](notes/JavaArchitecture/02%20Java%20集合框架.md)
+- [Java 集合框架](notes/JavaArchitecture/02-Java集合框架.md)
 
 　　数据结构 & 源码分析：ArrayList、Vector、LinkedList、HashMap、ConcurrentHashMap、HashSet、LinkedHashSet and LinkedHashMap
 
-- [Java 并发编程](notes/JavaArchitecture/03%20Java%20并发编程.md)
+- [Java 并发编程](notes/JavaArchitecture/03-Java并发编程.md)
 
 　　线程状态、线程机制、线程通信、J.U.C 组件、JMM、线程安全、锁优化
 
-- [Java I/O](notes/JavaArchitecture/04%20Java%20IO.md)
+- [Java I/O](notes/JavaArchitecture/04-Java-IO.md)
 
 　　磁盘操作、字节操作、字符操作、对象操作、网络操作、NIO
 
-- [Java 虚拟机](notes/JavaArchitecture/05%20Java%20虚拟机.md)
+- [Java 虚拟机](notes/JavaArchitecture/05-Java虚拟机.md)
 
 　　运行时数据区域、垃圾收集、内存分配机制、类加载机制、性能调优监控工具
 
-- [Java 设计模式](notes/JavaArchitecture/06%20设计模式.md)
+- [Java 设计模式](notes/JavaArchitecture/06-0设计模式.md)
 
 　　Java 常见的 10 余种设计模式，全 23 种设计模式逐步更新
 
-- [Java Web](notes/JavaArchitecture/07%20Java%20Web.md)
+- [Java Web](notes/JavaArchitecture/07-JavaWeb.md)
 
 　　包含 Servlet & JSP、Spring、SpringMVC、Mybatis、Hibernate、Structs2 核心思想，如 IOC、AOP 等思想。SSM 更详细请转向：[Spring](notes/JavaWeb/Spring.md) | [SpringMVC](https://github.com/frank-lam/SpringMVC_MyBatis_Learning) | [MyBatis](https://github.com/frank-lam/SpringMVC_MyBatis_Learning)
 
@@ -281,7 +281,7 @@
 
   集中式工作流，功能分支工作流， GitFlow 工作流，Forking 工作流，Pull Requests
 
-- [正则表达式](notes/EfficiencyTools/正则表达式.md)
+- [正则表达式](notes/正则表达式.md)
 
   常见符号含义，速查表
 
