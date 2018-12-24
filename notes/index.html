@@ -132,6 +132,18 @@
 
     <script type="text/javascript" src="//js.users.51.la/19815069.js"></script>
 
+    <script src="docsify/unpkg/gotop/jquery-2.1.0.js" charset="utf-8"></script>
+    <script src="docsify/unpkg/gotop/jquery.toTop.min.js" charset="utf-8"></script>
+
+    <script>
+        $('.footer--text').prepend(`<span>${$('.footer--text a').text()}</span>`)
+        $('.footer--text a').remove()
+        $(function () {
+          $('.to-top').toTop();
+        });
+      </script>
+
+        <a class="to-top" style="z-index:2000;font-size: 35px;color:#0e90d2;">🔝</a>
 
 </body>
 </html>
