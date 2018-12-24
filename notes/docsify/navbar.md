@@ -4,5 +4,5 @@
   - <a href="#" data-link-title="Simple Dark">深色</a>
 
 * About
-  * [联系作者](docs/about/author)
-  * [打赏一下](docs/about/donate)
+  * [联系作者](docsify/about/author)
+  * [打赏一下](docsify/about/donate)
