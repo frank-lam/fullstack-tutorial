@@ -41,7 +41,7 @@
             支持手机阅读，目录导航，Gitalk 评论，搜索定位
         </p>
         <p>
-            📖 <a href="https://frank-lam.github.io/fullstack-tutorial/#/">点击，即可开始阅读！</a>
+            <a href="https://frank-lam.github.io/fullstack-tutorial/#/">📖 点击，即可开始阅读！</a>
         </p>
     </div>
 </div>
