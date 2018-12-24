@@ -1686,6 +1686,118 @@ options 参数主要有 WNOHANG 和 WUNTRACED 两个选项，WNOHANG 可以使 w
 
 
 
+### kill
+
+kill命令用来删除执行中的程序或工作。kill可将指定的信息送至程序。预设的信息为SIGTERM(15),可将指定程序终止。若仍无法终止该程序，可使用SIGKILL(9)信息尝试强制删除程序。程序或工作的编号可利用[ps](http://man.linuxde.net/ps)指令或job指令查看。
+
+**语法** 
+
+```
+kill(选项)(参数)
+```
+
+**选项** 
+
+```
+-a：当处理当前进程时，不限制命令名和进程号的对应关系；
+-l <信息编号>：若不加<信息编号>选项，则-l参数会列出全部的信息名称；
+-p：指定kill 命令只打印相关进程的进程号，而不发送任何信号；
+-s <信息名称或编号>：指定要送出的信息；
+-u：指定用户。
+```
+
+**参数** 
+
+进程或作业识别号：指定要删除的进程或作业。
+
+**实例** 
+
+列出所有信号名称：
+
+```
+ kill -l
+ 1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL
+ 5) SIGTRAP      6) SIGABRT      7) SIGBUS       8) SIGFPE
+ 9) SIGKILL     10) SIGUSR1     11) SIGSEGV     12) SIGUSR2
+13) SIGPIPE     14) SIGALRM     15) SIGTERM     16) SIGSTKFLT
+17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP
+21) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU
+25) SIGXFSZ     26) SIGVTALRM   27) SIGPROF     28) SIGWINCH
+29) SIGIO       30) SIGPWR      31) SIGSYS      34) SIGRTMIN
+35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3  38) SIGRTMIN+4
+39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8
+43) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12
+47) SIGRTMIN+13 48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14
+51) SIGRTMAX-13 52) SIGRTMAX-12 53) SIGRTMAX-11 54) SIGRTMAX-10
+55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7  58) SIGRTMAX-6
+59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2
+63) SIGRTMAX-1  64) SIGRTMAX
+```
+
+只有第9种信号(SIGKILL)才可以无条件终止进程，其他信号进程都有权利忽略，**下面是常用的信号：**
+
+```
+HUP     1    终端断线
+INT     2    中断（同 Ctrl + C）
+QUIT    3    退出（同 Ctrl + \）
+TERM   15    终止
+KILL    9    强制终止
+CONT   18    继续（与STOP相反， fg/bg命令）
+STOP   19    暂停（同 Ctrl + Z）
+```
+
+先用ps查找进程，然后用kill杀掉：
+
+```
+ps -ef | grep vim
+root      3268  2884  0 16:21 pts/1    00:00:00 vim install.log
+root      3370  2822  0 16:21 pts/0    00:00:00 grep vim
+
+kill 3268
+kill 3268
+-bash: kill: (3268) - 没有那个进程
+```
+
+
+
+### killall
+
+killall命令使用进程的名称来杀死进程，使用此指令可以杀死一组同名进程。我们可以使用[kill](http://man.linuxde.net/kill)命令杀死指定进程PID的进程，如果要找到我们需要杀死的进程，我们还需要在之前使用[ps](http://man.linuxde.net/ps)等命令再配合[grep](http://man.linuxde.net/grep)来查找进程，而killall把这两个过程合二为一，是一个很好用的命令。
+
+**语法** 
+
+```
+killall(选项)(参数)
+```
+
+选项 
+
+```
+-e：对长名称进行精确匹配；
+-l：忽略大小写的不同；
+-p：杀死进程所属的进程组；
+-i：交互式杀死进程，杀死进程前需要进行确认；
+-l：打印所有已知信号列表；
+-q：如果没有进程被杀死。则不输出任何信息；
+-r：使用正规表达式匹配要杀死的进程名称；
+-s：用指定的进程号代替默认信号“SIGTERM”；
+-u：杀死指定用户的进程。
+```
+
+**参数** 
+
+进程名称：指定要杀死的进程名称。
+
+**实例** 
+
+杀死所有同名进程
+
+```
+killall vi
+```
+
+
+
 ## 17. 包管理工具
 
 RPM 和 DPKG 为最常见的两类软件包管理工具。RPM 全称为 Redhat Package Manager，最早由 Red Hat 公司制定实施，随后被 GNU 开源操作系统接受并成为很多 Linux 系统 (RHEL) 的既定软件标准。与 RPM 进行竞争的是基于 Debian 操作系统 (UBUNTU) 的 DEB 软件包管理工具 DPKG，全称为 Debian Package，功能方面与 RPM 相似。
@@ -2040,6 +2152,34 @@ https://www.cnblogs.com/linxiong945/p/4226211.html
 
 sshpass的安装使用 - 蓝凌的博客 - CSDN博客
 https://blog.csdn.net/qq_30553235/article/details/78711491
+
+
+
+
+
+## 29. 防火墙
+
+Centos中iptables和firewall防火墙开启、关闭、查看状态、基本设置等 - 菲宇运维 - CSDN博客
+https://blog.csdn.net/bbwangj/article/details/74502967
+
+
+
+linux如何查看端口被哪个进程占用？ - 晓容晓枫 - 博客园
+https://www.cnblogs.com/CEO-H/p/7794306.html
+
+
+
+
+
+1、lsof -i:端口号
+
+2、netstat -tunlp|grep 端口号
+
+都可以查看指定端口被哪个进程占用的情况
+
+
+
+
 
 
 
