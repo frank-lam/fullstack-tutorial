@@ -9,8 +9,8 @@
     <p>
         Hey, welcome to visit and start the computer science learning journey.
     </p>
-	<a href="https://frank-lam.github.io/fullstack-tutorial/#/">已经搭建阅读更加良好的在线文档<br/> GitHub 页面实时同步更新！ 点击阅读体验！</a>
 </div>
+
 
 
 
@@ -20,16 +20,19 @@
 
 <div align="center">  
     <p>
-公告（2018/11/15）：
+📣 公告（2018/11/15）：
         <a href="notes/技术交流群.md">QQ技术交流群</a>
     </p>
     <p>
         个人能力有限，欢迎志同道合的朋友们共同维护。<a href="notes/开源贡献.md">⊱ 开源小组，英雄招募令</a>
     </p>
     <div>
-        <a href="https://github.com/frank-lam/2019_campus_apply/issues/2" target="_blank">读者信箱（资料、意见、想法都可以在这里留言分享）</a>
+        <p>
+            🔥 阅读体验更好的在线文档（与 GitHub 实时同步！）<a href="https://frank-lam.github.io/fullstack-tutorial/#/">⊱ 点击阅读体验！</a>
+        </p>
     </div>
 </div>
+
 
 
 
