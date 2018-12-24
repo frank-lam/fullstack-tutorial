@@ -9,7 +9,6 @@
     <p>
         Hey, welcome to visit and start the computer science learning journey.
     </p>
-    <img src="assets/hot.svg" style="height:20px;"></img>
 	<a href="https://frank-lam.github.io/fullstack-tutorial/#/">已经搭建阅读更加良好的在线文档<br/> GitHub 页面实时同步更新！ 点击阅读体验！</a>
 </div>
 
