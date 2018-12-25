@@ -56,12 +56,13 @@
             我也为您打造了一款 Chrome 插件 <a href="https://github.com/fullstack-tutorial/github-markdown-toc">Chrome Extension：GitHub Markdown</a>
         </p>
         <p>
-            方便在 GitHub 长文阅读时，在侧边栏生成目录导航定位
+            方便在 GitHub 长文阅读时，在侧边栏生成标题目录定位
             </p>
         <p>
             🎅 特别鸣谢共同完成两位小伙伴：<a href="https://github.com/dxiaoqi">@dxiaoqi</a> <a href="https://github.com/dzeze">@dzeze</a>
     </div>
 </div>
+
 
 
 
