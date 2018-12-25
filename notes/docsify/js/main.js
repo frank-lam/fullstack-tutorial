@@ -168,11 +168,13 @@
 
                 // 方法二：
                 for(var i = 1; i < 20; i++){
-                    if($('#la_19815069 a')){
+                    if($('#la_19815069 a').length != 0){
                         break;
                     }
                     else{
-                        setTimeout(get51La, 200);
+                        setTimeout(function(){
+                            $('#la_19815069').append('<script type="text/javascript" src="//quote.51.la/q?id=19815069&mb=4"></script>');
+                        }, 200);
                     }
                 }
                 
@@ -198,10 +200,6 @@
         }
     }
 
-    // 获取流量统计数据
-    function get51La(){
-        $('#la_19815069').append('<script type="text/javascript" src="//quote.51.la/q?id=19815069&mb=4"></script>');
-    }
 
 
     // Main
