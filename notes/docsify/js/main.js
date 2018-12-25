@@ -155,14 +155,21 @@
                     handleSwitch(activeHref);
                 }
 
-                // document.querySelector(".markdown-section").click();
-                var getJs = true;
-                while(getJs){
-                    setTimeout(function () {
-                        $('#la_19815069').append('<script type="text/javascript" src="//quote.51.la/q?id=19815069&mb=4"></script>');
-                    }, 150)
-                    if($('#la_19815069 a')){
-                       getJs = false;
+                // 方法一：会出现时而可以加载，时而不能加载问题
+                // var getJs = true;
+                // while(getJs){
+                //     setTimeout(function () {
+                //         $('#la_19815069').append('<script type="text/javascript" src="//quote.51.la/q?id=19815069&mb=4"></script>');
+                //     }, 150)
+                //     if($('#la_19815069 a')){
+                //        getJs = false;
+                //     }
+                // }
+
+                // 方法二：
+                for(var i = 1; i < 20; i++){
+                    if(!$('#la_19815069 a')){
+                        setTimeout(get51La, 200);
                     }
                 }
                 
@@ -187,6 +194,12 @@
             });
         }
     }
+
+    // 获取流量统计数据
+    function get51La(){
+        $('#la_19815069').append('<script type="text/javascript" src="//quote.51.la/q?id=19815069&mb=4"></script>');
+    }
+
 
     // Main
     // =========================================================================
