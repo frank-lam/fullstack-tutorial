@@ -18,7 +18,6 @@
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: |
 | 算法<br />[📝](#一数据结构与算法) | Java<br/>[☕️](#二java) | Python<br />[🐍](#三python) | 前端<br />[🔗](#四前端) | 数据库<br/>[💾](#五数据库) | 操作系统<br/>[💻](#六操作系统) | 网络通信<br/>[☁️](#七网络通信) | 分布式<br/>[📃](#八分布式) | 机器学习<br/> [🔍](#九机器学习) |工具<br/>[🔨](#十工具) |Learn<br />[📚](#learn-books) |Talking<br />[💡](#talking-bulb) |
 
-
 <div align="center">  
     <p>
         📢📢📢
@@ -45,7 +44,25 @@
             📖 <a href="https://frank-lam.github.io/fullstack-tutorial/#/">点击，即刻开始阅读！</a>
         </p>
     </div>
+        <div>
+        <br/>
+        <p>
+            🔥🔥🔥
+        </p>
+        <p>
+             也许你特别钟爱 GitHub 的阅读体验，没关系
+        </p>
+        <p>
+            我也为您打造了一款 Chrome 插件 <a href="https://github.com/fullstack-tutorial/github-markdown-toc">Chrome Extension：GitHub Markdown</a>
+        </p>
+        <p>
+            方便在 GitHub 长文阅读时，在侧边栏生成目录导航定位
+            </p>
+        <p>
+            🎅 特别鸣谢共同完成两位小伙伴：<a href="https://github.com/dxiaoqi">@dxiaoqi</a> <a href="https://github.com/dzeze">@dzeze</a>
+    </div>
 </div>
+
 
 
 
