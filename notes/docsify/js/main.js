@@ -168,7 +168,10 @@
 
                 // 方法二：
                 for(var i = 1; i < 20; i++){
-                    if(!$('#la_19815069 a')){
+                    if($('#la_19815069 a')){
+                        break;
+                    }
+                    else{
                         setTimeout(get51La, 200);
                     }
                 }
