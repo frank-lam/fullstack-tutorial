@@ -3,9 +3,6 @@
 # 确保脚本抛出遇到的错误
 set -e
 
-# 先切换到根目录
-cd ../../
-
 
 rm gh-pages -rf; mkdir gh-pages; cp -r notes/* gh-pages/;
 cd gh-pages;
