@@ -155,9 +155,16 @@
                     handleSwitch(activeHref);
                 }
 
-               
                 // document.querySelector(".markdown-section").click();
-        
+                var getJs = true;
+                while(getJs){
+                    setTimeout(function () {
+                        $('#la_19815069').append('<script type="text/javascript" src="//quote.51.la/q?id=19815069&mb=4"></script>');
+                    }, 150)
+                    if($('#la_19815069 a')){
+                       getJs = false;
+                    }
+                }
                 
             });
 
