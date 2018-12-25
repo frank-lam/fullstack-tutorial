@@ -8,7 +8,7 @@
 - Docker、Git工作流、正则表达式
 - from zero to hero
 
-<span id="page_view"></span>
+<span id="la_19815069"></span>
 
 [Get Started](introduction)
 [GitHub](https://github.com/frank-lam/fullstack-tutorial)
