@@ -1,5 +1,5 @@
 sudo: required
-script: bash ./deploy.sh
+script: bash ./assets/deploy/deploy.sh
 branches:
   only:
   - master
