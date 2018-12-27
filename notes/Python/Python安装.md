@@ -170,17 +170,17 @@ pip3 -V  # V大写
 
 - 下载Mac安装包
 
-  ![Mac安装包](../../../Python%E6%80%BB%E7%BB%93/Python%E5%88%9D%E4%BD%93%E9%AA%8C/Python%E7%AE%80%E4%BB%8B/assets/Mac%E5%8C%85%E4%B8%8B%E8%BD%BD.png)
+  ![Mac安装包](assets/Mac包下载.png)
 
   ------
 
   > 根据系统位数,下载相应版本pkg安装即可
 
-  ![Mac下载1](../../../Python%E6%80%BB%E7%BB%93/Python%E5%88%9D%E4%BD%93%E9%AA%8C/Python%E7%AE%80%E4%BB%8B/assets/Mac%E4%B8%8B%E8%BD%BD1.png)
+  ![Mac下载1](assets/Mac下载1.png)
 
   - 双击安装即可
 
-    ![Mac安装](../../../Python%E6%80%BB%E7%BB%93/Python%E5%88%9D%E4%BD%93%E9%AA%8C/Python%E7%AE%80%E4%BB%8B/assets/Mac%E5%AE%89%E8%A3%85.png)
+    ![Mac安装](assets/Mac安装.png)
 
 ##### 验证
 
@@ -190,4 +190,4 @@ pip -V #v 大写
 python3
 ```
 
-![mac验证](../../../Python%E6%80%BB%E7%BB%93/Python%E5%88%9D%E4%BD%93%E9%AA%8C/Python%E7%AE%80%E4%BB%8B/assets/Mac%E9%AA%8C%E8%AF%81.png)
+![mac验证](assets/Mac验证.png)
