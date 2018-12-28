@@ -116,7 +116,7 @@
 
 　　运行时数据区域、垃圾收集、内存分配机制、类加载机制、性能调优监控工具
 
-- [Java 设计模式](notes/JavaArchitecture/06-0设计模式.md)
+- [Java 设计模式](notes/JavaArchitecture/06-Java设计模式.md)
 
 　　Java 常见的 10 余种设计模式，全 23 种设计模式逐步更新
 
@@ -316,6 +316,8 @@
 - [正则表达式](notes/正则表达式.md)
 
   常见符号含义，速查表
+
+- [什么是 TDD 及常见的测试方法](notes/软件测试.md)
 
 
 
