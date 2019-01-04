@@ -175,6 +175,11 @@ vim /var/log/docker
 
 
 
+在 Ubuntu 16.04 LTS 上 离线安装 Docker / Docker-compose - TonyZhang24 - 博客园
+https://www.cnblogs.com/atuotuo/p/9272368.html
+
+
+
 ## Docker 镜像加速器
 
 1. 加速器服务
