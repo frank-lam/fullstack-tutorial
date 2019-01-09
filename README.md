@@ -268,7 +268,7 @@
 
 - Zookeeper
 
-  分布式协调服务
+  分布式协调服务，服务注册发现
 
 - Dubbo、Thrift（RPC 框架）
 
