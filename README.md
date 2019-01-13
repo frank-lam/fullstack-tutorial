@@ -1,15 +1,5 @@
-![full stack developer tutorial](assets/fullstack-tutorial-2019-2.png)
+![full stack developer tutorial](assets/fullstack-tutorial-logo.svg)
 
-
-
-<div align="center">  
-    <p>
-        嗨，欢迎来做客，即刻开始 CS 学习之旅.
-    </p>
-    <p>
-        Hey, welcome to visit and start the computer science learning journey.
-    </p>
-</div>
 
 
 |              I              |           II           |           III           |           IV           |            V            |            VI            |        VII        |         VIII         | IX |            X            |            XI            |            XII            |
