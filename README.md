@@ -1,4 +1,4 @@
-![full stack developer tutorial](assets/1537592021705.png)
+![full stack developer tutorial](assets/fullstack-tutorial-2019-2.png)
 
 
 
@@ -10,8 +10,6 @@
         Hey, welcome to visit and start the computer science learning journey.
     </p>
 </div>
-
-
 
 
 |              I              |           II           |           III           |           IV           |            V            |            VI            |        VII        |         VIII         | IX |            X            |            XI            |            XII            |
