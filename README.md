@@ -234,6 +234,10 @@
 
   微服务简介、API 网关、服务注册发现、服务通信
 
+- 分布式锁
+
+  基于 Redis、MySQL、Zookeeper 的分布式锁实现
+
 - FastDFS
 
   轻量级分布式文件管理系统
@@ -317,7 +321,7 @@
 
 ## 十、工具
 
-- [Git](notes/Git.md)
+- [Git](notes/git-tutorial.md)
 
   基本概念，常见命令，速查表
 

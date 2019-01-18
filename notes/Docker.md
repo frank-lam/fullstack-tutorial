@@ -75,7 +75,10 @@
 
 Docker 容器化引擎，更详细请转向：[Docker_Tutorial: Docker 容器化引擎入门手册](https://github.com/frank-lam/Docker_Tutorial)
 
-> 本文内容均来自：【千锋-李卫民老师博客，推荐大家学习】http://www.funtl.com/
+> 参考资料：
+>
+> - http://www.funtl.com/
+> - [Docker —— 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/)
 >
 > 基于以上部分内容做一定的修改
 
