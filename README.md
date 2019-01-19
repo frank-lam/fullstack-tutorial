@@ -329,7 +329,7 @@
 
 - [Git](notes/git-tutorial.md)
 
-  基本概念，常见命令，速查表
+  学习指引，将用最极简的语言带你进入 Git 版本控制的世界
 
 - [Git 工作流](notes/Git工作流.md)
 
