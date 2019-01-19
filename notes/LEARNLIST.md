@@ -2,6 +2,8 @@
 
 在这部分，我将对阅读书籍和学习课程进程推荐，在课程中我将附带官网链接，图书则附京东和豆瓣链接，PDF 下载我会陆续更新。
 
+如果你有更好的学习资料，可以在 [issue#26](https://github.com/frank-lam/fullstack-tutorial/issues/26) 中留言
+
 
 
 程序员的武林秘籍
