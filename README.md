@@ -1,4 +1,6 @@
 ![full stack developer tutorial](assets/fullstack-tutorial-logo.png)
+[![Backers on Open Collective](https://opencollective.com/fullstack-tutorial/backers/badge.svg)](#backers)
+ [![Sponsors on Open Collective](https://opencollective.com/fullstack-tutorial/sponsors/badge.svg)](#sponsors) 
 
 |              I              |           II           |           III           |           IV           |            V            |            VI            |        VII        |         VIII         | IX |            X            |            XI            |            XII            |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: |
@@ -408,6 +410,36 @@
 
 
 
+## Contributors
+
+This project exists thanks to all the people who contribute. 
+<a href="https://github.com/frank-lam/fullstack-tutorial/graphs/contributors"><img src="https://opencollective.com/fullstack-tutorial/contributors.svg?width=890&button=false" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/fullstack-tutorial#backer)]
+
+<a href="https://opencollective.com/fullstack-tutorial#backers" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/fullstack-tutorial#sponsor)]
+
+<a href="https://opencollective.com/fullstack-tutorial/sponsor/0/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/fullstack-tutorial/sponsor/1/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/fullstack-tutorial/sponsor/2/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/fullstack-tutorial/sponsor/3/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/fullstack-tutorial/sponsor/4/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/fullstack-tutorial/sponsor/5/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/fullstack-tutorial/sponsor/6/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/fullstack-tutorial/sponsor/7/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/fullstack-tutorial/sponsor/8/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/fullstack-tutorial/sponsor/9/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/9/avatar.svg"></a>
+
+
+
 ### License
 
 　　本作品采用 [知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议](https://creativecommons.org/licenses/by-nc-sa/4.0/) 进行许可。使用者可以对本创作进行转载、节选、混编、二次创作，但不得运用于商业目的，且使用时须进行署名，采用本创作的内容必须同样采用本协议进行授权。
@@ -422,7 +454,7 @@
     <p>
         在颠覆世界的同时，也要好好关照自己。
     </p>
-<a  target="_blank" href="https://zhuanlan.zhihu.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
+<a  target="_blank" href="https://zhuanlan.zhihu.com/frankfeekr" rel="nofollow"><a href="#backers" alt="sponsors on Open Collective"><img src="https://opencollective.com/fullstack-tutorial/backers/badge.svg" /></a> <a href="#sponsors" alt="Sponsors on Open Collective"><img src="https://opencollective.com/fullstack-tutorial/sponsors/badge.svg" /></a> <img src="https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="http://blog.csdn.net/u012104219" rel="nofollow"><img src="https://img.shields.io/badge/CSDN-东风牧野-red.svg" alt="CSDN" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="mailto:frank_lin@whu.edu.cn" rel="nofollow"><img src="https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-lightgrey.svg" alt="邮箱" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=593WvX0" rel="nofollow" ><img src="https://img.shields.io/badge/QQ群-862619503-green.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
