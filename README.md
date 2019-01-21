@@ -359,37 +359,39 @@
 
 ## Talking :bulb:
 
-　　本仓库致力于成为一个全栈开发爱好者的学习指南，给初学者一个更明确的学习方向，同时也是对自己技能的强化和巩固。在架构师这条路上，希望和大家一起成长，帮助更多的计算机爱好者能够有一个明确的学习路径。持续不间断的维护本仓库，也欢迎有更多的极客们加入。
+本仓库致力于成为一个全栈开发爱好者的学习指南，给初学者一个更明确的学习方向，同时也是对自己技能的强化和巩固。在架构师这条路上，希望和大家一起成长，帮助更多的计算机爱好者能够有一个明确的学习路径。持续不间断的维护本仓库，也欢迎有更多的极客们加入。
 
-　　都说好记性不如烂笔头，定期的学习和整理必然对学习巩固有所帮助，这里通过索引的方式对全栈开发技术做一个系统分类，方便随时巩固和学习，当然还有面试。在学习这条路上难免会有很多盲点和学不完的知识。有道无术，术尚可求，掌握好思维能力才能应对千变万化的技术。不要把大脑当成硬盘，也不要做高速运转的 CPU，而修行自己的大脑成为一个搜索引擎，学会分析解决问题。
+都说好记性不如烂笔头，定期的学习和整理必然对学习巩固有所帮助，这里通过索引的方式对全栈开发技术做一个系统分类，方便随时巩固和学习，当然还有面试。在学习这条路上难免会有很多盲点和学不完的知识。有道无术，术尚可求，掌握好思维能力才能应对千变万化的技术。不要把大脑当成硬盘，也不要做高速运转的 CPU，而修行自己的大脑成为一个搜索引擎，学会分析解决问题。
 
-　　Since 20,May,2018
+Since 20,May,2018
 
 
 
 ## Reference
 
-　　个人的能力有限，在编写的过程中引用了诸多优秀的 GitHub 仓库。本项目的启发来自 [@CyC2018](https://github.com/CyC2018) 的学习笔记，是一个非常优秀的开源项目，在本仓库中部分内容引用文字和图例；引用了 [@计算所的小鼠标](https://github.com/CarpenterLee) 中对于 JCF 的源码分析和理解；引用了  [阿里面试题总结](https://www.nowcoder.com/discuss/5949) 中全部的面试题，并对面经进行了整理勘误，并进行了知识拓展和修改；引用了 [牛客网](https://www.nowcoder.com) 上的面试经验贴。也引用了知乎上的热门回答和优秀博客的回答。在这里特别鸣谢，我将每篇文章中做外链引用说明。
+个人的能力有限，在编写的过程中引用了诸多优秀的 GitHub 仓库。本项目的启发来自 [@CyC2018](https://github.com/CyC2018) 的学习笔记，是一个非常优秀的开源项目，在本仓库中部分内容引用文字和图例；引用了 [@计算所的小鼠标](https://github.com/CarpenterLee) 中对于 JCF 的源码分析和理解；引用了  [阿里面试题总结](https://www.nowcoder.com/discuss/5949) 中全部的面试题，并对面经进行了整理勘误，并进行了知识拓展和修改；引用了 [牛客网](https://www.nowcoder.com) 上的面试经验贴。也引用了知乎上的热门回答和优秀博客的回答。在这里特别鸣谢，我将每篇文章中做外链引用说明。
 
-　　文中我也推荐了学习的书籍和学习课程，都将附着上最高清、最形象的配图进行讲解。在文中的配图都来自自己绘制的、博客、Github、PDF书籍等等，这里没法一一感谢，谢谢你们。
+文中我也推荐了学习的书籍和学习课程，都将附着上最高清、最形象的配图进行讲解。在文中的配图都来自自己绘制的、博客、Github、PDF书籍等等，这里没法一一感谢，谢谢你们。
 
-　　推荐一些优秀的开源项目，供大家参考，[reference](notes/reference.md)。
+推荐一些优秀的开源项目，供大家参考，[reference](notes/reference.md)。
 
 
 
 ## Contributors
 
-　　This project exists thanks to all the people who contribute. 
+This project exists thanks to all the people who contribute. 
 
-　　感谢以下伙伴们对于本仓库的贡献，如想加入本开源项目，请联系笔者。[如何给我的仓库贡献？](notes/docs/如何给我的仓库贡献.md)
+感谢以下伙伴们对于本仓库的贡献，如想加入本开源项目，请联系笔者。[如何给我的仓库贡献？](notes/docs/如何给我的仓库贡献.md)
 
-<a href="https://github.com/frank-lam/fullstack-tutorial/graphs/contributors" style="margin-left:25px"><img src="https://opencollective.com/fullstack-tutorial/contributors.svg?width=890&button=false" /></a>
+<a href="https://github.com/frank-lam/fullstack-tutorial/graphs/contributors"><img src="https://opencollective.com/fullstack-tutorial/contributors.svg?width=890&button=false" /></a>
+
+
 
 ## License
 
-　　使用者可以对本创作进行转载、节选、混编、二次创作，但不得运用于商业目的，且使用时须进行署名，采用本创作的内容必须同样采用本协议进行授权。
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
-　　<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+Copyright (c) 2018-present, Frank Lam
 
 
 
