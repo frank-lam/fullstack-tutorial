@@ -379,28 +379,11 @@
 
 ## Contributors
 
-This project exists thanks to all the people who contribute. 
+　　This project exists thanks to all the people who contribute. 
 
-感谢以下伙伴们对于本仓库的贡献，如想加入本开源项目，请联系笔者。[如何给我的仓库贡献？](notes/docs/如何给我的仓库贡献.md)
+　　感谢以下伙伴们对于本仓库的贡献，如想加入本开源项目，请联系笔者。[如何给我的仓库贡献？](notes/docs/如何给我的仓库贡献.md)
 
-<a href="https://github.com/frank-lam/fullstack-tutorial/graphs/contributors"><img src="https://opencollective.com/fullstack-tutorial/contributors.svg?width=890&button=false" /></a>
-
-
-
-## Backers
-
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/fullstack-tutorial#backer)]
-
-<a href="https://opencollective.com/fullstack-tutorial#backers" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/backers.svg?width=890"></a>
-
-## Sponsors
-
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/fullstack-tutorial#sponsor)]
-
-<a href="https://opencollective.com/fullstack-tutorial/sponsor/0/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/fullstack-tutorial/sponsor/1/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/fullstack-tutorial/sponsor/2/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/2/avatar.svg"></a>
-
+<a href="https://github.com/frank-lam/fullstack-tutorial/graphs/contributors" style="margin-left:25px"><img src="https://opencollective.com/fullstack-tutorial/contributors.svg?width=890&button=false" /></a>
 
 ## License
 
