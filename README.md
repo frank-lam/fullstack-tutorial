@@ -379,9 +379,9 @@ Since 20,May,2018
 
 ## Contributors
 
-This project exists thanks to all the people who contribute. 
+Thank you to all the people who already contributed to fullstack-tutorial !
 
-感谢以下伙伴们对于本仓库的贡献，如想加入本开源项目，请联系笔者。[如何给我的仓库贡献？](notes/docs/如何给我的仓库贡献.md)
+Please make sure to read the [Contributing Guide/如何给我的仓库贡献](notes/docs/如何给我的仓库贡献.md) before making a pull request. 
 
 <a href="https://github.com/frank-lam/fullstack-tutorial/graphs/contributors"><img src="https://opencollective.com/fullstack-tutorial/contributors.svg?width=890&button=false" /></a>
 
