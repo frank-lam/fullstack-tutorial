@@ -367,7 +367,7 @@
 
 
 
-### Reference
+## Reference
 
 　　个人的能力有限，在编写的过程中引用了诸多优秀的 GitHub 仓库。本项目的启发来自 [@CyC2018](https://github.com/CyC2018) 的学习笔记，是一个非常优秀的开源项目，在本仓库中部分内容引用文字和图例；引用了 [@计算所的小鼠标](https://github.com/CarpenterLee) 中对于 JCF 的源码分析和理解；引用了  [阿里面试题总结](https://www.nowcoder.com/discuss/5949) 中全部的面试题，并对面经进行了整理勘误，并进行了知识拓展和修改；引用了 [牛客网](https://www.nowcoder.com) 上的面试经验贴。也引用了知乎上的热门回答和优秀博客的回答。在这里特别鸣谢，我将每篇文章中做外链引用说明。
 
@@ -377,41 +377,34 @@
 
 
 
-### Contributors
+## Contributors
 
-This project exists thanks to all the people who contribute. [【开源贡献】如何给我的仓库贡献？](notes/docs/如何给我的仓库贡献.md)
+This project exists thanks to all the people who contribute. 
+
+感谢以下伙伴们对于本仓库的贡献，如想加入本开源项目，请联系笔者。[如何给我的仓库贡献？](notes/docs/如何给我的仓库贡献.md)
+
 <a href="https://github.com/frank-lam/fullstack-tutorial/graphs/contributors"><img src="https://opencollective.com/fullstack-tutorial/contributors.svg?width=890&button=false" /></a>
 
 
 
-### Backers
+## Backers
 
 Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/fullstack-tutorial#backer)]
 
 <a href="https://opencollective.com/fullstack-tutorial#backers" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/backers.svg?width=890"></a>
 
-
-
-### Sponsors
+## Sponsors
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/fullstack-tutorial#sponsor)]
 
 <a href="https://opencollective.com/fullstack-tutorial/sponsor/0/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/0/avatar.svg"></a>
 <a href="https://opencollective.com/fullstack-tutorial/sponsor/1/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/1/avatar.svg"></a>
 <a href="https://opencollective.com/fullstack-tutorial/sponsor/2/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/fullstack-tutorial/sponsor/3/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/fullstack-tutorial/sponsor/4/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/fullstack-tutorial/sponsor/5/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/fullstack-tutorial/sponsor/6/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/fullstack-tutorial/sponsor/7/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/fullstack-tutorial/sponsor/8/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/fullstack-tutorial/sponsor/9/website" target="_blank"><img src="https://opencollective.com/fullstack-tutorial/sponsor/9/avatar.svg"></a>
 
 
+## License
 
-### License
-
-　　本作品采用 [知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议](https://creativecommons.org/licenses/by-nc-sa/4.0/) 进行许可。使用者可以对本创作进行转载、节选、混编、二次创作，但不得运用于商业目的，且使用时须进行署名，采用本创作的内容必须同样采用本协议进行授权。
+　　使用者可以对本创作进行转载、节选、混编、二次创作，但不得运用于商业目的，且使用时须进行署名，采用本创作的内容必须同样采用本协议进行授权。
 
 　　<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
@@ -433,4 +426,3 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
     </p>
 </div>
 <div align="center"><img src="assets/wechat-fullstack.png" width="620"/></div><br/>
-
