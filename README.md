@@ -1,6 +1,4 @@
 ![full stack developer tutorial](assets/fullstack-tutorial-logo.png)
-[![Backers on Open Collective](https://opencollective.com/fullstack-tutorial/backers/badge.svg)](#backers)
- [![Sponsors on Open Collective](https://opencollective.com/fullstack-tutorial/sponsors/badge.svg)](#sponsors) 
 
 |              I              |           II           |           III           |           IV           |            V            |            VI            |        VII        |         VIII         | IX |            X            |            XI            |            XII            |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: |
