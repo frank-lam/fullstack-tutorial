@@ -617,3 +617,9 @@ socket是网络编程的基础，本文用打电话来类比socket通信中建�
 1. Socket基于TCP链接，数据传输有保障
 2. Socket适用于建立长时间链接
 3. Socket编程通常应用于即时通讯
+
+
+
+## 资料引用
+
+- 部分参考自：[CyC2018/CS-Notes](CyC2018/CS-Notes)
