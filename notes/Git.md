@@ -374,6 +374,9 @@ The key fingerprint is: # 01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db your_e
 到此为止，你本地的密钥对就生成了。
 
 
+(9+条消息)Mac OS 配置多个ssh-key - maoxinwen1的博客 - CSDN博客
+https://blog.csdn.net/maoxinwen1/article/details/80269299
+
 
 ### 2. 添加公钥到你的远程仓库（github）
 
