@@ -133,6 +133,12 @@
 ## 四、前端
 
 - [前端知识体系](notes/Frontend/前端知识体系.md)
+- Vue
+  - 第一个 Vue 应用程序
+  - Vue-cli 脚手架
+  - vue-router 路由
+  - vuex 状态管理
+- Webpack
 
 
 <details>
@@ -314,13 +320,12 @@
 
 
 ## 九、机器学习
+
+- [深度学习初识](notes/DeepLearning/深度学习初识.md)
+
 - 经典机器学习算法
 
   K 近邻算法、线性回归、梯度下降法、逻辑回归、支持向量机、决策树、集成学习
-
-- 基础框架
-
-  Tensorflow，Scikit-learn
 
 
 
