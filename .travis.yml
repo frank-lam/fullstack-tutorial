@@ -1,0 +1,7 @@
+sudo: required
+script: bash ./assets/deploy/deploy.sh
+branches:
+  only:
+  - master
+notifications:
+  email: true

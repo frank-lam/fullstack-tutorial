@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no, viewport-fit=cover"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A delightfully simple theme system for docsify.js. Features multiple themes with rich customization options, an improved desktop and mobile experience, and legacy browser support (IE10+).">
+    <meta name="google-site-verification" content="_EWJaM8G6xwMtEqemO4yN8WqSU2CaKVi3jTj0gLg48E">
+    <title>fullstack tutorial - 全栈开发指南</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="docsify/unpkg/docsify-themeable/dist/css/theme-simple.css" title="Simple">
+    <link rel="stylesheet" href="docsify/css/main.css">
+
+    <!-- Alternate Stylesheets -->
+    <link rel="stylesheet alternate" href="docsify/unpkg/docsify-themeable/dist/css/theme-defaults.css" title="Defaults">
+    <link rel="stylesheet alternate" href="docsify/unpkg/docsify-themeable/dist/css/theme-simple-dark.css" title="Simple Dark">
+
+    <!-- Test Stylesheets -->
+    <!-- <link rel="stylesheet" href="//unpkg.com/docsify/themes/vue.css"> -->
+    <!-- <link rel="stylesheet" href="//unpkg.com/docsify/themes/buble.css"> -->
+    <!-- <link rel="stylesheet" href="//unpkg.com/docsify/themes/dark.css"> -->
+    <!-- <link rel="stylesheet" href="//unpkg.com/docsify/themes/pure.css"> -->
+    <style>
+        .sidebar-nav a,
+        .sidebar nav a {
+            white-space: unset !important;
+        }
+
+        .sidebar-nav ul li ul {
+            font-size: 14px;
+        }
+
+        .sidebar-nav ul li strong {
+            font-size: 17px;
+        }
+
+        h1#fullstack-tutorial span {
+            color: hsl(204, 90%, 45%);
+        }
+
+        article#main a {
+            color: hsl(204, 90%, 45%);
+        }
+        /* 隐藏 Github TOC 目录 */
+        .markdown-section :first-child li{
+            display: none;
+        }
+        /* gittalk padding */
+        .gt-container {
+            /* padding-left: 20px;
+            padding-right: 20px; */
+            padding: 2rem 35px;
+        }
+        /* 隐藏 gitalk 版本号 */
+        .gt-copyright {
+            display: none;
+        }
+        /* 正文CSS padding */
+        article#main {
+            padding: 2rem 35px;
+        }
+        /* 访问量显示 */
+        span#la_19815069 a {
+            text-decoration: none;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <!-- JavaScript -->
+    <script>
+        window.$docsify = {
+            loadNavbar: true,
+            loadNavbar: 'docsify/navbar.md',
+            // basePath: '/docs/notes',
+            // GENERAL
+            // -----------------------------------------------------------------
+            name: 'fullstack tutorial',
+            repo: 'https://github.com/frank-lam/fullstack-tutorial',
+            coverpage: 'docsify/coverpage.md',
+            homepage: 'introduction.md',
+            loadSidebar: 'docsify/sidebar.md',
+
+            // NAVIGATION
+            // -----------------------------------------------------------------
+            alias: {
+                '.*?/changelog': 'https://unpkg.com/docsify-themeable/CHANGELOG.md',
+            },
+            auto2top: true,
+            maxLevel: 3,
+            subMaxLevel: 2,
+
+            // PLUGINS
+            // -----------------------------------------------------------------
+            executeScript: true,
+            ga: 'UA-100100910-3',
+            search: {
+                depth: 6,
+                noData: 'No results!',
+                placeholder: 'Search ...'
+            }
+        };
+    </script>
+
+    <script src="docsify/js/main.js"></script>
+
+    <script src="docsify/unpkg/docsify/lib/plugins/emoji.js"></script>
+    <script src="docsify/unpkg/docsify/docsify.min.js"></script>
+    <script src="docsify/unpkg/docsify-themeable.min.js"></script>
+    <script src="docsify/unpkg/docsify-tabs.min.js"></script>
+    <script src="docsify/unpkg/docsify-copy-code.min.js"></script>
+
+    <script src="docsify/unpkg/docsify-pagination/dist/docsify-pagination.min.js"></script>
+
+    <!-- <script src="https://unpkg/docsify/lib/plugins/external-script.min.js"></script> -->
+    <script src="docsify/unpkg/docsify/lib/plugins/ga.min.js"></script>
+    <script src="docsify/unpkg/docsify/lib/plugins/search.js"></script>
+    <script src="docsify/unpkg/docsify/lib/plugins/zoom-image.min.js"></script>
+    <script src="docsify/unpkg/prismjs/components/prism-bash.min.js"></script>
+
+    <link rel="stylesheet" href="docsify/unpkg/gitalk/dist/gitalk.css">
+
+    <script src="docsify/unpkg/docsify/lib/plugins/gitalk.min.js"></script>
+    <script src="docsify/unpkg/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        const gitalk = new Gitalk({
+            clientID: '67ba8c5b2ac4f27e47e1',
+            clientSecret: 'bea349f1e21ab64348ddb365901b3f6daf9f0697',
+            repo: 'fullstack-tutorial-gitalk',
+            owner: 'frank-lam',
+            admin: ['frank-lam'],
+            id: location.pathname,
+            // distractionFreeMode: false
+        })
+    </script>
+
+    <script type="text/javascript" src="//js.users.51.la/19815069.js"></script>
+
+    <script src="docsify/unpkg/gotop/jquery-2.1.0.js" charset="utf-8"></script>
+    <script src="docsify/unpkg/gotop/jquery.toTop.min.js" charset="utf-8"></script>
+
+    <script>
+        $('.footer--text').prepend(`<span>${$('.footer--text a').text()}</span>`)
+        $('.footer--text a').remove()
+        $(function () {
+          $('.to-top').toTop();
+        });
+    </script>
+    <a class="to-top" style="z-index:2000;font-size: 35px;color:#0e90d2;">🔝</a>
+</body>
+</html>

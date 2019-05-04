@@ -35,6 +35,9 @@
 
 本文部分内容引用来自：【千锋-李卫民老师博客，推荐大家学习】http://www.funtl.com/
 
+A simple, interactive and fun playground to learn Docker：[Play with Docker](https://labs.play-with-docker.com/)
+
+
 ## 初探 Docker
 
 ### 什么是 Docker
@@ -172,6 +175,11 @@ vim /var/log/docker
 
 
 
+在 Ubuntu 16.04 LTS 上 离线安装 Docker / Docker-compose - TonyZhang24 - 博客园
+https://www.cnblogs.com/atuotuo/p/9272368.html
+
+
+
 ## Docker 镜像加速器
 
 1. 加速器服务
@@ -221,6 +229,8 @@ Redirecting to /bin/systemctl start docker.service
 - -v：是挂在宿机目录， /centos_dir 是宿机目录，/docker_dir 是当前 Docker 容器的目录，宿机目录必须是绝对的。
 - -p：端口映射
 - --name：是给容器起一个名字，可省略，省略的话 docker 会随机产生一个名字
+
+- --restart：always
 
 ### 3. 启动的容器列表
 
@@ -370,6 +380,8 @@ Docker-Compose 是一个部署多个容器的简单但是非常必要的工具.
 - [CentOS7下安装Docker-Compose - YatHo - 博客园](https://www.cnblogs.com/YatHo/p/7815400.html)
 
 ## docker-compose.yml 规范
+
+
 
 
 
