@@ -115,7 +115,9 @@ GitFlow 工作流通过为功能开发、发布准备和维护分配独立的分
 
 ## Forking 工作流
 
-Forking 工作流是分布式工作流，充分利用了 Git 在分支和克隆上的优势。可以安全可靠地管理大团队的开发者（developer），并能接受不信任贡献者（contributor）的提交。
+Forking 工作流是分布式工作流，充分利用了 Git 在分支和克隆上的优势。可以安全可靠地管理大团队的开发者（developer），并能接受不信任贡献者（contributor）的提交。x
+
+
 
 
 
