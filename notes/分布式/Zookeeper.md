@@ -81,10 +81,10 @@ ZooKeeper是一个分布式的，开放源码的分布式协调服务，是Googl
 
 LOOKING：寻找Leader状态，处于该状态需要进入选举流程
 LEADING：领导者状态，处于该状态的节点说明是角色已经是Leader
-FOLLOWING：跟随者状态，表示Leader已经选举出来，当前节点角色是follower
-OBSERVER：观察者状态，表明当前节点角色是observer
+FOLLOWING：跟随者状态，表示Leader已经选举出来，当前节点角色是Follower
+OBSERVER：观察者状态，表明当前节点角色是Observer，Observer节点不参与投票，只负责同步Leader状态
 
-## 数据模型
+## Zookeeper数据模型
 
 - Zookeeper的数据结构非常类似于文件系统。是由节点组成的树形结构。不同的是文件系统是由文件夹和文件来组成的树，而Zookeeper中是由Znode来组成的树。每一个Znode里都可以存放一段数据，Znode下还可以挂载零个或多个子Znode节点，从而组成一个树形结构。
 - 节点类型
@@ -93,39 +93,44 @@ OBSERVER：观察者状态，表明当前节点角色是observer
   - 临时节点：一个客户端连接创建的临时节点，会在当客户端会话结束时立即自动删除。
   - 持久节点：创建出来后只要不删除就不会消失，无论客户端是否连接。
 
-## 常见客户端Shell操作
+## 常用Shell操作
 
 - 连接zookeeper客户端
-  `bin/zkCli.sh [-server ip:port]` #如不指定ip、port，则默认连接本机的ZkServer
-- 列出：
-  `ls path [watch]`#列出所有数据节点
-- 创建：
-  `create [-s] [-e] path data acl` #创建数据节点
-  -s表示顺序节点 -e表示临时节点
-  --acl 指定权限控制
-- 获取：
+  `bin/zkCli.sh [-server ip:port]` 
+- 列出节点：
+  `ls path [watch]`
+- 创建节点：
+  `create [-s] [-e] path data acl` 
+- 获取节点：
   `get path [watch]`
-- 更新：
-  `set path data [version]`#data 为要更新的内容 version指定要基于哪个版本的数据进行更新
-- 删除：
-  `delete path [version]`#path 为要删除的路径 version指定要基于哪个版本进行删除
-  --注意，要删除的节点下必须没有子节点
+- 更新操作：
+  `set path data [version]`
+- 删除操作：
+  `delete path [version]`
 
 ## Zookeeper原理
 
-- 为了保证Zookeeper集群数据一致性，由leader节点负责决策，其他follower节点负责投票。
-- 某一时刻集群里只能有且仅有一个leader。
-- leader可以执行增删改和查询操作，而follower只能进行查询操作。
-- 所有的更新操作都会被转交给leader来处理，leader批准的任务，再发送给follower去执行来保证和leader的一致性。
-- 由于网络是不稳定的，为了保证任务顺序的一致，所有的任务都被赋予一个事务id（zxid）它代表了提案的整体顺序。zxid由两部分组成：周期（epoch）和计数器（counter）。在当前的实现中zxid是一个64位整数，高32位为epoch，低32位为counter，因此zxid也可以记为一个整数对(epoch, count)。epoch的值代表leader的改变，每当选举产生一个新的leader就会生成一个它独有的epoch编号。ZooKeeper使用了一种简单的算法将一个唯一的zxid赋给提案：leader对每个提案只是简单地递增zxid以得到一个唯一的zxid值。Leader激活算法会保证只有一个leader使用一个特定的epoch，因此这个简单的算法可以保证每个提案都有一个唯一的id。
-- 当集群内的节点过半通过，leader就可以认为一个客户端请求提案通过
+- 为了保证Zookeeper集群数据一致性，由Leader节点负责决策，其他Follower节点负责投票。
+- 某一时刻集群里只能有且仅有一个Leader。
+- Leader可以执行增删改和查询操作，而Follower只能进行查询操作。
+- 所有的更新操作都会被转交给Leader来处理，Leader批准的任务，再发送给Follower去执行来保证和Leader的一致性。
+- 由于网络是不稳定的，为了保证任务顺序的一致，所有的任务都被赋予一个事务id（zxid）它代表了提案的整体顺序。zxid由两部分组成：周期（epoch）和计数器（counter）。在当前的实现中zxid是一个64位整数，高32位为epoch，低32位为counter，因此zxid也可以记为一个整数对(epoch, count)。epoch的值代表Leader的改变，每当选举产生一个新的Leader就会生成一个它独有的epoch编号。ZooKeeper使用了一种简单的算法将一个唯一的zxid赋给提案：Leader对每个提案只是简单地递增zxid以得到一个唯一的zxid值。Leader激活算法会保证只有一个Leader使用一个特定的epoch，因此这个简单的算法可以保证每个提案都有一个唯一的id。
+- 当集群内的节点过半通过，Leader就可以认为一个客户端请求提案通过
 
-## 选举机制和Zab原子广播
+## 原子广播
 
-Zookeeper是通过选举产生Leader。。。
+Zookeeper的核心是原子广播，这个机制保证了各个server之间的同步。实现这个机制的协议叫做Zab协议。Zab协议有恢复模式和广播模式两种模式。当服务启动或者在Leader崩溃后，Zab就进入了恢复模式，当领导者被选举出来，且大多数server的完成了和Leader的状态同步以后，恢复模式就结束了。
+当服务启动或者在领导者崩溃后，Zab就进入了恢复模式，当领导者被选举出来，且大多数server的完成了和Leader的状态同步以后，恢复模式就结束了。状态同步保证了Leader和server具有相同的系统状态。
+当Leader和多数的Follower进行了状态同步后，就进入了广播状态。此时当一个Server加入Zookeeper，它会在恢复模式下启动,发现Leader并和Leader进行状态同步。同步完成后，它也参与消息广播。Zookeeper服务一直维持在Broadcast状态，直到Leader崩溃或者Leader失去了大部分的Follower支持。
 
+## 选主流程
 
+上文已说当Leader崩溃或者Leader失去大多数的follower时，Zookeeper处于恢复模式，在恢复模式下需要重新选举出一个新的Leader，让所有的 Server都恢复到一个正确的状态。Zookeeper的选举算法有两种：一种是基于basic paxos实现的，另外一种是基于fast paxos算法实现的。系统默认的选举算法为fast paxos。
 
-## 过半同意机制
+Basic paxos：当前Server发起选举的线程,向所有Server发起询问,选举线程收到所有回复,计算zxid最大Server,并推荐此为Leader，若此提议获得n/2+1票通过（过半同意）,此为Leader，否则重复上述流程，直到Leader选出。
 
-当只有leader或少数机器批准执行某个任务时，则极端情况下leader和这些少量机器挂掉，则无法保证新leader知道之前已经批准该任务，这样就违反了数据可靠性。所以leader在批准一个任务之前应该保证集群里大部分的机器知道这个提案，这样即使leader挂掉，选举出来的新leader也会从其他follower处获取这个提案。而如果leader要求所有follower都同意才执行提案也不行，此时若有一个机器挂掉，leader就无法继续工作，这样的话整个集群相当于单节点，无法保证可靠性
+Fast paxos:某Server首先向所有Server提议自己要成为Leader，当其它Server收到提议以后，解决epoch和 zxid的冲突，并接受对方的提议，然后向对方发送接受提议完成的消息，重复这个流程，最后一定能选举出Leader。(即提议方解决其他所有epoch和 zxid的冲突,即为Leader)。
+
+## 过半同意
+
+当只有Leader或少数机器批准执行某个任务时，则极端情况下Leader和这些少量机器挂掉，则无法保证新Leader知道之前已经批准该任务，这样就违反了数据可靠性。所以Leader在批准一个任务之前应该保证集群里大部分的机器知道这个提案，这样即使Leader挂掉，选举出来的新Leader也会从其他Follower处获取这个提案。而如果Leader要求所有Follower都同意才执行提案也不行，此时若有一个机器挂掉，Leader就无法继续工作，这样的话整个集群相当于单节点，无法保证可靠性
