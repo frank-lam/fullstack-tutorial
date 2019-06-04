@@ -19,7 +19,7 @@
 
 - **Partition tolerance** 指的是在分布式系统中，由于不同的服务器之间可能无法通讯，所以需要一定的容错机制，默认情况下认为 Partition tolerance总是成立。
 
-- **Consistency **指的是在分布式系统中，不同的服务器上所存储的数据需要一致，可以理解成当服务器A执行操作数据的指令后，服务器B上也要应用同样的操作以保证其所提供的数据同A中的一致。
+- **Consistency** 指的是在分布式系统中，不同的服务器上所存储的数据需要一致，可以理解成当服务器A执行操作数据的指令后，服务器B上也要应用同样的操作以保证其所提供的数据同A中的一致。
 - **Availability** 指的是分布式系统中，每当服务端收到客户端的请求，服务端都必须给出回应。
 
 为什么说这三者不能同时满足呢，其主要原因在于Consistency 和 Availability不可能同时成立。
@@ -92,8 +92,11 @@ ZooKeeper是一个分布式的，开放源码的分布式协调服务，是Googl
 ## Zookeeper节点状态
 
 LOOKING：寻找Leader状态，处于该状态需要进入选举流程
+
 LEADING：领导者状态，处于该状态的节点说明是角色已经是Leader
+
 FOLLOWING：跟随者状态，表示Leader已经选举出来，当前节点角色是Follower
+
 OBSERVER：观察者状态，表明当前节点角色是Observer，Observer节点不参与投票，只负责同步Leader状态
 
 ## Zookeeper数据模型
