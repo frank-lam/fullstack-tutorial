@@ -3,45 +3,45 @@
 - [前言](#前言)
 - [一、概述](#一概述)
     - [集合框架图](#集合框架图)
-    - [Collection](#collection)
-    - [Map](#map)
+    - [Collection](#Collection)
+    - [Map](#Map)
     - [工具类](#工具类)
     - [通用实现](#通用实现)
 - [二、深入源码分析](#二深入源码分析)
-    - [ArrayList](#arraylist)
+    - [ArrayList](#ArrayList)
         - [1. 概览](#1-概览)
         - [2. 序列化](#2-序列化)
         - [3. 扩容](#3-扩容)
         - [4. 删除元素](#4-删除元素)
-        - [5. Fail-Fast](#5-fail-fast)
-    - [Vector](#vector)
+        - [5. Fail-Fast](#5-Fail-Fast)
+    - [Vector](#Vector)
         - [1. 同步](#1-同步)
-        - [2. ArrayList 与 Vector](#2-arraylist-与-vector)
-        - [3. Vector 替代方案](#3-vector-替代方案)
-            - [synchronizedList](#synchronizedlist)
-            - [CopyOnWriteArrayList](#copyonwritearraylist)
-    - [LinkedList](#linkedlist)
+        - [2. ArrayList 与 Vector](#2-ArrayList-与-Vector)
+        - [3. Vector 替代方案](#3-Vector-替代方案)
+            - [synchronizedList](#synchronizedList)
+            - [CopyOnWriteArrayList](#CopyOnWriteArrayList)
+    - [LinkedList](#LinkedList)
         - [1. 概览](#1-概览-1)
         - [2. add()](#2-add)
         - [3. remove()](#3-remove)
         - [4. get()](#4-get)
         - [5. 总结](#5-总结)
-        - [6. ArrayList 与 LinkedList](#6-arraylist-与-linkedlist)
-    - [HashMap](#hashmap)
+        - [6. ArrayList 与 LinkedList](#6-ArrayList-与-LinkedList)
+    - [HashMap](#HashMap)
         - [1. 存储结构](#1-存储结构)
             - [JDK1.7 的存储结构](#jdk17-的存储结构)
             - [JDK1.8 的存储结构](#jdk18-的存储结构)
         - [2. 重要参数](#2-重要参数)
         - [3. 确定哈希桶数组索引位置](#3-确定哈希桶数组索引位置)
-        - [4. 分析HashMap的put方法](#4-分析hashmap的put方法)
+        - [4. 分析HashMap的put方法](#4-分析HashMap的put方法)
         - [5. 扩容机制](#5-扩容机制)
         - [6. 线程安全性](#6-线程安全性)
         - [7. JDK1.8与JDK1.7的性能对比](#7-jdk18与jdk17的性能对比)
         - [8. Hash较均匀的情况](#8-hash较均匀的情况)
         - [9. Hash极不均匀的情况](#9-hash极不均匀的情况)
-        - [10. HashMap与HashTable](#10-hashmap与hashtable)
+        - [10. HashMap与Hashtable](#10-HashMap与Hashtable)
         - [11. 小结](#11-小结)
-    - [ConcurrentHashMap](#concurrenthashmap)
+    - [ConcurrentHashMap](#ConcurrentHashMap)
         - [1. 概述](#1-概述)
         - [2. 存储结构](#2-存储结构)
         - [2. size 操作](#2-size-操作)
@@ -52,25 +52,25 @@
         - [2. 构造函数](#2-构造函数)
         - [3. add()](#3-add)
         - [4. 总结](#4-总结)
-    - [LinkedHashSet and LinkedHashMap](#linkedhashset-and-linkedhashmap)
+    - [LinkedHashSet and LinkedHashMap](#LinkedHashSet-and-LinkedHashMap)
         - [1. 概览](#1-概览-2)
         - [2. get()](#2-get)
         - [3. put()](#3-put)
         - [4. remove()](#4-remove)
-        - [5. LinkedHashSet](#5-linkedhashset)
-        - [6. LinkedHashMap经典用法](#6-linkedhashmap经典用法)
+        - [5. LinkedHashSet](#5-LinkedHashSet)
+        - [6. LinkedHashMap经典用法](#6-LinkedHashMap经典用法)
 - [三、容器中的设计模式](#三容器中的设计模式)
     - [迭代器模式](#迭代器模式)
     - [适配器模式](#适配器模式)
 - [四、面试指南](#四面试指南)
-    - [1. ArrayList和LinkedList区别](#1-arraylist和linkedlist区别)
-    - [2. HashMap和HashTable区别，HashMap的key类型](#2-hashmap和hashtable区别hashmap的key类型)
-    - [3. HashMap和ConcurrentHashMap](#3-hashmap和concurrenthashmap)
-    - [4. Hashtable的原理](#4-hashtable的原理)
+    - [1. ArrayList和LinkedList区别](#1-ArrayList和LinkedList区别)
+    - [2. HashMap和Hashtable区别，HashMap的key类型](#2-HashMap和Hashtable区别HashMap的key类型)
+    - [3. HashMap和ConcurrentHashMap](#3-HashMap和ConcurrentHashMap)
+    - [4. Hashtable的原理](#4-Hashtable的原理)
     - [5. Hash冲突的解决办法](#5-hash冲突的解决办法)
     - [6. 什么是迭代器](#6-什么是迭代器)
     - [7. 构造相同hash的字符串进行攻击，这种情况应该怎么处理？JDK7如何处理](#7-构造相同hash的字符串进行攻击这种情况应该怎么处理jdk7如何处理)
-    - [8. Hashmap为什么大小是2的幂次](#8-hashmap为什么大小是2的幂次)
+    - [8. HashMap为什么大小是2的幂次](#8-HashMap为什么大小是2的幂次)
 - [更新日志](#更新日志)
 
 <!-- /TOC -->
@@ -127,7 +127,7 @@
 
 - `TreeMap`：线程不同步，基于 **红黑树** （Red-Black tree）的 NavigableMap 实现，能够把它保存的记录根据键排序，默认是按键值的升序排序，也可以指定排序的比较器，当用 Iterator 遍历 TreeMap 时，得到的记录是排过序的。
   - **TreeMap 底层通过红黑树（Red-Black tree）实现**，也就意味着 `containsKey()`, `get()`, `put()`, `remove()` 都有着 `log(n)` 的时间复杂度。其具体算法实现参照了《算法导论》。
-- `HashTable`：**线程安全**，HashMap 的迭代器 \(Iterator\) 是 `fail-fast` 迭代器。**HashTable 不能存储 NULL 的 key 和 value。**
+- `Hashtable`：**线程安全**，HashMap 的迭代器 \(Iterator\) 是 `fail-fast` 迭代器。**Hashtable 不能存储 NULL 的 key 和 value。**
 - `HashMap`：线程不同步。根据 `key` 的 `hashcode` 进行存储，内部使用静态内部类 `Node` 的数组进行存储，默认初始大小为 16，每次扩大一倍。当发生 Hash 冲突时，采用拉链法（链表）。JDK 1.8中：**当单个桶中元素个数大于等于8时，链表实现改为红黑树实现；当元素个数小于6时，变回链表实现。由此来防止hashCode攻击。**
   - Java HashMap 采用的是冲突链表方式。  
   - HashMap 是 Hashtable 的轻量级实现，可以接受为 null 的键值 (key\) 和值 \(value\)，而 Hashtable 不允许。
@@ -1164,9 +1164,9 @@ class Key implements Comparable<Key> {
 
 
 
-### 10. HashMap与HashTable
+### 10. HashMap与Hashtable
 
-1. HashTable 使用 synchronized 来进行同步。
+1. Hashtable 使用 synchronized 来进行同步。
 2. HashMap 可以插入键为 null 的 Entry。
 3. HashMap 的迭代器是 fail-fast 迭代器。
 4. HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
@@ -1196,17 +1196,17 @@ class Key implements Comparable<Key> {
 
 ### 1. 概述　　
 
-　　众所周知，哈希表是中非常高效，复杂度为 O(1) 的数据结构，在 Java 开发中，我们最常见到最频繁使用的就是 HashMap 和 HashTable，但是在线程竞争激烈的并发场景中使用都不够合理。
+　　众所周知，哈希表是中非常高效，复杂度为 O(1) 的数据结构，在 Java 开发中，我们最常见到最频繁使用的就是 HashMap 和 Hashtable，但是在线程竞争激烈的并发场景中使用都不够合理。
 
 　　**HashMap** ：先说 HashMap，HashMap 是**线程不安全**的，在并发环境下，可能会形成**环状链表**（扩容时可能造成），导致 get 操作时，cpu 空转，所以，在并发环境中使 用HashMap 是非常危险的。
 
-　　**HashTable** ： HashTable 和 HashMap的实现原理几乎一样，差别无非是：（1）HashTable不允许key和value为null；（2）HashTable是线程安全的。
+　　**Hashtable** ： Hashtable 和 HashMap的实现原理几乎一样，差别无非是：（1）Hashtable不允许key和value为null；（2）Hashtable是线程安全的。
 
-　　但是 HashTable 线程安全的策略实现代价却太大了，简单粗暴，get/put 所有相关操作都是 synchronized 的，这相当于给整个哈希表加了一把大锁，多线程访问时候，只要有一个线程访问或操作该对象，那其他线程只能阻塞，相当于将所有的操作串行化，在竞争激烈的并发场景中性能就会非常差。
+　　但是 Hashtable 线程安全的策略实现代价却太大了，简单粗暴，get/put 所有相关操作都是 synchronized 的，这相当于给整个哈希表加了一把大锁，多线程访问时候，只要有一个线程访问或操作该对象，那其他线程只能阻塞，相当于将所有的操作串行化，在竞争激烈的并发场景中性能就会非常差。
 
 <div align="center"> <img src="assets/hashtable-ds.png" width="600"/></div>
 
-　　HashTable 性能差主要是由于所有操作需要竞争同一把锁，而如果容器中有多把锁，每一把锁锁一段数据，这样在多线程访问时不同段的数据时，就不会存在锁竞争了，这样便可以有效地提高并发效率。这就是ConcurrentHashMap 所采用的 "**分段锁**" 思想。
+　　Hashtable 性能差主要是由于所有操作需要竞争同一把锁，而如果容器中有多把锁，每一把锁锁一段数据，这样在多线程访问时不同段的数据时，就不会存在锁竞争了，这样便可以有效地提高并发效率。这就是ConcurrentHashMap 所采用的 "**分段锁**" 思想。
 
 <div align="center"> <img src="assets/hashmap-ds.png" width="600"/></div><br/>
 
@@ -1710,16 +1710,16 @@ List list = Arrays.asList(1,2,3);
 
 - **ArrayList、LinkedList 和 Vector如何选择？**
   - 当对数据的主要操作为索引或只在集合的末端增加、删除元素时，使用 ArrayList 或 Vector 效率比较高；
-  - 当对数据的操作主要为制定位置的插入或删除操作时，使用 LinkedList 效率比较高；
+  - 当对数据的操作主要为指定位置的插入或删除操作时，使用 LinkedList 效率比较高；
   - 当在多线程中使用容器时（即多个线程会同时访问该容器），选用 Vector 较为安全；
 
 
 
-## 2. HashMap和HashTable区别，HashMap的key类型
+## 2. HashMap和Hashtable区别，HashMap的key类型
 
-- **Hash Map和HashTable的区别**  
+- **HashMap和Hashtable的区别**  
 
-  - Hashtable 的方法是同步的，HashMap 非同步，所以在多线程场合要手动同步
+  - Hashtable 的方法是同步的，HashMap 非同步，所以在多线程场合要手动同步。
   - Hashtable 不允许 null 值 (key 和 value 都不可以)，HashMap 允许 null 值( key 和 value 都可以)。 
   - 两者的遍历方式大同小异，Hashtable 仅仅比 HashMap 多一个 elements 方法。 
 
@@ -1727,30 +1727,30 @@ List list = Arrays.asList(1,2,3);
 
   - 两者也都可以通过 entrySet() 方法返回一个 Set ， 然后进行遍历处理。 
 
-  - HashTable 使用 Enumeration，HashMap 使用 Iterator。 
+  - Hashtable 使用 Enumeration，HashMap 使用 Iterator。 
   - 哈希值的使用不同，Hashtable 直接使用对象的 hashCode。而 HashMap 重新计算hash值，而且用于代替求模。 
   - Hashtable 中 hash 数组默认大小是11，增加的方式是 old*2+1。HashMap 中 hash 数组的默认大小是16，而且一定是 2 的指数。 
-  - HashTable 基于 Dictionary 类，而 HashMap 基于 AbstractMap 类 
+  - Hashtable 基于 Dictionary 类，而 HashMap 基于 AbstractMap 类 
 
 - **HashMap中的key可以是任何对象或数据类型吗** 
 
   - 可以为null，但不能是可变对象，如果是可变对象的话，对象中的属性改变，则对象 HashCode 也进行相应的改变，导致下次无法查找到已存在Map中的数据。 
   - 如果可变对象在 HashMap 中被用作键，那就要小心在改变对象状态的时候，不要改变它的哈希值了。我们只需要保证成员变量的改变能保证该对象的哈希值不变即可。 
 
-- **HashTable是线程安全的么** 
+- **Hashtable是线程安全的么** 
 
-  - HashTable 是线程安全的，其实现是在对应的方法上添加了 synchronized 关键字进行修饰，由于在执行此方法的时候需要获得对象锁，则执行起来比较慢。所以现在如果为了保证线程安全的话，使用 CurrentHashMap。 
+  - Hashtable 是线程安全的，其实现是在对应的方法上添加了 synchronized 关键字进行修饰，由于在执行此方法的时候需要获得对象锁，则执行起来比较慢。所以现在如果为了保证线程安全的话，使用 CurrentHashMap。 
 
 
 
 ## 3. HashMap和ConcurrentHashMap
 
 - **HashMap和Concurrent HashMap区别？** 
-  - HashMa p是非线程安全的，CurrentHashMap 是线程安全的。 
+  - HashMap 是非线程安全的，CurrentHashMap 是线程安全的。 
   - ConcurrentHashMap 将整个 Hash 桶进行了分段 segment，也就是将这个大的数组分成了几个小的片段segment，而且每个小的片段 segment 上面都有锁存在，那么在插入元素的时候就需要先找到应该插入到哪一个片段 segment，然后再在这个片段上面进行插入，而且这里还需要获取 segment 锁。 
   - ConcurrentHashMap 让锁的粒度更精细一些，并发性能更好。 
 - **ConcurrentHashMap 线程安全吗， ConcurrentHashMap如何保证 线程安全？** 
-  - HashTable 容器在竞争激烈的并发环境下表现出效率低下的原因是所有访问 HashTable 的线程都必须竞争同一把锁，那假如容器里有多把锁，每一把锁用于锁容器其中一部分数据，那么当多线程访问容器里不同数据段的数据时，线程间就不会存在锁竞争，从而可以有效的提高并发访问效率，这就是 ConcurrentHashMap 所使用的**分段锁**，首先将数据分成一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问。 
+  - Hashtable 容器在竞争激烈的并发环境下表现出效率低下的原因是所有访问 Hashtable 的线程都必须竞争同一把锁，那假如容器里有多把锁，每一把锁用于锁容器其中一部分数据，那么当多线程访问容器里不同数据段的数据时，线程间就不会存在锁竞争，从而可以有效的提高并发访问效率，这就是 ConcurrentHashMap 所使用的**分段锁**，首先将数据分成一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问。 
   - get 操作的高效之处在于整个 get 过程不需要加锁，除非读到的值是空的才会加锁重读。**get 方法里将要使用的共享变量都定义成 volatile**，如用于统计当前 Segement 大小的 count 字段和用于存储值的 HashEntry 的 value。定义成 volatile 的变量，能够在线程之间保持可见性，能够被多线程同时读，并且保证不会读到过期的值，但是只能被单线程写（有一种情况可以被多线程写，就是写入的值不依赖于原值），在 get 操作里只需要读不需要写共享变量 count 和 value，所以可以不用加锁。 
   - put 方法首先定位到 Segment，然后在 Segment 里进行插入操作。
     - 插入操作需要经历两个步骤：（1）判断是否需要对 Segment 里的 HashEntry 数组进行扩容；（2）定位添加元素的位置然后放在HashEntry数组里。 
@@ -1783,9 +1783,9 @@ List list = Arrays.asList(1,2,3);
 
 **Hashtable 与 HashMap 的简单比较**
 
-1. HashTable 基于 Dictionary 类，而 HashMap 是基于 AbstractMap。Dictionary 是任何可将键映射到相应值的类的抽象父类，而 AbstractMap 是基于 Map 接口的实现，它以最大限度地减少实现此接口所需的工作。
+1. Hashtable 基于 Dictionary 类，而 HashMap 是基于 AbstractMap。Dictionary 是任何可将键映射到相应值的类的抽象父类，而 AbstractMap 是基于 Map 接口的实现，它以最大限度地减少实现此接口所需的工作。
 2. HashMap 的 key 和 value 都允许为 null，而 Hashtable 的 key 和 value 都不允许为 null。HashMap 遇到 key 为 null 的时候，调用 putForNullKey 方法进行处理，而对 value 没有处理；Hashtable遇到 null，直接返回 NullPointerException。
-3. **Hashtable 方法是同步，而HashMap则不是**。我们可以看一下源码，Hashtable 中的几乎所有的 public 的方法都是 synchronized 的，而有些方法也是在内部通过 synchronized 代码块来实现。所以有人一般都建议如果是涉及到多线程同步时采用 HashTable，没有涉及就采用 HashMap，但是在 Collections 类中存在一个静态方法：**synchronizedMap()**，该方法创建了一个线程安全的 Map 对象，并把它作为一个封装的对象来返回。
+3. **Hashtable 方法是同步，而HashMap则不是**。我们可以看一下源码，Hashtable 中的几乎所有的 public 的方法都是 synchronized 的，而有些方法也是在内部通过 synchronized 代码块来实现。所以有人一般都建议如果是涉及到多线程同步时采用 Hashtable，没有涉及就采用 HashMap，但是在 Collections 类中存在一个静态方法：**synchronizedMap()**，该方法创建了一个线程安全的 Map 对象，并把它作为一个封装的对象来返回。
 
 
 
@@ -1871,15 +1871,15 @@ HashMap 会动态的使用一个专门 TreeMap 实现来替换掉它。
 
 
 
-## 8. Hashmap为什么大小是2的幂次
+## 8. HashMap为什么大小是2的幂次
 
-首先来看一下 hashmap 的 put 方法的源码
+首先来看一下 HashMap 的 put 方法的源码
 
 ```java
 public V put(K key, V value) {
     if (key == null)                
         return putForNullKey(value);  //将空key的Entry加入到table[0]中
-    int hash = hash(key.hashCode());  //计算key.hashcode()的hash值，hash函数由hashmap自己实现
+    int hash = hash(key.hashCode());  //计算key.hashcode()的hash值，hash函数由HashMap自己实现
     int i = indexFor(hash, table.length);  //获取将要存放的数组下标
     /*
      * for中的代码用于：当hash值相同且key相同的情况下，使用新值覆盖旧值（其实就是修改功能）
@@ -1911,7 +1911,7 @@ static int indexFor(int h, int length) {
 
 ```
 
-**hashmap 始终将自己的桶保持在2<sup>n</sup>，这是为什么？indexFor这个方法解释了这个问题**
+**HashMap 始终将自己的桶保持在2<sup>n</sup>，这是为什么？indexFor这个方法解释了这个问题**
 
 大家都知道计算机里面位运算是基本运算，位运算的效率是远远高于取余 % 运算的
 

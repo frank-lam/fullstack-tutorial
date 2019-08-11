@@ -2008,9 +2008,9 @@ public static void main(String[] args) {
 
 - 当 equals 方法被重写时，通常有必要重写 hashCode 方法，以维护 hashCode 方法的常规协定，该协定声明相对等的两个对象必须有相同的 hashCode 
 
-  - object1.euqal(object2) 时为 true， object1.hashCode() ==  object2.hashCode() 为 true 
-  - object1.hashCode() ==  object2.hashCode() 为 false 时，object1.euqal(object2) 必定为 false 
-  - object1.hashCode() ==  object2.hashCode() 为 true时，但 object1.euqal(object2) 不一定定为 true 
+  - object1.equals(object2) 时为 true， object1.hashCode() ==  object2.hashCode() 为 true 
+  - object1.hashCode() ==  object2.hashCode() 为 false 时，object1.equals(object2) 必定为 false 
+  - object1.hashCode() ==  object2.hashCode() 为 true时，但 object1.equals(object2) 不一定定为 true 
 
 - 重写 equals 不重写 hashcode 会出现什么问题 
 
