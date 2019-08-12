@@ -4,7 +4,6 @@
 
 - 《Java程序员面试笔试宝典》何昊，薛鹏，叶向阳 著
 - [《阿里面经OneNote》](https://blog.csdn.net/sinat_22797429/article/details/76293284)
-- [CyC2018/CS-Notes](CyC2018/CS-Notes)
 
  主要内容：基本概念、面向对象、关键字、基本数据类型与运算、字符串与数组、异常处理、Object 通用方法
 
