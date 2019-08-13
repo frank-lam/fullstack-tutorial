@@ -6,13 +6,13 @@
 	- [Zookeeper节点状态](#zookeeper节点状态)
 	- [Zookeeper数据类型](#zookeeper数据类型)
 	- [Zookeeper数据版本](#zookeeper数据版本)
-	- [Zookeeper Watcher](#Zookeeper Watcher)
-	- [Zookeeper Session](#Zookeeper Session)
-	- [Zookeeper ACL](#Zookeeper ACL)
-	- [Zookeeper ZAB](#zookeeper ZAB)
-		- [ZAB 选主流程](#ZAB 选主流程)
-		- [ZAB 数据同步](#ZAB 数据同步)
-		- [ZAB 过半同意](#ZAB 过半同意)
+	- [Zookeeper Watcher](#Watcher)
+	- [Zookeeper Session](#Session)
+	- [Zookeeper ACL](#ACL)
+	- [Zookeeper ZAB](#ZAB)
+		- [ZAB 选主流程](#选主流程)
+		- [ZAB 数据同步](#数据同步)
+		- [ZAB 过半同意](#过半同意)
 - [Zookeeper运维](#Zookeeper运维)
 	- [Zookeeper集群搭建](#Zookeeper集群搭建)
 	- [Zookeeper集群监控](#Zookeeper集群监控)
@@ -93,7 +93,8 @@ Zookeeper的每个ZNode上都会存储数据，对应到每个ZNode，Zookeeper�
 - numChildren: 子节点个数
 
 
-## Zookeeper Watcher
+## Watcher
+
 Watcher(事件监听器)是 Zookeeper提供的一种 发布/订阅的机制。Zookeeper允许用户在指定节点上注册一些 Watcher，并且在一些特定事件触发的时候，Zookeeper服务端会将事件通知给订阅的客户端。该机制是 Zookeeper实现分布式协调的重要特性。
 
 - watcher特点
@@ -109,7 +110,8 @@ Watcher(事件监听器)是 Zookeeper提供的一种 发布/订阅的机制。Zo
 	- watcher数量过多会导致性能下降
 
 
-## Zookeeper Session
+## Session
+
 zookeeper会为每个客户端分配一个session，类似于web服务器一样，用来标识客户端的身份。
 
 - Session作用
@@ -135,7 +137,7 @@ zookeeper会为每个客户端分配一个session，类似于web服务器一样�
 	- 低16位是一个计数器，初始值为0
 
 
-## Zookeeper ACL
+## ACL
 
 在Zookeeper中，node的ACL是没有继承关系的。ACL表现形式:scheme:id:permissions。
 
@@ -153,13 +155,13 @@ zookeeper会为每个客户端分配一个session，类似于web服务器一样�
 	- ADMIN(a):  管理权限，可以设置当前node的permission
 
 
-## Zookeeper ZAB
+## ZAB
 
 ZAB 是 ZooKeeper Atomic Broadcast （ZooKeeper 原子广播协议）的缩写，它是特别为 ZooKeeper 设计的崩溃可恢复的原子消息广播算法。ZooKeeper 使用 Leader来接收并处理所有事务请求，并采用 ZAB 协议，将服务器数据的状态变更以事务 Proposal 的形式广播到所有的 Follower 服务器上去。这种主备模型架构保证了同一时刻集群中只有一个服务器广播服务器的状态变更，因此能够很好的保证事物的完整性和顺序性。
 Zab协议有两种模式，它们分别是恢复模式(recovery)和广播模式(broadcast)。当服务启动或者在leader崩溃后，Zab就进入了恢复模式，当leader被选举出来，且大多数follower完成了和leader的状态同步以后， 恢复模式就结束了，ZAB开始进入广播模式。
 
 
-### ZAB 选主流程
+### 选主流程
 
 当Leader崩溃或者Leader失去大多数的Follower时，Zookeeper处于恢复模式，在恢复模式下需要重新选举出一个新的Leader，让所有的 Server都恢复到一个正确的状态。Zookeeper的选举算法有两种：一种是基于basic paxos实现的，另外一种是基于fast paxos算法实现的。系统默认的选举算法为fast paxos。
 
@@ -168,7 +170,7 @@ Zab协议有两种模式，它们分别是恢复模式(recovery)和广播模式(
 - Fast paxos:某Server首先向所有Server提议自己要成为Leader，当其它Server收到提议以后，解决epoch和 zxid的冲突，并接受对方的提议，然后向对方发送接受提议完成的消息，重复这个流程，最后一定能选举出Leader。(即提议方解决其他所有epoch和 zxid的冲突,即为Leader)。
 
 
-### ZAB 数据同步
+### 数据同步
 当集群重新选举出Leader后，所有的Follower需要和Leader同步数据，确保集群数据的一致性。
 
 - 数据同步方式
@@ -186,7 +188,7 @@ Zab协议有两种模式，它们分别是恢复模式(recovery)和广播模式(
 		- 说明：leader a已经将事务truncA提交到本地事务日志中，但没有成功发起proposal协议进行投票就宕机了；然后集群中剔除原leader a重新选举出新leader b，又提交了若干新的提议proposal，然后原leader a重新服务又加入到集群中说明：此时a,b都有一些对方未提交的事务，若b是leader, a需要先回滚truncA然后增量同步新leader b上的数据。
 
 
-### ZAB 过半同意
+### 过半同意
 当数据同步完成后，集群开始从恢复模式进入广播模式，开始接受客户端的事物请求。
 当只有Leader或少数机器批准执行某个任务时，则极端情况下Leader和这些少量机器挂掉，则无法保证新Leader知道之前已经批准该任务，这样就违反了数据可靠性。所以Leader在批准一个任务之前应该保证集群里大部分的机器知道这个提案，这样即使Leader挂掉，选举出来的新Leader也会从其他Follower处获取这个提案。而如果Leader要求所有Follower都同意才执行提案也不行，此时若有一个机器挂掉，Leader就无法继续工作，这样的话整个集群相当于单节点，无法保证可靠性。
 
