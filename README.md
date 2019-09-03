@@ -9,11 +9,11 @@
         📢📢📢
     </p>
     <p>
- 		和技术达人们一起交流：
+ 		和 400+ 技术达人在线交流：
       <a href="notes/技术交流群.md">QQ技术交流群</a>
     </p>
   <p>
-    🔥 欢迎光临我的技术博客：<a href="https://www.frankfeekr.cn">www.frankfeekr.cn</a>
+    欢迎光临我的技术博客：<a href="https://www.frankfeekr.cn">www.frankfeekr.cn</a>
   </p>
     <p>
         欢迎志同道合的小伙伴加入开源小组：<a href="notes/开源贡献.md">⊱ 开源小组，英雄招募令</a>
@@ -21,7 +21,7 @@
     <div>
         <br/>
         <p>
-            🔥🔥🔥
+            🎯🎯🎯
         </p>
         <p>
              为极客打造，阅读体验更好的在线文档（与 GitHub 实时同步）
@@ -36,7 +36,7 @@
         <div>
         <br/>
         <p>
-            🔥🔥🔥
+            🎯🎯🎯
         </p>
         <p>
              也许你特别钟爱 GitHub 的阅读体验，没关系
@@ -51,9 +51,6 @@
             🎅 特别鸣谢共同完成两位小伙伴：<a href="https://github.com/dxiaoqi">@dxiaoqi</a> <a href="https://github.com/dzeze">@dzeze</a>
     </div>
 </div>
-
-
-
 
 
 
@@ -253,6 +250,12 @@
 
   微服务简介、API 网关、服务注册发现、服务通信
 
+- [Zookeeper](notes/分布式/Zookeeper.md)
+
+  分布式协调服务，服务注册发现
+
+- [玩转时序数据库 InfluxDB（一）初体验](https://www.frankfeekr.cn/2019/07/24/influxdb-tutorial-start/)
+
 - 分布式锁
 
   基于 Redis、MySQL、Zookeeper 的分布式锁实现
@@ -260,8 +263,6 @@
 - FastDFS
 
   轻量级分布式文件管理系统
-
-
 
 
 【说明】**分布式专题** 笔者也在学习中，这里列举了一些技能列表，笔者将局部更新。敬请期待
@@ -353,6 +354,10 @@
 
   基于 lanproxy 穿透服务，为你定了一键启动的服务端和客户端 Docker 镜像
 
+- [基于 SpringBoot & IDEA & JRebel 玩转远程热部署与远程调试](https://www.frankfeekr.cn/2019/07/17/springboot-idea-jrebel-hotswap/)
+
+  手把手带你玩转，远程调试与远程热部署
+
 - [什么是 TDD 及常见的测试方法](notes/软件测试.md)
 
 
@@ -401,7 +406,7 @@ Please make sure to read the [Contributing Guide/如何给我的仓库贡献](no
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
-Copyright (c) 2018-present, Frank Lam
+Copyright (c) 2019-present, Frank Lam
 
 
 
@@ -412,7 +417,7 @@ Copyright (c) 2018-present, Frank Lam
         在颠覆世界的同时，也要好好关照自己。
     </p>
 <a  target="_blank" href="https://zhuanlan.zhihu.com/frankfeekr" rel="nofollow"><a href="#backers" alt="sponsors on Open Collective"><img src="https://opencollective.com/fullstack-tutorial/backers/badge.svg" /></a> <a href="#sponsors" alt="Sponsors on Open Collective"><img src="https://opencollective.com/fullstack-tutorial/sponsors/badge.svg" /></a> <img src="https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
-<a target="_blank" href="http://blog.csdn.net/u012104219" rel="nofollow"><img src="https://img.shields.io/badge/CSDN-东风牧野-red.svg" alt="CSDN" data-canonical-src="" style="max-width:100%;"></a>
+<a target="_blank" href="https://frankfeekr.cn" rel="nofollow"><img src="https://img.shields.io/badge/BLOG-frankfeekr.cn-blue.svg" alt="BLOG" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="mailto:frank_lin@whu.edu.cn" rel="nofollow"><img src="https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-lightgrey.svg" alt="邮箱" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=593WvX0" rel="nofollow" ><img src="https://img.shields.io/badge/QQ群-862619503-green.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
     <br/><br/>

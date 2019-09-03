@@ -86,7 +86,7 @@ public static void copyFile(String src, String dist) throws IOException
 
 
 
-<div align="center"> <img src="assets//DP-Decorator-java.io.png" width="600"/> </div><br>
+<div align="center"> <img src="assets/DP-Decorator-java.io.png" width="600"/> </div><br>
 
 
 

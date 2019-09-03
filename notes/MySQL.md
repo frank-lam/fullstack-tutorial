@@ -41,7 +41,7 @@
         - [2. 浮点数](#2-浮点数)
         - [3. 字符串](#3-字符串)
         - [4. 时间和日期](#4-时间和日期)
-            - [DATATIME](#datatime)
+            - [DATETIME](#datetime)
             - [TIMESTAMP](#timestamp)
     - [8. 索引](#8-索引)
         - [1. 索引使用的场景](#1-索引使用的场景)
@@ -156,7 +156,7 @@
 
 ### AUTOCOMMIT
 
-MySQL 默认采用自动提交模式。也就是说，如果不显式使用 `START TRANSACTION` 语句来开始一个事务，那么每个查询都会被当做一个事务自动提交
+MySQL 默认 自动提交模式。也就是说，如果不显式使用 `START TRANSACTION` 语句来开始一个事务，那么每个查询都会被当做一个事务自动提交
 
 
 
@@ -734,9 +734,9 @@ VARCHAR 会保留字符串末尾的空格，而 CHAR 会删除。
 
 ### 4. 时间和日期
 
-MySQL 提供了两种相似的日期时间类型：DATATIME 和 TIMESTAMP。
+MySQL 提供了两种相似的日期时间类型：DATETIME 和 TIMESTAMP。
 
-#### DATATIME
+#### DATETIME
 
 能够保存从 1001 年到 9999 年的日期和时间，精度为秒，使用 8 字节的存储空间。
 

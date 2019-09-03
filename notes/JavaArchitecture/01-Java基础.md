@@ -4,7 +4,6 @@
 
 - 《Java程序员面试笔试宝典》何昊，薛鹏，叶向阳 著
 - [《阿里面经OneNote》](https://blog.csdn.net/sinat_22797429/article/details/76293284)
-- [CyC2018/CS-Notes](CyC2018/CS-Notes)
 
  主要内容：基本概念、面向对象、关键字、基本数据类型与运算、字符串与数组、异常处理、Object 通用方法
 
@@ -2008,9 +2007,9 @@ public static void main(String[] args) {
 
 - 当 equals 方法被重写时，通常有必要重写 hashCode 方法，以维护 hashCode 方法的常规协定，该协定声明相对等的两个对象必须有相同的 hashCode 
 
-  - object1.euqal(object2) 时为 true， object1.hashCode() ==  object2.hashCode() 为 true 
-  - object1.hashCode() ==  object2.hashCode() 为 false 时，object1.euqal(object2) 必定为 false 
-  - object1.hashCode() ==  object2.hashCode() 为 true时，但 object1.euqal(object2) 不一定定为 true 
+  - object1.equals(object2) 时为 true， object1.hashCode() ==  object2.hashCode() 为 true 
+  - object1.hashCode() ==  object2.hashCode() 为 false 时，object1.equals(object2) 必定为 false 
+  - object1.hashCode() ==  object2.hashCode() 为 true时，但 object1.equals(object2) 不一定定为 true 
 
 - 重写 equals 不重写 hashcode 会出现什么问题 
 
