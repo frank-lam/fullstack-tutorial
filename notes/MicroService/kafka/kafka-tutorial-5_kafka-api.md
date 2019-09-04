@@ -18,6 +18,10 @@
 
 
 
+
+
+
+
 ### 2. 异步发送 API
 
 - **KafkaProducer** 需要创建一个生产者对象，用来发送数据
@@ -31,6 +35,8 @@
     <version>0.11.0.0</version>
 </dependency>
 ```
+
+#### （1）不带回调函数的异步（AsyncProducer）
 
 ```java
 package com.tian.kafka.producer;
@@ -70,6 +76,8 @@ public class AsyncProducer {
 }
 ```
 
+#### （2）带回调函数的异步（CallbackProducer）
+
 ```java
 package com.tian.kafka.producer;
 
@@ -79,13 +87,13 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import java.util.Properties;
 
 /**
- * 带回调函数的异步 Producer API
+ * 带回调函数的异步Producer API
  */
 public class CallbackProducer {
     public static void main(String[] args) {
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "hadoop101:9092,hadoop102:9092,hadoop103:9092");
+                "192.168.72.133:9092");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
@@ -105,8 +113,9 @@ public class CallbackProducer {
                     else e.printStackTrace();
                 }
             });
-            producer.close();
+
         }
+        producer.close();
     }
 }
 ```
@@ -114,6 +123,8 @@ public class CallbackProducer {
 
 
 ### 3. 同步发送 API
+
+#### （1）同步发送（SyncProducer）
 
 ```java
 package com.tian.kafka.producer;
@@ -339,7 +350,7 @@ public class AsyncManualCommitOffset {
 ### 3. 自定义存储 offset
 
 　　Kafka 0.9 版本之前，offset 存储在 zookeeper，0.9 版本之后，默认将 offset 存储在 Kafka 的一个内置的 topic 中。除此之外，Kafka 还可以选择自定义存储 offset。
-　　Offset 的维护是相当繁琐的，因为需要考虑到消费者的 Rebalance。
+　　offset 的维护是相当繁琐的，因为需要考虑到消费者的 Rebalance。
 　　当有新的消费者加入消费者组、已有的消费者推出消费者组或者所订阅的主题的分区发生变化，就会触发到分区的重新分配，重新分配的过程叫做 Rebalance。
 　　消费者发生 Rebalance 之后，每个消费者消费的分区就会发生变化。因此消费者要首先获取到自己被重新分配到的分区，并且定位到每个分区最近提交的 offset 位置继续消费。
 　　要实现自定义存储 offset，需要借助 ConsumerRebalanceListener，以下为示例代码，其中提交和获取 offset 的方法，需要根据所选的 offset 存储系统自行实现。
@@ -368,6 +379,7 @@ public class CustomConsumer {
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+        // 消费者订阅主题
         consumer.subscribe(Arrays.asList("first"), new ConsumerRebalanceListener() {
             
             // 该方法会在 Rebalance 之前调用
