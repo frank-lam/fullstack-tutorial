@@ -19,8 +19,6 @@
 ## 参考资料
 
 - 官网：[Apache Kafka](https://kafka.apache.org/)
-
 - 中文社区：[Kafka 中文文档 - ApacheCN](http://kafka.apachecn.org/)
-
 - 快速上手：[尚硅谷大数据课程之Kafka（2019新版）](https://www.bilibili.com/video/av65544753?from=search&seid=14596778029771113163)
 
