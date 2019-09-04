@@ -11,7 +11,7 @@
 | Ⅲ    | 深入浅出 Kafka（三）集群化部署                               | 集群下的，宿主机和容器的两种部署方式            |      |
 | Ⅳ    | [深入浅出 Kafka（四）架构深入](kafka-tutorial-4_%E6%9E%B6%E6%9E%84%E6%B7%B1%E5%85%A5.md) | 深入理解 Kafka 的架构细节                       | √    |
 | Ⅴ    | [深入浅出 Kafka（五）Kafka API](kafka-tutorial-5_kafka-api.md) | Kafka API 接口使用                              | √    |
-| Ⅵ    | 深入浅出 Kafka（六）Spring Kafka API                         | Kafka 与 SpringBoot 框架整合，常见 API 接口使用 |      |
+| Ⅵ    | [深入浅出 Kafka（六）Spring Kafka API](kafka-tutorial-6_spring-kafka-api.md) | Kafka 与 SpringBoot 框架整合，常见 API 接口使用 | √    |
 | Ⅶ    | 深入浅出 Kafka（七）监控                                     | Kafka Monitor，Kafka Manager                    |      |
 
 

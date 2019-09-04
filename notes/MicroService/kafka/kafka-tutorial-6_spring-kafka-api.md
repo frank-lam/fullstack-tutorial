@@ -1,3 +1,17 @@
+<!-- TOC -->
+
+- [深入浅出 Kafka（六）Spring Kafka API](#深入浅出-kafka六spring-kafka-api)
+    - [一、Producer](#一producer)
+        - [1. KafkaProducer](#1-kafkaproducer)
+        - [2. KafkaProducerConfig](#2-kafkaproducerconfig)
+    - [二、Consumer](#二consumer)
+        - [3. KafkaConsumer](#3-kafkaconsumer)
+        - [4. KafkaConsumerConfig](#4-kafkaconsumerconfig)
+    - [三、配置文件](#三配置文件)
+    - [四、pom 依赖](#四pom-依赖)
+    - [参考资料](#参考资料)
+
+<!-- /TOC -->
 # 深入浅出 Kafka（六）Spring Kafka API
 
 　　在上一节中学习了如何通过 Kafka API 的方式进行生产者和消费者及其配置，但是主要是通过手动编写 Java 代码的方式实现。在项目开发中，我们主要会使用到 SpringBoot 框架，这里就将带你 SpringBoot 与 Kafka 整合，通过注解和配置的方式轻松集成。

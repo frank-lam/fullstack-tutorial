@@ -1,3 +1,26 @@
+<!-- TOC -->
+
+- [深入浅出 Kafka（五）Kafka API](#深入浅出-kafka五kafka-api)
+    - [一、Producer API](#一producer-api)
+        - [1. 消息发送流程](#1-消息发送流程)
+        - [2. 异步发送 API](#2-异步发送-api)
+            - [（1）不带回调函数的异步（AsyncProducer）](#1不带回调函数的异步asyncproducer)
+            - [（2）带回调函数的异步（CallbackProducer）](#2带回调函数的异步callbackproducer)
+        - [3. 同步发送 API](#3-同步发送-api)
+            - [（1）同步发送（SyncProducer）](#1同步发送syncproducer)
+    - [二、Consumer API](#二consumer-api)
+        - [1. 自动提交 offset](#1-自动提交-offset)
+        - [2. 手动提交 offset](#2-手动提交-offset)
+            - [（1）同步提交 commitSync offset](#1同步提交-commitsync-offset)
+            - [（2）异步提交 commitAsync offset](#2异步提交-commitasync-offset)
+            - [（3）数据漏消费和重复消费分析](#3数据漏消费和重复消费分析)
+        - [3. 自定义存储 offset](#3-自定义存储-offset)
+    - [三、自定义 Interceptor](#三自定义-interceptor)
+        - [1. 拦截器原理](#1-拦截器原理)
+        - [2. 拦截器案例](#2-拦截器案例)
+
+<!-- /TOC -->
+
 # 深入浅出 Kafka（五）Kafka API
 
 ## 一、Producer API
