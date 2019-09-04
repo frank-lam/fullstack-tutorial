@@ -57,7 +57,11 @@
 
 ## 前言
 
-- [全栈修炼手册：如何选择自己的技术栈？](notes/如何选择自己的技术栈.md)
+- [谈谈技术学习的一些方法论](https://www.frankfeekr.cn/2019/05/09/谈谈技术学习的一些方法论/)
+
+  在学习技术这条路上并不是一帆风顺，也一直在探索一条适合自己的学习方法。从一开始的技术小白，到现在还比较上道的老鸟，在这个过程中走了太多的弯路，想在这里和大家分享一些我的经历和学习方法。
+
+- [如何选择自己的技术栈](https://www.frankfeekr.cn/2019/05/27/如何选择自己的技术栈/)
 
   在编程的世界里，该如何选择自己的技术栈呢。学前端？学 APP 开发？对于 Java、C++、C#、Python、PHP 又如何选择呢？人工智能现如今这么火，是不是机器学习、深度学习更高级一些呢？那么程序员又如何修炼内功呢？
 
@@ -417,7 +421,7 @@ Copyright (c) 2019-present, Frank Lam
         在颠覆世界的同时，也要好好关照自己。
     </p>
 <a  target="_blank" href="https://zhuanlan.zhihu.com/frankfeekr" rel="nofollow"><a href="#backers" alt="sponsors on Open Collective"><img src="https://opencollective.com/fullstack-tutorial/backers/badge.svg" /></a> <a href="#sponsors" alt="Sponsors on Open Collective"><img src="https://opencollective.com/fullstack-tutorial/sponsors/badge.svg" /></a> <img src="https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
-<a target="_blank" href="http://blog.csdn.net/u012104219" rel="nofollow"><img src="https://img.shields.io/badge/BLOG-frankfeekr.cn-blue.svg" alt="BLOG" data-canonical-src="" style="max-width:100%;"></a>
+<a target="_blank" href="https://frankfeekr.cn" rel="nofollow"><img src="https://img.shields.io/badge/BLOG-frankfeekr.cn-blue.svg" alt="BLOG" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="mailto:frank_lin@whu.edu.cn" rel="nofollow"><img src="https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-lightgrey.svg" alt="邮箱" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=593WvX0" rel="nofollow" ><img src="https://img.shields.io/badge/QQ群-862619503-green.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
     <br/><br/>
