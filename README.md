@@ -258,15 +258,15 @@
 
   分布式协调服务，服务注册发现
 
+- [Kafka](notes/MicroService/kafka/README.md)
+
+  深入浅出 Kafka，将用最极简的语言带你走进 Kafka 的消息中间件世界
+
+
 - [玩转时序数据库 InfluxDB（一）初体验](https://www.frankfeekr.cn/2019/07/24/influxdb-tutorial-start/)
 
-- 分布式锁
 
-  基于 Redis、MySQL、Zookeeper 的分布式锁实现
 
-- FastDFS
-
-  轻量级分布式文件管理系统
 
 
 【说明】**分布式专题** 笔者也在学习中，这里列举了一些技能列表，笔者将局部更新。敬请期待
@@ -321,6 +321,15 @@
 
   自动化运维，持续集成、持续交付、持续部署
 
+
+- 分布式锁
+
+  基于 Redis、MySQL、Zookeeper 的分布式锁实现
+
+- FastDFS
+
+  轻量级分布式文件管理系统
+  
 - Go
 
   并发的、带垃圾回收的、快速编译的语言
