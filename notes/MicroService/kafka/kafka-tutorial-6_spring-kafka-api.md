@@ -12,6 +12,7 @@
     - [参考资料](#参考资料)
 
 <!-- /TOC -->
+
 # 深入浅出 Kafka（六）Spring Kafka API
 
 　　在上一节中学习了如何通过 Kafka API 的方式进行生产者和消费者及其配置，但是主要是通过手动编写 Java 代码的方式实现。在项目开发中，我们主要会使用到 SpringBoot 框架，这里就将带你 SpringBoot 与 Kafka 整合，通过注解和配置的方式轻松集成。
@@ -275,5 +276,7 @@ app:
 
 ## 参考资料
 
-- [Spring for Apache Kafka](https://docs.spring.io/spring-kafka/reference/html/#si-kafka)
+- [Spring for Apache Kafka](https://docs.spring.io/spring-kafka/reference/html)
+- [Overview (Spring Kafka 2.2.8.RELEASE API)](https://docs.spring.io/spring-kafka/docs/2.2.8.RELEASE/api/)
 - [SpringBoot整合Kafka实现发布订阅 - 简书](https://www.jianshu.com/p/7a284bf4efc9)
+- [SpringBoot 集成 Spring For Kafka 操作 Kafka 详解 · 小豆丁个人博客](http://www.mydlq.club/article/34/)
