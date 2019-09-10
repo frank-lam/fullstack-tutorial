@@ -414,6 +414,10 @@ Please make sure to read the [Contributing Guide/如何给我的仓库贡献](no
 <a href="https://github.com/frank-lam/fullstack-tutorial/graphs/contributors"><img src="https://opencollective.com/fullstack-tutorial/contributors.svg?width=890&button=false" /></a>
 
 
+## Stargazers over time
+
+![Stargazers over time](https://starcharts.herokuapp.com/frank-lam/fullstack-tutorial.svg)
+
 
 ## License
 
