@@ -32,7 +32,7 @@
 
   - Customize installation `自定义安装选项`
 
-  ![Customize installation](assets/Customize installation.png)
+  ![Customize_installation](assets/Customize_installation.png)
 
   > 勾选 pip
   >
