@@ -204,13 +204,17 @@
 
   Redis 核心知识
 
-- MongoDB
-
-  基于分布式文件存储的数据库
-
 - [SQL](notes/SQL.md)
 
   常用 SQL 语句
+
+- [PostgreSQL](notes/PostgreSQL.md)
+
+  一个开源的关系数据库，是从伯克利写的 POSTGRES 软件包发展而来的
+
+- MongoDB
+
+  基于分布式文件存储的数据库
 
 
 
