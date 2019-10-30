@@ -1761,7 +1761,7 @@ List list = Arrays.asList(1,2,3);
 
 **Hashtable 使用链地址法进行元素存储，通过一个实际的例子来演示一下插入元素的过程：**
 
-假设我们现在 Hashtable 的容量为 5，已经存在了 (5,5)，(13,13)，(16,16)，(17,17)，(21,21) 这 5 个键值对，目前他们在 Hashtable 中的位置如下：
+假设我们现在 Hashtable 的容量为 5，已经存在了 (8,8)，(10,10)，(13,13)，(16,16)，(17,17)，(21,21) 这 6 个键值对，目前他们在 Hashtable 中的位置如下：
 
 <div align="center"> <img src="assets/hashtable1.png" width=""/></div><br/>
 
