@@ -24,7 +24,7 @@
       🎯🎯🎯
     </p>
     <p>
-      <strong>本仓库即将重构并出版，欢迎留言交流</strong>
+      本仓库即将重构并出版，欢迎留言交流
     </p>
     <p>
       <a href="https://github.com/frank-lam/fullstack-tutorial/issues/49">《全栈开发技术地图》出版进行中 · Issue #49</a>
