@@ -351,6 +351,32 @@
 
 ## 九、大数据
 
+> 基于 [@heibaiying / Bigdata-Notes](https://github.com/heibaiying) 基础上编写，根据本仓库的演进有一定的修改(已获得作者授权)
+
+- 学习指南
+  - 大数据学习路线
+  - 大数据技术栈思维导图
+  - 大数据常用软件安装指南
+- 语言基础
+  - Scala
+- Hadoop
+  - HDFS
+  - MapReduce
+  - YARN
+- Spark
+  - Spark Core
+  - Spark SQL
+  - Spark Streaming
+- 实时计算
+  - Spark Streaming
+  - Kafka Streaming
+  - Flink
+  - Storm
+- Hive
+- HBase
+- Scala
+- Flume
+
 
 
 ## 十、机器学习
