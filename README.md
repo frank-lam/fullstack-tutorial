@@ -19,6 +19,18 @@
         欢迎志同道合的小伙伴加入开源小组：<a href="notes/开源贡献.md">⊱ 开源小组，英雄招募令</a>
     </p>
     <div>
+            <br/>
+    <p>
+      🎯🎯🎯
+    </p>
+    <p>
+      <strong>本仓库即将重构并出版，欢迎留言交流</strong>
+    </p>
+    <p>
+      <a href="https://github.com/frank-lam/fullstack-tutorial/issues/49">《全栈开发技术地图》出版进行中 · Issue #49</a>
+    </p>
+  </div>
+    <div>
         <br/>
         <p>
             🎯🎯🎯
@@ -51,13 +63,6 @@
             🎅 特别鸣谢共同完成两位小伙伴：<a href="https://github.com/dxiaoqi">@dxiaoqi</a> <a href="https://github.com/dzeze">@dzeze</a>
     </div>
 </div>
-
-
-
-
-🎯 本仓库即将重构并出版，欢迎留言讨论
-
-[《全栈开发技术地图》出版进行中 · Issue #49](https://github.com/frank-lam/fullstack-tutorial/issues/49)
 
 
 
