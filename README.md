@@ -9,7 +9,7 @@
         📢📢📢
     </p>
     <p>
- 		和 400+ 技术达人在线交流：
+ 		和 500+ 技术达人在线交流：
       <a href="notes/技术交流群.md">QQ技术交流群</a>
     </p>
   <p>
@@ -51,6 +51,13 @@
             🎅 特别鸣谢共同完成两位小伙伴：<a href="https://github.com/dxiaoqi">@dxiaoqi</a> <a href="https://github.com/dzeze">@dzeze</a>
     </div>
 </div>
+
+
+
+
+🎯 本仓库即将重构并出版，欢迎留言讨论
+
+[《全栈开发技术地图》出版进行中 · Issue #49](https://github.com/frank-lam/fullstack-tutorial/issues/49)
 
 
 
