@@ -1,4 +1,4 @@
-![full stack developer tutorial](assets/fullstack-tutorial-logo.png)
+![full stack developer tutorial](assets/fullstack-tutorial-logo.svg)
 
 |              I              |           II           |           III           |           IV           |            V            |            VI            |        VII        |         VIII         | IX |            X            |            XI            |            XII            |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: |
@@ -19,16 +19,6 @@
         欢迎志同道合的小伙伴加入开源小组：<a href="notes/开源贡献.md">⊱ 开源小组，英雄招募令</a>
     </p>
     <div>
-            <br/>
-    <p>
-      🎯🎯🎯
-    </p>
-    <p>
-      本仓库即将重构并出版，欢迎留言交流
-    </p>
-    <p>
-      <a href="https://github.com/frank-lam/fullstack-tutorial/issues/49">《全栈开发技术地图》出版进行中 · Issue #49</a>
-    </p>
   </div>
     <div>
         <br/>
@@ -63,7 +53,6 @@
             🎅 特别鸣谢共同完成两位小伙伴：<a href="https://github.com/dxiaoqi">@dxiaoqi</a> <a href="https://github.com/dzeze">@dzeze</a>
     </div>
 </div>
-
 
 
 
