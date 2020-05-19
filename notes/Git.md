@@ -475,3 +475,17 @@ https://blog.csdn.net/u011478909/article/details/77683754
 
 
 
+## 8. Git 回退到制定版本
+
+**回滚到指定的版本**
+
+```shell
+git reset --hard e377f60e28c8b84158
+```
+
+**强制提交**
+
+```shell
+git push -f origin master
+```
+
