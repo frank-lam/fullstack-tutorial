@@ -421,9 +421,10 @@ Copyright (c) 2019-present, Frank Lam
 
 <div align="center">  
     <p>
-      作者简介 | <a href="https://www.frankfeekr.cn/author">https://www.frankfeekr.cn/author</a>
+      『作者简介』：<a href="https://www.frankfeekr.cn/author">https://www.frankfeekr.cn/author</a>
     </p>
 </div>
+
 
 
 <div align="center">  
