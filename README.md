@@ -13,7 +13,7 @@
       <a href="notes/技术交流群.md">🤟 快来吧，和大家一起技术互动交流</a>
     </p>
   <p>
-    技术博客：<a href="https://www.frankfeekr.cn">www.frankfeekr.cn</a>  |  开源贡献：<a href="notes/开源贡献.md">⊱ 英雄招募令</a> | 微信订阅号：全栈开发社区
+    『技术博客』：<a href="https://www.frankfeekr.cn">www.frankfeekr.cn</a>   |  『开源贡献』：<a href="notes/开源贡献.md">⊱ 英雄招募令</a>   |   『微信订阅号』：全栈开发社区
   </p>
 </div>
 
