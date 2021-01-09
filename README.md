@@ -424,6 +424,13 @@ Copyright (c) 2019-present, Frank Lam
 
 <div align="center">  
     <p>
+      作者简介 | <a href="https://www.frankfeekr.cn/author">https://www.frankfeekr.cn/author</a>
+    </p>
+</div>
+
+
+<div align="center">  
+    <p>
         在颠覆世界的同时，也要好好关照自己。
     </p>
 <a target="_blank" href="https://frankfeekr.cn" rel="nofollow"><img src="https://img.shields.io/badge/BLOG-frankfeekr.cn-blue.svg" alt="BLOG" data-canonical-src="" style="max-width:100%;"></a>
@@ -434,4 +441,5 @@ Copyright (c) 2019-present, Frank Lam
         from zero to hero.
     </p>
 </div>
-<div align="left"> <img src="assets/wechat/wx-white.png"/></div>
+<div align="center"> <img src="assets/wechat/wx-green.png" width="90%"/></div>
+
