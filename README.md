@@ -151,15 +151,20 @@
 <details>
 <summary>TODO LIST</summary>
 
-- HTML(5)
+- HTML5
 
-- CSS(3)
+- CSS3
 
-  sass、scss、stylus
+- CSS 预处理
+
+  - sass(scss)
+  - less
+  - stylus
 
 - CSS 框架
 
-  BootStarp、LayUI
+  - BootStarp
+  - LayUI
 
 - JavaScript 
 
@@ -168,7 +173,7 @@
 - JavaScript 框架
 
   - Vue
-  - React 
+  - React
   - Angular
   - jQuery
 
@@ -176,18 +181,28 @@
 
   常用 api、对象池、异常处理、进程通信、高并发
 
-- 静态编译
-  - Flow
-  - TypeScript
+- 静态类型检查
 
-- 打包工具
+  - TypeScript
+  - Flow
+
+- 构建/打包工具
+
   - webpack
-  - glup
+  - gulp
   - rollup
 
-- 工具
+- 包管理工具
+
   - npm
   - yarn
+  
+- 服务端渲染
+
+  - koa2
+  - express
+  - nuxt
+  - next
 
 </details>
 
