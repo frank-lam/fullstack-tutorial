@@ -23,7 +23,7 @@
 </div>
 
 
-<div align="left"> <img src="assets/wechat/wx-green.png"/></div>
+<div align="center"> <img src="assets/wechat/wx-green.png" width="750"/></div>
 
 
 
