@@ -6,21 +6,18 @@
 
 <div align="center">  
     <p>
-        📢📢📢
+        ✨✨✨
     </p>
     <p>
  		和 500+ 技术达人在线交流：
-      <a href="notes/技术交流群.md">🤟 快来吧，大家一起技术互动交流</a>
+      <a href="notes/技术交流群.md">🤟 快来吧，和大家一起技术互动交流</a>
     </p>
   <p>
-    技术博客：<a href="https://www.frankfeekr.cn">www.frankfeekr.cn</a>
+    技术博客：<a href="https://www.frankfeekr.cn">www.frankfeekr.cn</a>  |  开源贡献：<a href="notes/开源贡献.md">⊱ 英雄招募令</a> | 微信订阅号：全栈开发社区
   </p>
-    <p>
-        开源小组：<a href="notes/开源贡献.md">⊱ 开源小组，英雄招募令</a>
-    </p>
-    <div>
-  </div>
 </div>
+
+
 
 
 <div align="center"> <img src="assets/wechat/wx-green.png" width="70%"/></div>
