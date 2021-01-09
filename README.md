@@ -10,17 +10,20 @@
     </p>
     <p>
  		和 500+ 技术达人在线交流：
-      <a href="notes/技术交流群.md">QQ 技术交流群</a>
+      <a href="notes/技术交流群.md">🤟 快来吧，大家一起技术互动交流</a>
     </p>
   <p>
-    欢迎光临我的技术博客：<a href="https://www.frankfeekr.cn">www.frankfeekr.cn</a>
+    技术博客：<a href="https://www.frankfeekr.cn">www.frankfeekr.cn</a>
   </p>
     <p>
-        欢迎志同道合的小伙伴加入开源小组：<a href="notes/开源贡献.md">⊱ 开源小组，英雄招募令</a>
+        开源小组：<a href="notes/开源贡献.md">⊱ 开源小组，英雄招募令</a>
     </p>
     <div>
   </div>
 </div>
+
+
+<div align="left"> <img src="assets/wechat/wx-green.png"/></div>
 
 
 
@@ -423,7 +426,6 @@ Copyright (c) 2019-present, Frank Lam
     <p>
         在颠覆世界的同时，也要好好关照自己。
     </p>
-<a  target="_blank" href="https://zhuanlan.zhihu.com/frankfeekr" rel="nofollow"><img src="https://img.shields.io/badge/知乎专栏-frankfeekr-blue.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="https://frankfeekr.cn" rel="nofollow"><img src="https://img.shields.io/badge/BLOG-frankfeekr.cn-blue.svg" alt="BLOG" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="mailto:frank_lin@whu.edu.cn" rel="nofollow"><img src="https://img.shields.io/badge/Email-frank__lin@whu.edu.cn-lightgrey.svg" alt="邮箱" data-canonical-src="" style="max-width:100%;"></a>
 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=593WvX0" rel="nofollow" ><img src="https://img.shields.io/badge/QQ群-862619503-green.svg" alt="QQ群" data-canonical-src="" style="max-width:100%;"></a>
@@ -432,4 +434,4 @@ Copyright (c) 2019-present, Frank Lam
         from zero to hero.
     </p>
 </div>
-<div align="center"><img src="assets/wechat-fullstack.png" width="620"/></div><br/>
+<div align="left"> <img src="assets/wechat/wx-white.png"/></div>
