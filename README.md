@@ -1,4 +1,4 @@
-![full stack developer tutorial](assets/fullstack-tutorial-logo.png)
+![full stack developer tutorial](assets/logo-2021.svg)
 
 |              I              |           II           |           III           |           IV           |            V            |            VI            |        VII        |         VIII         | IX |            X            |            XI            |            XII            |
 | :--------------------------: | :-------------------: | :----------------------: | :---------------------: | :--------------: | :---------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: | :----------------------: |
@@ -10,7 +10,7 @@
     </p>
     <p>
  		和 500+ 技术达人在线交流：
-      <a href="notes/技术交流群.md">QQ技术交流群</a>
+      <a href="notes/技术交流群.md">QQ 技术交流群</a>
     </p>
   <p>
     欢迎光临我的技术博客：<a href="https://www.frankfeekr.cn">www.frankfeekr.cn</a>
@@ -20,39 +20,8 @@
     </p>
     <div>
   </div>
-    <div>
-        <br/>
-        <p>
-            🎯🎯🎯
-        </p>
-        <p>
-             为极客打造，阅读体验更好的在线文档（与 GitHub 实时同步）
-        </p>
-        <p>
-            支持手机阅读，目录导航，Gitalk 评论，搜索定位
-        </p>
-        <p>
-            📖 <a href="https://frank-lam.github.io/fullstack-tutorial/#/">点击，即刻开始阅读！</a>
-        </p>
-    </div>
-        <div>
-        <br/>
-        <p>
-            🎯🎯🎯
-        </p>
-        <p>
-             也许你特别钟爱 GitHub 的阅读体验，没关系
-        </p>
-        <p>
-            我也为您打造了一款 Chrome 插件 <a href="https://github.com/fullstack-tutorial/github-markdown-toc">Chrome Extension：GitHub Markdown</a>
-        </p>
-        <p>
-            方便在 GitHub 长文阅读时，在侧边栏生成标题目录定位
-            </p>
-        <p>
-            🎅 特别鸣谢共同完成两位小伙伴：<a href="https://github.com/dxiaoqi">@dxiaoqi</a> <a href="https://github.com/dzeze">@dzeze</a>
-    </div>
 </div>
+
 
 
 
