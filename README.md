@@ -22,6 +22,12 @@
 
 <div align="center"> <img src="assets/wechat/wx-green.png" width="70%"/></div>
 
+## 技术学习清单
+
+在这里，为你推荐了技术学习路上优质的学习书籍、学习课程。在推荐清单中将附带官网链接，图书则附京东和豆瓣链接。如果你有更好的学习资料，可以在下方留言，采纳后我会更新在文章中。
+
+**技术学习清单⎡计算机学习的“武林秘籍”⎦**
+https://www.frankfeekr.cn/2019/04/19/cs-learning-list
 
 
 
