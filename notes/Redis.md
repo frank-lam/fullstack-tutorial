@@ -57,7 +57,6 @@
 实时系统
 
 
-
 ## 3. 数据类型
 
 <div align="center"><img src="pics/redis-data-structure-types.jpeg" width="650"/></div><br/>
