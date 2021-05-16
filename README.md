@@ -20,7 +20,7 @@
 
 <div align="center"> <img src="assets/wechat/wx-green.png" width="70%"/></div>
 
-<div align="center"> <img src="https://frank-lam.github.io/public-static-resources/assets/wechat/wx-group-qrcode.png" width="400px"/></div>
+<div align="center"> <img src="https://frank-lam.github.io/public-static-resources/assets/wechat/wx-group-qrcode2.png" width="400px"/></div>
 
 
 
