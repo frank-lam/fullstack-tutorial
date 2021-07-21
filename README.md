@@ -117,6 +117,7 @@
 
 - [前端知识体系](notes/Frontend/前端知识体系.md)
 - [Angular 基础知识](notes/Frontend/Angular.md)
+- [ES6+ 语法全解析](http://es.xiecheng.live/)
 
 
 
@@ -181,8 +182,6 @@
 
 
 
-
-
 ## 五、数据库
 
 - [MySQL](notes/MySQL.md)
@@ -201,9 +200,9 @@
 
   一个开源的关系数据库，是从伯克利写的 POSTGRES 软件包发展而来的
 
-- MongoDB
+- [InfluxDB](https://www.frankfeekr.cn/2019/07/24/influxdb-tutorial-start/)
 
-  基于分布式文件存储的数据库
+  玩转时序数据库
 
 
 
@@ -254,11 +253,6 @@
 - [Kafka](notes/MicroService/kafka/README.md)
 
   深入浅出 Kafka，将用最极简的语言带你走进 Kafka 的消息中间件世界
-
-
-- [玩转时序数据库 InfluxDB（一）初体验](https://www.frankfeekr.cn/2019/07/24/influxdb-tutorial-start/)
-
-
 
 
 
