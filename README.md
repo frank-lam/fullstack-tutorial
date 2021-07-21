@@ -19,7 +19,7 @@
 
 
 <div align="center"> <img src="assets/wechat/wx-green.png" width="70%"/></div>
-<div align="center"> <img src="https://github.com/frank-lam/public-static-resources/blob/main/assets/wechat/wx-group-qrcode.png?raw=true" width="400px"/></div>
+<div align="center"> <img src="https://github.com/frank-lam/public-static-resources/blob/main/assets/wechat/wx-group-qrcode.png?raw=true" width="300px"/></div>
 
 
 
@@ -116,12 +116,9 @@
 ## 四、前端
 
 - [前端知识体系](notes/Frontend/前端知识体系.md)
-- Vue
-  - 第一个 Vue 应用程序
-  - Vue-cli 脚手架
-  - vue-router 路由
-  - vuex 状态管理
-- Webpack
+- [Angular 基础知识](notes/Frontend/Angular.md)
+
+
 
 
 <details>
