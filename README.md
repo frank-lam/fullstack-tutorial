@@ -107,9 +107,6 @@
 ## 三、Python
 
 - [Python 语言基础](notes/Python/Python简介及基础语法.md)
-- Scrapy 爬虫框架
-- Flask
-- Django
 
 
 
@@ -232,7 +229,6 @@
 
   web前后端漏洞分析与防御，XSS 攻击、CSRF 攻击、DDoS 攻击、SQL 注入
 
-- Socket 网络编程
 
 
 
