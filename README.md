@@ -18,7 +18,6 @@
 </div>
 
 
-<div align="center"> <img src="assets/wechat/wx-green.png" width="70%"/></div>
 <div align="center"> <img src="https://github.com/frank-lam/public-static-resources/blob/main/assets/wechat/wx-group-qrcode.png?raw=true" width="300px"/></div>
 
 
