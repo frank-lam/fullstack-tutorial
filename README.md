@@ -18,17 +18,8 @@
 </div>
 
 
-<div align="center"> <img src="assets/wechat/wx-green.png" width="70%"/></div>
 <div align="center"> <img src="https://github.com/frank-lam/public-static-resources/blob/main/assets/wechat/wx-group-qrcode.png?raw=true" width="300px"/></div>
 
-
-
-
-## 技术学习清单
-
-在这里，为你推荐了技术学习路上优质的学习书籍、学习课程。在推荐清单中将附带官网链接，图书则附京东和豆瓣链接。如果你有更好的学习资料，可以在下方留言，采纳后我会更新在文章中。
-
-**传送门**：https://mp.weixin.qq.com/s/gezKXKY4ezU0ZbvPybbbxQ
 
 
 
