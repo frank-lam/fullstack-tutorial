@@ -421,7 +421,6 @@ Copyright (c) 2021-present, Frank Lam
 </div>
 
 
-
 <div align="center">  
     <p>
         在颠覆世界的同时，也要好好关照自己。
@@ -434,5 +433,5 @@ Copyright (c) 2021-present, Frank Lam
         from zero to hero.
     </p>
 </div>
-<div align="center"> <img src="assets/wechat/wx-green.png" width="90%"/></div>
+<div align="center"> <img src="assets/wechat/wx-green.png" width="70%"/></div>
 
