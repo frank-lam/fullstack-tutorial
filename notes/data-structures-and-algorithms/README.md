@@ -1,6 +1,6 @@
 # 数据结构与算法
 
-> 欢迎来到数据结构与算法的世界，带你从基础的数据结构入手层层深入
+> 欢迎来到数据结构与算法的世界，带你从基础数据结构层层深入。本章以 Java 代码为例，结合 LeetCode 题解示例进行数据结构学习。
 
 
 
@@ -47,5 +47,5 @@
 | 【慕课网】程序员的内功修炼，学好算法与数据结构（C++）  | [官网](https://coding.imooc.com/class/chapter/71.html)  | [代码](https://github.com/liuyubobobo/Play‑with‑Algorithms)  | 程序员的内功修炼，强烈推荐                |
 | 【慕课网】玩转算法面试 leetcode 题库（C++）            | [官网](https://coding.imooc.com/class/chapter/82.html)  | [代码](https://github.com/liuyubobobo/Play‑with‑Algorithm‑Interview) | LeetCode 刷题入门，强烈推荐               |
 | 【极客时间】覃超：算法面试通关40讲                     | [官网](https://time.geekbang.org/course/intro/130)      | /                                                            | 市面上比较新的课程，推荐                  |
-| 【慕课网】刘宇波：看得见的算法 7个经典应用诠释算法精髓 | 官网                                                    | /                                                            | 通过7款经典好玩游戏，真正将算法用于实际开 |
+| 【慕课网】刘宇波：看得见的算法 7个经典应用诠释算法精髓 | [官网](https://coding.imooc.com/class/chapter/138.html) | /                                                            | 通过7款经典好玩游戏，真正将算法用于实际开 |
 
