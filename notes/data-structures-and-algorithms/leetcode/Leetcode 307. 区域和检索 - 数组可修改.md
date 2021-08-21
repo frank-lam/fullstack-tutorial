@@ -1,79 +1,50 @@
-# 数据结构
+## [307. 区域和检索 - 数组可修改](https://leetcode-cn.com/problems/range-sum-query-mutable/)
 
-## 一、基础数据结构
+给你一个数组 `nums` ，请你完成两类查询，其中一类查询要求更新数组下标对应的值，另一类查询要求返回数组中某个范围内元素的总和。
 
-### 字符串
+实现 `NumArray` 类：
 
-- 标准库，解析，匹配等
-
-### 线性表
-
-- 数组	
-
-- 动态数组
-
-### 栈和队列
-
-### 链表
-
-### 哈希表
+- `NumArray(int[] nums)` 用整数数组 `nums` 初始化对象
+- `void update(int index, int val)` 将 `nums[index]` 的值更新为 `val`
+- `int sumRange(int left, int right)` 返回子数组 `nums[left, right]` 的总和（即，`nums[left] + nums[left + 1], ..., nums[right]`）
 
 
 
-## 二、高级数据结构
+**示例：**
 
-### 1. 线段树
+```
+输入：
+["NumArray", "sumRange", "update", "sumRange"]
+[[[1, 3, 5]], [0, 2], [1, 2], [0, 2]]
+输出：
+[null, 9, null, 8]
 
-线段树（segment tree），顾名思义， 是用来存放给定区间（segment, or interval）内对应信息的一种数据结构。与树状数组（binary indexed tree）相似，线段树也用来处理数组相应的区间查询（range query）和元素更新（update）操作。与树状数组不同的是，线段树不止可以适用于区间求和的查询，也可以进行区间最大值，区间最小值（Range Minimum/Maximum Query problem）或者区间异或值的查询。
-
-对应于树状数组，线段树进行更新（update）的操作为 O(logn)，进行区间查询（range query）的操作也为 O(logn)。
-
-![image-20210821164803357](assets/image-20210821164803357.png)
-
-在线可视化：https://visualgo.net/en/segmenttree
-
-
-
-#### 303. 区域和检索 - 数组不可变 （LeetCode）
-
-
-https://leetcode-cn.com/problems/range-sum-query-immutable
-
-```java
-class NumArray {
-    private int[] data;
-
-    public NumArray(int[] nums) {
-        this.data = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            this.data[i] = nums[i];
-        }
-    }
-
-    public void update(int index, int val) {
-        this.data[index] = val;
-    }
-
-    public int sumRange(int left, int right) {
-        int sum = 0;
-        for (int i = left; i <= right; i++) {
-            sum += this.data[i];
-        }
-        return sum;
-    }
-}
+解释：
+NumArray numArray = new NumArray([1, 3, 5]);
+numArray.sumRange(0, 2); // 返回 9 ，sum([1,3,5]) = 9
+numArray.update(1, 2);   // nums = [1,2,5]
+numArray.sumRange(0, 2); // 返回 8 ，sum([1,2,5]) = 8
 ```
 
 
 
-#### 307. 区域和检索 - 数组可修改 （LeetCode）
+**提示：**
 
-https://leetcode-cn.com/problems/range-sum-query-mutable
+- `1 <= nums.length <= 3 * 104`
+- `-100 <= nums[i] <= 100`
+- `0 <= index < nums.length`
+- `-100 <= val <= 100`
+- `0 <= left <= right < nums.length`
+- 最多调用 `3 * 104` 次 `update` 和 `sumRange` 方法
+
+
+
+**提交代码：**
 
 ```java
-
 class NumArray {
     public class SegmentTree<E> {
+
         private E[] tree;
         private E[] data;
         private Merger<E> merger;
@@ -238,36 +209,3 @@ class NumArray {
     }
 }
 ```
-
-
-
-### 树和二叉树
-
-- 二叉树
-
-- 二分搜索树
-
-- AVL 树
-
-- B 和 B+
-
-- 二分查找法
-  - Leetcode 704.
-
-- 红黑树
-
-
-
-### 集合和映射
-
-
-
-### 优先队列和堆
-
-
-
-
-
-### Trie
-
-### 并查集

@@ -20,7 +20,7 @@
 
   https://leetcode-cn.com/problemset/all
 
-- 牛客网-找工作神器|笔试题库|面试经验|实习招聘内推，求职就业一站解决_牛客网
+- 牛客网 - 找工作神器|笔试题库|面试经验|实习招聘内推，求职就业一站解决
 
   https://www.nowcoder.com/
 
