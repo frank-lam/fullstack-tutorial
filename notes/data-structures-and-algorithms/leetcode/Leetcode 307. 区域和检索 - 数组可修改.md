@@ -1,4 +1,6 @@
-## [307. 区域和检索 - 数组可修改](https://leetcode-cn.com/problems/range-sum-query-mutable/)
+https://leetcode-cn.com/problems/range-sum-query-mutable
+
+## 307. 区域和检索 - 数组可修改
 
 给你一个数组 `nums` ，请你完成两类查询，其中一类查询要求更新数组下标对应的值，另一类查询要求返回数组中某个范围内元素的总和。
 
