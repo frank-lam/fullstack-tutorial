@@ -112,7 +112,7 @@
 
 - [前端知识体系](notes/Frontend/前端知识体系.md)
 - [Angular 基础知识](notes/Frontend/Angular.md)
-- [ES6+ 语法全解析](http://es.xiecheng.live/)
+- [ES6+ 语法全解析](https://notes.frankfeekr.cn/docs/frontend/es6/%E9%A1%B9%E7%9B%AE%E5%87%86%E5%A4%87/%E5%89%8D%E8%A8%80)
 
 
 
