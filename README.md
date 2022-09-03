@@ -16,7 +16,7 @@
     『技术博客』：<a href="https://www.frankfeekr.cn">www.frankfeekr.cn</a>   |  『开源贡献』：<a href="notes/开源贡献.md">⊱ 英雄招募令</a>   |   『微信订阅号』：全栈开发社区
   </p>
 </div>
-<div align="center"><img src="assets/zhishixingqiu.JPG" width="30%"/></div><br/>
+<div align="center"><img src="assets/zhishixingqiu.JPG" width="40%"/></div><br/>
 
 
 
